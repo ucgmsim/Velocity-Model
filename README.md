@@ -65,10 +65,10 @@ Example of EXTRACT_VELOCITY_SLICES call (will generate a model if it does not al
 
 Call type 3) GENERATE_VELOCITY_SLICES
 
--1	GENERATE_VELOCITY_SLICES
--2	MODEL_VERSION (model version - select from list of model versions at bottom of readme)
--3	OUTPUT_DIR (directory to save outputs to)
--4	GENERATED_SLICE_PARAMETERS_DIRECTORY (directory housing slice parameters text file)
+- 1	GENERATE_VELOCITY_SLICES
+- 2	MODEL_VERSION (model version - select from list of model versions at bottom of readme)
+- 3	OUTPUT_DIR (directory to save outputs to)
+- 4	GENERATED_SLICE_PARAMETERS_DIRECTORY (directory housing slice parameters text file)
 
  Example of GENERATE_VELOCITY_SLICES call
 ```
@@ -151,16 +151,16 @@ Summary of velocity model version numbers
 	-Pliocene - Vp=2.0, Vs=0.6086, Rho = 1.905
 	-BPV - Vp=4.0, Vs=2.2818, Rho= 2.393 
 
--v1.62 Same as v1.61 with different parameters for the BPV
-	-BPV - Vp=3.6, Vs=1.9428, Rho= 2.334 
+- v1.62 Same as v1.61 with different parameters for the BPV
+	- BPV - Vp=3.6, Vs=1.9428, Rho= 2.334 
 
--v1.63 Same as v1.61 with weathering function for the top 100m of the BPV
-	-BPV at 0m - Vp=3.2, Vs=1.59, Rho= 2.265 
-	-BPV below 100m - Vp=4.0, Vs=2.2818, Rho= 2.393 
-	-Linear relationship between 0 and 100m depth
+-v 1.63 Same as v1.61 with weathering function for the top 100m of the BPV
+	- BPV at 0m - Vp=3.2, Vs=1.59, Rho= 2.265 
+	- BPV below 100m - Vp=4.0, Vs=2.2818, Rho= 2.393 
+	- Linear relationship between 0 and 100m depth
 
--v1.64 Same as v1.63 with updated 1D velocity model
-	* 1D model version (Cant. 1D velocity model v2)
+- v1.64 Same as v1.63 with updated 1D velocity model
+	- 1D model version (Cant. 1D velocity model v2)
 
 
 

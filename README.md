@@ -1,95 +1,166 @@
-# groundMotionStationAnalysis
+# Velocity-Model
 
-This is the repository for the Python code for post-processing of the ground motion time series for each station, including Intensity Measure (IM) calculation, and plotting of the velocity seismograms and IMs. This replaces the original matlab code that was not parallel and resided on local machines. This Python code can be run either in parallel using the load leveller script or linearly in Python. All the parameters for the IM calculation and plotting are stored in parameters.py. The name of the parameter file is passed as an argument to the script runPostProcessStation.py , so new parameters files with different names can be created. Wherever possible, the parameter and function names from the original matlab code have been retained.
+This is the repository for the source code for South Island Velocity Model (SIVM) generation and interrogation. The model generation is a serial process. There are four general call types which are outlined in this readme.
 
 To clone the code from the github repository:
 ```
-git clone https://github.com/ucgmsim/groundMotionStationAnalysis
+git clone https://github.com/ucgmsim/Velocity-Model
 ```
-In order to run the code:
+In order to execute the code:
 
-1) In parallel:
+1) Compile:
 ```
-llsubmit runPostProcessStation.ll
+gcc -Wall -g -std=c99 -o SIVM *.c -lm -g
 ```
-The parameter filename needs to be changed in the load leveller script. The number of processes in the .ll script is currently set to 8. More than this had no significant improvement on the speed.
+2) Execute the code using one of the four call types:
+GENERATE_VELOCITY_MOD - Generates a velocity model from input parameters
+EXTRACT_VELOCITY_SLICES - Extracts velocity slices from a saved model (will generate the model first if it does not exist)
+GENERATE_VELOCITY_SLICES - Generated velocity slices for plotting (slices generated from scratch)
+GENERATE_INDIVIDUAL_PROFILE - Generates a velocity profile at a single lat/lon location
 
-2) From python:
+All four call types and required inputs are explained here.
+
+Call type 1) GENERATE_VELOCITY_MOD
+
+1	GENERATE_VELOCITY_MOD
+2	MODEL_VERSION (model version - select from list of model versions at bottom of readme)
+3	OUTPUT_DIR (directory to save outputs to)
+4	ORIGIN_LAT (origin latitude - in decimal format)
+5	ORIGIN_LON (origin longitude - in decimal format)
+6	ORIGIN_ROT (model rotation - clockwise is positive)
+7	EXTENT_X (model extent in the X direction away from the origin - i.e. for a 100km wide model input 50)
+8	EXTENT_Y (model extent in the Y direction away from the origin - i.e. for a 100km wide model input 50)
+9	EXTENT_ZMAX (maximum model extent in the Z direction - positive downwards in km)
+10	EXTENT_ZMIN (minimum model extent in the Z direction - positive downwards i.e -1 represents +1km above mean sea level)
+11	EXTENT_Z_SPACING (gridspacing in the Z direction in km)
+12	EXTENT_LATLON_SPACING (gridspacing in the Y and X direction in km)
+13	MIN_VS (minimium shear wave velocity to enforce, in km/s - typically 0.5)
+
+Example of GENERATE_VELOCITY_MOD call
 ```
-python runPostProcessStation.py parameterfilename
+./SIVM GENERATE_VELOCITY_MOD 1.01 v1.01Model -43.6 173.2 -10 70 60 46 0 1 1 0.5
 ```
-The individual plotting functions can also be run without re-running the IM calculation in python by:
+Call type 2) EXTRACT_VELOCITY_SLICES
+
+1	EXTRACT_VELOCITY_SLICES
+2	MODEL_VERSION (model version - select from list of model versions at bottom of readme)
+3	OUTPUT_DIR (directory to save outputs to)
+4	ORIGIN_LAT (origin latitude - in decimal format)
+5	ORIGIN_LON (origin longitude - in decimal format)
+6	ORIGIN_ROT (model rotation - clockwise is positive)
+7	EXTENT_X (model extent in the X direction away from the origin - i.e. for a 100km wide model input 50)
+8	EXTENT_Y (model extent in the Y direction away from the origin - i.e. for a 100km wide model input 50)
+9	EXTENT_ZMAX (maximum model extent in the Z direction - positive downwards in km)
+10	EXTENT_ZMIN (minimum model extent in the Z direction - positive downwards i.e -1 represents +1km above mean sea level)
+11	EXTENT_Z_SPACING (gridspacing in the Z direction in km)
+12	EXTENT_LATLON_SPACING (gridspacing in the Y and X direction in km)
+13	MIN_VS (minimium shear wave velocity to enforce, in km/s - typically 0.5)
+14	EXTRACTED_SLICE_PARAMETERS_DIRECTORY (directory housing slice parameters text file)
+
+Example of EXTRACT_VELOCITY_SLICES call (will generate a model if it does not already exist)
+- See readme in ExtractedSliceParameters directory 
 ```
-python runPlotObsSynIntensityMeasures parameterfilename
+./SIVM EXTRACT_VELOCITY_SLICES 1.01 v1.01Model -43.6 173.2 -10 70 60 46 0 1 1 0.5 ExtractedSliceParameters
 ```
-etc.
 
-3) From ipython (interactive python):
+Call type 3) GENERATE_VELOCITY_SLICES
+
+1	GENERATE_VELOCITY_SLICES
+2	MODEL_VERSION (model version - select from list of model versions at bottom of readme)
+3	OUTPUT_DIR (directory to save outputs to)
+4	GENERATED_SLICE_PARAMETERS_DIRECTORY (directory housing slice parameters text file)
+
+ Example of GENERATE_VELOCITY_SLICES call
 ```
-ipython --pylab
+./SIVM GENERATE_VELOCITY_SLICES 1.01 v1.01Model GeneratedSliceParameters
 ```
+
+Call type 4) GENERATE_INDIVIDUAL_PROFILE
+
+1	GENERATE_INDIVIDUAL_PROFILE
+2	MODEL_VERSION (model version - select from list of model versions at bottom of readme)
+3	OUTPUT_DIR (directory to save outputs to)
+4	PROFILE_LAT (latitude point of profile - in decimal format)
+5	PROFILE_LON (longitude point of profile - in decimal format)
+6	PROFILE_ZMAX (maximum depth of profile +ve downwards in km) 
+7	PROFILE_ZMIN (minimum depth of profile +ve downwards in km ie. -0.1 corresponds to the top of the profile at +0.1km above mean sea level)
+8	EXTENT_Z_SPACING (z spacing of the profile in km)
+
+Example of GENERATE_INDIVIDUAL_PROFILE 
 ```
-run'runPostProcessStation.py' parameterfilename
+./SIVM GENERATE_INDIVIDUAL_PROFILE 1.01 v1.01Model -43.5 172.5 0.1 -.05 0.001
 ```
-The individual plotting functions can also be run without re-running the IM calculation in ipython by:
-```
-run'runPlotObsSynIntensityMeasures' parameterfilename
-```
-and
-```
-run'runPlotVelocitySeismogramsWithDistance'	parameterfilename
-```
-```
-run'runPlotObservedSimulatedTimeSeries'	parameterfilename
-```
-In the parameter file, there are five flags in a class object called flags that control the postprocessing workflow in the top level script runPostProcess.py . 
 
-Flag Name | Purpose
-------------------------------------------------- | ----------------------------------------------------------------------------------------
-calcIM	| Whether to calculate the Intensity Measures and save out to .h5 file 
-plotSeismogram | Whether to plot the Velocity Seismograms with distance and save to .eps and .png
-plotIM | Whether to plot the Intensity Measures with distance and save to .eps and .png
-plotTimeSeries | Whether to plot the Time Series and save to .eps and .png
-plotGMPE | Whether to overlay the Ground Motion Prediction Equation on the Intensity Measure figures
 
-In the first 4 cases, for these flags:
+Execute one of these four call types and open the output directory to view saved outputs.
 
-Flag Value | Workflow control
-------------------- | ------------------------------
-0 | Done for neither obseravations nor simulations
-1 | Done for observations only
-2 | Done for simulations only
-3 | Done for both observations and simulations
 
-For the flag plotGMPE, a value of 1 does overlay the GMPE on the IMs, a value of 0 does not.
 
-The other variables in the parameter file define the input and output filenames and directories, and the specifics of the plotting (which IM to plot etc). 
-The definitions for these are commented inside the parameter file. The variables that are in the parameter file are grouped together as class objects, based on which plot function they are for etc.
+Summary of velocity model version numbers
 
-## Unit tests
+v1.01 1D velocity model 
+	1D model version (Cant. 1D velocity model)
+v1.02 1D velocity model 
+	1D model version (Cant. 1D velocity model v2)
 
-There are currently three unit tests for this code. They are:
+v1.11 Eberhart-Phillips Tomography 
+	(Unpublished updated Canterbury version)
 
-1) Intensity Measurement calculation compared against the Darfield September 4th earthquake,
+v1.21 Tomography below basement, 1D above
+	1D model version (Cant. 1D velocity model)
+	Basement version (BasementPoints_35_v8p9_1000m.txt)
+v1.22 Tomography below basement, 1D above
+	1D model version (Cant. 1D velocity model v2)
+	Basement version (BasementPoints_35_v8p9_1000m.txt)
 
-2) Source-to-Site distance calculation for specific fault and station files (again Darfield Sept 4th earthquake),
+v1.31 Tomography below basement, constant velocity Paleogene layer, 1D Above
+	1D model version (Cant. 1D velocity model)
+	Basement version (BasementPoints_35_v8p9_1000m.txt)
+	Paleogene version (PaleogenePoints_35_v8p9_1000m.txt)
+	Paleogene - Vp=2.7 , Vs=1.1511 , Rho=2.151
 
-3) GMPE calculation (mean and sigma) for both PGA and pSA (at 1s) for the Darfield earthquake.
+v1.41 Tomography below basement, constant velocity Paleogene & Miocene layers, 1D Above
+	1D model version (Cant. 1D velocity model)
+	Basement version (BasementPoints_35_v8p9_1000m.txt)
+	Paleogene version (PaleogenePoints_35_v8p9_1000m.txt)
+	Miocene version (MiocenePoints_35_v8p9_1000m.txt)
+	Paleogene - Vp=2.7 , Vs=1.1511 , Rho=2.151
+	Miocene - Vp=2.5, Vs=0.98355, Rho=2.9031 
 
-In all 3 cases, a .h5 file of reference values is saved in the github. By using the parameter file parameters_unit_test.py , the IMs, rupture distances or GMPEs are calculated for the current code version and the outputs are compared against the reference versions. The absolute and relative differences for both the IMs and Rrups are printed to the .out file if they do not exactly agree with the reference values.
+v1.51 Tomography below basement, constant velocity Paleogene & Miocene layers, 1D Above, BPV Basin
+	1D model version (Cant. 1D velocity model)
+	Basement version (BasementPoints_35_v8p9_1000m.txt)
+	Paleogene version (PaleogenePoints_35_v8p9_1000m.txt)
+	Miocene version (MiocenePoints_35_v8p9_1000m.txt)
+	BPV top version (BPPoints_41_v1p13_1000m.txt)
+	Paleogene - Vp=2.7 , Vs=1.1511 , Rho=2.151
+	Miocene - Vp=2.5, Vs=0.98355, Rho=2.9031 
+	BPV - Vp=4.0, Vs=2.2818, Rho= 2.393 
 
-The unit tests can be run by setting, respectively:
+v1.61 Tomography below basement, constant velocity Paleogene, Miocene & Pliocene layers, 1D Above, BPV Basin
+	1D model version (Cant. 1D velocity model)
+	Basement version (BasementPoints_35_v8p9_1000m.txt)
+	Paleogene version (PaleogenePoints_35_v8p9_1000m.txt)
+	Miocene version (MiocenePoints_35_v8p9_1000m.txt)
+	Pliocene version (PliocenePoints_35_v8p9_1000m.txt)
+	BPV top version (BPPoints_41_v1p13_1000m.txt)
+	Paleogene - Vp=2.7 , Vs=1.1511 , Rho=2.151
+	Miocene - Vp=2.5, Vs=0.98355, Rho=2.9031 
+	Pliocene - Vp=2.0, Vs=0.6086, Rho = 1.905
+	BPV - Vp=4.0, Vs=2.2818, Rho= 2.393 
 
-tests.IM_unit_test=True         
-                    
-tests.Rrup_unit_test=True
+v1.62 Same as v1.61 with different parameters for the BPV
+	BPV - Vp=3.6, Vs=1.9428, Rho= 2.334 
 
-tests.GMPE_unit_test=True
+v1.63 Same as v1.61 with weathering function for the top 100m of the BPV
+	BPV at 0m - Vp=3.2, Vs=1.59, Rho= 2.265 
+	BPV below 100m - Vp=4.0, Vs=2.2818, Rho= 2.393 
+	Linear relationship between 0 and 100m depth
 
-These .h5 reference files have been verified to ~15 significant figures against the original matlab code.
+v1.64 Same as v1.63 with updated 1D velocity model
+	1D model version (Cant. 1D velocity model v2)
 
-When the calculations within the Python post-processing code are changed, these unit tests should be run!
 
-The plotting functions should be verified against PostProcessPlots.pdf also in this repository.
+
 
 

@@ -160,7 +160,7 @@ Summary of velocity model version numbers
 	-Linear relationship between 0 and 100m depth
 
 -v1.64 Same as v1.63 with updated 1D velocity model
-	-1D model version (Cant. 1D velocity model v2)
+	* 1D model version (Cant. 1D velocity model v2)
 
 
 

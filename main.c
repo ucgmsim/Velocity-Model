@@ -22,10 +22,10 @@
 #include "structs.h"
 #include "functions.h"
 
-//int main(int argc, char *argv[])
-int main(void)
+int main(int argc, char *argv[])
+//int main(void)
 {
-    ///*
+    /*
      int argc = 14;
      char *argv[20];
     argv[1] = "GENERATE_VELOCITY_MOD";
@@ -41,7 +41,7 @@ int main(void)
     argv[11] = "1";
     argv[12] = "1";
     argv[13] = "0.5";
-     //*/
+     */
     
     
     /*

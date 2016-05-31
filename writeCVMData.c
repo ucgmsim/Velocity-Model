@@ -54,31 +54,31 @@ void writeCVMData(gridStruct *location, globalDataValues *globDataVals, char *ou
 	char rho3dfile[64];
     sprintf(rho3dfile,"%s/rho3dfile.d",veloModDir);
     
-    char lats[64];
-    char latsTxt[64];
-
-    sprintf(lats,"%s/lats.bin",veloModDir);
-    FILE *flats = fopen(lats, "w");
-    sprintf(latsTxt,"%s/lats.txt",veloModDir);
-    FILE *flatsTxt = fopen("lats.txt", "w");
-
-    
-    char lons[64];
-    char lonsTxt[64];
-
-    sprintf(lons,"%s/lons.bin",veloModDir);
-    FILE *flons = fopen(lons, "w");
-    sprintf(lonsTxt,"%s/lons.txt",veloModDir);
-    FILE *flonsTxt = fopen("lons.txt", "w");
-
-    
-    char deps[64];
-    char depsTxt[64];
-
-    sprintf(deps,"%s/deps.bin",veloModDir);
-    FILE *fdeps = fopen(deps, "w");
-    sprintf(depsTxt,"%s/deps.txt",veloModDir);
-    FILE *fdepsTxt = fopen("deps.txt", "w");
+//    char lats[64];
+//    char latsTxt[64];
+//
+//    sprintf(lats,"%s/lats.bin",veloModDir);
+//    FILE *flats = fopen(lats, "w");
+//    sprintf(latsTxt,"%s/lats.txt",veloModDir);
+//    FILE *flatsTxt = fopen("lats.txt", "w");
+//
+//    
+//    char lons[64];
+//    char lonsTxt[64];
+//
+//    sprintf(lons,"%s/lons.bin",veloModDir);
+//    FILE *flons = fopen(lons, "w");
+//    sprintf(lonsTxt,"%s/lons.txt",veloModDir);
+//    FILE *flonsTxt = fopen("lons.txt", "w");
+//
+//    
+//    char deps[64];
+//    char depsTxt[64];
+//
+//    sprintf(deps,"%s/deps.bin",veloModDir);
+//    FILE *fdeps = fopen(deps, "w");
+//    sprintf(depsTxt,"%s/deps.txt",veloModDir);
+//    FILE *fdepsTxt = fopen("deps.txt", "w");
 
 
     float *vp, *vs, *rho;
@@ -140,13 +140,13 @@ void writeCVMData(gridStruct *location, globalDataValues *globDataVals, char *ou
                 }
 
                 
-                fwrite(&location->Lat[ix][iy],sizeof(float),1,flats);
-                fwrite(&location->Lon[ix][iy],sizeof(float),1,flons);
-                fwrite(&location->Z[iz],sizeof(float),1,fdeps);
+//                fwrite(&location->Lat[ix][iy],sizeof(float),1,flats);
+//                fwrite(&location->Lon[ix][iy],sizeof(float),1,flons);
+//                fwrite(&location->Z[iz],sizeof(float),1,fdeps);
 
-                fprintf(flatsTxt,"%f\n",location->Lat[ix][iy]);
-                fprintf(flonsTxt,"%f\n",location->Lon[ix][iy]);
-                fprintf(fdepsTxt,"%f\n",location->Z[iz]);
+//                fprintf(flatsTxt,"%f\n",location->Lat[ix][iy]);
+//                fprintf(flonsTxt,"%f\n",location->Lon[ix][iy]);
+//                fprintf(fdepsTxt,"%f\n",location->Z[iz]);
                 
                 fwrite(&vpWrite,sizeof(vpWrite),1,fvp);
                 fwrite(&vsWrite,sizeof(vsWrite),1,fvs);
@@ -183,14 +183,14 @@ void writeCVMData(gridStruct *location, globalDataValues *globDataVals, char *ou
 	fclose(fvp);
 	fclose(fvs);
 	fclose(frho);
-
-    fclose(flatsTxt);
-    fclose(flonsTxt);
-    fclose(fdepsTxt);
-    
-    fclose(flats);
-    fclose(flons);
-    fclose(fdeps);
+//
+//    fclose(flatsTxt);
+//    fclose(flonsTxt);
+//    fclose(fdepsTxt);
+//    
+//    fclose(flats);
+//    fclose(flons);
+//    fclose(fdeps);
 printf("Binary file write complete.\n");
 
     

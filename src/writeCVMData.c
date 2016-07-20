@@ -1,0 +1,219 @@
+//
+//  writeCVMData.c
+//  CVMversions
+//
+//  Created by Ethan M. Thomson on 24/06/14.
+//  Copyright (c) 2014 Dept. Civil Engineering. All rights reserved.
+//
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <string.h>
+#include <assert.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <stdint.h>
+#include "constants.h"
+#include "structs.h"
+#include "functions.h"
+
+void writeGlobalQualities(char *OUTPUT_DIR, partial_global_mesh *PARTIAL_GLOBAL_MESH, partial_global_qualities *PARTIAL_GLOBAL_QUALITIES, gen_extract_velo_mod_call GEN_EXTRACT_VELO_MOD_CALL, calculation_log *CALCULATION_LOG, int latInd)
+
+/*
+ Purpose:   write the full velocity model to file
+ 
+ Input variables:
+ PARTIAL_GLOBAL_MESH        - pointer to structure containing lat lon grid
+ globalValues    - pointer to structure containing vp vs and rho for all gridpoints
+ 
+ Output variables:
+ N/A.
+ */
+{
+    // perform endian check
+    int endianInt;
+    endianInt = endian();
+    
+    FILE *fvp, *fvs, *frho;
+    char vp3dfile[MAX_FILENAME_STRING_LEN];
+    sprintf(vp3dfile,"%s/Velocity_Model/vp3dfile.p",OUTPUT_DIR);
+    
+    char vs3dfile[MAX_FILENAME_STRING_LEN];
+    sprintf(vs3dfile,"%s/Velocity_Model/vs3dfile.s",OUTPUT_DIR);
+    
+    char rho3dfile[MAX_FILENAME_STRING_LEN];
+    sprintf(rho3dfile,"%s/Velocity_Model/rho3dfile.d",OUTPUT_DIR);
+    
+    float *vp, *vs, *rho;
+    float vpTemp, vsTemp, rhoTemp;
+    float vpWrite, vsWrite, rhoWrite;
+    
+    //    char fullMod[64];
+    //    sprintf(fullMod,"%s/fullMod.txt",veloModDir);
+    //    FILE *fullModTxt;
+    int bsize;
+    
+    
+    if( latInd == 0) // if first time, generate binary files
+    {
+        fvp = fopen(vp3dfile,"w");
+        fvs = fopen(vs3dfile,"w");
+        frho = fopen(rho3dfile,"w");
+        if (fvp == NULL)
+        {
+            printf("Unable to generate binary files for write.\n");
+            exit(EXIT_FAILURE);
+        }
+        
+        //        fullModTxt = fopen(fullMod, "w");
+        
+    }
+    else // append to existing binary files
+    {
+        fvp = fopen(vp3dfile,"a");
+        fvs = fopen(vs3dfile,"a");
+        frho = fopen(rho3dfile,"a");
+        
+        if (fvp == NULL)
+        {
+            printf("Unable to reopen binary files for write.\n");
+            exit(EXIT_FAILURE);
+        }
+        
+        //        fullModTxt = fopen(fullMod,"a");
+        
+    }
+    
+    bsize = PARTIAL_GLOBAL_MESH->nX*PARTIAL_GLOBAL_MESH->nZ*sizeof(float);
+    vp = (float*) malloc(bsize);
+    vs = (float*) malloc(bsize);
+    rho = (float*) malloc(bsize);
+    
+    for(int iz = 0; iz < PARTIAL_GLOBAL_MESH->nZ; iz++)
+    {
+        for (int ix = 0; ix < PARTIAL_GLOBAL_MESH->nX; ix++)
+        {
+            //				ip = ix + iz * PARTIAL_GLOBAL_MESH->nX;  //index counter
+            if (PARTIAL_GLOBAL_QUALITIES->Vs[ix][iz] <= GEN_EXTRACT_VELO_MOD_CALL.MIN_VS) // enforce min Vs
+            {
+                vsTemp = GEN_EXTRACT_VELO_MOD_CALL.MIN_VS;
+                CALCULATION_LOG->nPointsExceedingMinVelo += 1;
+            }
+            else
+            {
+                vsTemp = PARTIAL_GLOBAL_QUALITIES->Vs[ix][iz]; // else assign from global structure
+            }
+            vpTemp = PARTIAL_GLOBAL_QUALITIES->Vp[ix][iz];
+            rhoTemp = PARTIAL_GLOBAL_QUALITIES->Rho[ix][iz];
+            
+            
+            if (endianInt == 1) // big endian
+            {
+                vsWrite = float_swap(vsTemp);
+                vpWrite = float_swap(vpTemp);
+                rhoWrite = float_swap(rhoTemp);
+            }
+            else if (endianInt == 0) // little endian
+            {
+                vsWrite = vsTemp;
+                vpWrite = vpTemp;
+                rhoWrite = rhoTemp;
+            }
+            
+            fwrite(&vpWrite,sizeof(float),1,fvp);
+            fwrite(&vsWrite,sizeof(float),1,fvs);
+            fwrite(&rhoWrite,sizeof(float),1,frho);
+            
+            //                fprintf(fullModTxt,"%f\t%f\t%f\t%f\n",PARTIAL_GLOBAL_MESH->Lat[ix],PARTIAL_GLOBAL_MESH->Lon[ix],PARTIAL_GLOBAL_MESH->Z[iz],vsTemp);
+        }
+    }
+    
+    
+    free(vp);
+    free(vs);
+    free(rho);
+    fclose(fvp);
+    fclose(fvs);
+    fclose(frho);
+    //    fclose(fullModTxt);
+    
+    
+}
+
+
+void writeIndividualProfile(qualities_vector *QUALITIES_VECTOR, gen_profile_call GEN_PROFILE_CALL, mesh_vector *MESH_VECTOR, char *OUTPUT_DIR, calculation_log *CALCULATION_LOG)
+{
+    FILE *fp;
+    char fName[MAX_FILENAME_STRING_LEN];
+    sprintf(fName,"%s/Profile/Profile.txt",OUTPUT_DIR);
+    fp = fopen(fName, "w");
+    if (fp == NULL)
+    {
+        printf("Unable to open text file to write profile to.\n");
+        exit(EXIT_FAILURE);
+    }
+    fprintf(fp,"Properties at Lat: %lf Lon: %lf\n",*MESH_VECTOR->Lat, *MESH_VECTOR->Lon);
+    fprintf(fp,"Depth \t Vp \t Vs \t Rho\n");
+    
+    
+    for(int i = 0; i < *MESH_VECTOR->nZ; i++)
+    {
+        if(QUALITIES_VECTOR->Vs[i] <= GEN_PROFILE_CALL.PROFILE_MIN_VS)
+        {
+            QUALITIES_VECTOR->Vs[i] = GEN_PROFILE_CALL.PROFILE_MIN_VS;
+        }
+        fprintf(fp,"%lf \t %lf \t %lf \t %lf\n",*MESH_VECTOR->Z[i], QUALITIES_VECTOR->Vp[i],QUALITIES_VECTOR->Vs[i],QUALITIES_VECTOR->Rho[i]);
+    }
+    fclose(fp);
+    printf("Profile text file write complete.\n");
+    
+}
+
+void writeProfileSurfaceDepths(global_model_parameters *GLOBAL_MODEL_PARAMETERS, basin_data *BASIN_DATA, partial_global_surface_depths *PARTIAL_GLOBAL_SURFACE_DEPTHS, partial_basin_surface_depths *PARTIAL_BASIN_SURFACE_DEPTHS, in_basin *IN_BASIN,mesh_vector *MESH_VECTOR, char *OUTPUT_DIR, calculation_log *CALCULATION_LOG)
+{
+    FILE *fp;
+    char fName[MAX_FILENAME_STRING_LEN];
+    sprintf(fName,"%s/Profile/ProfileSurfaceDepths.txt", OUTPUT_DIR);
+    fp = fopen(fName, "w");
+    if (fp == NULL)
+    {
+        printf("Unable to open text file to write profile to.\n");
+        exit(EXIT_FAILURE);
+    }
+    
+    fprintf(fp,"Surface Depths (in m) at Lat: %lf Lon: %lf\n\n",*MESH_VECTOR->Lat,*MESH_VECTOR->Lon);
+    fprintf(fp,"Global surfaces\n");
+    fprintf(fp,"Surface_name \t Depth (m)\n");
+    
+    for ( int i = 0 ; i < GLOBAL_MODEL_PARAMETERS->nSurf; i++)
+    {
+        fprintf(fp,"%s\t%lf\n",GLOBAL_MODEL_PARAMETERS->surf[i],PARTIAL_GLOBAL_SURFACE_DEPTHS->dep[i]);
+    }
+    
+    fprintf(fp,"\nBasin surfaces (if applicable)\n");
+
+    for ( int i = 0 ; i < GLOBAL_MODEL_PARAMETERS->nBasins; i++)
+    {
+        if(IN_BASIN->inBasinLatLon[i][0])
+        {
+            fprintf(fp,"\n%s\n",GLOBAL_MODEL_PARAMETERS->basin[i]);
+            for(int j = 0; j < GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[i]; j++)
+            {
+                fprintf(fp,"%s\t%lf\n",GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[i][j],PARTIAL_BASIN_SURFACE_DEPTHS->dep[i][j]);
+            }
+        }
+    }
+
+    fclose(fp);
+    printf("Completed write of surface depths at the location.\n");
+    
+}
+
+
+
+
+
+
+
+

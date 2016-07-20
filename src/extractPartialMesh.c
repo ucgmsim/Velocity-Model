@@ -1,0 +1,93 @@
+//
+//  extractPartialMesh.c
+//  CVMversions
+//
+//  Created by Ethan M. Thomson on 16/11/15.
+//  Copyright (c) 2015 Dept. Civil Engineering. All rights reserved.
+//
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <string.h>
+#include <assert.h>
+#include "constants.h"
+#include "structs.h"
+#include "functions.h"
+
+
+partial_global_mesh *extractPartialMesh(global_mesh *GLOBAL_MESH, int latInd)
+/*
+ Purpose: to extract one slice of values from the global mesh, i.e nX x nY x nZ becomes nX x 1 x nZ
+ 
+ Input variables:
+    *GLOBAL_MESH - structure containing the full model grid (lat, lon and depth points)
+    latInd - y indicie of the slice of the global grid to be extracted
+ 
+ Output variables:
+    *PARTIAL_GLOBAL_MESH - struct containing a slice of the global mesh
+ */
+{
+    partial_global_mesh *PARTIAL_GLOBAL_MESH;
+    PARTIAL_GLOBAL_MESH = malloc(sizeof(partial_global_mesh));
+    if(PARTIAL_GLOBAL_MESH == NULL)
+    {
+        printf("Memory allocation failed for PARTIAL_GLOBAL_MESH array.\n");
+        exit(EXIT_FAILURE);
+    }
+    
+    int i;
+    
+    PARTIAL_GLOBAL_MESH->nX = GLOBAL_MESH->nX;
+    PARTIAL_GLOBAL_MESH->nY = 1;
+    PARTIAL_GLOBAL_MESH->nZ = GLOBAL_MESH->nZ;
+    PARTIAL_GLOBAL_MESH->Y = GLOBAL_MESH->Y[latInd];
+
+    for(i = 0; i < GLOBAL_MESH->nZ; i ++)
+    {
+        PARTIAL_GLOBAL_MESH->Z[i] = GLOBAL_MESH->Z[i];
+    }
+    for(i = 0; i < GLOBAL_MESH->nX; i ++)
+    {
+        PARTIAL_GLOBAL_MESH->Lon[i] = GLOBAL_MESH->Lon[i][latInd];
+        PARTIAL_GLOBAL_MESH->Lat[i] = GLOBAL_MESH->Lat[i][latInd];
+        PARTIAL_GLOBAL_MESH->X[i] = GLOBAL_MESH->X[i];
+    }
+    return PARTIAL_GLOBAL_MESH;
+}
+
+mesh_vector *extractMeshVector(partial_global_mesh *PARTIAL_GLOBAL_MESH, int lonInd)
+/*
+ Purpose: to extract one vector of values from the global mesh, i.e  nX x 1 x nZ becomes 1 x 1 x nZ
+ 
+ Input variables:
+    *GLOBAL_MESH - structure containing the full model grid (lat, lon and depth points)
+    lonInd - x indicie of the slice of the grid to be extracted
+ 
+ Output variables:
+    *MESH_VECTOR - struct containing one lat - lon point and the depths of all grid points at this location
+ */
+{
+    mesh_vector *MESH_VECTOR;
+    MESH_VECTOR = malloc(sizeof(mesh_vector));
+    if(MESH_VECTOR == NULL)
+    {
+        printf("Memory allocation failed for MESH_VECTOR array.\n");
+        exit(EXIT_FAILURE);
+    }
+    
+    MESH_VECTOR->Lat = &PARTIAL_GLOBAL_MESH->Lat[lonInd];
+    MESH_VECTOR->Lon = &PARTIAL_GLOBAL_MESH->Lon[lonInd];
+    
+    for(int i = 0; i < PARTIAL_GLOBAL_MESH->nZ; i++)
+    {
+        MESH_VECTOR->Z[i] = &PARTIAL_GLOBAL_MESH->Z[i];
+    }
+    MESH_VECTOR->nZ = &PARTIAL_GLOBAL_MESH->nZ;
+    
+    return MESH_VECTOR;
+}
+
+
+
+

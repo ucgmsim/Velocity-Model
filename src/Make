@@ -1,0 +1,2 @@
+gcc -Wall -std=c99 -o CVM *.c -lm
+./CVM EXTRACT_VELOCITY_SLICES 1.64 v1.64.SI400m -43.75 170.75 -50 425 150 100 0 0.4 0.4 SliceParametersLarge

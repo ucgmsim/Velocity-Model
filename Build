@@ -1,5 +1,0 @@
-gcc -Wall -g -std=c99 -o CVM *.c -lm -g
-./CVM EXTRACT_VELOCITY_SLICES 1.63 v1.63 -43.6 172.3 -10 70 60 46 0 0.1 0.1 0.5 SliceParameters
-
-
-

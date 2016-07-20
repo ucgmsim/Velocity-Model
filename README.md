@@ -85,7 +85,7 @@ Call type 4) GENERATE_INDIVIDUAL_PROFILE - All parameters must be set and the ou
 - 6	PROFILE_ZMAX (maximum depth of profile +ve downwards in km) 
 - 7	PROFILE_ZMIN (minimum depth of profile +ve downwards in km ie. -0.1 corresponds to the top of the profile at +0.1km above mean sea level)
 - 8 PROFILE_MIN_VS=0.5 (minimium shear wave velocity to enforce, in km/s - typically 0.5, set as 0.0 for no restriction)
-- 9	EXTENT_Z_SPACING (z spacing of the profile in km)
+- 9	EXTENT_Z_SPACING_PROFILE (z spacing of the profile in km)
 
 Example of GENERATE_INDIVIDUAL_PROFILE 
 - See readme in GeneratedSliceParameters directory for additional information

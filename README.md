@@ -1,23 +1,21 @@
-# UCVM-Velocity-Model-Integration
-
-f# Velocity-Model
+# Velocity Model
 
 This is the repository for the source code for South Island Velocity Model (SIVM) generation and interrogation. The model generation is a serial process. There are four general call types which are outlined in this readme.
 
 To clone the code from the github repository:
 ```
-git clone https://github.com/ucgmsim/UCVM-Velocity-Model-Integration
+git clone https://github.com/ucgmsim/Velocity-Model
 ```
 In order to execute the code:
 
-1) Compile:
+1) Compile - Run make (this will compile the executable)
 ```
-gcc -Wall -g -std=c99 -o SIVM *.c -lm -g
+make
 ```
 2) Execute the code using one of the four call types:
 - GENERATE_VELOCITY_MOD - Generates a velocity model from input parameters
 - EXTRACT_VELOCITY_SLICES - Extracts velocity slices from a saved model (will generate the model first if it does not exist)
-- GENERATE_VELOCITY_SLICES - Generated velocity slices for plotting (slices generated from scratch)
+- !!!GENERATE_VELOCITY_SLICES - Generated velocity slices for plotting (slices generated from scratch) not working currently
 - GENERATE_INDIVIDUAL_PROFILE - Generates a velocity profile at a single lat/lon location
 
 All four call types and required inputs are explained here.
@@ -38,11 +36,11 @@ Call type 1) GENERATE_VELOCITY_MOD
 - 12	EXTENT_LATLON_SPACING (gridspacing in the Y and X direction in km)
 - 13	MIN_VS (minimium shear wave velocity to enforce, in km/s - typically 0.5)
 
-Example of GENERATE_VELOCITY_MOD call
+Example of GENERATE_VELOCITY_MOD call - All parameters must be set and the output directory must not exist
 ```
-./SIVM GENERATE_VELOCITY_MOD 1.01 v1.01Model -43.6 173.2 -10 70 60 46 0 1 1 0.5
+./NZVM -GENERATE_VELOCITY_MOD -MODEL_VERSION=1.64 -OUTPUT_DIR=v1.64_Model -ORIGIN_LAT=-43.6 -ORIGIN_LON=172.3 -ORIGIN_ROT=-10.00 -EXTENT_X=140 -EXTENT_Y=120 -EXTENT_ZMAX=46 -EXTENT_ZMIN=0 -EXTENT_Z_SPACING=1 -EXTENT_LATLON_SPACING=1 -MIN_VS=0.5
 ```
-Call type 2) EXTRACT_VELOCITY_SLICES
+Call type 2) EXTRACT_VELOCITY_SLICES - All parameters must be set and the output directory must have been generated previously using GENERATE_VELOCITY_MOD call
 
 - 1	EXTRACT_VELOCITY_SLICES
 - 2	MODEL_VERSION (model version - select from list of model versions at bottom of readme)
@@ -62,10 +60,10 @@ Call type 2) EXTRACT_VELOCITY_SLICES
 Example of EXTRACT_VELOCITY_SLICES call (will generate a model if it does not already exist)
 - See readme in ExtractedSliceParameters directory for additional information
 ```
-./SIVM EXTRACT_VELOCITY_SLICES 1.01 v1.01Model -43.6 173.2 -10 70 60 46 0 1 1 0.5 ExtractedSliceParameters
+./NZVM -EXTRACT_VELOCITY_SLICES -MODEL_VERSION=1.64 -OUTPUT_DIR=v1.64_Model -ORIGIN_LAT=-43.6 -ORIGIN_LON=172.3 -ORIGIN_ROT=-10.00 -EXTENT_X=140 -EXTENT_Y=120 -EXTENT_ZMAX=46 -EXTENT_ZMIN=0 -EXTENT_Z_SPACING=1 -EXTENT_LATLON_SPACING=1 -MIN_VS=0.5 -EXTRACTED_SLICE_PARAMETERS_DIRECTORY=ExtractedSliceParameters
 ```
 
-Call type 3) GENERATE_VELOCITY_SLICES
+Call type 3) GENERATE_VELOCITY_SLICES !! not working currently
 
 - 1	GENERATE_VELOCITY_SLICES
 - 2	MODEL_VERSION (model version - select from list of model versions at bottom of readme)
@@ -77,7 +75,7 @@ Example of GENERATE_VELOCITY_SLICES call
 ./SIVM GENERATE_VELOCITY_SLICES 1.01 v1.01Model GeneratedSliceParameters
 ```
 
-Call type 4) GENERATE_INDIVIDUAL_PROFILE
+Call type 4) GENERATE_INDIVIDUAL_PROFILE - All parameters must be set and the output directory must not exist
 
 - 1	GENERATE_INDIVIDUAL_PROFILE
 - 2	MODEL_VERSION (model version - select from list of model versions at bottom of readme)
@@ -86,13 +84,15 @@ Call type 4) GENERATE_INDIVIDUAL_PROFILE
 - 5	PROFILE_LON (longitude point of profile - in decimal format)
 - 6	PROFILE_ZMAX (maximum depth of profile +ve downwards in km) 
 - 7	PROFILE_ZMIN (minimum depth of profile +ve downwards in km ie. -0.1 corresponds to the top of the profile at +0.1km above mean sea level)
-- 8	EXTENT_Z_SPACING (z spacing of the profile in km)
+- 8 PROFILE_MIN_VS=0.5 (minimium shear wave velocity to enforce, in km/s - typically 0.5, set as 0.0 for no restriction)
+- 9	EXTENT_Z_SPACING (z spacing of the profile in km)
 
 Example of GENERATE_INDIVIDUAL_PROFILE 
 - See readme in GeneratedSliceParameters directory for additional information
 
 ```
-./SIVM GENERATE_INDIVIDUAL_PROFILE 1.01 v1.01Model -43.5 172.5 0.1 -.05 0.001
+./NZVM -GENERATE_PROFILE -MODEL_VERSION=1.64 -OUTPUT_DIR=v1.64_Profile -PROFILE_LAT=-44.3968 -PROFILE_LON=171.5 -PROFILE_ZMAX=5 -PROFILE_ZMIN=-1 -PROFILE_MIN_VS=0.5 -EXTENT_Z_SPACING_PROFILE=0.05
+
 ```
 
 

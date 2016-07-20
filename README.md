@@ -14,7 +14,7 @@ make
 ```
 2) Execute the code using one of the four call types:
 - GENERATE_VELOCITY_MOD - Generates a velocity model from input parameters
-- EXTRACT_VELOCITY_SLICES - Extracts velocity slices from a saved model (will generate the model first if it does not exist)
+- EXTRACT_VELOCITY_SLICES - Extracts velocity slices from a saved model (Model need to have been previously generated to use this call)
 - !!!GENERATE_VELOCITY_SLICES - Generated velocity slices for plotting (slices generated from scratch) not working currently
 - GENERATE_INDIVIDUAL_PROFILE - Generates a velocity profile at a single lat/lon location
 

@@ -226,8 +226,10 @@ void determineBasinSurfaceDepths(basin_data *BASIN_DATA, global_model_parameters
     {
         for(int j = 0; j < GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[i]; j++)
         {
-            
-            //            printf("%i, %i\n",IN_BASIN->inBasinLatLon[i][GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[i][j]],j);
+//            printf("%i, %i\n",i,j);
+//            printf("bount num %i\n",GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[i][j]);
+//            printf("%s\n", GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[i][j]);
+//            printf("%i, %i\n",IN_BASIN->inBasinLatLon[i][GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[i][j]],j);
             if(IN_BASIN->inBasinLatLon[i][GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[i][j]] == 1)
             {
                 // find adjacent points

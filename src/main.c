@@ -76,10 +76,10 @@ int main(int argc, char *argv[])
      int argc = 10;
      char *argv[10];
      argv[1] = "-GENERATE_PROFILE";
-     argv[2] = "-MODEL_VERSION=1.64";
-     argv[3] = "-OUTPUT_DIR=ProfileV1.02";
-     argv[4] = "-PROFILE_LAT=-44.3968";
-     argv[5] = "-PROFILE_LON=171.5";
+     argv[2] = "-MODEL_VERSION=Test_0.1";
+     argv[3] = "-OUTPUT_DIR=CACS";
+     argv[4] = "-PROFILE_LAT=-43.5968";
+     argv[5] = "-PROFILE_LON=172.5";
      argv[6] = "-PROFILE_ZMAX=5";
      argv[7] = "-PROFILE_ZMIN=-1";
      argv[8] = "-PROFILE_MIN_VS=0.5";

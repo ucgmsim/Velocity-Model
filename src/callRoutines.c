@@ -139,43 +139,6 @@ void runGenerateProfile(char *MODEL_VERSION, char *OUTPUT_DIR, gen_profile_call 
     free(PARTIAL_GLOBAL_SURFACE_DEPTHS);
     free(MESH_VECTOR);
     free(QUALITIES_VECTOR);
-
-    
-    /*
-    
-    void generateProfile(modOrigin modelOrigin, modVersion modelVersion, modExtent modelExtent, char *outputDirectory)
- 
-        printf("Generating model version %f.\n", modelVersion.version);
-    
-        // generate the model grid
-        gridStruct *location = NULL;
-        location = generateModelGrid(modelOrigin,modelExtent);
-    
-        // obtain surface filenames based off version number
-        surfNames surfSubModNames;
-        surfSubModNames = getSurfSubModNames(modelVersion);
-    
-        // determine the depths of each surface for each lat lon point
-        surfaceDepthsGlobal *surfDepsGlob = NULL;
-        location->saveSurfaceDepths = 0;
-        surfDepsGlob = getSurfaceValues(location, surfSubModNames, outputDirectory);
-    
-        // assign values
-        globalDataValues *globDataVals = NULL;
-        globDataVals = assignValues(modelVersion, location, surfSubModNames, surfDepsGlob, outputDirectory);
-    
-        // write profile to file
-        writeIndividualProfile(globDataVals, location, outputDirectory);
-    
-        // free allocated memory
-        free(surfDepsGlob);
-        free(globDataVals);
-        free(location);
-        
-        */
-        
-
-    
     
 }
 

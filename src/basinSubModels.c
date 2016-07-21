@@ -38,15 +38,9 @@ void assignBasinQualities(global_model_parameters *GLOBAL_MODEL_PARAMETERS, basi
     indAbove = determineBasinSurfaceAbove(GLOBAL_MODEL_PARAMETERS, PARTIAL_BASIN_SURFACE_DEPTHS, depth, basinNum);
     indBelow = determineBasinSurfaceBelow(GLOBAL_MODEL_PARAMETERS, PARTIAL_BASIN_SURFACE_DEPTHS, depth, basinNum);
     
-    if (indAbove != (indBelow -1))
-    {
-        printf("Adacent basin surfaces do not conform to hierarchy.\n");
-    }
-    else
-    {
-        // assign values
-        callBasinSubVelocityModels(GLOBAL_MODEL_PARAMETERS, BASIN_DATA, PARTIAL_BASIN_SURFACE_DEPTHS, QUALITIES_VECTOR,depth, indAbove, basinNum, zInd);
-    }
+
+    callBasinSubVelocityModels(GLOBAL_MODEL_PARAMETERS, BASIN_DATA, PARTIAL_BASIN_SURFACE_DEPTHS, QUALITIES_VECTOR,depth, indAbove, basinNum, zInd);
+    
 }
 
 void callBasinSubVelocityModels(global_model_parameters *GLOBAL_MODEL_PARAMETERS, basin_data *BASIN_DATA, partial_basin_surface_depths *PARTIAL_BASIN_SURFACE_DEPTHS, qualities_vector *QUALITIES_VECTOR, double depth, int basinSubModelInd, int basinNum, int zInd)
@@ -67,7 +61,7 @@ void callBasinSubVelocityModels(global_model_parameters *GLOBAL_MODEL_PARAMETERS
     n.a.
  */
 {
-
+    // 1D sub models
     if(strcmp(GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][basinSubModelInd], "Cant1D_v1") == 0)
     {
         v1DsubMod(zInd, depth, QUALITIES_VECTOR, &BASIN_DATA->BASIN_SUBMODEL_DATA[basinNum].VELO_MOD_1D_DATA);
@@ -76,6 +70,9 @@ void callBasinSubVelocityModels(global_model_parameters *GLOBAL_MODEL_PARAMETERS
     {
         v1DsubMod(zInd, depth, QUALITIES_VECTOR, &BASIN_DATA->BASIN_SUBMODEL_DATA[basinNum].VELO_MOD_1D_DATA);
     }
+    
+    
+    // Pre-quaternary models
     else if(strcmp(GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][basinSubModelInd], "PaleogeneSubMod_v1") == 0)
     {
         paleogeneSubModelv1(zInd, QUALITIES_VECTOR);
@@ -88,6 +85,9 @@ void callBasinSubVelocityModels(global_model_parameters *GLOBAL_MODEL_PARAMETERS
     {
         plioceneSubModelv1(zInd, QUALITIES_VECTOR);
     }
+    
+    
+    // BPV models
     else if(strcmp(GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][basinSubModelInd], "BPVSubMod_v1") == 0)
     {
         BPVSubModelv1(zInd, QUALITIES_VECTOR);
@@ -100,8 +100,43 @@ void callBasinSubVelocityModels(global_model_parameters *GLOBAL_MODEL_PARAMETERS
     {
         BPVSubModelv3(zInd, QUALITIES_VECTOR, PARTIAL_BASIN_SURFACE_DEPTHS, basinNum, depth);
     }
+    
+    // Quaternary models
+    else if(strcmp(GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][basinSubModelInd], "RiccartonSubMod_v1") == 0)
+    {
+        gravelSubModel(zInd, QUALITIES_VECTOR);
+    }
+    else if(strcmp(GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][basinSubModelInd], "BromleySubMod_v1") == 0)
+    {
+        marineSubModel(zInd, QUALITIES_VECTOR);
+    }
+    else if(strcmp(GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][basinSubModelInd], "LinwoodSubMod_v1") == 0)
+    {
+        gravelSubModel(zInd, QUALITIES_VECTOR);
+    }
+    else if(strcmp(GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][basinSubModelInd], "HeathcoteSubMod_v1") == 0)
+    {
+        marineSubModel(zInd, QUALITIES_VECTOR);
+    }
+    else if(strcmp(GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][basinSubModelInd], "BurwoodSubMod_v1") == 0)
+    {
+        gravelSubModel(zInd, QUALITIES_VECTOR);
+    }
+    else if(strcmp(GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][basinSubModelInd], "ShirleySubMod_v1") == 0)
+    {
+        marineSubModel(zInd, QUALITIES_VECTOR);
+    }
+    else if(strcmp(GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][basinSubModelInd], "WainoniSubMod_v1") == 0)
+    {
+        gravelSubModel(zInd, QUALITIES_VECTOR);
+    }
+
+    
+    
+    
     else
     {
+        printf("%s.\n",GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][basinSubModelInd]);
         printf("Error, invalid basin sub model name.\n");
     }
 
@@ -166,6 +201,31 @@ int determineBasinSurfaceAbove(global_model_parameters *GLOBAL_MODEL_PARAMETERS,
     return upperSurfInd;
 }
 
+//=================================================================
+
+//          QUATERNARY MODELS
+
+//=================================================================
+
+
+// Gravel sub-model
+void gravelSubModel(int zInd, qualities_vector *QUALITIES_VECTOR)
+{
+    // placeholder values
+    QUALITIES_VECTOR->Rho[zInd] =  2;
+    QUALITIES_VECTOR->Vp[zInd] = 2;
+    QUALITIES_VECTOR->Vs[zInd] = 2;
+}
+
+// Marine sub-model
+void marineSubModel(int zInd, qualities_vector *QUALITIES_VECTOR)
+{
+    //placeholder values
+    QUALITIES_VECTOR->Rho[zInd] = 1;
+    QUALITIES_VECTOR->Vp[zInd] = 1;
+    QUALITIES_VECTOR->Vs[zInd] = 1;
+    
+}
 //=================================================================
 
 //          PRE QUATERNARY MODELS

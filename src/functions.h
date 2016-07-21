@@ -114,6 +114,9 @@ extern void plioceneSubModelv1(int zInd, qualities_vector *QUALITIES_VECTOR);
 extern void BPVSubModelv1(int zInd, qualities_vector *QUALITIES_VECTOR);
 extern void BPVSubModelv2(int zInd, qualities_vector *QUALITIES_VECTOR);
 extern void BPVSubModelv3(int zInd, qualities_vector *QUALITIES_VECTOR, partial_basin_surface_depths *PARTIAL_BASIN_SURFACE_DEPTHS, int basinNum, double depth);
+extern void gravelSubModel(int zInd, qualities_vector *QUALITIES_VECTOR);
+extern void marineSubModel(int zInd, qualities_vector *QUALITIES_VECTOR);
+
 
 //slice functions
 extern void extractSlicesFromBinaryFiles(char *OUTPUT_DIR, gen_extract_velo_mod_call GEN_EXTRACT_VELO_MOD_CALL, calculation_log *CALCULATION_LOG, global_mesh *GLOBAL_MESH, model_extent *MODEL_EXTENT);

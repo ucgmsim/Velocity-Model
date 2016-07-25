@@ -31,6 +31,8 @@ void writeGlobalQualities(char *OUTPUT_DIR, partial_global_mesh *PARTIAL_GLOBAL_
  N/A.
  */
 {
+    int writeModelTextFile = 0; // set as (0) for no text file, and (1) to write the full model in text file format
+    
     // perform endian check
     int endianInt;
     endianInt = endian();
@@ -49,9 +51,10 @@ void writeGlobalQualities(char *OUTPUT_DIR, partial_global_mesh *PARTIAL_GLOBAL_
     float vpTemp, vsTemp, rhoTemp;
     float vpWrite, vsWrite, rhoWrite;
     
-    //    char fullMod[64];
-    //    sprintf(fullMod,"%s/fullMod.txt",veloModDir);
-    //    FILE *fullModTxt;
+    char fullMod[MAX_FILENAME_STRING_LEN];
+    FILE *fullModTxt;
+    sprintf(fullMod,"%s/Velocity_Model/fullMod.txt",OUTPUT_DIR);
+    
     int bsize;
     
     
@@ -65,8 +68,11 @@ void writeGlobalQualities(char *OUTPUT_DIR, partial_global_mesh *PARTIAL_GLOBAL_
             printf("Unable to generate binary files for write.\n");
             exit(EXIT_FAILURE);
         }
-        
-        //        fullModTxt = fopen(fullMod, "w");
+        if (writeModelTextFile == 1)
+        {
+            fullModTxt = fopen(fullMod, "w");
+            fprintf(fullModTxt,"Lat\tLon\tDepth(km)\tVp (km/s)\tVs (km/s)\tRho\t\n");
+        }
         
     }
     else // append to existing binary files
@@ -80,8 +86,10 @@ void writeGlobalQualities(char *OUTPUT_DIR, partial_global_mesh *PARTIAL_GLOBAL_
             printf("Unable to reopen binary files for write.\n");
             exit(EXIT_FAILURE);
         }
-        
-        //        fullModTxt = fopen(fullMod,"a");
+        if (writeModelTextFile == 1)
+        {
+            fullModTxt = fopen(fullMod,"a");
+        }
         
     }
     
@@ -125,7 +133,10 @@ void writeGlobalQualities(char *OUTPUT_DIR, partial_global_mesh *PARTIAL_GLOBAL_
             fwrite(&vsWrite,sizeof(float),1,fvs);
             fwrite(&rhoWrite,sizeof(float),1,frho);
             
-            //                fprintf(fullModTxt,"%f\t%f\t%f\t%f\n",PARTIAL_GLOBAL_MESH->Lat[ix],PARTIAL_GLOBAL_MESH->Lon[ix],PARTIAL_GLOBAL_MESH->Z[iz],vsTemp);
+            if (writeModelTextFile == 1)
+            {
+                fprintf(fullModTxt,"%f\t%f\t%f\t%f\t%f\t%f\n",PARTIAL_GLOBAL_MESH->Lat[ix],PARTIAL_GLOBAL_MESH->Lon[ix],PARTIAL_GLOBAL_MESH->Z[iz]*1.0/1000,vpTemp,vsTemp,rhoTemp);
+            }
         }
     }
     

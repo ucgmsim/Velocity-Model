@@ -105,6 +105,7 @@ slice_parameters *readExtractedSliceParametersFile(char *sliceParametersDirector
         fscanf(file, "%lf %lf %lf %lf %lf", &SLICE_PARAMETERS->latA[i], &SLICE_PARAMETERS->latB[i], &SLICE_PARAMETERS->lonA[i], &SLICE_PARAMETERS->lonB[i], &SLICE_PARAMETERS->LatLonRes[i]);
     }
     
+    printf("Extracted slice parameters file read complete.\n");
     fclose(file);
     return SLICE_PARAMETERS;
 }

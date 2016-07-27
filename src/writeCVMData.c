@@ -71,7 +71,7 @@ void writeGlobalQualities(char *OUTPUT_DIR, partial_global_mesh *PARTIAL_GLOBAL_
         if (writeModelTextFile == 1)
         {
             fullModTxt = fopen(fullMod, "w");
-            fprintf(fullModTxt,"Lat\tLon\tDepth(km)\tVp (km/s)\tVs (km/s)\tRho\t\n");
+            fprintf(fullModTxt,"Lat\tLon\tX(km)\tY(km)\tDepth(km)\tVp (km/s)\tVs (km/s)\tRho\t\n");
         }
         
     }
@@ -135,7 +135,7 @@ void writeGlobalQualities(char *OUTPUT_DIR, partial_global_mesh *PARTIAL_GLOBAL_
             
             if (writeModelTextFile == 1)
             {
-                fprintf(fullModTxt,"%f\t%f\t%f\t%f\t%f\t%f\n",PARTIAL_GLOBAL_MESH->Lat[ix],PARTIAL_GLOBAL_MESH->Lon[ix],PARTIAL_GLOBAL_MESH->Z[iz]*1.0/1000,vpTemp,vsTemp,rhoTemp);
+                fprintf(fullModTxt,"%f\t%f\t%f\t%f\t%f\t%f\t%f\t%f\n",PARTIAL_GLOBAL_MESH->Lat[ix],PARTIAL_GLOBAL_MESH->Lon[ix],PARTIAL_GLOBAL_MESH->X[ix],PARTIAL_GLOBAL_MESH->Y, PARTIAL_GLOBAL_MESH->Z[iz]*1.0/1000,vpTemp,vsTemp,rhoTemp);
             }
         }
     }

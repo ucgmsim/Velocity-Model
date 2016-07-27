@@ -26,13 +26,28 @@ void extractSlicesFromBinaryFiles(char *OUTPUT_DIR, gen_extract_velo_mod_call GE
     
     global_data_for_interpolation *GLOBAL_DATA_FOR_INTERPOLATION;
     GLOBAL_DATA_FOR_INTERPOLATION = malloc(sizeof(global_data_for_interpolation));
+    if (GLOBAL_DATA_FOR_INTERPOLATION == NULL)
+    {
+        printf("Memory allocation of GLOBAL_DATA_FOR_INTERPOLATION failed.\n");
+        exit(EXIT_FAILURE);
+    }
     GLOBAL_DATA_FOR_INTERPOLATION->nPts = 0;
     
     // obtain lat-lon points
     for( int i = 0; i < SLICE_PARAMETERS->nSlices; i++)
     {
         GLOBAL_DATA_FOR_INTERPOLATION->INDIVIDUAL_SLICE_PARAMETERS[i] = malloc(sizeof(individual_slice_parameters));
+        if (GLOBAL_DATA_FOR_INTERPOLATION->INDIVIDUAL_SLICE_PARAMETERS[i] == NULL)
+        {
+            printf("Memory allocation of INDIVIDUAL_SLICE_PARAMETERS failed.\n");
+            exit(EXIT_FAILURE);
+        }
         GLOBAL_DATA_FOR_INTERPOLATION->INDIVIDUAL_SLICE_DATA[i] = malloc(sizeof(individual_slice_data));
+        if (GLOBAL_DATA_FOR_INTERPOLATION->INDIVIDUAL_SLICE_DATA[i] == NULL)
+        {
+            printf("Memory allocation of INDIVIDUAL_SLICE_DATA failed.\n");
+            exit(EXIT_FAILURE);
+        }
         
         GLOBAL_DATA_FOR_INTERPOLATION->INDIVIDUAL_SLICE_PARAMETERS[i]->resXY = SLICE_PARAMETERS->LatLonRes[i];
         GLOBAL_DATA_FOR_INTERPOLATION->INDIVIDUAL_SLICE_PARAMETERS[i]->latPtsSlice[0] = SLICE_PARAMETERS->latA[i];
@@ -41,10 +56,12 @@ void extractSlicesFromBinaryFiles(char *OUTPUT_DIR, gen_extract_velo_mod_call GE
         GLOBAL_DATA_FOR_INTERPOLATION->INDIVIDUAL_SLICE_PARAMETERS[i]->lonPtsSlice[1] = SLICE_PARAMETERS->lonB[i];
         
         generateSlicePoints(GLOBAL_DATA_FOR_INTERPOLATION->INDIVIDUAL_SLICE_DATA[i], GLOBAL_DATA_FOR_INTERPOLATION->INDIVIDUAL_SLICE_PARAMETERS[i], GLOBAL_MESH);
-        
+        printf("Generated slice interpolation points at slice #%i of #%i.\n",i+1, SLICE_PARAMETERS->nSlices);
         generateGlobalIndsForRead(GLOBAL_MESH, GLOBAL_DATA_FOR_INTERPOLATION, MODEL_EXTENT, i);
+
         
     }
+    printf("Determined all global indicies to read.\n");
     
     globalIndReduction(GLOBAL_DATA_FOR_INTERPOLATION);
     
@@ -334,21 +351,25 @@ void readGlobalDataPointsForInterpolation(char *OUTPUT_DIR, global_data_for_inte
     vp = (float*) malloc(bsize);
     vs = (float*) malloc(bsize);
     rho = (float*) malloc(bsize);
-    printf("step2\n");
 
     float vsRead, vpRead, rhoRead;
     int inYArray, inBothArrays;
     
     read_flags *READ_FLAGS;
     READ_FLAGS = malloc(sizeof(read_flags));
+    if (READ_FLAGS == NULL)
+    {
+        printf("Memory allocation of READ_FLAGS failed.\n");
+        exit(EXIT_FAILURE);
+    }
     
 
-    printf("step3\n");
 
     for(int i = 0; i < GLOBAL_MESH->nY; i++)
     {
         for(int j = 0; j < GLOBAL_MESH->nX; j++)
         {
+            
             READ_FLAGS->xyReqFlag[j][i] = 0;
             READ_FLAGS->xyReqFlag[j][i] = 0; // set as zero for not assigned then 1 for required and 2 for not required
         }

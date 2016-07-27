@@ -29,17 +29,17 @@ int main(int argc, char *argv[])
      int argc = 14;
     char *argv[14];
      argv[1] = "-GENERATE_VELOCITY_MOD";
-     argv[2] = "-MODEL_VERSION=1.02";
-     argv[3] = "-OUTPUT_DIR=v1.64";
-     argv[4] = "-ORIGIN_LAT=-43.60000";
-     argv[5] = "-ORIGIN_LON=172.30000";;
-     argv[6] = "-ORIGIN_ROT=-10.00";
-     argv[7] = "-EXTENT_X=140";
-     argv[8] = "-EXTENT_Y=120";
-     argv[9] = "-EXTENT_ZMAX=46";
+     argv[2] = "-MODEL_VERSION=1.64";
+     argv[3] = "-OUTPUT_DIR=v1.64_ECVM_Local";
+     argv[4] = "-ORIGIN_LAT=-43.65";
+     argv[5] = "-ORIGIN_LON=172.1";;
+     argv[6] = "-ORIGIN_ROT=-42.00";
+     argv[7] = "-EXTENT_X=210.";
+     argv[8] = "-EXTENT_Y=146.";
+     argv[9] = "-EXTENT_ZMAX=70.";
      argv[10] = "-EXTENT_ZMIN=0";
-     argv[11] = "-EXTENT_Z_SPACING=1";
-     argv[12] = "-EXTENT_LATLON_SPACING=10";
+     argv[11] = "-EXTENT_Z_SPACING=0.1";
+     argv[12] = "-EXTENT_LATLON_SPACING=0.1";
      argv[13] = "-MIN_VS=0.5";
      */
     
@@ -48,18 +48,18 @@ int main(int argc, char *argv[])
     char *argv[15];
     argv[1] = "-EXTRACT_VELOCITY_SLICES";
     argv[2] = "-MODEL_VERSION=1.64";
-    argv[3] = "-OUTPUT_DIR=v1.64";
-    argv[4] = "-ORIGIN_LAT=-43.60000";
-    argv[5] = "-ORIGIN_LON=172.30000";;
-    argv[6] = "-ORIGIN_ROT=-10.00";
-    argv[7] = "-EXTENT_X=140";
-    argv[8] = "-EXTENT_Y=120";
-    argv[9] = "-EXTENT_ZMAX=46";
+    argv[3] = "-OUTPUT_DIR=v1.64_ECVM";
+    argv[4] = "-ORIGIN_LAT=-43.65";
+    argv[5] = "-ORIGIN_LON=172.1";;
+    argv[6] = "-ORIGIN_ROT=-42.00";
+    argv[7] = "-EXTENT_X=210.";
+    argv[8] = "-EXTENT_Y=146.";
+    argv[9] = "-EXTENT_ZMAX=70.";
     argv[10] = "-EXTENT_ZMIN=0";
-    argv[11] = "-EXTENT_Z_SPACING=1";
-    argv[12] = "-EXTENT_LATLON_SPACING=1";
+    argv[11] = "-EXTENT_Z_SPACING=0.1";
+    argv[12] = "-EXTENT_LATLON_SPACING=0.1";
     argv[13] = "-MIN_VS=0.5";
-    argv[14] = "-EXTRACTED_SLICE_PARAMETERS_DIRECTORY=ExtractedSliceParametersCanterbury";
+    argv[14] = "-EXTRACTED_SLICE_PARAMETERS_DIRECTORY=ExtractedSliceParametersECVM";
     */
     
     /*

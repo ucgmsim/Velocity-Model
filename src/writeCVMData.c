@@ -147,7 +147,10 @@ void writeGlobalQualities(char *OUTPUT_DIR, partial_global_mesh *PARTIAL_GLOBAL_
     fclose(fvp);
     fclose(fvs);
     fclose(frho);
-    //    fclose(fullModTxt);
+    if (writeModelTextFile == 1)
+    {
+        fclose(fullModTxt);
+    }
     
     
 }

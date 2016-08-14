@@ -15,7 +15,7 @@ make
 2) Execute the code using one of the four call types:
 - GENERATE_VELOCITY_MOD - Generates a velocity model from input parameters
 - EXTRACT_VELOCITY_SLICES - Extracts velocity slices from a saved model (Model need to have been previously generated to use this call)
-- !!!GENERATE_VELOCITY_SLICES - Generated velocity slices for plotting (slices generated from scratch) not working currently
+- GENERATE_VELOCITY_SLICES - Generated velocity slices for plotting (slices generated from scratch)
 - GENERATE_INDIVIDUAL_PROFILE - Generates a velocity profile at a single lat/lon location
 
 All four call types and required inputs are explained here.
@@ -63,7 +63,7 @@ Example of EXTRACT_VELOCITY_SLICES call (will generate a model if it does not al
 ./NZVM -A EXTRACT_VELOCITY_SLICES -B 1.64 -C v1.64_Model -D -43.6 -E 172.3 -F -10.00 -G 140 -H 120 -I 46 -J 0 -K 1 -L 1 -M 0.5 -N ExtractedSliceParameters
 ```
 
-Call type 3) GENERATE_VELOCITY_SLICES !! not working currently
+Call type 3) GENERATE_VELOCITY_SLICES
 
 - 1	-A GENERATE_VELOCITY_SLICES
 - 2	-B MODEL_VERSION (model version - select from list of model versions at bottom of readme)

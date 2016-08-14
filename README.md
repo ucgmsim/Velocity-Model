@@ -22,76 +22,77 @@ All four call types and required inputs are explained here.
 
 Call type 1) GENERATE_VELOCITY_MOD
 
-- 1	GENERATE_VELOCITY_MOD
-- 2	MODEL_VERSION (model version - select from list of model versions at bottom of readme)
-- 3	OUTPUT_DIR (directory to save outputs to)
-- 4	ORIGIN_LAT (origin latitude - in decimal format)
-- 5	ORIGIN_LON (origin longitude - in decimal format)
-- 6	ORIGIN_ROT (model rotation - clockwise is positive)
-- 7	EXTENT_X (model extent in the X direction in km)
-- 8	EXTENT_Y (model extent in the Y direction in km)
-- 9	EXTENT_ZMAX (maximum model extent in the Z direction - positive downwards in km)
-- 10	EXTENT_ZMIN (minimum model extent in the Z direction - positive downwards i.e -1 represents +1km above mean sea level)
-- 11	EXTENT_Z_SPACING (gridspacing in the Z direction in km)
-- 12	EXTENT_LATLON_SPACING (gridspacing in the Y and X direction in km)
-- 13	MIN_VS (minimium shear wave velocity to enforce, in km/s - typically 0.5)
+- 1	-A GENERATE_VELOCITY_MOD
+- 2	-B MODEL_VERSION (model version - select from list of model versions at bottom of readme)
+- 3	-C OUTPUT_DIR (directory to save outputs to)
+- 4	-D ORIGIN_LAT (origin latitude - in decimal format)
+- 5	-E ORIGIN_LON (origin longitude - in decimal format)
+- 6	-F ORIGIN_ROT (model rotation - clockwise is positive)
+- 7	-G EXTENT_X (model extent in the X direction in km)
+- 8	-H EXTENT_Y (model extent in the Y direction in km)
+- 9	-I EXTENT_ZMAX (maximum model extent in the Z direction - positive downwards in km)
+- 10	-J EXTENT_ZMIN (minimum model extent in the Z direction - positive downwards i.e -1 represents +1km above mean sea level)
+- 11 -K	EXTENT_Z_SPACING (gridspacing in the Z direction in km)
+- 12 -L	EXTENT_LATLON_SPACING (gridspacing in the Y and X direction in km)
+- 13 -M	MIN_VS (minimium shear wave velocity to enforce, in km/s - typically 0.5)
 
 Example of GENERATE_VELOCITY_MOD call - All parameters must be set and the output directory must not exist
 ```
-./NZVM -GENERATE_VELOCITY_MOD -MODEL_VERSION=1.64 -OUTPUT_DIR=v1.64_Model -ORIGIN_LAT=-43.6 -ORIGIN_LON=172.3 -ORIGIN_ROT=-10.00 -EXTENT_X=140 -EXTENT_Y=120 -EXTENT_ZMAX=46 -EXTENT_ZMIN=0 -EXTENT_Z_SPACING=1 -EXTENT_LATLON_SPACING=1 -MIN_VS=0.5
+./NZVM -A GENERATE_VELOCITY_MOD -B 1.64 -C v1.64_Model -D -43.6 -E 172.3 -F -10.00 -G 140 -H 120 -I 46 -J 0 -K 1 -L 1 -M 0.5
 ```
 Call type 2) EXTRACT_VELOCITY_SLICES - All parameters must be set and the output directory must have been generated previously using GENERATE_VELOCITY_MOD call
 
-- 1	EXTRACT_VELOCITY_SLICES
-- 2	MODEL_VERSION (model version - select from list of model versions at bottom of readme)
-- 3	OUTPUT_DIR (directory to save outputs to)
-- 4	ORIGIN_LAT (origin latitude - in decimal format)
-- 5	ORIGIN_LON (origin longitude - in decimal format)
-- 6	ORIGIN_ROT (model rotation - clockwise is positive)
-- 7	EXTENT_X (model extent in the X direction in km)
-- 8	EXTENT_Y (model extent in the Y direction in km)
-- 9	EXTENT_ZMAX (maximum model extent in the Z direction - positive downwards in km)
-- 10	EXTENT_ZMIN (minimum model extent in the Z direction - positive downwards i.e -1 represents +1km above mean sea level)
-- 11	EXTENT_Z_SPACING (gridspacing in the Z direction in km)
-- 12	EXTENT_LATLON_SPACING (gridspacing in the Y and X direction in km)
-- 13	MIN_VS (minimium shear wave velocity to enforce, in km/s - typically 0.5)
-- 14	EXTRACTED_SLICE_PARAMETERS_DIRECTORY (directory housing slice parameters text file)
+- 1	-A EXTRACT_VELOCITY_SLICES
+- 2	-B MODEL_VERSION (model version - select from list of model versions at bottom of readme)
+- 3	-C OUTPUT_DIR (directory to save outputs to)
+- 4	-D ORIGIN_LAT (origin latitude - in decimal format)
+- 5	-E ORIGIN_LON (origin longitude - in decimal format)
+- 6	-F ORIGIN_ROT (model rotation - clockwise is positive)
+- 7	-G EXTENT_X (model extent in the X direction in km)
+- 8	-H EXTENT_Y (model extent in the Y direction in km)
+- 9	-I EXTENT_ZMAX (maximum model extent in the Z direction - positive downwards in km)
+- 10	-J EXTENT_ZMIN (minimum model extent in the Z direction - positive downwards i.e -1 represents +1km above mean sea level)
+- 11 -K	EXTENT_Z_SPACING (gridspacing in the Z direction in km)
+- 12 -L	EXTENT_LATLON_SPACING (gridspacing in the Y and X direction in km)
+- 13 -M	MIN_VS (minimium shear wave velocity to enforce, in km/s - typically 0.5)
+- 14 -N	EXTRACTED_SLICE_PARAMETERS_DIRECTORY (directory housing slice parameters text file)
 
 Example of EXTRACT_VELOCITY_SLICES call (will generate a model if it does not already exist)
 - See readme in ExtractedSliceParameters directory for additional information
 ```
-./NZVM -EXTRACT_VELOCITY_SLICES -MODEL_VERSION=1.64 -OUTPUT_DIR=v1.64_Model -ORIGIN_LAT=-43.6 -ORIGIN_LON=172.3 -ORIGIN_ROT=-10.00 -EXTENT_X=140 -EXTENT_Y=120 -EXTENT_ZMAX=46 -EXTENT_ZMIN=0 -EXTENT_Z_SPACING=1 -EXTENT_LATLON_SPACING=1 -MIN_VS=0.5 -EXTRACTED_SLICE_PARAMETERS_DIRECTORY=ExtractedSliceParameters
+./NZVM -A EXTRACT_VELOCITY_SLICES -B 1.64 -C v1.64_Model -D -43.6 -E 172.3 -F -10.00 -G 140 -H 120 -I 46 -J 0 -K 1 -L 1 -M 0.5 -N ExtractedSliceParameters
 ```
 
 Call type 3) GENERATE_VELOCITY_SLICES !! not working currently
 
-- 1	GENERATE_VELOCITY_SLICES
-- 2	MODEL_VERSION (model version - select from list of model versions at bottom of readme)
-- 3	OUTPUT_DIR (directory to save outputs to)
-- 4	GENERATED_SLICE_PARAMETERS_DIRECTORY (directory housing slice parameters text file)
+- 1	-A GENERATE_VELOCITY_SLICES
+- 2	-B MODEL_VERSION (model version - select from list of model versions at bottom of readme)
+- 3	-C OUTPUT_DIR (directory to save outputs to)
+- 4 -O MIN_VS (minimium shear wave velocity to enforce, in km/s - typically 0.5)
+- 5	-P GENERATED_SLICE_PARAMETERS_DIRECTORY (directory housing slice parameters text file)
 
 Example of GENERATE_VELOCITY_SLICES call
 ```
-./SIVM GENERATE_VELOCITY_SLICES 1.01 v1.01Model GeneratedSliceParameters
+./SIVM -A GENERATE_VELOCITY_SLICES -B 1.01 -C v1.01Model -O 0.5 -P GeneratedSliceParameters
 ```
 
 Call type 4) GENERATE_INDIVIDUAL_PROFILE - All parameters must be set and the output directory must not exist
 
-- 1	GENERATE_INDIVIDUAL_PROFILE
-- 2	MODEL_VERSION (model version - select from list of model versions at bottom of readme)
-- 3	OUTPUT_DIR (directory to save outputs to)
-- 4	PROFILE_LAT (latitude point of profile - in decimal format)
-- 5	PROFILE_LON (longitude point of profile - in decimal format)
-- 6	PROFILE_ZMAX (maximum depth of profile +ve downwards in km) 
-- 7	PROFILE_ZMIN (minimum depth of profile +ve downwards in km ie. -0.1 corresponds to the top of the profile at +0.1km above mean sea level)
-- 8 PROFILE_MIN_VS=0.5 (minimium shear wave velocity to enforce, in km/s - typically 0.5, set as 0.0 for no restriction)
-- 9	EXTENT_Z_SPACING_PROFILE (z spacing of the profile in km)
+- 1 -A	GENERATE_INDIVIDUAL_PROFILE
+- 2	-B MODEL_VERSION (model version - select from list of model versions at bottom of readme)
+- 3	-C OUTPUT_DIR (directory to save outputs to)
+- 4	-Q PROFILE_LAT (latitude point of profile - in decimal format)
+- 5	-R PROFILE_LON (longitude point of profile - in decimal format)
+- 6	-S PROFILE_ZMAX (maximum depth of profile +ve downwards in km) 
+- 7	-T PROFILE_ZMIN (minimum depth of profile +ve downwards in km ie. -0.1 corresponds to the top of the profile at +0.1km above mean sea level)
+- 8 -U PROFILE_MIN_VS=0.5 (minimium shear wave velocity to enforce, in km/s - typically 0.5, set as 0.0 for no restriction)
+- 9	-V EXTENT_Z_SPACING_PROFILE (z spacing of the profile in km)
 
 Example of GENERATE_INDIVIDUAL_PROFILE 
 - See readme in GeneratedSliceParameters directory for additional information
 
 ```
-./NZVM -GENERATE_PROFILE -MODEL_VERSION=1.64 -OUTPUT_DIR=v1.64_Profile -PROFILE_LAT=-44.3968 -PROFILE_LON=171.5 -PROFILE_ZMAX=5 -PROFILE_ZMIN=-1 -PROFILE_MIN_VS=0.5 -EXTENT_Z_SPACING_PROFILE=0.05
+./NZVM -A GENERATE_PROFILE -B 1.64 -C v1.64_Profile -Q -44.3968 -R 171.5 -S 5 -T -1 -U 0.5 -V 0.05
 
 ```
 

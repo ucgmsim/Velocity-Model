@@ -22,8 +22,8 @@
 #include "structs.h"
 #include "functions.h"
 
-//int main(int argc, char *argv[])
-int main(void)
+int main(int argc, char *argv[])
+//int main(void)
 {
     /*
      int argc = 27;
@@ -114,7 +114,7 @@ int main(void)
      */
     
     
-    ///*
+    /*
     int argc = 11;
     char *argv[11];
     argv[1] = "-A";
@@ -127,7 +127,7 @@ int main(void)
     argv[8] = "0.5";
     argv[9] = "-P";
     argv[10] = "GeneratedSliceParameters";
-     //*/
+     */
     
     
     

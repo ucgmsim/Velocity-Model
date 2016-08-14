@@ -58,7 +58,7 @@ void extractSlicesFromBinaryFiles(char *OUTPUT_DIR, gen_extract_velo_mod_call GE
         generateSlicePoints(GLOBAL_DATA_FOR_INTERPOLATION->INDIVIDUAL_SLICE_DATA[i], GLOBAL_DATA_FOR_INTERPOLATION->INDIVIDUAL_SLICE_PARAMETERS[i], GLOBAL_MESH);
         printf("Generated slice interpolation points at slice #%i of #%i.\n",i+1, SLICE_PARAMETERS->nSlices);
         generateGlobalIndsForRead(GLOBAL_MESH, GLOBAL_DATA_FOR_INTERPOLATION, MODEL_EXTENT, i);
-
+        
         
     }
     printf("Determined all global indicies to read.\n");
@@ -68,7 +68,7 @@ void extractSlicesFromBinaryFiles(char *OUTPUT_DIR, gen_extract_velo_mod_call GE
     // read necessary points
     readGlobalDataPointsForInterpolation(OUTPUT_DIR, GLOBAL_DATA_FOR_INTERPOLATION, GLOBAL_MESH, CALCULATION_LOG);
     printf("Completed read of binary files for interpolation.\n");
-
+    
     // interpolate
     for( int i = 0; i < SLICE_PARAMETERS->nSlices; i++)
     {
@@ -79,7 +79,7 @@ void extractSlicesFromBinaryFiles(char *OUTPUT_DIR, gen_extract_velo_mod_call GE
     }
     writeSliceParametersLogFile(OUTPUT_DIR, SLICE_PARAMETERS, MODEL_EXTENT, GLOBAL_MESH, CALCULATION_LOG, "EXTRACTED");
     printf("Completed write of slice parameters log file.\n");
-
+    
     // free data
     for (int j = 0; j < SLICE_PARAMETERS->nSlices; j++)
     {
@@ -134,9 +134,6 @@ void interpolateIndividualSlice(global_mesh *GLOBAL_MESH, global_data_for_interp
     
     // loop over points
     int matchingInd1, matchingInd2, matchingInd3, matchingInd4;
-    double Q1Vp, Q2Vp, Q3Vp, Q4Vp;
-    double Q1Vs, Q2Vs, Q3Vs, Q4Vs;
-    double Q1Rho, Q2Rho, Q3Rho, Q4Rho;
     int loni1, loni2, loni3, loni4;
     int lati1, lati2, lati3, lati4;
     double lat1, lat2, lat3, lat4;
@@ -166,117 +163,66 @@ void interpolateIndividualSlice(global_mesh *GLOBAL_MESH, global_data_for_interp
             lati3 = GLOBAL_DATA_FOR_INTERPOLATION->INDIVIDUAL_SLICE_DATA[sliceNum]->latInds[4*i+2];
             lati4 = GLOBAL_DATA_FOR_INTERPOLATION->INDIVIDUAL_SLICE_DATA[sliceNum]->latInds[4*i+3];
             
-            //            printf("%i %i %i %i\n",loni1, loni2, loni3, loni4);
-            //            printf("%i %i %i %i\n",lati1, lati2, lati3, lati4);
-            
-            
             // get indice of nearby points
-            
             matchingInd1 = findTwinInds(loni1, lati1, GLOBAL_DATA_FOR_INTERPOLATION->sortedLonInds, GLOBAL_DATA_FOR_INTERPOLATION->sortedLatInds, GLOBAL_DATA_FOR_INTERPOLATION->sortedNPts);
-            matchingInd2 = findTwinInds(loni2, lati2, GLOBAL_DATA_FOR_INTERPOLATION->sortedLonInds, GLOBAL_DATA_FOR_INTERPOLATION->sortedLatInds, GLOBAL_DATA_FOR_INTERPOLATION->sortedNPts);
-            matchingInd3 = findTwinInds(loni3, lati3, GLOBAL_DATA_FOR_INTERPOLATION->sortedLonInds, GLOBAL_DATA_FOR_INTERPOLATION->sortedLatInds, GLOBAL_DATA_FOR_INTERPOLATION->sortedNPts);
+            matchingInd2 = findTwinInds(loni2, lati3, GLOBAL_DATA_FOR_INTERPOLATION->sortedLonInds, GLOBAL_DATA_FOR_INTERPOLATION->sortedLatInds, GLOBAL_DATA_FOR_INTERPOLATION->sortedNPts);
+            matchingInd3 = findTwinInds(loni3, lati2, GLOBAL_DATA_FOR_INTERPOLATION->sortedLonInds, GLOBAL_DATA_FOR_INTERPOLATION->sortedLatInds, GLOBAL_DATA_FOR_INTERPOLATION->sortedNPts);
             matchingInd4 = findTwinInds(loni4, lati4, GLOBAL_DATA_FOR_INTERPOLATION->sortedLonInds, GLOBAL_DATA_FOR_INTERPOLATION->sortedLatInds, GLOBAL_DATA_FOR_INTERPOLATION->sortedNPts);
             
             // interpolate points
-            lat1 = GLOBAL_MESH->Lat[loni1][lati1];
-            lat2 = GLOBAL_MESH->Lat[loni2][lati2];
-            lat3 = GLOBAL_MESH->Lat[loni3][lati3];
-            lat4 = GLOBAL_MESH->Lat[loni4][lati4];
+            lat1 = GLOBAL_MESH->Y[lati1];
+            lat3 = GLOBAL_MESH->Y[lati2];
+            lat2 = GLOBAL_MESH->Y[lati3];
+            lat4 = GLOBAL_MESH->Y[lati4];
             
-            lon1 = GLOBAL_MESH->Lon[loni1][lati1];
-            lon2 = GLOBAL_MESH->Lon[loni2][lati2];
-            lon3 = GLOBAL_MESH->Lon[loni3][lati3];
-            lon4 = GLOBAL_MESH->Lon[loni4][lati4];
+            lon1 = GLOBAL_MESH->X[loni1];
+            lon2 = GLOBAL_MESH->X[loni2];
+            lon3 = GLOBAL_MESH->X[loni3];
+            lon4 = GLOBAL_MESH->X[loni4];
             
-            double yCoords[4];
-            yCoords[0] = lat2;
-            yCoords[1] = lat3;
-            yCoords[2] = lat4;
-            yCoords[3] = lat1;
-            
-            double xCoords[4];
-            xCoords[0] = lon2;
-            xCoords[1] = lon3;
-            xCoords[2] = lon4;
-            xCoords[3] = lon1;
+//            printf("%lf %lf %lf %lf\n",lat1,lat2,lat3,lat4);
+//            printf("%lf %lf %lf %lf\n",lon1,lon2,lon3,lon4);
+
             
             for(int k = 0; k < GLOBAL_MESH->nZ; k++)
             {
                 // Vs
-                Q4Vs = GLOBAL_DATA_FOR_INTERPOLATION->Vs[matchingInd1][k];
-                Q2Vs = GLOBAL_DATA_FOR_INTERPOLATION->Vs[matchingInd2][k];
-                Q3Vs = GLOBAL_DATA_FOR_INTERPOLATION->Vs[matchingInd3][k];
-                Q1Vs = GLOBAL_DATA_FOR_INTERPOLATION->Vs[matchingInd4][k];
+                interpVals[0] = GLOBAL_DATA_FOR_INTERPOLATION->Vs[matchingInd1][k];
+                interpVals[1] = GLOBAL_DATA_FOR_INTERPOLATION->Vs[matchingInd2][k];
+                interpVals[2] = GLOBAL_DATA_FOR_INTERPOLATION->Vs[matchingInd3][k];
+                interpVals[3] = GLOBAL_DATA_FOR_INTERPOLATION->Vs[matchingInd4][k];
                 
-                interpVals[0] = Q2Vs;
-                interpVals[1] = Q3Vs;
-                interpVals[2] = Q4Vs;
-                interpVals[3] = Q1Vs;
                 
-                GLOBAL_DATA_FOR_INTERPOLATION->INDIVIDUAL_SLICE_DATA[sliceNum]->Vs[i][k] = interpolateQuad(xCoords, yCoords, interpVals, GLOBAL_DATA_FOR_INTERPOLATION->INDIVIDUAL_SLICE_DATA[sliceNum]->lonPts[i], GLOBAL_DATA_FOR_INTERPOLATION->INDIVIDUAL_SLICE_DATA[sliceNum]->latPts[i]);
+                GLOBAL_DATA_FOR_INTERPOLATION->INDIVIDUAL_SLICE_DATA[sliceNum]->Vs[i][k] = biLinearInterpolation(lon1, lon2, lat1, lat3, interpVals[0], interpVals[1], interpVals[2], interpVals[3], GLOBAL_DATA_FOR_INTERPOLATION->INDIVIDUAL_SLICE_DATA[sliceNum]->xPts[i], GLOBAL_DATA_FOR_INTERPOLATION->INDIVIDUAL_SLICE_DATA[sliceNum]->yPts[i]);
                 
                 // Vp
-                Q1Vp = GLOBAL_DATA_FOR_INTERPOLATION->Vp[matchingInd1][k];
-                Q2Vp = GLOBAL_DATA_FOR_INTERPOLATION->Vp[matchingInd2][k];
-                Q3Vp = GLOBAL_DATA_FOR_INTERPOLATION->Vp[matchingInd3][k];
-                Q4Vp = GLOBAL_DATA_FOR_INTERPOLATION->Vp[matchingInd4][k];
+                interpVals[0] = GLOBAL_DATA_FOR_INTERPOLATION->Vp[matchingInd1][k];
+                interpVals[1] = GLOBAL_DATA_FOR_INTERPOLATION->Vp[matchingInd2][k];
+                interpVals[2] = GLOBAL_DATA_FOR_INTERPOLATION->Vp[matchingInd3][k];
+                interpVals[3] = GLOBAL_DATA_FOR_INTERPOLATION->Vp[matchingInd4][k];
                 
-                interpVals[0] = Q2Vp;
-                interpVals[1] = Q3Vp;
-                interpVals[2] = Q4Vp;
-                interpVals[3] = Q1Vp;
                 
-                GLOBAL_DATA_FOR_INTERPOLATION->INDIVIDUAL_SLICE_DATA[sliceNum]->Vp[i][k] = interpolateQuad(xCoords, yCoords, interpVals, GLOBAL_DATA_FOR_INTERPOLATION->INDIVIDUAL_SLICE_DATA[sliceNum]->lonPts[i], GLOBAL_DATA_FOR_INTERPOLATION->INDIVIDUAL_SLICE_DATA[sliceNum]->latPts[i]);
+                GLOBAL_DATA_FOR_INTERPOLATION->INDIVIDUAL_SLICE_DATA[sliceNum]->Vp[i][k] = biLinearInterpolation(lon1, lon2, lat1, lat3, interpVals[0], interpVals[1], interpVals[2], interpVals[3], GLOBAL_DATA_FOR_INTERPOLATION->INDIVIDUAL_SLICE_DATA[sliceNum]->xPts[i], GLOBAL_DATA_FOR_INTERPOLATION->INDIVIDUAL_SLICE_DATA[sliceNum]->yPts[i]);
                 
                 // Rho
-                Q1Rho = GLOBAL_DATA_FOR_INTERPOLATION->Rho[matchingInd1][k];
-                Q2Rho = GLOBAL_DATA_FOR_INTERPOLATION->Rho[matchingInd2][k];
-                Q3Rho = GLOBAL_DATA_FOR_INTERPOLATION->Rho[matchingInd3][k];
-                Q4Rho = GLOBAL_DATA_FOR_INTERPOLATION->Rho[matchingInd4][k];
+                interpVals[0] = GLOBAL_DATA_FOR_INTERPOLATION->Rho[matchingInd1][k];
+                interpVals[1] = GLOBAL_DATA_FOR_INTERPOLATION->Rho[matchingInd2][k];
+                interpVals[2] = GLOBAL_DATA_FOR_INTERPOLATION->Rho[matchingInd3][k];
+                interpVals[3] = GLOBAL_DATA_FOR_INTERPOLATION->Rho[matchingInd4][k];
                 
-                interpVals[0] = Q2Rho;
-                interpVals[1] = Q3Rho;
-                interpVals[2] = Q4Rho;
-                interpVals[3] = Q1Rho;
                 
-                GLOBAL_DATA_FOR_INTERPOLATION->INDIVIDUAL_SLICE_DATA[sliceNum]->Rho[i][k] = interpolateQuad(xCoords, yCoords, interpVals, GLOBAL_DATA_FOR_INTERPOLATION->INDIVIDUAL_SLICE_DATA[sliceNum]->lonPts[i], GLOBAL_DATA_FOR_INTERPOLATION->INDIVIDUAL_SLICE_DATA[sliceNum]->latPts[i]);            }
+                GLOBAL_DATA_FOR_INTERPOLATION->INDIVIDUAL_SLICE_DATA[sliceNum]->Rho[i][k] = biLinearInterpolation(lon1, lon2, lat1, lat3, interpVals[0], interpVals[1], interpVals[2], interpVals[3], GLOBAL_DATA_FOR_INTERPOLATION->INDIVIDUAL_SLICE_DATA[sliceNum]->xPts[i], GLOBAL_DATA_FOR_INTERPOLATION->INDIVIDUAL_SLICE_DATA[sliceNum]->yPts[i]);
+                
+//                printf("%lf %lf %lf\n", GLOBAL_DATA_FOR_INTERPOLATION->INDIVIDUAL_SLICE_DATA[sliceNum]->Vs[i][k], GLOBAL_DATA_FOR_INTERPOLATION->INDIVIDUAL_SLICE_DATA[sliceNum]->Vp[i][k], GLOBAL_DATA_FOR_INTERPOLATION->INDIVIDUAL_SLICE_DATA[sliceNum]->Rho[i][k]);
+            
+
+            }
         }
         
     }
     
 }
 
-//void obtainGlobalIndsSlice(global_mesh *GLOBAL_MESH, individual_slice_data *INDIVIDUAL_SLICE_DATA, ind_struct *IND_STRUCT, int point)
-//{
-//
-//    // if outside cartesian domain
-//    if(INDIVIDUAL_SLICE_DATA->xPts[point]<GLOBAL_MESH->X[0] || INDIVIDUAL_SLICE_DATA->xPts[point]>GLOBAL_MESH->X[GLOBAL_MESH->nX-1] || INDIVIDUAL_SLICE_DATA->yPts[point]>GLOBAL_MESH->Y[GLOBAL_MESH->nY-1] || INDIVIDUAL_SLICE_DATA->yPts[point]<GLOBAL_MESH->Y[0] )
-//    {
-//    }
-//    else  // get indice of nearby points
-//    {
-//        for(int k = 0; k < GLOBAL_MESH->nX; k++)
-//        {
-//            if(GLOBAL_MESH->X[k]>=INDIVIDUAL_SLICE_DATA->xPts[point])
-//            {
-//                IND_STRUCT->xInd1 = k-1;
-//                IND_STRUCT->xInd2 = k;
-//
-//                break;
-//            }
-//        }
-//        for(int j = 0; j < GLOBAL_MESH->nY; j++)
-//        {
-//            if(GLOBAL_MESH->Y[j]>=INDIVIDUAL_SLICE_DATA->yPts[point])
-//            {
-//                IND_STRUCT->yInd1 = j-1;
-//                IND_STRUCT->yInd2 = j;
-//                break;
-//            }
-//        }
-//    }
-//
-//}
 
 
 void writeInterpolatedSlice(char *OUTPUT_DIR, global_data_for_interpolation *GLOBAL_DATA_FOR_INTERPOLATION, global_mesh *GLOBAL_MESH, calculation_log *CALCULATION_LOG, int sliceNum)
@@ -351,7 +297,7 @@ void readGlobalDataPointsForInterpolation(char *OUTPUT_DIR, global_data_for_inte
     vp = (float*) malloc(bsize);
     vs = (float*) malloc(bsize);
     rho = (float*) malloc(bsize);
-
+    
     float vsRead, vpRead, rhoRead;
     int inYArray, inBothArrays;
     
@@ -363,8 +309,8 @@ void readGlobalDataPointsForInterpolation(char *OUTPUT_DIR, global_data_for_inte
         exit(EXIT_FAILURE);
     }
     
-
-
+    
+    
     for(int i = 0; i < GLOBAL_MESH->nY; i++)
     {
         for(int j = 0; j < GLOBAL_MESH->nX; j++)
@@ -561,242 +507,89 @@ void globalIndReduction(global_data_for_interpolation *GLOBAL_DATA_FOR_INTERPOLA
 }
 
 
-int findGlobalMeshAdjacentPoints(global_mesh *GLOBAL_MESH, double latA, double lonA, double modelRot, double *adjLatInds, double *adjLonInds)
+int findGlobalMeshAdjacentPoints(global_mesh *GLOBAL_MESH, model_extent *MODEL_EXTENT, double latA, double lonA, double modelRot, double *adjYInds, double *adjXInds, double *xp, double *yp)
 {
-    int nVert = 5;
-    double lon[nVert], lat[nVert];
-    int inPoly;
-    
-    double maxLat, maxLon;
-    double minLat, minLon;
 
-//    int xFound = 0;
-//    int yFound = 0;
-//    
-//    int xFoundTemp = 0;
-//    int yFoundTemp = 0;
-//    int xInds[2][2];
-//    int yInds[2][2];
+    int xSet = 0;
+    int ySet = 0;
+    ll2xy(MODEL_EXTENT->originLat, MODEL_EXTENT->originLon, MODEL_EXTENT->originRot, xp, yp, latA, lonA);
 
     
-    if(latA> GLOBAL_MESH->maxLat || latA < GLOBAL_MESH->minLat || lonA > GLOBAL_MESH->maxLon || lonA < GLOBAL_MESH->minLon)
+    if(*xp> GLOBAL_MESH->X[GLOBAL_MESH->nX-1] || *xp < GLOBAL_MESH->X[0] || *yp > GLOBAL_MESH->Y[GLOBAL_MESH->nY-1] || *yp < GLOBAL_MESH->Y[0])
     {
-        return 0; // outside the maximum lat lon of the domain
+        return 0; // outside the maximum extent of the cartesian domain
     }
     else
     {
-
-//        printf("%i %i\n",xFound,yFound);
-//        
-//        findCrossingIndsX(GLOBAL_MESH, 0, &xInds[xFound][0], &xInds[xFound][1], &yInds[yFound][0], &yInds[yFound][1], &yFoundTemp, &xFoundTemp, latA, lonA);
-//        if( xFoundTemp == 1)
-//        {
-//            xFound += 1;
-//            xFoundTemp = 0;
-//        }
-//        if( yFoundTemp == 1)
-//        {
-//            yFound += 1;
-//            yFoundTemp = 0;
-//        }
-//        findCrossingIndsX(GLOBAL_MESH, GLOBAL_MESH->nX-1, &xInds[xFound][0], &xInds[xFound][1], &yInds[yFound][0], &yInds[yFound][1], &yFoundTemp, &xFoundTemp, latA, lonA);
-//        if( xFoundTemp == 1)
-//        {
-//            xFound += 1;
-//            xFoundTemp = 0;
-//        }
-//        if( yFoundTemp == 1)
-//        {
-//            yFound += 1;
-//            yFoundTemp = 0;
-//        }
-//        printf("%i %i %i %i\n", xInds[0][0],xInds[0][1],xInds[1][0],xInds[0][1]);
-//        printf("%i %i %i %i\n", yInds[0][0],yInds[0][1],yInds[1][0],yInds[0][1]);
-//        printf("%i %i\n",xFound,yFound);
-//        
-//        findCrossingIndsY(GLOBAL_MESH, 0, &xInds[xFound][0], &xInds[xFound][1], &yInds[yFound][0], &yInds[yFound][1], &yFoundTemp, &xFoundTemp, latA, lonA);
-//        if( xFoundTemp == 1)
-//        {
-//            xFound += 1;
-//            xFoundTemp = 0;
-//        }
-//        if( yFoundTemp == 1)
-//        {
-//            yFound += 1;
-//            yFoundTemp = 0;
-//        }
-//        findCrossingIndsY(GLOBAL_MESH, GLOBAL_MESH->nY-1, &xInds[xFound][0], &xInds[xFound][1], &yInds[yFound][0], &yInds[yFound][1], &yFoundTemp, &xFoundTemp, latA, lonA);
-//        if( xFoundTemp == 1)
-//        {
-//            xFound += 1;
-//            xFoundTemp = 0;
-//        }
-//        if( yFoundTemp == 1)
-//        {
-//            yFound += 1;
-//            yFoundTemp = 0;
-//        }
-//        printf("%i %i %i %i\n", xInds[0][0],xInds[0][1],xInds[1][0],xInds[0][1]);
-//        printf("%i %i %i %i\n", yInds[0][0],yInds[0][1],yInds[1][0],yInds[0][1]);
-//        printf("%i %i\n",xFound,yFound);
-//        
-//        printf("%lf %lf %lf\n",latA,GLOBAL_MESH->Lat[xInds[0][0]][xInds[0][1]], GLOBAL_MESH->Lat[xInds[1][0]][xInds[1][1]]);
-//        
-//        printf("%lf %lf %lf\n",lonA,GLOBAL_MESH->Lon[yInds[0][0]][yInds[0][1]], GLOBAL_MESH->Lat[yInds[1][0]][xInds[1][1]]);
-
-        
-        for( int iy = 0; iy < GLOBAL_MESH->nY; iy ++)
+        for( int iy = 0; iy < GLOBAL_MESH->nY-1; iy ++)
         {
+            if ( GLOBAL_MESH->Y[iy] < *yp && GLOBAL_MESH->Y[iy+1] >= *yp)
+            {
+                adjYInds[0] = iy;
+                adjYInds[1] = iy + 1;
+                ySet = 1;
+                break;
+            }
         }
         for( int ix = 0; ix < GLOBAL_MESH->nX-1; ix ++)
         {
-            for( int iy = 0; iy < GLOBAL_MESH->nY-1; iy ++)
+            if ( GLOBAL_MESH->X[ix] < *xp && GLOBAL_MESH->X[ix+1] >= *xp)
             {
-                lon[0] = GLOBAL_MESH->Lon[ix][iy];
-                lon[1] = GLOBAL_MESH->Lon[ix][iy+1];
-                lon[2] = GLOBAL_MESH->Lon[ix+1][iy+1];
-                lon[3] = GLOBAL_MESH->Lon[ix+1][iy];
-                lon[4] = GLOBAL_MESH->Lon[ix][iy];
-
-                lat[0] = GLOBAL_MESH->Lat[ix][iy];
-                lat[1] = GLOBAL_MESH->Lat[ix][iy+1];
-                lat[2] = GLOBAL_MESH->Lat[ix+1][iy+1];
-                lat[3] = GLOBAL_MESH->Lat[ix+1][iy];
-                lat[4] = GLOBAL_MESH->Lat[ix][iy];
-
-                maxLat = findMaxValueArray(nVert-1, lat);
-                minLat = findMinValueArray(nVert-1, lat);
-
-                maxLon = findMaxValueArray(nVert-1, lon);
-                minLon = findMinValueArray(nVert-1, lon);
-                
-                if(latA>maxLat || latA < minLat || lonA > maxLon || lonA < minLon)
-                {
-                }
-                else
-                {
-                    inPoly = pnpoly(nVert, lon, lat, lonA, latA);
-                    if(inPoly == 1)
-                    {
-                        adjLonInds[0] = ix;
-                        adjLonInds[1] = ix;
-                        adjLonInds[2] = ix + 1;
-                        adjLonInds[3] = ix + 1;
-                        
-                        adjLatInds[0] = iy;
-                        adjLatInds[1] = iy + 1;
-                        adjLatInds[2] = iy + 1;
-                        adjLatInds[3] = iy;
-                        
-                        return 1;
-                    }
-                }
-                
+                adjXInds[0] = ix;
+                adjXInds[1] = ix + 1;
+                xSet = 1;
+                break;
             }
         }
-        
+    }
+    
+    if (xSet == 1 && ySet == 1)
+    {
+        return 1;
+    }
+    else
+    {
         return 0;
     }
 }
 
-void findCrossingIndsX(global_mesh *GLOBAL_MESH, int searchIndX, int *xInd1, int *xInd2, int *yInd1, int *yInd2, int *yFound, int *xFound, double latA, double lonA)
-{
-    for( int iy = 0; iy < GLOBAL_MESH->nY-1; iy ++)
-    {
-        if((GLOBAL_MESH->Lon[searchIndX][iy] > lonA) &&  (GLOBAL_MESH->Lon[searchIndX][iy+1] < lonA))
-        {
-            *yInd1 = searchIndX;
-            *yInd2 = iy;
-            *yFound = 1;
-        }
-        if((GLOBAL_MESH->Lon[searchIndX][iy] < lonA) &&  (GLOBAL_MESH->Lon[searchIndX][iy+1] > lonA))
-        {
-            *yInd1 = searchIndX;
-            *yInd2 = iy;
-            *yFound = 1;
-        }
-        if((GLOBAL_MESH->Lat[searchIndX][iy] > latA) &&  (GLOBAL_MESH->Lat[searchIndX][iy+1] < latA))
-        {
-            *xInd1 = searchIndX;
-            *xInd2 = iy;
-            *xFound = 1;
-        }
-        if((GLOBAL_MESH->Lat[searchIndX][iy] < latA) &&  (GLOBAL_MESH->Lat[searchIndX][iy+1] > latA))
-        {
-            *xInd1 = searchIndX;
-            *xInd2 = iy;
-            *xFound = 1;
-        }
-    }
-    printf("%i %i\n",*xFound,*yFound);
-
-}
-
-void findCrossingIndsY(global_mesh *GLOBAL_MESH, int searchIndY, int *xInd1, int *xInd2, int *yInd1, int *yInd2, int *yFound, int *xFound, double latA, double lonA)
-{
-    for( int ix = 0; ix < GLOBAL_MESH->nX-1; ix ++)
-    {
-        if((GLOBAL_MESH->Lon[ix][searchIndY] > lonA) &&  (GLOBAL_MESH->Lon[ix+1][searchIndY] < lonA))
-        {
-            *yInd1 = ix;
-            *yInd2 = searchIndY;
-            *yFound = 1;
-        }
-        if((GLOBAL_MESH->Lon[ix][searchIndY] < lonA) &&  (GLOBAL_MESH->Lon[ix+1][searchIndY] > lonA))
-        {
-            *yInd1 = ix;
-            *yInd2 = searchIndY;
-            *yFound = 1;
-        }
-        if((GLOBAL_MESH->Lat[ix][searchIndY] > latA) &&  (GLOBAL_MESH->Lat[ix+1][searchIndY] < latA))
-        {
-            *xInd1 = ix;
-            *xInd2 = searchIndY;
-            *xFound = 1;
-        }
-        if((GLOBAL_MESH->Lat[ix][searchIndY] < latA) &&  (GLOBAL_MESH->Lat[ix+1][searchIndY] > latA))
-        {
-            *xInd1 = ix;
-            *xInd2 = searchIndY;
-            *xFound = 1;
-        }
-    }
-    printf("%i %i\n",*xFound,*yFound);
-    
-}
 
 
 
 void generateGlobalIndsForRead(global_mesh *GLOBAL_MESH, global_data_for_interpolation *GLOBAL_DATA_FOR_INTERPOLATION, model_extent *MODEL_EXTENT, int sliceNum)
 {
-    double adjLatInds[4], adjLonInds[4];
+    double adjXInds[2], adjYInds[2];
     int pointsFound;
+    double xPt, yPt;
     for(int i = 0; i < GLOBAL_DATA_FOR_INTERPOLATION->INDIVIDUAL_SLICE_DATA[sliceNum]->nPts; i++)
     {
         printf("Searching slice #%i, point #%i of %i.\n", sliceNum+1,i+1,GLOBAL_DATA_FOR_INTERPOLATION->INDIVIDUAL_SLICE_DATA[sliceNum]->nPts );
-        pointsFound = findGlobalMeshAdjacentPoints(GLOBAL_MESH, GLOBAL_DATA_FOR_INTERPOLATION->INDIVIDUAL_SLICE_DATA[sliceNum]->latPts[i], GLOBAL_DATA_FOR_INTERPOLATION->INDIVIDUAL_SLICE_DATA[sliceNum]->lonPts[i], MODEL_EXTENT->originRot, adjLatInds, adjLonInds);
+        pointsFound = findGlobalMeshAdjacentPoints(GLOBAL_MESH,  MODEL_EXTENT, GLOBAL_DATA_FOR_INTERPOLATION->INDIVIDUAL_SLICE_DATA[sliceNum]->latPts[i], GLOBAL_DATA_FOR_INTERPOLATION->INDIVIDUAL_SLICE_DATA[sliceNum]->lonPts[i], MODEL_EXTENT->originRot, adjYInds, adjXInds, &xPt, &yPt);
         if( pointsFound == 1)
         {
             
-            GLOBAL_DATA_FOR_INTERPOLATION->requiredLatInds[GLOBAL_DATA_FOR_INTERPOLATION->nPts] = adjLatInds[0];
-            GLOBAL_DATA_FOR_INTERPOLATION->requiredLatInds[GLOBAL_DATA_FOR_INTERPOLATION->nPts+1] = adjLatInds[1];
-            GLOBAL_DATA_FOR_INTERPOLATION->requiredLatInds[GLOBAL_DATA_FOR_INTERPOLATION->nPts+2] = adjLatInds[2];
-            GLOBAL_DATA_FOR_INTERPOLATION->requiredLatInds[GLOBAL_DATA_FOR_INTERPOLATION->nPts+3] = adjLatInds[3];
+            GLOBAL_DATA_FOR_INTERPOLATION->requiredLatInds[GLOBAL_DATA_FOR_INTERPOLATION->nPts] = adjYInds[0];
+            GLOBAL_DATA_FOR_INTERPOLATION->requiredLatInds[GLOBAL_DATA_FOR_INTERPOLATION->nPts+1] = adjYInds[1];
+            GLOBAL_DATA_FOR_INTERPOLATION->requiredLatInds[GLOBAL_DATA_FOR_INTERPOLATION->nPts+2] = adjYInds[0];
+            GLOBAL_DATA_FOR_INTERPOLATION->requiredLatInds[GLOBAL_DATA_FOR_INTERPOLATION->nPts+3] = adjYInds[1];
             
-            GLOBAL_DATA_FOR_INTERPOLATION->requiredLonInds[GLOBAL_DATA_FOR_INTERPOLATION->nPts] = adjLonInds[0];
-            GLOBAL_DATA_FOR_INTERPOLATION->requiredLonInds[GLOBAL_DATA_FOR_INTERPOLATION->nPts+1] = adjLonInds[1];
-            GLOBAL_DATA_FOR_INTERPOLATION->requiredLonInds[GLOBAL_DATA_FOR_INTERPOLATION->nPts+2] = adjLonInds[2];
-            GLOBAL_DATA_FOR_INTERPOLATION->requiredLonInds[GLOBAL_DATA_FOR_INTERPOLATION->nPts+3] = adjLonInds[3];
+            GLOBAL_DATA_FOR_INTERPOLATION->requiredLonInds[GLOBAL_DATA_FOR_INTERPOLATION->nPts] = adjXInds[0];
+            GLOBAL_DATA_FOR_INTERPOLATION->requiredLonInds[GLOBAL_DATA_FOR_INTERPOLATION->nPts+1] = adjXInds[1];
+            GLOBAL_DATA_FOR_INTERPOLATION->requiredLonInds[GLOBAL_DATA_FOR_INTERPOLATION->nPts+2] = adjXInds[1];
+            GLOBAL_DATA_FOR_INTERPOLATION->requiredLonInds[GLOBAL_DATA_FOR_INTERPOLATION->nPts+3] = adjXInds[0];
             
-            GLOBAL_DATA_FOR_INTERPOLATION->INDIVIDUAL_SLICE_DATA[sliceNum]->latInds[4*i] = adjLatInds[0];
-            GLOBAL_DATA_FOR_INTERPOLATION->INDIVIDUAL_SLICE_DATA[sliceNum]->latInds[4*i+1] = adjLatInds[1];
-            GLOBAL_DATA_FOR_INTERPOLATION->INDIVIDUAL_SLICE_DATA[sliceNum]->latInds[4*i+2] = adjLatInds[2];
-            GLOBAL_DATA_FOR_INTERPOLATION->INDIVIDUAL_SLICE_DATA[sliceNum]->latInds[4*i+3] = adjLatInds[3];
+            GLOBAL_DATA_FOR_INTERPOLATION->INDIVIDUAL_SLICE_DATA[sliceNum]->latInds[4*i] = adjYInds[0];
+            GLOBAL_DATA_FOR_INTERPOLATION->INDIVIDUAL_SLICE_DATA[sliceNum]->latInds[4*i+1] = adjYInds[1];
+            GLOBAL_DATA_FOR_INTERPOLATION->INDIVIDUAL_SLICE_DATA[sliceNum]->latInds[4*i+2] = adjYInds[0];
+            GLOBAL_DATA_FOR_INTERPOLATION->INDIVIDUAL_SLICE_DATA[sliceNum]->latInds[4*i+3] = adjYInds[1];
             
-            GLOBAL_DATA_FOR_INTERPOLATION->INDIVIDUAL_SLICE_DATA[sliceNum]->lonInds[4*i] = adjLonInds[0];
-            GLOBAL_DATA_FOR_INTERPOLATION->INDIVIDUAL_SLICE_DATA[sliceNum]->lonInds[4*i+1] = adjLonInds[1];
-            GLOBAL_DATA_FOR_INTERPOLATION->INDIVIDUAL_SLICE_DATA[sliceNum]->lonInds[4*i+2] = adjLonInds[2];
-            GLOBAL_DATA_FOR_INTERPOLATION->INDIVIDUAL_SLICE_DATA[sliceNum]->lonInds[4*i+3] = adjLonInds[3];
+            GLOBAL_DATA_FOR_INTERPOLATION->INDIVIDUAL_SLICE_DATA[sliceNum]->lonInds[4*i] = adjXInds[0];
+            GLOBAL_DATA_FOR_INTERPOLATION->INDIVIDUAL_SLICE_DATA[sliceNum]->lonInds[4*i+1] = adjXInds[1];
+            GLOBAL_DATA_FOR_INTERPOLATION->INDIVIDUAL_SLICE_DATA[sliceNum]->lonInds[4*i+2] = adjXInds[1];
+            GLOBAL_DATA_FOR_INTERPOLATION->INDIVIDUAL_SLICE_DATA[sliceNum]->lonInds[4*i+3] = adjXInds[0];
+            
+            GLOBAL_DATA_FOR_INTERPOLATION->INDIVIDUAL_SLICE_DATA[sliceNum]->xPts[i] = xPt;
+            GLOBAL_DATA_FOR_INTERPOLATION->INDIVIDUAL_SLICE_DATA[sliceNum]->yPts[i] = yPt;
             
             GLOBAL_DATA_FOR_INTERPOLATION->nPts += 4;
         }
@@ -824,7 +617,7 @@ void generateSlicePoints(individual_slice_data *INDIVIDUAL_SLICE_DATA, individua
     int count = 0;
     
     nGrdPts = INDIVIDUAL_SLICE_PARAMETERS->resXY;
-
+    
     deltaLat = (INDIVIDUAL_SLICE_PARAMETERS->latPtsSlice[0]-INDIVIDUAL_SLICE_PARAMETERS->latPtsSlice[1])/nGrdPts;
     deltaLon = (INDIVIDUAL_SLICE_PARAMETERS->lonPtsSlice[0]-INDIVIDUAL_SLICE_PARAMETERS->lonPtsSlice[1])/nGrdPts;
     
@@ -840,6 +633,98 @@ void generateSlicePoints(individual_slice_data *INDIVIDUAL_SLICE_DATA, individua
         printf("Total number of slice sample points exceeds the maximum allowable value of %i.\n",MAX_NUM_SLICE_GRIDPTS);
         exit(EXIT_FAILURE);
     }
+}
+
+
+
+void ll2xy(double originLat, double originLon, double originRot, double *xp, double *yp, double latA, double lonA)
+{
+    
+    double arg, cosA, sinA, cosT, sinT, cosP, sinP;
+    
+    arg = originRot*RPERD;
+    cosA = cos(arg);
+    sinA = sin(arg);
+    
+    arg = (90.0-originLat)*RPERD;
+    cosT = cos(arg);
+    sinT = sin(arg);
+    
+    arg = originLon*RPERD;
+    cosP = cos(arg);
+    sinP = sin(arg);
+    
+    double amat[9], ainv[9];
+    double det;
+    
+    amat[0] = cosA*cosT*cosP + sinA*sinP;
+    amat[1] = sinA*cosT*cosP - cosA*sinP;
+    amat[2] = sinT*cosP;
+    amat[3] = cosA*cosT*sinP - sinA*cosP;
+    amat[4] = sinA*cosT*sinP + cosA*cosP;
+    amat[5] = sinT*sinP;
+    amat[6] = -cosA*sinT;
+    amat[7] = -sinA*sinT;
+    amat[8] = cosT;
+    
+    det = amat[0]*(amat[4]*amat[8] - amat[7]*amat[5]) - amat[1]*(amat[3]*amat[8] - amat[6]*amat[5]) + amat[2]*(amat[3]*amat[7] - amat[6]*amat[4]);
+    
+    det = 1.0/det;
+    
+    ainv[0] = det*amat[0];
+    ainv[1] = det*amat[3];
+    ainv[2] = det*amat[6];
+    ainv[3] = det*amat[1];
+    ainv[4] = det*amat[4];
+    ainv[5] = det*amat[7];
+    ainv[6] = det*amat[2];
+    ainv[7] = det*amat[5];
+    ainv[8] = det*amat[8];
+    
+    
+    double g0 = 0.0;
+    double b0 = 0.0;
+    double erad = ERAD;
+    
+    gcprojRev(xp,yp,lonA,latA,erad,g0,b0,amat,ainv);
+    
+}
+
+
+
+
+void gcprojRev(double *xf,double *yf,double rlon,double rlat,double ref_rad,double g0,double b0,double amat[8],double ainv[8])
+{
+    double xp, yp;
+    double xg, yg, zg;
+    double arg;
+    double cosG, sinG;
+    double cosB, sinB;
+    
+    double rperd = RPERD;
+    
+    arg = (rlon)*rperd;
+    cosG = cos(arg);
+    sinG = sin(arg);
+    
+    arg = (90.0 - (rlat))*rperd;
+    cosB = cos(arg);
+    sinB = sin(arg);
+    
+    xg = sinB*cosG;
+    yg = sinB*sinG;
+    zg = cosB;
+    
+    xp = xg*ainv[0] + yg*ainv[1] + zg*ainv[2];
+    yp = xg*ainv[3] + yg*ainv[4] + zg*ainv[5];
+    //    zp = xg*ainv[6] + yg*ainv[7] + zg*ainv[8];
+    
+    sinG = xp/sqrt(1.0 - yp*yp);
+    sinB = yp/sqrt(1.0 - xp*xp);
+    
+    *xf = ref_rad*(asin(sinB)+(b0));
+    *yf = ref_rad*(asin(sinG)+(g0));
+    //    printf("%lf %lf\n",*xf,*yf);
 }
 
 

@@ -43,7 +43,7 @@ colorDepth = 1000;
 
 sliceLetter = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P'};
 colorArray = [0 0 0; 0 0 0; 0 0 0; 0 0 0; 0 0 0; 0 0 0; 0 0 0; 0 0 0; 0 0 0; 0 0 0; 0 0 0; 0 0 0; 0 0 0; 0 0 0];
-colorArrayB = [255 0 0; 255 128 0; 255 255 0; 128 255 0; 0 255 255; 0 128 255; 0 0 155; 127 0 255; 255 0 255; 192 192 192; 64 64 64; 0 0 0]/255;
+colorArrayB = [255 0 0; 255 128 0; 255 255 0; 0  100 0; 128 255 0; 0 255 255; 0 128 255; 0 0 155; 127 0 255; 255 0 255; 240 240 240; 192 192 192;112 112 112; 64 64 64; 0 0 0]/255;
 
 
 
@@ -473,7 +473,7 @@ for j = 1 : length(dirName)
     legend(sliceLetter);
     [NZcoastLat,NZcoastLong]=NZCoastlineData;
     plot(NZcoastLong,NZcoastLat,'LineWidth',lineWidth3)
-    %     axis([170.5 174.0 -44.5 -42.7]);
+    axis([170. 173.8 -44.8 -42.4]);
     if strcmp(type{j},'Extracted') == 1
         latDom = [sliceParameters.latA  sliceParameters.latB sliceParameters.latC sliceParameters.latD sliceParameters.latA];
         lonDom = [sliceParameters.lonA  sliceParameters.lonB sliceParameters.lonC sliceParameters.lonD sliceParameters.lonA];

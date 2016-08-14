@@ -56,6 +56,10 @@ double biLinearInterpolation(double X1, double X2, double Y1, double Y2, double 
  
  */
 {
+    
+//    printf("%lf %lf %lf\n", X1, X, X2);
+//    printf("%lf %lf %lf\n\n", Y1, Y, Y2);
+
     double A, B, C, D, E, Q;
     A = Q11*(X2-X)*(Y2-Y);
     B = Q21*(X-X1)*(Y2-Y);

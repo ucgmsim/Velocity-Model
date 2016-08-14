@@ -330,6 +330,12 @@ double findMinValueArray(int nPts, double pts[5])
 
 double interpolateQuad(double lons[4], double lats[4], double values[4], double lonA, double latA)
 {
+    
+    printf("%lf %lf\n", lonA,latA);
+    for (int k = 0; k < 4; k++)
+    {
+        printf("%lf %lf %lf\n", lons[k], lats[k],values[k]);
+    }
     double N1, N2, N3, N4;
     double AA, BB, CC;
     
@@ -384,6 +390,7 @@ double interpolateQuad(double lons[4], double lats[4], double values[4], double 
     N4 = (0.25)*(1-e)*(1+n)*values[3];
 
     interpVal = N1 + N2 + N3 + N4;
+    printf("%lf\n",interpVal);
     
     return interpVal;
     
@@ -391,6 +398,7 @@ double interpolateQuad(double lons[4], double lats[4], double values[4], double 
     
     
 }
+
 
 
 void gcproj(double xf,double yf,double *rlon,double *rlat,double ref_rad,double g0,double b0,double amat[8],double ainv[8])

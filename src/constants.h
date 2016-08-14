@@ -35,7 +35,7 @@
 #define SURF_IN_DIM_MAX_TOMO 1200 // maximum dimension of tomography surfaces
 #define MAX_NUM_GLOBAL_SURFACES 4 // the maximum number of full domain (global) surfaces
 #define EARTH_RADIUS_MEAN 6378.139 //6371.0071
-#define MAX_NUM_SLICES 15 // the maximum number of slices in the slice parameters files
+#define MAX_NUM_SLICES 20 // the maximum number of slices in the slice parameters files
 #define MAX_LAT_SURFACE_EXTENSION 1 // value in degrees the surface files may be extended by
 #define MAX_LON_SURFACE_EXTENSION 1 // value in degrees the surface files may be extended by
 

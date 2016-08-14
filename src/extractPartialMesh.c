@@ -16,6 +16,67 @@
 #include "functions.h"
 
 
+
+partial_global_mesh *generateSlicePartialMesh(individual_slice_parameters INDIVIDUAL_SLICE_PARAMETERS)
+{
+    partial_global_mesh *PARTIAL_GLOBAL_MESH;
+    PARTIAL_GLOBAL_MESH = malloc(sizeof(partial_global_qualities));
+
+    if (PARTIAL_GLOBAL_MESH == NULL)
+    {
+        printf("Memory allocation of PARTIAL_GLOBAL_MESH failed.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    
+    
+    
+    double deltaLat;
+    double deltaLon;
+    int nGrdPts;
+    int count = 0;
+    
+    nGrdPts = INDIVIDUAL_SLICE_PARAMETERS.resXY;
+    
+    deltaLat = (INDIVIDUAL_SLICE_PARAMETERS.latPtsSlice[0]-INDIVIDUAL_SLICE_PARAMETERS.latPtsSlice[1])/nGrdPts;
+    deltaLon = (INDIVIDUAL_SLICE_PARAMETERS.lonPtsSlice[0]-INDIVIDUAL_SLICE_PARAMETERS.lonPtsSlice[1])/nGrdPts;
+    
+    for(int j = 0; j < nGrdPts+1; j++)
+    {
+        PARTIAL_GLOBAL_MESH->Lat[count] = INDIVIDUAL_SLICE_PARAMETERS.latPtsSlice[0]-j*deltaLat;
+        PARTIAL_GLOBAL_MESH->Lon[count] = INDIVIDUAL_SLICE_PARAMETERS.lonPtsSlice[0]-j*deltaLon;
+        count += 1;
+    }
+    PARTIAL_GLOBAL_MESH->nX= count;
+    if( PARTIAL_GLOBAL_MESH->nX>=LON_GRID_DIM_MAX)
+    {
+        printf("Total number of slice points exceeds the maximum allowable value of %i.\n",LON_GRID_DIM_MAX);
+        exit(EXIT_FAILURE);
+    }
+    
+    
+    int i;
+    
+    PARTIAL_GLOBAL_MESH->nY = 1;
+    PARTIAL_GLOBAL_MESH->nZ = INDIVIDUAL_SLICE_PARAMETERS.resZ +1.0;
+    if( PARTIAL_GLOBAL_MESH->nZ>=DEP_GRID_DIM_MAX)
+    {
+        printf("Total number of slice depth points exceeds the maximum allowable value of %i.\n",DEP_GRID_DIM_MAX);
+        exit(EXIT_FAILURE);
+    }
+    
+    double dz = (INDIVIDUAL_SLICE_PARAMETERS.zMax - INDIVIDUAL_SLICE_PARAMETERS.zMin) / PARTIAL_GLOBAL_MESH->nZ;
+    
+    for(i = 0; i < PARTIAL_GLOBAL_MESH->nZ; i ++)
+    {
+        PARTIAL_GLOBAL_MESH->Z[i] = 1000*(INDIVIDUAL_SLICE_PARAMETERS.zMin - i*dz);
+    }
+
+    
+    return PARTIAL_GLOBAL_MESH;
+    
+    
+}
 partial_global_mesh *extractPartialMesh(global_mesh *GLOBAL_MESH, int latInd)
 /*
  Purpose: to extract one slice of values from the global mesh, i.e nX x nY x nZ becomes nX x 1 x nZ

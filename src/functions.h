@@ -45,6 +45,8 @@ extern void determineIfWithinBasinLatLon(basin_data *BASIN_DATA, global_model_pa
 extern void interpolateBasinSurfaceDepths(basin_data *BASIN_DATA, global_model_parameters *GLOBAL_MODEL_PARAMETERS, in_basin *IN_BASIN, partial_basin_surface_depths *PARTIAL_BASIN_SURFACE_DEPTHS, mesh_vector *MESH_VECTOR);
 extern void runGenerateVelocityModel(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extract_velo_mod_call GEN_EXTRACT_VELO_MOD_CALL, calculation_log *CALCULATION_LOG);
 extern void runExtractFromVelocityModel(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extract_velo_mod_call GEN_EXTRACT_VELO_MOD_CALL, calculation_log *CALCULATION_LOG);
+extern void runGenerateVelocitySlices(char *MODEL_VERSION, char *OUTPUT_DIR, gen_velo_slices_call GEN_VELO_SLICES_CALL, calculation_log *CALCULATION_LOG);
+
 extern void runGenerateProfile(char *MODEL_VERSION, char *OUTPUT_DIR, gen_profile_call GEN_PROFILE_CALL, calculation_log *CALCULATION_LOG);
 extern void gcprojRev(double *xf,double *yf,double rlon,double rlat,double ref_rad,double g0,double b0,double amat[8],double ainv[8]);
 extern void ll2xy(double originLat, double originLon, double originRot, double *xp, double *yp, double latA, double lonA);
@@ -125,6 +127,7 @@ extern void marineSubModel(int zInd, qualities_vector *QUALITIES_VECTOR);
 
 //slice functions
 extern void extractSlicesFromBinaryFiles(char *OUTPUT_DIR, gen_extract_velo_mod_call GEN_EXTRACT_VELO_MOD_CALL, calculation_log *CALCULATION_LOG, global_mesh *GLOBAL_MESH, model_extent *MODEL_EXTENT);
+extern slice_parameters *readGeneratedSliceParametersFile(char *sliceParametersDirectory);
 extern slice_parameters *readExtractedSliceParametersFile(char *sliceParametersDirectory);
 extern void generateSlicePoints(individual_slice_data *INDIVIDUAL_SLICE_DATA, individual_slice_parameters *INDIVIDUAL_SLICE_PARAMETERS,  global_mesh *GLOBAL_MESH);
 extern void generateGlobalIndsForRead(global_mesh *GLOBAL_MESH, global_data_for_interpolation *GLOBAL_DATA_FOR_INTERPOLATION, model_extent *MODEL_EXTENT, int sliceNum);
@@ -133,19 +136,15 @@ extern void readGlobalDataPointsForInterpolation(char *OUTPUT_DIR, global_data_f
 extern void interpolateGlobalSliceData(slice_parameters *SLICE_PARAMETERS, global_mesh *GLOBAL_MESH, model_extent *MODEL_EXTENT, global_data_for_interpolation *GLOBAL_DATA_FOR_INTERPOLATION,calculation_log *CALCULATION_LOG);
 extern void interpolateIndividualSlice(global_mesh *GLOBAL_MESH, global_data_for_interpolation *GLOBAL_DATA_FOR_INTERPOLATION, int sliceNum);
 extern void writeInterpolatedSlice(char *OUTPUT_DIR, global_data_for_interpolation *GLOBAL_DATA_FOR_INTERPOLATION, global_mesh *GLOBAL_MESH, calculation_log *CALCULATION_LOG, int sliceNum);
+extern void writeGeneratedSlice(char *OUTPUT_DIR, partial_global_mesh *PARTIAL_GLOBAL_MESH, partial_global_qualities *PARTIAL_GLOBAL_QUALITIES, individual_slice_parameters *INDIVIDUAL_SLICE_PARAMETERS,calculation_log *CALCULATION_LOG, int sliceNum);
+
 extern void writeSliceParametersLogFile(char *OUTPUT_DIR, slice_parameters *SLICE_PARAMETRES,  model_extent *MODEL_EXTENT, global_mesh *GLOBAL_MESH, calculation_log *CALCULATION_LOG, char *type);
 extern int findGlobalMeshAdjacentPoints(global_mesh *GLOBAL_MESH, model_extent *MODEL_EXTENT, double latA, double lonA, double modelRot, double *adjYInds, double *adjXInds, double *xp, double *yp);
 extern void findCrossingIndsX(global_mesh *GLOBAL_MESH, int searchIndX, int *xInd1, int *xInd2, int *yInd1, int *yInd2, int *yFound, int *xFound, double latA, double lonA);
 extern void findCrossingIndsY(global_mesh *GLOBAL_MESH, int searchIndY, int *xInd1, int *xInd2, int *yInd1, int *yInd2, int *yFound, int *xFound, double latA, double lonA);
+extern partial_global_mesh *generateSlicePartialMesh(individual_slice_parameters INDIVIDUAL_SLICE_PARAMETERS);
 
 
-//printf("%lf %lf.\n", GLOBAL_DATA_FOR_INTERPOLATION->INDIVIDUAL_SLICE_DATA[sliceNum]->xPts[i], GLOBAL_DATA_FOR_INTERPOLATION->INDIVIDUAL_SLICE_DATA[sliceNum]->yPts[i]);
-//for( int k = 0; k< 4; k++)
-//{
-//    printf("%lf.\n", GLOBAL_MESH->Y[GLOBAL_DATA_FOR_INTERPOLATION->requiredLatInds[GLOBAL_DATA_FOR_INTERPOLATION->nPts+k]]);
-//    printf("%lf.\n", GLOBAL_MESH->X[GLOBAL_DATA_FOR_INTERPOLATION->requiredLonInds[GLOBAL_DATA_FOR_INTERPOLATION->nPts+k]]);
-//    
-//}
 
 
 

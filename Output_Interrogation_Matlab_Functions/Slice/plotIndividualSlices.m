@@ -3,12 +3,12 @@ function plotIndividualSlices
 close all
 
 
-dirName{1} = 'v1.64';
+dirName{1} = 'v1.01';
 % dirName{2} = 'v1.22';
 
 
-% type{1} = 'Generated';
-type{1} = 'Extracted';
+type{1} = 'Generated';
+% type{1} = 'Extracted';
 
 % type{2} = 'Generated';
 % type{3} = 'Generated';
@@ -61,13 +61,10 @@ for j = 1 : length(dirName)
         if strcmp(type{j},'Extracted') == 1
             sliceFileName = strcat(dirName{j},'/Extracted_Slices/ExtractedSlice',sprintf('%i',k),'.txt');
         elseif strcmp(type{j},'Generated') == 1
-            sliceFileName = strcat(dirName{j},'/Slices/GeneratedSlice',sprintf('%i',k),'.txt');
+            sliceFileName = strcat(dirName{j},'/Generated_Slices/GeneratedSlice',sprintf('%i',k),'.txt');
         end
-        
-        %
-        slice = loadSlice(sliceFileName);
-        %                        save('dataA.mat')
-        %         load('dataA.mat')
+        slice = loadSlice(sliceFileName, type{j});
+
         
         
         F1 = figure(1);
@@ -571,7 +568,19 @@ if strcmp(type,'Extracted') == 1
     sliceParameters.lonD = str2double(line(tabLocation(1):end));
     
 elseif strcmp(type,'Generated') == 1
+        fileName = strcat(dirName,'/Generated_Slices/SliceLogFile.txt')
     
+    fid = fopen(fileName);
+    
+    line = fgetl(fid); % desregard first line
+    
+    line = fgetl(fid);
+    tabLocation = strfind(line,sprintf('\t'));
+    sliceParameters.nSlices = str2double(line(tabLocation(1):end));
+    
+    line = fgetl(fid);
+    tabLocation = strfind(line,sprintf('\t'));
+    sliceParameters.version = str2double(line(tabLocation(1):end));
 end
 
 fclose(fid);

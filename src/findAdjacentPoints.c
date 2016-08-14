@@ -196,7 +196,8 @@ void findEdgeInds(global_surf_read *GLOBAL_SURF_READ, adjacent_points *ADJACENT_
         }
         else
         {
-            printf("Error.\n");
+            printf("Point lies outside of surface bounds.\n");
+            exit(EXIT_FAILURE);
         }
     }
     else if (edgeType == 3)
@@ -211,7 +212,8 @@ void findEdgeInds(global_surf_read *GLOBAL_SURF_READ, adjacent_points *ADJACENT_
         }
         else
         {
-            printf("Error.\n");
+            printf("Point lies outside of surface bounds.\n");
+            exit(EXIT_FAILURE);
         }
     }
     else if (edgeType == 2)
@@ -226,7 +228,8 @@ void findEdgeInds(global_surf_read *GLOBAL_SURF_READ, adjacent_points *ADJACENT_
         }
         else
         {
-            printf("Error.\n");
+            printf("Point lies outside of surface bounds.\n");
+            exit(EXIT_FAILURE);
         }
     }
     else if (edgeType == 4)
@@ -241,12 +244,14 @@ void findEdgeInds(global_surf_read *GLOBAL_SURF_READ, adjacent_points *ADJACENT_
         }
         else
         {
-            printf("Error.\n");
+            printf("Point lies outside of surface bounds.\n");
+            exit(EXIT_FAILURE);
         }
     }
     else
     {
-        printf("Error.\n");
+        printf("Point lies outside of surface bounds.\n");
+        exit(EXIT_FAILURE);
     }
     
 }
@@ -275,7 +280,8 @@ void findCornerInds(global_surf_read *GLOBAL_SURF_READ, double latPt, double lon
     }
     else
     {
-        printf("Error.\n");
+        printf("Point lies outside of surface bounds.\n");
+        exit(EXIT_FAILURE);
     }
     
     if(lonPt == GLOBAL_SURF_READ->loni[0])
@@ -288,7 +294,8 @@ void findCornerInds(global_surf_read *GLOBAL_SURF_READ, double latPt, double lon
     }
     else
     {
-        printf("Error.\n");
+        printf("Point lies outside of surface bounds.\n");
+        exit(EXIT_FAILURE);
     }
     
     ADJACENT_POINTS->inCornerZone = 1;

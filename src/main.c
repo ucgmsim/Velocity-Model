@@ -56,7 +56,7 @@ int main(void)
     argv[26] = "0.5";
      */
     
-     ///*
+     /*
     int argc = 29;
      char *argv[29];
      argv[1] = "-A";
@@ -87,7 +87,7 @@ int main(void)
     argv[26] = "0.5";
      argv[27] = "-N";
      argv[28] = "ExtractedSliceParametersECVM";
-     //*/
+     */
 
     
     /*
@@ -114,20 +114,20 @@ int main(void)
      */
     
     
-    /*
+    ///*
     int argc = 11;
     char *argv[11];
     argv[1] = "-A";
     argv[2] = "GENERATE_VELOCITY_SLICES";
     argv[3] = "-B";
-    argv[4] = "1.63";
+    argv[4] = "1.01";
     argv[5] = "-C";
-    argv[6] = "v1.63";
+    argv[6] = "v1.01";
     argv[7] = "-O";
     argv[8] = "0.5";
     argv[9] = "-P";
-    argv[10] = "SliceParametersBPV";
-     */
+    argv[10] = "GeneratedSliceParameters";
+     //*/
     
     
     
@@ -268,6 +268,7 @@ int main(void)
         
     }
     
+    ///*
     // check that the appropriate parameters have been set for each call type
     if ( numCallTypesSet != 1) // implies that either zero or two (or more) call types have been entered
     {
@@ -348,7 +349,7 @@ int main(void)
             exit(EXIT_FAILURE);
         }
     }
-    //*/
+    
     
     // generate the log file struct
     calculation_log *CALCULATION_LOG;
@@ -379,7 +380,13 @@ int main(void)
     }
     else if (GENERATE_VELOCITY_SLICES == 1)
     {
-        
+        printf("==========================================\n");
+        printf("Running GENERATE_VELOCITY_SLICES.\n");
+        printf("==========================================\n");
+        runGenerateVelocitySlices(MODEL_VERSION, OUTPUT_DIR, GEN_VELO_SLICES_CALL, CALCULATION_LOG);
+        printf("==========================================\n");
+        printf("Completed running EXTRACT_VELOCITY_SLICES.\n");
+        printf("==========================================\n");
     }
     else if (GENERATE_PROFILE == 1)
     {

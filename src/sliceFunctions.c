@@ -128,6 +128,41 @@ slice_parameters *readExtractedSliceParametersFile(char *sliceParametersDirector
 }
 
 
+slice_parameters *readGeneratedSliceParametersFile(char *sliceParametersDirectory)
+{
+    slice_parameters *SLICE_PARAMETERS;
+    SLICE_PARAMETERS = malloc(sizeof(slice_parameters));
+    
+    char sliceFileName[MAX_FILENAME_STRING_LEN];
+    sprintf(sliceFileName,"%s/SliceParametersGenerated.txt", sliceParametersDirectory);
+    FILE *file;
+    
+    file = fopen(sliceFileName, "r");
+    
+    if (file == NULL)
+    {
+        printf("Extracted slice parameters file %s not found.\n",sliceFileName);
+        exit(EXIT_FAILURE);
+    }
+    
+    fscanf(file, "%d", &SLICE_PARAMETERS->nSlices);
+    
+    if(SLICE_PARAMETERS->nSlices>=MAX_NUM_SLICES)
+    {
+        printf("Number of slices in the slice parameters file exceeds the maximum allowable value of %i.\n",MAX_NUM_SLICES);
+        exit(EXIT_FAILURE);
+    }
+    
+    for(int i = 0; i < SLICE_PARAMETERS->nSlices; i++)
+    {
+        fscanf(file, "%lf %lf %lf %lf %lf %lf %lf %lf", &SLICE_PARAMETERS->latA[i], &SLICE_PARAMETERS->latB[i], &SLICE_PARAMETERS->lonA[i], &SLICE_PARAMETERS->lonB[i], &SLICE_PARAMETERS->depMin[i], &SLICE_PARAMETERS->depMax[i], &SLICE_PARAMETERS->LatLonRes[i], &SLICE_PARAMETERS->DepRes[i]);
+    }
+    
+    printf("Extracted slice parameters file read complete.\n");
+    fclose(file);
+    return SLICE_PARAMETERS;
+}
+
 
 void interpolateIndividualSlice(global_mesh *GLOBAL_MESH, global_data_for_interpolation *GLOBAL_DATA_FOR_INTERPOLATION, int sliceNum)
 {
@@ -255,6 +290,48 @@ void writeInterpolatedSlice(char *OUTPUT_DIR, global_data_for_interpolation *GLO
             currRho = GLOBAL_DATA_FOR_INTERPOLATION->INDIVIDUAL_SLICE_DATA[sliceNum]->Rho[i][m];
             currVs = GLOBAL_DATA_FOR_INTERPOLATION->INDIVIDUAL_SLICE_DATA[sliceNum]->Vs[i][m];
             fprintf(fp2, "%lf\t%lf\t%lf\t%lf\t%lf\t%lf\n",GLOBAL_DATA_FOR_INTERPOLATION->INDIVIDUAL_SLICE_DATA[sliceNum]->latPts[i],GLOBAL_DATA_FOR_INTERPOLATION->INDIVIDUAL_SLICE_DATA[sliceNum]->lonPts[i], GLOBAL_MESH->Z[m], currVp, currVs, currRho);
+            
+        }
+        
+    }
+    
+    fclose(fp2);
+    
+}
+
+void writeGeneratedSlice(char *OUTPUT_DIR, partial_global_mesh *PARTIAL_GLOBAL_MESH, partial_global_qualities *PARTIAL_GLOBAL_QUALITIES, individual_slice_parameters *INDIVIDUAL_SLICE_PARAMETERS,calculation_log *CALCULATION_LOG, int sliceNum)
+{
+    
+    
+    // generate file for writing
+    FILE *fp2;
+    double vsTemp, vpTemp, rhoTemp;
+    char fName[MAX_FILENAME_STRING_LEN];
+    sprintf(fName,"%s/Generated_Slices/GeneratedSlice%i.txt",OUTPUT_DIR,sliceNum+1);
+    fp2 = fopen(fName,"w");
+    if (fp2 == NULL)
+    {
+        printf("Unable to generate slice text file for writing data.\n");
+        exit(EXIT_FAILURE);
+    }
+    
+    fprintf(fp2,"Generated slice #%i.\n",sliceNum+1);
+    fprintf(fp2,"Slice_Horizontal_Resolution\t%i\n",INDIVIDUAL_SLICE_PARAMETERS->resXY );
+    fprintf(fp2,"Slice_Vertical_Resolution\t%lf\n",INDIVIDUAL_SLICE_PARAMETERS->resZ);
+
+    fprintf(fp2,"LatA:\t%lf\n",INDIVIDUAL_SLICE_PARAMETERS->latPtsSlice[0]);
+    fprintf(fp2,"LatB:\t%lf\n",INDIVIDUAL_SLICE_PARAMETERS->latPtsSlice[1]);
+    fprintf(fp2,"LonA:\t%lf\n",INDIVIDUAL_SLICE_PARAMETERS->lonPtsSlice[0]);
+    fprintf(fp2,"LonB:\t%lf\n",INDIVIDUAL_SLICE_PARAMETERS->lonPtsSlice[1]);
+    fprintf(fp2,"Lat \t Lon \t Depth \t Vp \t Vs \t Rho\n");
+    for(int ix = 0; ix < PARTIAL_GLOBAL_MESH->nX; ix++)
+    {
+        for(int iz = 0; iz < PARTIAL_GLOBAL_MESH->nZ; iz++)
+        {
+            vsTemp = PARTIAL_GLOBAL_QUALITIES->Vs[ix][iz]; // else assign from global structure
+            vpTemp = PARTIAL_GLOBAL_QUALITIES->Vp[ix][iz];
+            rhoTemp = PARTIAL_GLOBAL_QUALITIES->Rho[ix][iz];
+            fprintf(fp2, "%lf\t%lf\t%lf\t%lf\t%lf\t%lf\n",PARTIAL_GLOBAL_MESH->Lat[ix],PARTIAL_GLOBAL_MESH->Lon[ix], PARTIAL_GLOBAL_MESH->Z[iz], vpTemp, vsTemp, rhoTemp);
             
         }
         

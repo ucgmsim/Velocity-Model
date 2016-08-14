@@ -73,7 +73,7 @@ Call type 3) GENERATE_VELOCITY_SLICES
 
 Example of GENERATE_VELOCITY_SLICES call
 ```
-./SIVM -A GENERATE_VELOCITY_SLICES -B 1.01 -C v1.01Model -O 0.5 -P GeneratedSliceParameters
+./NZVM -A GENERATE_VELOCITY_SLICES -B 1.01 -C v1.01Model -O 0.5 -P GeneratedSliceParameters
 ```
 
 Call type 4) GENERATE_INDIVIDUAL_PROFILE - All parameters must be set and the output directory must not exist

@@ -179,6 +179,33 @@ void loadEPtomoSurfaceData(char *tomoType, nz_tomography_data *NZ_TOMOGRAPHY_DAT
 //        int elev[20] = {10, 1, -5, -8, -11, -15, -23, -30, -38, -48, -65, -85, -105, -130, -155, -185, -225, -275, -370, -620};
 
     }
+    else if (strcmp(tomoType, "2010_Full_North_Island") == 0)
+    {
+        nElev = 12; // read in only the necessary surfaces
+        elev[0] = 15;
+        elev[1] = 1;
+        elev[2] = -3;
+        elev[3] = -8;
+        elev[4] = -15;
+        elev[5] = -23;
+        elev[6] = -30;
+        elev[7] = -38;
+        elev[8] = -48;
+        elev[9] = -65;
+        elev[10] = -85;
+        elev[11] = -105;
+        elev[12] = -130;
+        elev[13] = -155;
+        elev[14] = -185;
+        elev[15] = -225;
+        elev[16] = -275;
+        elev[17] = -370;
+        elev[18] = -620;
+        elev[19] = -750;
+        printf("Loading North Island Tomography.\n");
+
+        
+    }
     
     char baseFilename[MAX_FILENAME_STRING_LEN];
     

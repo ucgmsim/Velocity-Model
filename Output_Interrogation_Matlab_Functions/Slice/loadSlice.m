@@ -1,7 +1,6 @@
-function slice = loadSlice(fileName)
+function slice = loadSlice(fileName,type)
 % reads the files within the profile directory and places the data within a
 % struct 
-fileName
 fid = fopen(fileName);
 
 temp = fgetl(fid); % disregard first line
@@ -9,6 +8,12 @@ temp = fgetl(fid); % disregard first line
 line = fgetl(fid);
 tabLocation = strfind(line,sprintf('\t'));
 slice.res = str2double(line(tabLocation(1):end));
+
+if strcmp(type,'Generated') == 1
+    line = fgetl(fid);
+    tabLocation = strfind(line,sprintf('\t'));
+    slice.resZ = str2double(line(tabLocation(1):end));
+end
 
 % lat
 line = fgetl(fid);
@@ -51,6 +56,9 @@ fclose(fid);
 fid = fopen(fileName);
 for i = 1:7
 temp = fgetl(fid); % disregard first 6 lines
+end
+if strcmp(type,'Generated') == 1
+    temp = fgetl(fid); % disregard first 6 lines
 end
 
 for i = 1 : count

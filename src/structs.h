@@ -373,6 +373,8 @@ typedef struct{
     double lonInds[4*MAX_NUM_SLICE_GRIDPTS];
     double latPts[MAX_NUM_SLICE_GRIDPTS];
     double lonPts[MAX_NUM_SLICE_GRIDPTS];
+    double xPts[MAX_NUM_SLICE_GRIDPTS];
+    double yPts[MAX_NUM_SLICE_GRIDPTS];
     double Vp[MAX_NUM_SLICE_GRIDPTS][DEP_GRID_DIM_MAX];
     double Vs[MAX_NUM_SLICE_GRIDPTS][DEP_GRID_DIM_MAX];
     double Rho[MAX_NUM_SLICE_GRIDPTS][DEP_GRID_DIM_MAX];
@@ -398,6 +400,7 @@ typedef struct{
     int requiredLonInds[MAX_NUM_SLICE_GRIDPTS*4*MAX_NUM_SLICES];
     int sortedLatInds[MAX_NUM_SLICE_GRIDPTS*4*MAX_NUM_SLICES];
     int sortedLonInds[MAX_NUM_SLICE_GRIDPTS*4*MAX_NUM_SLICES];
+    
     
     double Vp[MAX_NUM_SLICE_GRIDPTS*4*MAX_NUM_SLICES][DEP_GRID_DIM_MAX];
     double Vs[MAX_NUM_SLICE_GRIDPTS*4*MAX_NUM_SLICES][DEP_GRID_DIM_MAX];

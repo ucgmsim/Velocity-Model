@@ -33,8 +33,8 @@ calculation_log *initializeCalculationLog(int argc, char *argv[])
 {
     calculation_log *CALCULATION_LOG;
     CALCULATION_LOG = malloc(sizeof(calculation_log));
-    CALCULATION_LOG->minVs = atof(argv[13]);
-    CALCULATION_LOG->outputDirectory = argv[3];
+//    CALCULATION_LOG->minVs = atof(argv[13]);
+//    CALCULATION_LOG->outputDirectory = argv[3];
     
     
     CALCULATION_LOG->nPointsInGlobalCornerSurfaceExtensionZone = 0;
@@ -51,20 +51,21 @@ void writeSliceParametersLogFile(char *OUTPUT_DIR, slice_parameters *SLICE_PARAM
     // generate file for writing
     FILE *fp2;
     char fName[MAX_FILENAME_STRING_LEN];
-    sprintf(fName,"%s/Extracted_Slices/SliceLogFile.txt",OUTPUT_DIR);
-    fp2 = fopen(fName,"w");
-    if (fp2 == NULL)
-    {
-        printf("Unable to open slice log file for write.\n");
-        exit(EXIT_FAILURE);
-    }
-    fprintf(fp2,"Slice Parameters Log File.\n");
-    fprintf(fp2,"Number_of_slices\t%i\n",SLICE_PARAMETRES->nSlices);
-    fprintf(fp2,"Model_version\t%s\n",MODEL_EXTENT->version);
+
 
     
     if (strcmp(type,"EXTRACTED") == 0)
     {
+        sprintf(fName,"%s/Extracted_Slices/SliceLogFile.txt",OUTPUT_DIR);
+        fp2 = fopen(fName,"w");
+        if (fp2 == NULL)
+        {
+            printf("Unable to open slice log file for write.\n");
+            exit(EXIT_FAILURE);
+        }
+        fprintf(fp2,"Slice Parameters Log File.\n");
+        fprintf(fp2,"Number_of_slices\t%i\n",SLICE_PARAMETRES->nSlices);
+        fprintf(fp2,"Model_version\t%s\n",MODEL_EXTENT->version);
         fprintf(fp2,"CornerLat1\t%lf\n",GLOBAL_MESH->Lat[0][0]);
         fprintf(fp2,"CornerLat2\t%lf\n",GLOBAL_MESH->Lat[0][GLOBAL_MESH->nY-1]);
         fprintf(fp2,"CornerLat3\t%lf\n",GLOBAL_MESH->Lat[GLOBAL_MESH->nX-1][GLOBAL_MESH->nY-1]);
@@ -76,7 +77,16 @@ void writeSliceParametersLogFile(char *OUTPUT_DIR, slice_parameters *SLICE_PARAM
     }
     else if (strcmp(type,"GENERATED") == 0)
     {
-        
+        sprintf(fName,"%s/Generated_Slices/SliceLogFile.txt",OUTPUT_DIR);
+        fp2 = fopen(fName,"w");
+        if (fp2 == NULL)
+        {
+            printf("Unable to open slice log file for write.\n");
+            exit(EXIT_FAILURE);
+        }
+        fprintf(fp2,"Slice Parameters Log File.\n");
+        fprintf(fp2,"Number_of_slices\t%i\n",SLICE_PARAMETRES->nSlices);
+        fprintf(fp2,"Model_version\t%s\n",MODEL_EXTENT->version);
     }
     fclose(fp2);
 

@@ -3,12 +3,12 @@ function plotIndividualSlices
 close all
 
 
-dirName{1} = 'v1.64';
+dirName{1} = 'v1.01';
 % dirName{2} = 'v1.22';
 
 
-% type{1} = 'Generated';
-type{1} = 'Extracted';
+type{1} = 'Generated';
+% type{1} = 'Extracted';
 
 % type{2} = 'Generated';
 % type{3} = 'Generated';
@@ -43,7 +43,7 @@ colorDepth = 1000;
 
 sliceLetter = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P'};
 colorArray = [0 0 0; 0 0 0; 0 0 0; 0 0 0; 0 0 0; 0 0 0; 0 0 0; 0 0 0; 0 0 0; 0 0 0; 0 0 0; 0 0 0; 0 0 0; 0 0 0];
-colorArrayB = [255 0 0; 255 128 0; 255 255 0; 128 255 0; 0 255 255; 0 128 255; 0 0 155; 127 0 255; 255 0 255; 192 192 192; 64 64 64; 0 0 0]/255;
+colorArrayB = [255 0 0; 255 128 0; 255 255 0; 0  100 0; 128 255 0; 0 255 255; 0 128 255; 0 0 155; 127 0 255; 255 0 255; 240 240 240; 192 192 192;112 112 112; 64 64 64; 0 0 0]/255;
 
 
 
@@ -61,13 +61,10 @@ for j = 1 : length(dirName)
         if strcmp(type{j},'Extracted') == 1
             sliceFileName = strcat(dirName{j},'/Extracted_Slices/ExtractedSlice',sprintf('%i',k),'.txt');
         elseif strcmp(type{j},'Generated') == 1
-            sliceFileName = strcat(dirName{j},'/Slices/GeneratedSlice',sprintf('%i',k),'.txt');
+            sliceFileName = strcat(dirName{j},'/Generated_Slices/GeneratedSlice',sprintf('%i',k),'.txt');
         end
-        
-        %
-        slice = loadSlice(sliceFileName);
-        %                        save('dataA.mat')
-        %         load('dataA.mat')
+        slice = loadSlice(sliceFileName, type{j});
+
         
         
         F1 = figure(1);
@@ -473,7 +470,7 @@ for j = 1 : length(dirName)
     legend(sliceLetter);
     [NZcoastLat,NZcoastLong]=NZCoastlineData;
     plot(NZcoastLong,NZcoastLat,'LineWidth',lineWidth3)
-    %     axis([170.5 174.0 -44.5 -42.7]);
+    axis([170. 173.8 -44.8 -42.4]);
     if strcmp(type{j},'Extracted') == 1
         latDom = [sliceParameters.latA  sliceParameters.latB sliceParameters.latC sliceParameters.latD sliceParameters.latA];
         lonDom = [sliceParameters.lonA  sliceParameters.lonB sliceParameters.lonC sliceParameters.lonD sliceParameters.lonA];
@@ -571,7 +568,19 @@ if strcmp(type,'Extracted') == 1
     sliceParameters.lonD = str2double(line(tabLocation(1):end));
     
 elseif strcmp(type,'Generated') == 1
+        fileName = strcat(dirName,'/Generated_Slices/SliceLogFile.txt')
     
+    fid = fopen(fileName);
+    
+    line = fgetl(fid); % desregard first line
+    
+    line = fgetl(fid);
+    tabLocation = strfind(line,sprintf('\t'));
+    sliceParameters.nSlices = str2double(line(tabLocation(1):end));
+    
+    line = fgetl(fid);
+    tabLocation = strfind(line,sprintf('\t'));
+    sliceParameters.version = str2double(line(tabLocation(1):end));
 end
 
 fclose(fid);

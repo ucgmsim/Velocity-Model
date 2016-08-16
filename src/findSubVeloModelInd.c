@@ -40,7 +40,8 @@ int findGlobalSubVeloModelInd(double depth, partial_global_surface_depths *PARTI
     
     if(nVeloInd == 1e6)
     {
-        printf("Error.\n"); 
+        printf("Sub velocity model ind not found.\n");
+        exit(EXIT_FAILURE);
     }
     
     return nVeloInd;

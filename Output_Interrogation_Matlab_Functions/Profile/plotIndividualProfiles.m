@@ -5,7 +5,7 @@ close all
 
 % taylored to suit either one grid point location and different models or
 % different grid points for the same model
-dirName{1} = 'GeneratedProfileA';
+dirName{1} = 'Napier_EPTOMO_Profile';
 % dirName{2} = 'GeneratedProfile1D';
 
 % dirName{2} = 'GeneratedProfileV0.2';
@@ -57,15 +57,15 @@ for i = 1 : length(dirName)
     figure(3);
     plot(profile.rho,profile.dep,'LineWidth',lineWidth,'Color',colorArray(i,:));
     
-    ver(i) = profile.version;
-    lat(i) = profile.lat;
-    lon(i) = profile.lon;
-    minVp(i) = min(profile.vp);
-    maxVp(i) = max(profile.vp);
-    minVs(i) = min(profile.vs);
-    maxVs(i) = max(profile.vs);
-    minRho(i) = min(profile.rho);
-    maxRho(i) = max(profile.rho);
+%     ver(i) = profile.version;
+%     lat(i) = profile.lat;
+%     lon(i) = profile.lon;
+%     minVp(i) = min(profile.vp);
+%     maxVp(i) = max(profile.vp);
+%     minVs(i) = min(profile.vs);
+%     maxVs(i) = max(profile.vs);
+%     minRho(i) = min(profile.rho);
+%     maxRho(i) = max(profile.rho);
  
 end
 

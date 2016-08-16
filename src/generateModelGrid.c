@@ -73,12 +73,14 @@ void generateFullModelGridGreatCircle(model_extent *MODEL_EXTENT, global_mesh *G
     
     for(int i = 0; i < GLOBAL_MESH->nX; i++)
     {
-        GLOBAL_MESH->X[i] = MODEL_EXTENT->hLatLon*(i);
+        GLOBAL_MESH->X[i] = 0.5*MODEL_EXTENT->hLatLon+MODEL_EXTENT->hLatLon*(i)-0.5*MODEL_EXTENT->Xmax;
+//        GLOBAL_MESH->X[i] = MODEL_EXTENT->hLatLon*(i);
     }
     
     for(int i = 0; i < GLOBAL_MESH->nY; i++)
     {
-        GLOBAL_MESH->Y[i] = MODEL_EXTENT->hLatLon*(i);
+        GLOBAL_MESH->Y[i] = 0.5*MODEL_EXTENT->hLatLon+MODEL_EXTENT->hLatLon*(i)-0.5*MODEL_EXTENT->Ymax;
+//        GLOBAL_MESH->Y[i] = MODEL_EXTENT->hLatLon*(i);
     }
     
     for(int i = 0; i < GLOBAL_MESH->nZ; i++)
@@ -86,10 +88,10 @@ void generateFullModelGridGreatCircle(model_extent *MODEL_EXTENT, global_mesh *G
         GLOBAL_MESH->Z[i] = -1000*(MODEL_EXTENT->Zmin + MODEL_EXTENT->hDep*(i+0.5));
     }
     
-    double xmax, ymax;// zmax, xlen, ylen, zlen;
+//    double xmax, ymax;// zmax, xlen, ylen, zlen;
     
-    xmax = GLOBAL_MESH->X[GLOBAL_MESH->nX-1];
-    ymax = GLOBAL_MESH->Y[GLOBAL_MESH->nY-1];
+//    xmax = GLOBAL_MESH->X[GLOBAL_MESH->nX-1];
+//    ymax = GLOBAL_MESH->Y[GLOBAL_MESH->nY-1];
 //    zmax = GLOBAL_MESH->Z[GLOBAL_MESH->nZ-1];
     
 //    xlen = xmax + 0.5*(GLOBAL_MESH->X[GLOBAL_MESH->nX-1] + GLOBAL_MESH->X[0]);
@@ -143,9 +145,9 @@ void generateFullModelGridGreatCircle(model_extent *MODEL_EXTENT, global_mesh *G
     ainv[7] = det*amat[5];
     ainv[8] = det*amat[8];
 
-    
-    double g0 = 0.5*ymax/ERAD;
-    double b0 = 0.5*xmax/ERAD;
+
+    double g0 = 0.0;//0.5*(MODEL_EXTENT->Ymax - MODEL_EXTENT->hLatLon)/ERAD;
+    double b0 = 0.0;//0.5*(MODEL_EXTENT->Xmax - MODEL_EXTENT->hLatLon)/ERAD;
     
     double x, y;
     for(int iy = 0; iy < GLOBAL_MESH->nY; iy++)
@@ -156,6 +158,7 @@ void generateFullModelGridGreatCircle(model_extent *MODEL_EXTENT, global_mesh *G
             x = GLOBAL_MESH->X[ix];
             y = GLOBAL_MESH->Y[iy];
             gcproj(x,y,&GLOBAL_MESH->Lon[ix][iy],&GLOBAL_MESH->Lat[ix][iy],ERAD,g0,b0,amat,ainv);
+
             if( GLOBAL_MESH->maxLat < GLOBAL_MESH->Lat[ix][iy])
             {
                 GLOBAL_MESH->maxLat = GLOBAL_MESH->Lat[ix][iy];

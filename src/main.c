@@ -16,7 +16,8 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
-#include <getopt.h>
+//#include <getopt.h>
+#include "getopt_long.h"
 
 #include "constants.h"
 #include "structs.h"

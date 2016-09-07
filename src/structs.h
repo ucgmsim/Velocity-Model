@@ -159,6 +159,12 @@ typedef struct{
     int nSurfDep;
 }partial_global_surface_depths;
 
+typedef struct{
+    double globSurfdep[MAX_NUM_GLOBAL_SURFACES][MAX_NUM_SLICE_GRIDPTS];
+    double basinSurfdep[MAX_NUM_BASINS][MAX_NUM_BASIN_SURFACES][MAX_NUM_SLICE_GRIDPTS];
+}slice_surface_depths;
+
+
 // get surface values
 //typedef struct{
 //    double dep[NUM_SURF_DIM_MAX][LON_GRID_DIM_MAX][LAT_GRID_DIM_MAX];

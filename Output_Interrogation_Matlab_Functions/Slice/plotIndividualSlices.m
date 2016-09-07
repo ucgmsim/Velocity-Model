@@ -3,7 +3,9 @@ function plotIndividualSlices
 close all
 
 
-dirName{1} = 'v1.01';
+dirName{1} = 'v1.21SI';
+% dirName{2} = 'v1.01ModelRemote';
+
 % dirName{2} = 'v1.22';
 
 
@@ -470,7 +472,7 @@ for j = 1 : length(dirName)
     legend(sliceLetter);
     [NZcoastLat,NZcoastLong]=NZCoastlineData;
     plot(NZcoastLong,NZcoastLat,'LineWidth',lineWidth3)
-    axis([170. 173.8 -44.8 -42.4]);
+%     axis([170. 173.8 -44.8 -42.4]);
     if strcmp(type{j},'Extracted') == 1
         latDom = [sliceParameters.latA  sliceParameters.latB sliceParameters.latC sliceParameters.latD sliceParameters.latA];
         lonDom = [sliceParameters.lonA  sliceParameters.lonB sliceParameters.lonC sliceParameters.lonD sliceParameters.lonA];

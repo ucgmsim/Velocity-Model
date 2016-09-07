@@ -224,7 +224,84 @@ void writeProfileSurfaceDepths(global_model_parameters *GLOBAL_MODEL_PARAMETERS,
     
 }
 
+void writeSliceSurfaceDepths(global_model_parameters *GLOBAL_MODEL_PARAMETERS,partial_global_mesh *PARTIAL_GLOBAL_MESH, char *OUTPUT_DIR, slice_surface_depths *SLICE_SURFACE_DEPTHS)
+{
+    for( int i = 0; i < GLOBAL_MODEL_PARAMETERS->nBasins; i++)
+    {
+        writeAllBasinSurfaceDepths(GLOBAL_MODEL_PARAMETERS, PARTIAL_GLOBAL_MESH, i, OUTPUT_DIR, SLICE_SURFACE_DEPTHS);
+    }
+    for( int i = 0; i < GLOBAL_MODEL_PARAMETERS->nSurf; i++)
+    {
+        writeAllGlobalSurfaceDepths(SLICE_SURFACE_DEPTHS, PARTIAL_GLOBAL_MESH, GLOBAL_MODEL_PARAMETERS, OUTPUT_DIR);
+    }
 
+}
+
+void writeAllBasinSurfaceDepths(global_model_parameters *GLOBAL_MODEL_PARAMETERS, partial_global_mesh *PARTIAL_GLOBAL_MESH, int basinNum, char *OUTPUT_DIR,slice_surface_depths *SLICE_SURFACE_DEPTHS)
+{
+    char sliceDir[MAX_FILENAME_STRING_LEN];
+    sprintf(sliceDir,"%s/Generated_Slices",OUTPUT_DIR);
+    
+    static int sliceCount = 0;
+    sliceCount += 1;
+    sliceCount -= basinNum;
+    
+    
+    FILE *fp;
+    char fName[MAX_FILENAME_STRING_LEN];
+    sprintf(fName,"%s/SliceSurfaceDepthsBasin#%iSlice#%i.txt",sliceDir,basinNum,sliceCount);
+    fp = fopen(fName, "w");
+    fprintf(fp, "Lat\tLon\t");
+    for(int k = 0; k < GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum]; k++)
+    {
+        fprintf(fp, "%s\t", GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][k]);
+    }
+    fprintf(fp, "\n");
+    for (int i = 0; i < PARTIAL_GLOBAL_MESH->nX; i++)
+    {
+        fprintf(fp, "%lf\t%lf\t", PARTIAL_GLOBAL_MESH->Lat[i],PARTIAL_GLOBAL_MESH->Lon[i]);
+        for (int j = 0; j < GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum]; j++)
+        {
+            fprintf(fp, "%lf\t", SLICE_SURFACE_DEPTHS->basinSurfdep[basinNum][j][i]);
+        }
+        fprintf(fp, "\n");
+        
+    }
+    fclose(fp);
+}
+
+
+void writeAllGlobalSurfaceDepths(slice_surface_depths *SLICE_SURFACE_DEPTHS, partial_global_mesh *PARTIAL_GLOBAL_MESH, global_model_parameters *GLOBAL_MODEL_PARAMETERS,char *OUTPUT_DIR)
+{
+    char sliceDir[MAX_FILENAME_STRING_LEN];
+    sprintf(sliceDir,"%s/Generated_Slices",OUTPUT_DIR);
+    
+    static int sCount = 0;
+    sCount += 1;
+    
+    FILE *fp;
+    char fName[MAX_FILENAME_STRING_LEN];
+    sprintf(fName,"%s/SliceSurfaceDepthsGlobal%i.txt",sliceDir,sCount);
+    fp = fopen(fName, "w");
+    fprintf(fp, "Lat\tLon\t");
+    for(int k = 0; k < GLOBAL_MODEL_PARAMETERS->nSurf; k++)
+    {
+        fprintf(fp, "%s\t", GLOBAL_MODEL_PARAMETERS->surf[k]);
+    }
+    fprintf(fp, "\n");
+    for (int i = 0; i < PARTIAL_GLOBAL_MESH->nX; i++)
+    {
+        fprintf(fp, "%lf\t%lf\t", PARTIAL_GLOBAL_MESH->Lat[i],PARTIAL_GLOBAL_MESH->Lon[i]);
+        for (int j = 0; j < GLOBAL_MODEL_PARAMETERS->nSurf; j++)
+        {
+            fprintf(fp, "%lf\t",SLICE_SURFACE_DEPTHS->globSurfdep[j][i]);
+        }
+        fprintf(fp, "\n");
+        
+    }
+    fclose(fp);
+    
+}
 
 
 

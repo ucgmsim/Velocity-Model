@@ -79,6 +79,7 @@ void runGenerateVelocitySlices(char *MODEL_VERSION, char *OUTPUT_DIR, gen_velo_s
     partial_global_surface_depths *PARTIAL_GLOBAL_SURFACE_DEPTHS;
     partial_basin_surface_depths *PARTIAL_BASIN_SURFACE_DEPTHS;
     in_basin *IN_BASIN;
+    slice_surface_depths *SLICE_SURFACE_DEPTHS;
     // Load Data
     loadAllGlobalData(GLOBAL_MODEL_PARAMETERS, CALCULATION_LOG, VELO_MOD_1D_DATA, NZ_TOMOGRAPHY_DATA, GLOBAL_SURFACES, BASIN_DATA);
     
@@ -103,6 +104,12 @@ void runGenerateVelocitySlices(char *MODEL_VERSION, char *OUTPUT_DIR, gen_velo_s
         if (PARTIAL_GLOBAL_QUALITIES == NULL)
         {
             printf("Memory allocation of PARTIAL_GLOBAL_QUALITIES failed.\n");
+            exit(EXIT_FAILURE);
+        }
+        SLICE_SURFACE_DEPTHS = malloc(sizeof(slice_surface_depths));
+        if (SLICE_SURFACE_DEPTHS == NULL)
+        {
+            printf("Memory allocation of SLICE_SURFACE_DEPTHS failed.\n");
             exit(EXIT_FAILURE);
         }
         
@@ -147,6 +154,20 @@ void runGenerateVelocitySlices(char *MODEL_VERSION, char *OUTPUT_DIR, gen_velo_s
 
                 
             }
+            for(int i = 0; i < GLOBAL_MODEL_PARAMETERS->nBasins; i++)
+            {
+                for(int j = 0; j < GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[i]; j++)
+                {
+                    SLICE_SURFACE_DEPTHS->basinSurfdep[i][j][k] = PARTIAL_BASIN_SURFACE_DEPTHS->dep[i][j];
+                }
+
+            }
+            for(int i = 0; i < GLOBAL_MODEL_PARAMETERS->nSurf; i++)
+            {
+                SLICE_SURFACE_DEPTHS->globSurfdep[i][k] = PARTIAL_GLOBAL_SURFACE_DEPTHS->dep[i];
+            }
+
+            
             free(MESH_VECTOR);
             free(QUALITIES_VECTOR);
             free(PARTIAL_BASIN_SURFACE_DEPTHS);
@@ -154,9 +175,9 @@ void runGenerateVelocitySlices(char *MODEL_VERSION, char *OUTPUT_DIR, gen_velo_s
             free(IN_BASIN);
         }
         writeGeneratedSlice(OUTPUT_DIR, PARTIAL_GLOBAL_MESH, PARTIAL_GLOBAL_QUALITIES, &INDIVIDUAL_SLICE_PARAMETERS,CALCULATION_LOG, j);
-        
+        writeSliceSurfaceDepths(GLOBAL_MODEL_PARAMETERS,PARTIAL_GLOBAL_MESH, OUTPUT_DIR, SLICE_SURFACE_DEPTHS);
         printf("Slice %i of %i complete.\n",j+1,SLICE_PARAMETERS->nSlices);
-        
+        free(SLICE_SURFACE_DEPTHS);
         free(PARTIAL_GLOBAL_MESH);
         free(PARTIAL_GLOBAL_QUALITIES);
     }
@@ -484,7 +505,7 @@ void runGenerateVelocityModel(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extract
                 
             }
             free(MESH_VECTOR);
-            free(QUALITIES_VECTOR);
+            free(QUALITIES_VECTOR); 
             free(PARTIAL_BASIN_SURFACE_DEPTHS);
             free(PARTIAL_GLOBAL_SURFACE_DEPTHS);
             free(IN_BASIN);

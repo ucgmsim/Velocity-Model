@@ -630,6 +630,31 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion)
         
         GLOBAL_MODEL_PARAMETERS->nBasins = 2;
     }
+    //  Model Version 1.1  w/ Tomography
+    else if(strcmp(modelVersion,"1.11_DEM") == 0)
+    {
+        // define the number of surfaces and sub models
+        GLOBAL_MODEL_PARAMETERS->nSurf = 3;
+        GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 2;
+        
+        // insert surface surface keywords and filenames
+        GLOBAL_MODEL_PARAMETERS->surf[0] = "posInfSurf";
+        GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[0] = "Data/Global_Surfaces/posInf.in";
+        GLOBAL_MODEL_PARAMETERS->surf[1] = "DEM";
+        GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[1] = "Data/DEM/SI_DEM.in";
+        GLOBAL_MODEL_PARAMETERS->surf[2] = "negInfSurf";
+        GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[2] = "Data/Global_Surfaces/negInf.in";
+        
+        
+        // insert velocity submodel keywords and filenames (if necessary)
+        GLOBAL_MODEL_PARAMETERS->veloSubMod[0] = "NaNsubMod";
+        GLOBAL_MODEL_PARAMETERS->veloSubMod[1] = "EPtomo2010subMod";
+        GLOBAL_MODEL_PARAMETERS->tomographyName = "2010_Full_South_Island";
+        //GLOBAL_MODEL_PARAMETERS->tomographyName = "2010_Update_Canterbury";
+        //GLOBAL_MODEL_PARAMETERS->tomographyName = "2010_Update_Hybrid";
+        
+        GLOBAL_MODEL_PARAMETERS->nBasins = 0;
+    }
 
     
     //==========================================================

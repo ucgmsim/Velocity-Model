@@ -230,10 +230,8 @@ void writeSliceSurfaceDepths(global_model_parameters *GLOBAL_MODEL_PARAMETERS,pa
     {
         writeAllBasinSurfaceDepths(GLOBAL_MODEL_PARAMETERS, PARTIAL_GLOBAL_MESH, i, OUTPUT_DIR, SLICE_SURFACE_DEPTHS);
     }
-    for( int i = 0; i < GLOBAL_MODEL_PARAMETERS->nSurf; i++)
-    {
+
         writeAllGlobalSurfaceDepths(SLICE_SURFACE_DEPTHS, PARTIAL_GLOBAL_MESH, GLOBAL_MODEL_PARAMETERS, OUTPUT_DIR);
-    }
 
 }
 

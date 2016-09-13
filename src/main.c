@@ -119,15 +119,14 @@ int main(int argc, char *argv[])
     argv[1] = "-A";
     argv[2] = "GENERATE_VELOCITY_SLICES";
     argv[3] = "-B";
-    argv[4] = "1.64";
+    argv[4] = "1.11_DEM";
     argv[5] = "-C";
-    argv[6] = "v1.01";
+    argv[6] = "PreQFenceNZTomoOnly";
     argv[7] = "-O";
     argv[8] = "0.5";
     argv[9] = "-P";
-    argv[10] = "SliceParametersTesting";
+    argv[10] = "GeneratedSliceParametersThesisSI";
      */
-    
     
     
     // set call type flags to zero (0)

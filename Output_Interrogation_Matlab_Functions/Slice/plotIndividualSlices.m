@@ -3,7 +3,7 @@ function plotIndividualSlices
 close all
 
 
-dirName{1} = 'v1.21SI';
+dirName{1} = 'PreQFenceCFAllBasins';
 % dirName{2} = 'v1.01ModelRemote';
 
 % dirName{2} = 'v1.22';

@@ -69,7 +69,7 @@ partial_global_mesh *generateSlicePartialMesh(individual_slice_parameters INDIVI
     
     for(i = 0; i < PARTIAL_GLOBAL_MESH->nZ; i ++)
     {
-        PARTIAL_GLOBAL_MESH->Z[i] = 1000*(INDIVIDUAL_SLICE_PARAMETERS.zMin - i*dz);
+        PARTIAL_GLOBAL_MESH->Z[i] = 1000*(-1.0*INDIVIDUAL_SLICE_PARAMETERS.zMin - i*dz);
     }
 
     

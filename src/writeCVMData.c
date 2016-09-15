@@ -177,7 +177,7 @@ void writeIndividualProfile(qualities_vector *QUALITIES_VECTOR, gen_profile_call
         {
             QUALITIES_VECTOR->Vs[i] = GEN_PROFILE_CALL.PROFILE_MIN_VS;
         }
-        fprintf(fp,"%lf \t %lf \t %lf \t %lf\n",*MESH_VECTOR->Z[i], QUALITIES_VECTOR->Vp[i],QUALITIES_VECTOR->Vs[i],QUALITIES_VECTOR->Rho[i]);
+        fprintf(fp,"%lf \t %lf \t %lf \t %lf\n",MESH_VECTOR->Z[i], QUALITIES_VECTOR->Vp[i],QUALITIES_VECTOR->Vs[i],QUALITIES_VECTOR->Rho[i]);
     }
     fclose(fp);
     printf("Profile text file write complete.\n");

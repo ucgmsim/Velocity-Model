@@ -50,9 +50,10 @@ typedef struct{
 typedef struct{
     double *Lon;
     double *Lat;
-    double *Z[DEP_GRID_DIM_MAX];
+    double Z[DEP_GRID_DIM_MAX];
     int *nZ;
 }mesh_vector;
+
 
 
 
@@ -315,6 +316,7 @@ typedef struct{
     double EXTENT_Z_SPACING;
     double EXTENT_LATLON_SPACING;
     double MIN_VS;
+    char *TOPO_TYPE;
     int numInputsSet;
     char *EXTRACTED_SLICE_PARAMETERS_DIRECTORY;
 }gen_extract_velo_mod_call;
@@ -323,6 +325,7 @@ typedef struct{
 typedef struct{
     char *GENERATED_SLICE_PARAMETERS_DIRECTORY;
     double MIN_VS_SLICE;
+    char *TOPO_TYPE;
     int numInputsSet;
 }gen_velo_slices_call;
 

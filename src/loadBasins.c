@@ -130,11 +130,11 @@ void enforceBasinSurfaceDepths(basin_data *BASIN_DATA, global_model_parameters *
             
             for(int k  = 0; k < *MESH_VECTOR->nZ; k++)
             {
-                if(*MESH_VECTOR->Z[k] > topLim)
+                if(MESH_VECTOR->Z[k] > topLim)
                 {
                     IN_BASIN->inBasinDep[i][k] = 0;
                 }
-                else if (*MESH_VECTOR->Z[k] < botLim)
+                else if (MESH_VECTOR->Z[k] < botLim)
                 {
                     IN_BASIN->inBasinDep[i][k] = 0;
                 }

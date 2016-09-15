@@ -25,14 +25,14 @@ int main(int argc, char *argv[])
 //int main(void)
 {
     /*
-     int argc = 27;
-     char *argv[27];
+     int argc = 29;
+     char *argv[29];
      argv[1] = "-A";
      argv[2] = "GENERATE_VELOCITY_MOD";
     argv[3] = "-B";
-    argv[4] = "1.64";
+    argv[4] = "1.65";
     argv[5] = "-C";
-    argv[6] = "v1.64_CF";
+    argv[6] = "v1.65_CF_BULLDOZED";
     argv[7] = "-D";
     argv[8] = "-43.65";
     argv[9] = "-E";
@@ -53,11 +53,13 @@ int main(int argc, char *argv[])
     argv[24] = "1";
     argv[25] = "-M";
     argv[26] = "0.5";
+     argv[27] = "-N";
+    argv[28] = "SQUASHED"; //"SQUASHED" BULLDOZED
      */
     
      /*
-    int argc = 29;
-     char *argv[29];
+    int argc = 31;
+     char *argv[31];
      argv[1] = "-A";
      argv[2] = "EXTRACT_VELOCITY_SLICES";
     argv[3] = "-B";
@@ -84,8 +86,10 @@ int main(int argc, char *argv[])
     argv[24] = "1";
     argv[25] = "-M";
     argv[26] = "0.5";
-     argv[27] = "-N";
-     argv[28] = "ExtractedSliceParametersECVM";
+      argv[27] = "-N";
+      argv[28] = "BULLDOZED"; //"SQUASHED"
+     argv[29] = "-O";
+     argv[30] = "ExtractedSliceParametersECVM";
      */
 
     
@@ -114,18 +118,20 @@ int main(int argc, char *argv[])
     
     
     /*
-    int argc = 11;
-    char *argv[11];
+    int argc = 13;
+    char *argv[13];
     argv[1] = "-A";
     argv[2] = "GENERATE_VELOCITY_SLICES";
     argv[3] = "-B";
-    argv[4] = "1.11_DEM";
+    argv[4] = "1.65";
     argv[5] = "-C";
-    argv[6] = "PreQFenceNZTomoOnly";
-    argv[7] = "-O";
-    argv[8] = "0.5";
-    argv[9] = "-P";
-    argv[10] = "GeneratedSliceParametersThesisSI";
+    argv[6] = "v1.65_SQUASHED";
+    argv[7] = "-P";
+    argv[8] = "0"; //minVs
+    argv[9] = "-Q";
+    argv[10] = "SliceParametersCant";
+    argv[11] = "-R";
+    argv[12] = "SQUASHED"; //"SQUASHED" BULLDOZED
      */
     
     
@@ -146,7 +152,6 @@ int main(int argc, char *argv[])
     char *MODEL_VERSION = NULL;
     char *OUTPUT_DIR = NULL;
     char *genCallType = NULL;
-//    int long_index = 0;
     int numCallTypesSet = 0;
     int opt = 0;
     
@@ -224,36 +229,43 @@ int main(int argc, char *argv[])
             case 'M' : GEN_EXTRACT_VELO_MOD_CALL.MIN_VS = atof(optarg);
                 GEN_EXTRACT_VELO_MOD_CALL.numInputsSet += 1;
                 break;
-            case 'N' : GEN_EXTRACT_VELO_MOD_CALL.EXTRACTED_SLICE_PARAMETERS_DIRECTORY = optarg;
+            case 'N' : GEN_EXTRACT_VELO_MOD_CALL.TOPO_TYPE = optarg;
                 GEN_EXTRACT_VELO_MOD_CALL.numInputsSet += 1;
                 break;
+            case 'O' : GEN_EXTRACT_VELO_MOD_CALL.EXTRACTED_SLICE_PARAMETERS_DIRECTORY = optarg;
+                GEN_EXTRACT_VELO_MOD_CALL.numInputsSet += 1;
+                break;
+
                 
             // Optional inputs (GENERATE_VELOCITY_SLICES)
-            case 'O' : GEN_VELO_SLICES_CALL.MIN_VS_SLICE = atof(optarg);
+            case 'P' : GEN_VELO_SLICES_CALL.MIN_VS_SLICE = atof(optarg);
                 GEN_VELO_SLICES_CALL.numInputsSet += 1;
                 break;
-            case 'P' : GEN_VELO_SLICES_CALL.GENERATED_SLICE_PARAMETERS_DIRECTORY = optarg;
+            case 'Q' : GEN_VELO_SLICES_CALL.GENERATED_SLICE_PARAMETERS_DIRECTORY = optarg;
+                GEN_VELO_SLICES_CALL.numInputsSet += 1;
+                break;
+            case 'R' : GEN_VELO_SLICES_CALL.TOPO_TYPE = optarg;
                 GEN_VELO_SLICES_CALL.numInputsSet += 1;
                 break;
 
                 
                 // Optional inputs (GENERATE_PROFILE)
-            case 'Q' : GEN_PROFILE_CALL.PROFILE_LAT = atof(optarg);
+            case 'S' : GEN_PROFILE_CALL.PROFILE_LAT = atof(optarg);
                 GEN_PROFILE_CALL.numInputsSet += 1;
                 break;
-            case 'R' : GEN_PROFILE_CALL.PROFILE_LON = atof(optarg);
+            case 'T' : GEN_PROFILE_CALL.PROFILE_LON = atof(optarg);
                 GEN_PROFILE_CALL.numInputsSet += 1;
                 break;
-            case 'S' : GEN_PROFILE_CALL.PROFILE_ZMAX = atof(optarg);
+            case 'U' : GEN_PROFILE_CALL.PROFILE_ZMAX = atof(optarg);
                 GEN_PROFILE_CALL.numInputsSet += 1;
                 break;
-            case 'T' : GEN_PROFILE_CALL.PROFILE_ZMIN = atof(optarg);
+            case 'V' : GEN_PROFILE_CALL.PROFILE_ZMIN = atof(optarg);
                 GEN_PROFILE_CALL.numInputsSet += 1;
                 break;
-            case 'U' : GEN_PROFILE_CALL.PROFILE_MIN_VS = atof(optarg);
+            case 'W' : GEN_PROFILE_CALL.PROFILE_MIN_VS = atof(optarg);
                 GEN_PROFILE_CALL.numInputsSet += 1;
                 break;
-            case 'V' : GEN_PROFILE_CALL.EXTENT_Z_SPACING_PROFILE = atof(optarg);
+            case 'X' : GEN_PROFILE_CALL.EXTENT_Z_SPACING_PROFILE = atof(optarg);
                 GEN_PROFILE_CALL.numInputsSet += 1;
                 break;
                 
@@ -282,7 +294,7 @@ int main(int argc, char *argv[])
     
     if (GENERATE_VELOCITY_MOD == 1)
     {
-        if(GEN_EXTRACT_VELO_MOD_CALL.numInputsSet != 10)
+        if(GEN_EXTRACT_VELO_MOD_CALL.numInputsSet != 11)
         {
             printf("Incorrect number of parameters set for GENERATE_VELOCITY_MOD call, see readme for instructions.\n");
             exit(EXIT_FAILURE);
@@ -290,7 +302,7 @@ int main(int argc, char *argv[])
     }
     else if (EXTRACT_VELOCITY_SLICES == 1)
     {
-        if(GEN_EXTRACT_VELO_MOD_CALL.numInputsSet != 11)
+        if(GEN_EXTRACT_VELO_MOD_CALL.numInputsSet != 12)
         {
             printf("Incorrect number of parameters set for EXTRACT_VELOCITY_SLICES call, see readme for instructions.\n");
             exit(EXIT_FAILURE);
@@ -298,7 +310,7 @@ int main(int argc, char *argv[])
     }
     else if (GENERATE_VELOCITY_SLICES == 1)
     {
-        if(GEN_VELO_SLICES_CALL.numInputsSet != 2)
+        if(GEN_VELO_SLICES_CALL.numInputsSet != 3)
         {
             printf("Incorrect number of parameters set for GENERATE_VELOCITY_SLICES call, see readme for instructions.\n");
             exit(EXIT_FAILURE);
@@ -347,7 +359,7 @@ int main(int argc, char *argv[])
             exit(EXIT_FAILURE);
         }
     }
-    
+    //*/
     
     // generate the log file struct
     calculation_log *CALCULATION_LOG;

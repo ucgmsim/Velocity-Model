@@ -142,7 +142,7 @@ mesh_vector *extractMeshVector(partial_global_mesh *PARTIAL_GLOBAL_MESH, int lon
     
     for(int i = 0; i < PARTIAL_GLOBAL_MESH->nZ; i++)
     {
-        MESH_VECTOR->Z[i] = &PARTIAL_GLOBAL_MESH->Z[i];
+        MESH_VECTOR->Z[i] = PARTIAL_GLOBAL_MESH->Z[i];
     }
     MESH_VECTOR->nZ = &PARTIAL_GLOBAL_MESH->nZ;
     

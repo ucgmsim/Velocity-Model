@@ -52,7 +52,7 @@ void writeGlobalQualities(char *OUTPUT_DIR, partial_global_mesh *PARTIAL_GLOBAL_
     float vpWrite, vsWrite, rhoWrite;
     
     char fullMod[MAX_FILENAME_STRING_LEN];
-    FILE *fullModTxt;
+    FILE *fullModTxt = NULL;
     sprintf(fullMod,"%s/Velocity_Model/fullMod.txt",OUTPUT_DIR);
     
     int bsize;

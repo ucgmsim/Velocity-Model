@@ -38,7 +38,7 @@ void assignBasinQualities(global_model_parameters *GLOBAL_MODEL_PARAMETERS, basi
     indAbove = determineBasinSurfaceAbove(GLOBAL_MODEL_PARAMETERS, PARTIAL_BASIN_SURFACE_DEPTHS, depth, basinNum);
     indBelow = determineBasinSurfaceBelow(GLOBAL_MODEL_PARAMETERS, PARTIAL_BASIN_SURFACE_DEPTHS, depth, basinNum);
     
-
+//    printf("%i %i %i %lf.\n",indAbove, basinNum, zInd, depth);
     callBasinSubVelocityModels(GLOBAL_MODEL_PARAMETERS, BASIN_DATA, PARTIAL_BASIN_SURFACE_DEPTHS, QUALITIES_VECTOR,depth, indAbove, basinNum, zInd);
     
 }

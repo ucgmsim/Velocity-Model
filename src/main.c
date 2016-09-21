@@ -32,29 +32,29 @@ int main(int argc, char *argv[])
     argv[3] = "-B";
     argv[4] = "1.65";
     argv[5] = "-C";
-    argv[6] = "v1.65_CF_BULLDOZED";
+    argv[6] = "v1.65";
     argv[7] = "-D";
-    argv[8] = "-43.65";
+    argv[8] = "-43.6";
     argv[9] = "-E";
-    argv[10] = "172.1";
+    argv[10] = "172.3";
     argv[11] = "-F";
-    argv[12] = "-42.00";
+    argv[12] = "-10";
     argv[13] = "-G";
-    argv[14] = "210.";
+    argv[14] = "140.";
     argv[15] = "-H";
-    argv[16] = "146.";
+    argv[16] = "210.";
     argv[17] = "-I";
-    argv[18] = "70.";
+    argv[18] = "46.";
     argv[19] = "-J";
     argv[20] = "0";
     argv[21] = "-K";
-    argv[22] = "1";
+    argv[22] = "0.1";
     argv[23] = "-L";
     argv[24] = "1";
     argv[25] = "-M";
-    argv[26] = "0.5";
+    argv[26] = "0.1";
      argv[27] = "-N";
-    argv[28] = "SQUASHED"; //"SQUASHED" BULLDOZED
+    argv[28] = "SQUASHED_TAPERED"; //"SQUASHED" BULLDOZED
      */
     
      /*
@@ -131,7 +131,7 @@ int main(int argc, char *argv[])
     argv[9] = "-Q";
     argv[10] = "SliceParametersCant";
     argv[11] = "-R";
-    argv[12] = "SQUASHED"; //"SQUASHED" BULLDOZED
+    argv[12] = "SQUASHED_TAPERED"; //"SQUASHED" BULLDOZED SQUASHED_TAPERED
      */
     
     

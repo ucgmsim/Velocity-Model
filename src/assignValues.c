@@ -42,7 +42,8 @@ void assignQualities(global_model_parameters *GLOBAL_MODEL_PARAMETERS, velo_mod_
     double dZ;
     double depthChange;
 
-    mesh_vector *SHIFTED_MESH_VECTOR;
+    mesh_vector *SHIFTED_MESH_VECTOR = NULL;
+
     if(strcmp(TOPO_TYPE, "SQUASHED") == 0)
     {
         dZ = (MESH_VECTOR->Z[0] -  MESH_VECTOR->Z[1]);
@@ -66,23 +67,57 @@ void assignQualities(global_model_parameters *GLOBAL_MODEL_PARAMETERS, velo_mod_
             SHIFTED_MESH_VECTOR->Z[k] = PARTIAL_GLOBAL_SURFACE_DEPTHS->dep[1] - depthChange;
             //printf("%lf.\n",SHIFTED_MESH_VECTOR->Z[k]);
         }
+        interpolateBasinSurfaceDepths(BASIN_DATA, GLOBAL_MODEL_PARAMETERS, IN_BASIN, PARTIAL_BASIN_SURFACE_DEPTHS, SHIFTED_MESH_VECTOR);
+
     }
-    
-    
-    if(strcmp(TOPO_TYPE, "BULLDOZED") == 0)
+    else if(strcmp(TOPO_TYPE, "SQUASHED_TAPERED") == 0)
+    {
+        dZ = (MESH_VECTOR->Z[0] -  MESH_VECTOR->Z[1]);
+        //printf("%lf %lf %lf.\n",MESH_VECTOR->Z[0], MESH_VECTOR->Z[1],dZ);
+        double TAPER_DIST = 1.0; //1.0 times the value of the DEM
+        double TAPER_VAL;
+        
+        SHIFTED_MESH_VECTOR = malloc(sizeof(mesh_vector));
+        
+        if (SHIFTED_MESH_VECTOR == NULL)
+        {
+            printf("Memory allocation of SHIFTED_MESH_VECTOR failed.\n");
+            exit(EXIT_FAILURE);
+        }
+        SHIFTED_MESH_VECTOR->Lat = MESH_VECTOR->Lat;
+        SHIFTED_MESH_VECTOR->Lon = MESH_VECTOR->Lon;
+        SHIFTED_MESH_VECTOR->nZ = MESH_VECTOR->nZ;
+        
+        for (int k = 0; k < *MESH_VECTOR->nZ; k++)
+        {
+            depthChange = (k+half) * dZ;
+            TAPER_VAL = 1.0 - (depthChange/(PARTIAL_GLOBAL_SURFACE_DEPTHS->dep[1]*TAPER_DIST));
+            if(TAPER_VAL < 0)
+            {
+                TAPER_VAL = 0;
+            }
+            SHIFTED_MESH_VECTOR->Z[k] = PARTIAL_GLOBAL_SURFACE_DEPTHS->dep[1]*TAPER_VAL - depthChange;
+//            printf("%i %lf  %lf %lf %lf %lf.\n",k,MESH_VECTOR->Z[k],SHIFTED_MESH_VECTOR->Z[k],PARTIAL_GLOBAL_SURFACE_DEPTHS->dep[1], depthChange,TAPER_VAL);
+
+            //printf("%lf.\n",SHIFTED_MESH_VECTOR->Z[k]);
+        }
+        interpolateBasinSurfaceDepths(BASIN_DATA, GLOBAL_MODEL_PARAMETERS, IN_BASIN, PARTIAL_BASIN_SURFACE_DEPTHS, SHIFTED_MESH_VECTOR);
+    }
+    else if(strcmp(TOPO_TYPE, "BULLDOZED") == 0)
     {
         interpolateBasinSurfaceDepths(BASIN_DATA, GLOBAL_MODEL_PARAMETERS, IN_BASIN, PARTIAL_BASIN_SURFACE_DEPTHS, MESH_VECTOR);
 
     }
-    else if(strcmp(TOPO_TYPE, "SQUASHED") == 0)
+    else
     {
-        interpolateBasinSurfaceDepths(BASIN_DATA, GLOBAL_MODEL_PARAMETERS, IN_BASIN, PARTIAL_BASIN_SURFACE_DEPTHS, SHIFTED_MESH_VECTOR);
+        printf("User specified TOPO_TYPE not recognised, see readme.\n");
+        exit(EXIT_FAILURE);
     }
     
     
     
     int basinFlag = 0;
-    double Z;
+    double Z = 0;
 
     for (int k = 0; k < *MESH_VECTOR->nZ; k++)
     {
@@ -94,7 +129,10 @@ void assignQualities(global_model_parameters *GLOBAL_MODEL_PARAMETERS, velo_mod_
         {
             Z = SHIFTED_MESH_VECTOR->Z[k];
         }
-        
+        else if(strcmp(TOPO_TYPE, "SQUASHED_TAPERED") == 0)
+        {
+            Z = SHIFTED_MESH_VECTOR->Z[k];
+        }
         for(int i = 0; i < GLOBAL_MODEL_PARAMETERS->nBasins; i++)
         {
             if (IN_BASIN->inBasinDep[i][k] == 1)

@@ -17,6 +17,9 @@ make
 - EXTRACT_VELOCITY_SLICES - Extracts velocity slices from a saved model (Model need to have been previously generated to use this call)
 - GENERATE_VELOCITY_SLICES - Generated velocity slices for plotting (slices generated from scratch)
 - GENERATE_INDIVIDUAL_PROFILE - Generates a velocity profile at a single lat/lon location
+```
+./NZVM (OPTIONS HERE)
+```
 
 All four call types and required inputs are explained here.
 
@@ -35,11 +38,10 @@ Call type 1) GENERATE_VELOCITY_MOD
 - 11 -K	EXTENT_Z_SPACING (gridspacing in the Z direction in km)
 - 12 -L	EXTENT_LATLON_SPACING (gridspacing in the Y and X direction in km)
 - 13 -M	MIN_VS (minimium shear wave velocity to enforce, in km/s - typically 0.5)
+- 14 -N TOPO_TYPE (SQUASHED or BULLDOZED)
 
-Example of GENERATE_VELOCITY_MOD call - All parameters must be set and the output directory must not exist
-```
-./NZVM -A GENERATE_VELOCITY_MOD -B 1.64 -C v1.64_Model -D -43.6 -E 172.3 -F -10.00 -G 140 -H 120 -I 46 -J 0 -K 1 -L 1 -M 0.5
-```
+The output directory must not exist
+
 Call type 2) EXTRACT_VELOCITY_SLICES - All parameters must be set and the output directory must have been generated previously using GENERATE_VELOCITY_MOD call
 
 - 1	-A EXTRACT_VELOCITY_SLICES
@@ -55,46 +57,36 @@ Call type 2) EXTRACT_VELOCITY_SLICES - All parameters must be set and the output
 - 11 -K	EXTENT_Z_SPACING (gridspacing in the Z direction in km)
 - 12 -L	EXTENT_LATLON_SPACING (gridspacing in the Y and X direction in km)
 - 13 -M	MIN_VS (minimium shear wave velocity to enforce, in km/s - typically 0.5)
-- 14 -N	EXTRACTED_SLICE_PARAMETERS_DIRECTORY (directory housing slice parameters text file)
+- 14 -N TOPO_TYPE (SQUASHED or BULLDOZED)
+- 15 -O	EXTRACTED_SLICE_PARAMETERS_DIRECTORY (directory housing slice parameters text file)
 
-Example of EXTRACT_VELOCITY_SLICES call (will generate a model if it does not already exist)
 - See readme in ExtractedSliceParameters directory for additional information
-```
-./NZVM -A EXTRACT_VELOCITY_SLICES -B 1.64 -C v1.64_Model -D -43.6 -E 172.3 -F -10.00 -G 140 -H 120 -I 46 -J 0 -K 1 -L 1 -M 0.5 -N ExtractedSliceParameters
-```
+
 
 Call type 3) GENERATE_VELOCITY_SLICES
 
 - 1	-A GENERATE_VELOCITY_SLICES
 - 2	-B MODEL_VERSION (model version - select from list of model versions at bottom of readme)
 - 3	-C OUTPUT_DIR (directory to save outputs to)
-- 4 -O MIN_VS (minimium shear wave velocity to enforce, in km/s - typically 0.5)
-- 5	-P GENERATED_SLICE_PARAMETERS_DIRECTORY (directory housing slice parameters text file)
+- 4 -P MIN_VS (minimium shear wave velocity to enforce, in km/s - typically 0.5)
+- 5	-Q GENERATED_SLICE_PARAMETERS_DIRECTORY (directory housing slice parameters text file)
+- 6 -R TOPO_TYPE (SQUASHED or BULLDOZED)
 
-Example of GENERATE_VELOCITY_SLICES call
-```
-./NZVM -A GENERATE_VELOCITY_SLICES -B 1.01 -C v1.01Model -O 0.5 -P GeneratedSliceParameters
-```
 
 Call type 4) GENERATE_INDIVIDUAL_PROFILE - All parameters must be set and the output directory must not exist
 
 - 1 -A	GENERATE_INDIVIDUAL_PROFILE
 - 2	-B MODEL_VERSION (model version - select from list of model versions at bottom of readme)
 - 3	-C OUTPUT_DIR (directory to save outputs to)
-- 4	-Q PROFILE_LAT (latitude point of profile - in decimal format)
-- 5	-R PROFILE_LON (longitude point of profile - in decimal format)
-- 6	-S PROFILE_ZMAX (maximum depth of profile +ve downwards in km) 
-- 7	-T PROFILE_ZMIN (minimum depth of profile +ve downwards in km ie. -0.1 corresponds to the top of the profile at +0.1km above mean sea level)
-- 8 -U PROFILE_MIN_VS=0.5 (minimium shear wave velocity to enforce, in km/s - typically 0.5, set as 0.0 for no restriction)
-- 9	-V EXTENT_Z_SPACING_PROFILE (z spacing of the profile in km)
+- 4	-S PROFILE_LAT (latitude point of profile - in decimal format)
+- 5	-T PROFILE_LON (longitude point of profile - in decimal format)
+- 6	-U PROFILE_ZMAX (maximum depth of profile +ve downwards in km) 
+- 7	-V PROFILE_ZMIN (minimum depth of profile +ve downwards in km ie. -0.1 corresponds to the top of the profile at +0.1km above mean sea level)
+- 8 -W PROFILE_MIN_VS=0.5 (minimium shear wave velocity to enforce, in km/s - typically 0.5, set as 0.0 for no restriction)
+- 9	-X EXTENT_Z_SPACING_PROFILE (z spacing of the profile in km)
 
-Example of GENERATE_INDIVIDUAL_PROFILE 
 - See readme in GeneratedSliceParameters directory for additional information
 
-```
-./NZVM -A GENERATE_PROFILE -B 1.64 -C v1.64_Profile -Q -44.3968 -R 171.5 -S 5 -T -1 -U 0.5 -V 0.05
-
-```
 
 
 Execute one of these four call types and open the output directory to view saved outputs.

@@ -60,19 +60,19 @@ void loadBasinSubModelData(int basinNum, basin_data *BASIN_DATA, global_model_pa
         // insert hard coded basin subvelocity model data loads here
         if(strcmp (GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][i], "Cant1D_v1") == 0)
         {
-            char fName[32] = "Cant1D_v1.fd_modfile";
+            char fName[MAX_FILENAME_STRING_LEN] = "Cant1D_v1.fd_modfile";
             load1dVeloSubModel(fName, &BASIN_DATA->BASIN_SUBMODEL_DATA[basinNum].VELO_MOD_1D_DATA);
             
         }
         if(strcmp (GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][i], "Cant1D_v2") == 0)
         {
-            char fName[32] = "Cant1D_v2.fd_modfile";
+            char fName[MAX_FILENAME_STRING_LEN] = "Cant1D_v2.fd_modfile";
             load1dVeloSubModel(fName, &BASIN_DATA->BASIN_SUBMODEL_DATA[basinNum].VELO_MOD_1D_DATA);
             
         }
         if(strcmp (GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][i], "Cant1D_v2_Pliocene_Enforced") == 0)
         {
-            char fName[64] = "Cant1D_v2_Pliocene_Enforced.fd_modfile";
+            char fName[MAX_FILENAME_STRING_LEN] = "Cant1D_v2_Pliocene_Enforced.fd_modfile";
             load1dVeloSubModel(fName, &BASIN_DATA->BASIN_SUBMODEL_DATA[basinNum].VELO_MOD_1D_DATA);
             
         }
@@ -130,11 +130,11 @@ void enforceBasinSurfaceDepths(basin_data *BASIN_DATA, global_model_parameters *
             
             for(int k  = 0; k < *MESH_VECTOR->nZ; k++)
             {
-                if(*MESH_VECTOR->Z[k] > topLim)
+                if(MESH_VECTOR->Z[k] > topLim)
                 {
                     IN_BASIN->inBasinDep[i][k] = 0;
                 }
-                else if (*MESH_VECTOR->Z[k] < botLim)
+                else if (MESH_VECTOR->Z[k] < botLim)
                 {
                     IN_BASIN->inBasinDep[i][k] = 0;
                 }

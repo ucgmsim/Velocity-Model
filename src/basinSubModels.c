@@ -38,7 +38,7 @@ void assignBasinQualities(global_model_parameters *GLOBAL_MODEL_PARAMETERS, basi
     indAbove = determineBasinSurfaceAbove(GLOBAL_MODEL_PARAMETERS, PARTIAL_BASIN_SURFACE_DEPTHS, depth, basinNum);
     indBelow = determineBasinSurfaceBelow(GLOBAL_MODEL_PARAMETERS, PARTIAL_BASIN_SURFACE_DEPTHS, depth, basinNum);
     
-
+//    printf("%i %i %i %lf.\n",indAbove, basinNum, zInd, depth);
     callBasinSubVelocityModels(GLOBAL_MODEL_PARAMETERS, BASIN_DATA, PARTIAL_BASIN_SURFACE_DEPTHS, QUALITIES_VECTOR,depth, indAbove, basinNum, zInd);
     
 }
@@ -70,7 +70,10 @@ void callBasinSubVelocityModels(global_model_parameters *GLOBAL_MODEL_PARAMETERS
     {
         v1DsubMod(zInd, depth, QUALITIES_VECTOR, &BASIN_DATA->BASIN_SUBMODEL_DATA[basinNum].VELO_MOD_1D_DATA);
     }
-    
+    else if(strcmp(GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][basinSubModelInd], "Cant1D_v2_Pliocene_Enforced") == 0)
+    {
+        v1DsubMod(zInd, depth, QUALITIES_VECTOR, &BASIN_DATA->BASIN_SUBMODEL_DATA[basinNum].VELO_MOD_1D_DATA);
+    }
     
     // Pre-quaternary models
     else if(strcmp(GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][basinSubModelInd], "PaleogeneSubMod_v1") == 0)

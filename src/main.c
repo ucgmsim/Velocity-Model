@@ -16,6 +16,9 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#ifndef _AIX
+  #include <getopt.h>
+#endif
 
 #include "constants.h"
 #include "structs.h"

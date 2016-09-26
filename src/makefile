@@ -1,7 +1,7 @@
 TARGET = NZVM
 LIBS = -lm
 CC = gcc
-CFLAGS = -std=c99 -g -Wall
+CFLAGS = -std=c99 -g -Wall #-D_AIX
 
 .PHONY: default all clean
 

@@ -1,6 +1,6 @@
 
 all: 
-	cd src; make
+	cd src; make -f makefile.linux
 
 
 clean:

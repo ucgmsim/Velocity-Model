@@ -17,7 +17,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #ifndef _AIX
-  #include <getopt.h>
+#include <getopt.h>
 #endif
 
 #include "constants.h"
@@ -32,109 +32,109 @@ int main(int argc, char *argv[])
      char *argv[29];
      argv[1] = "-A";
      argv[2] = "GENERATE_VELOCITY_MOD";
-    argv[3] = "-B";
-    argv[4] = "1.65";
-    argv[5] = "-C";
-    argv[6] = "v1.65";
-    argv[7] = "-D";
-    argv[8] = "-43.6";
-    argv[9] = "-E";
-    argv[10] = "172.3";
-    argv[11] = "-F";
-    argv[12] = "-10";
-    argv[13] = "-G";
-    argv[14] = "140.";
-    argv[15] = "-H";
-    argv[16] = "210.";
-    argv[17] = "-I";
-    argv[18] = "46.";
-    argv[19] = "-J";
-    argv[20] = "0";
-    argv[21] = "-K";
-    argv[22] = "0.1";
-    argv[23] = "-L";
-    argv[24] = "1";
-    argv[25] = "-M";
-    argv[26] = "0.1";
+     argv[3] = "-B";
+     argv[4] = "1.65";
+     argv[5] = "-C";
+     argv[6] = "v1.65";
+     argv[7] = "-D";
+     argv[8] = "-43.6";
+     argv[9] = "-E";
+     argv[10] = "172.3";
+     argv[11] = "-F";
+     argv[12] = "-10";
+     argv[13] = "-G";
+     argv[14] = "140.";
+     argv[15] = "-H";
+     argv[16] = "210.";
+     argv[17] = "-I";
+     argv[18] = "46.";
+     argv[19] = "-J";
+     argv[20] = "0";
+     argv[21] = "-K";
+     argv[22] = "0.1";
+     argv[23] = "-L";
+     argv[24] = "1";
+     argv[25] = "-M";
+     argv[26] = "0.1";
      argv[27] = "-N";
-    argv[28] = "SQUASHED_TAPERED"; //"SQUASHED" BULLDOZED
+     argv[28] = "SQUASHED_TAPERED"; //"SQUASHED" BULLDOZED
      */
     
-     /*
-    int argc = 31;
+    /*
+     int argc = 31;
      char *argv[31];
      argv[1] = "-A";
      argv[2] = "EXTRACT_VELOCITY_SLICES";
-    argv[3] = "-B";
-    argv[4] = "1.64";
-    argv[5] = "-C";
-    argv[6] = "v1.64_CF";
-    argv[7] = "-D";
-    argv[8] = "-43.65";
-    argv[9] = "-E";
-    argv[10] = "172.1";
-    argv[11] = "-F";
-    argv[12] = "-42.00";
-    argv[13] = "-G";
-    argv[14] = "210.";
-    argv[15] = "-H";
-    argv[16] = "146.";
-    argv[17] = "-I";
-    argv[18] = "70.";
-    argv[19] = "-J";
-    argv[20] = "0";
-    argv[21] = "-K";
-    argv[22] = "1";
-    argv[23] = "-L";
-    argv[24] = "1";
-    argv[25] = "-M";
-    argv[26] = "0.5";
-      argv[27] = "-N";
-      argv[28] = "BULLDOZED"; //"SQUASHED"
+     argv[3] = "-B";
+     argv[4] = "1.64";
+     argv[5] = "-C";
+     argv[6] = "v1.64_CF";
+     argv[7] = "-D";
+     argv[8] = "-43.65";
+     argv[9] = "-E";
+     argv[10] = "172.1";
+     argv[11] = "-F";
+     argv[12] = "-42.00";
+     argv[13] = "-G";
+     argv[14] = "210.";
+     argv[15] = "-H";
+     argv[16] = "146.";
+     argv[17] = "-I";
+     argv[18] = "70.";
+     argv[19] = "-J";
+     argv[20] = "0";
+     argv[21] = "-K";
+     argv[22] = "1";
+     argv[23] = "-L";
+     argv[24] = "1";
+     argv[25] = "-M";
+     argv[26] = "0.5";
+     argv[27] = "-N";
+     argv[28] = "BULLDOZED"; //"SQUASHED"
      argv[29] = "-O";
      argv[30] = "ExtractedSliceParametersECVM";
      */
-
+    
     
     /*
-    int argc = 19;
-    char *argv[19];
-    argv[1] = "-A";
-    argv[2] = "GENERATE_PROFILE";
-    argv[3] = "-B";
-    argv[4] = "Test_0.1";
-    argv[5] = "-C";
-    argv[6] = "CACS";
-    argv[7] = "-Q";
-    argv[8] = "-43.5968";
-    argv[9] = "-R";
-    argv[10] = "172.5";
-    argv[11] = "-S";
-    argv[12] = "5";
-    argv[13] = "-T";
-    argv[14] = "-1";
-    argv[15] = "-U";
-    argv[16] = "-0.5";
-    argv[17] = "-V";
-    argv[18] = "0.05";
+     int argc = 19;
+     char *argv[19];
+     argv[1] = "-A";
+     argv[2] = "GENERATE_PROFILE";
+     argv[3] = "-B";
+     argv[4] = "Test_0.1";
+     argv[5] = "-C";
+     argv[6] = "CACS";
+     argv[7] = "-Q";
+     argv[8] = "-43.5968";
+     argv[9] = "-R";
+     argv[10] = "172.5";
+     argv[11] = "-S";
+     argv[12] = "5";
+     argv[13] = "-T";
+     argv[14] = "-1";
+     argv[15] = "-U";
+     argv[16] = "-0.5";
+     argv[17] = "-V";
+     argv[18] = "0.05";
      */
     
     
     /*
-    int argc = 13;
-    char *argv[13];
-    argv[1] = "-A";
-    argv[2] = "GENERATE_VELOCITY_SLICES";
-    argv[3] = "-B";
-    argv[4] = "1.65";
-    argv[5] = "-C";
-    argv[6] = "v1.65_SQUASHED";
-    argv[7] = "-P";
-    argv[8] = "0"; //minVs
-    argv[9] = "-Q";
-    argv[10] = "SliceParametersCant";
-    argv[11] = "-R";
-    argv[12] = "SQUASHED_TAPERED"; //"SQUASHED" BULLDOZED SQUASHED_TAPERED
+     int argc = 13;
+     char *argv[13];
+     argv[1] = "-A";
+     argv[2] = "GENERATE_VELOCITY_SLICES";
+     argv[3] = "-B";
+     argv[4] = "1.65";
+     argv[5] = "-C";
+     argv[6] = "v1.65_SQUASHED";
+     argv[7] = "-P";
+     argv[8] = "0"; //minVs
+     argv[9] = "-Q";
+     argv[10] = "SliceParametersCant";
+     argv[11] = "-R";
+     argv[12] = "SQUASHED_TAPERED"; //"SQUASHED" BULLDOZED SQUASHED_TAPERED
      */
     
     
@@ -159,116 +159,116 @@ int main(int argc, char *argv[])
     int opt = 0;
     
     char *optString = "A:B:C:D:E:F:G:H:I:J:K:L:M:N:O:P:Q:R:S:T:U:V:";
-
+    
     opt = getopt( argc, argv, optString  );
     while( opt != -1 )
     {
         switch( opt )
         {
-            // call type specifiers
-            case 'A':
+                // call type specifiers
+                case 'A':
                 if(strcmp(optarg, "GENERATE_VELOCITY_MOD") == 0)
-                {
-                    genCallType = "GENERATE_VELOCITY_MOD";
-                    GENERATE_VELOCITY_MOD = 1;
-                }
+            {
+                genCallType = "GENERATE_VELOCITY_MOD";
+                GENERATE_VELOCITY_MOD = 1;
+            }
                 else if (strcmp(optarg, "EXTRACT_VELOCITY_SLICES") == 0)
-                {
-                    genCallType = "EXTRACT_VELOCITY_SLICES";
-                    EXTRACT_VELOCITY_SLICES = 1;
-                }
+            {
+                genCallType = "EXTRACT_VELOCITY_SLICES";
+                EXTRACT_VELOCITY_SLICES = 1;
+            }
                 else if (strcmp(optarg, "GENERATE_VELOCITY_SLICES") == 0)
-                {
-                    genCallType = "GENERATE_VELOCITY_SLICES";
-                    GENERATE_VELOCITY_SLICES = 1;
-                }
+            {
+                genCallType = "GENERATE_VELOCITY_SLICES";
+                GENERATE_VELOCITY_SLICES = 1;
+            }
                 else if (strcmp(optarg, "GENERATE_PROFILE") == 0)
-                {
-                    genCallType = "GENERATE_PROFILE";
-                    GENERATE_PROFILE = 1;
-                }
+            {
+                genCallType = "GENERATE_PROFILE";
+                GENERATE_PROFILE = 1;
+            }
                 else
-                {
-                    printf("Option -A set incorrectly, see readme.\n");
-                    exit(EXIT_FAILURE);
-                }
+            {
+                printf("Option -A set incorrectly, see readme.\n");
+                exit(EXIT_FAILURE);
+            }
                 numCallTypesSet += 1;
                 break;
                 
-            // Required inputs
-            case 'B' : MODEL_VERSION = optarg;
+                // Required inputs
+                case 'B' : MODEL_VERSION = optarg;
                 break;
-            case 'C' : OUTPUT_DIR = optarg;
+                case 'C' : OUTPUT_DIR = optarg;
                 break;
                 
-            // Optional inputs (GENERATE_VELOCITY_MOD / EXTRACT_VELOCITY_SLICES)
-            case 'D' : GEN_EXTRACT_VELO_MOD_CALL.ORIGIN_LAT = atof(optarg);
+                // Optional inputs (GENERATE_VELOCITY_MOD / EXTRACT_VELOCITY_SLICES)
+                case 'D' : GEN_EXTRACT_VELO_MOD_CALL.ORIGIN_LAT = atof(optarg);
                 GEN_EXTRACT_VELO_MOD_CALL.numInputsSet += 1;
                 break;
-            case 'E' : GEN_EXTRACT_VELO_MOD_CALL.ORIGIN_LON = atof(optarg);
+                case 'E' : GEN_EXTRACT_VELO_MOD_CALL.ORIGIN_LON = atof(optarg);
                 GEN_EXTRACT_VELO_MOD_CALL.numInputsSet += 1;
                 break;
-            case 'F' : GEN_EXTRACT_VELO_MOD_CALL.ORIGIN_ROT = atof(optarg);
+                case 'F' : GEN_EXTRACT_VELO_MOD_CALL.ORIGIN_ROT = atof(optarg);
                 GEN_EXTRACT_VELO_MOD_CALL.numInputsSet += 1;
                 break;
-            case 'G' : GEN_EXTRACT_VELO_MOD_CALL.EXTENT_X = atof(optarg);
+                case 'G' : GEN_EXTRACT_VELO_MOD_CALL.EXTENT_X = atof(optarg);
                 GEN_EXTRACT_VELO_MOD_CALL.numInputsSet += 1;
                 break;
-            case 'H' : GEN_EXTRACT_VELO_MOD_CALL.EXTENT_Y = atof(optarg);
+                case 'H' : GEN_EXTRACT_VELO_MOD_CALL.EXTENT_Y = atof(optarg);
                 GEN_EXTRACT_VELO_MOD_CALL.numInputsSet += 1;
                 break;
-            case 'I' : GEN_EXTRACT_VELO_MOD_CALL.EXTENT_ZMAX = atof(optarg);
+                case 'I' : GEN_EXTRACT_VELO_MOD_CALL.EXTENT_ZMAX = atof(optarg);
                 GEN_EXTRACT_VELO_MOD_CALL.numInputsSet += 1;
                 break;
-            case 'J' : GEN_EXTRACT_VELO_MOD_CALL.EXTENT_ZMIN = atof(optarg);
+                case 'J' : GEN_EXTRACT_VELO_MOD_CALL.EXTENT_ZMIN = atof(optarg);
                 GEN_EXTRACT_VELO_MOD_CALL.numInputsSet += 1;
                 break;
-            case 'K' : GEN_EXTRACT_VELO_MOD_CALL.EXTENT_Z_SPACING = atof(optarg);
+                case 'K' : GEN_EXTRACT_VELO_MOD_CALL.EXTENT_Z_SPACING = atof(optarg);
                 GEN_EXTRACT_VELO_MOD_CALL.numInputsSet += 1;
                 break;
-            case 'L' : GEN_EXTRACT_VELO_MOD_CALL.EXTENT_LATLON_SPACING = atof(optarg);
+                case 'L' : GEN_EXTRACT_VELO_MOD_CALL.EXTENT_LATLON_SPACING = atof(optarg);
                 GEN_EXTRACT_VELO_MOD_CALL.numInputsSet += 1;
                 break;
-            case 'M' : GEN_EXTRACT_VELO_MOD_CALL.MIN_VS = atof(optarg);
+                case 'M' : GEN_EXTRACT_VELO_MOD_CALL.MIN_VS = atof(optarg);
                 GEN_EXTRACT_VELO_MOD_CALL.numInputsSet += 1;
                 break;
-            case 'N' : GEN_EXTRACT_VELO_MOD_CALL.TOPO_TYPE = optarg;
+                case 'N' : GEN_EXTRACT_VELO_MOD_CALL.TOPO_TYPE = optarg;
                 GEN_EXTRACT_VELO_MOD_CALL.numInputsSet += 1;
                 break;
-            case 'O' : GEN_EXTRACT_VELO_MOD_CALL.EXTRACTED_SLICE_PARAMETERS_DIRECTORY = optarg;
+                case 'O' : GEN_EXTRACT_VELO_MOD_CALL.EXTRACTED_SLICE_PARAMETERS_DIRECTORY = optarg;
                 GEN_EXTRACT_VELO_MOD_CALL.numInputsSet += 1;
                 break;
-
                 
-            // Optional inputs (GENERATE_VELOCITY_SLICES)
-            case 'P' : GEN_VELO_SLICES_CALL.MIN_VS_SLICE = atof(optarg);
+                
+                // Optional inputs (GENERATE_VELOCITY_SLICES)
+                case 'P' : GEN_VELO_SLICES_CALL.MIN_VS_SLICE = atof(optarg);
                 GEN_VELO_SLICES_CALL.numInputsSet += 1;
                 break;
-            case 'Q' : GEN_VELO_SLICES_CALL.GENERATED_SLICE_PARAMETERS_DIRECTORY = optarg;
+                case 'Q' : GEN_VELO_SLICES_CALL.GENERATED_SLICE_PARAMETERS_DIRECTORY = optarg;
                 GEN_VELO_SLICES_CALL.numInputsSet += 1;
                 break;
-            case 'R' : GEN_VELO_SLICES_CALL.TOPO_TYPE = optarg;
+                case 'R' : GEN_VELO_SLICES_CALL.TOPO_TYPE = optarg;
                 GEN_VELO_SLICES_CALL.numInputsSet += 1;
                 break;
-
+                
                 
                 // Optional inputs (GENERATE_PROFILE)
-            case 'S' : GEN_PROFILE_CALL.PROFILE_LAT = atof(optarg);
+                case 'S' : GEN_PROFILE_CALL.PROFILE_LAT = atof(optarg);
                 GEN_PROFILE_CALL.numInputsSet += 1;
                 break;
-            case 'T' : GEN_PROFILE_CALL.PROFILE_LON = atof(optarg);
+                case 'T' : GEN_PROFILE_CALL.PROFILE_LON = atof(optarg);
                 GEN_PROFILE_CALL.numInputsSet += 1;
                 break;
-            case 'U' : GEN_PROFILE_CALL.PROFILE_ZMAX = atof(optarg);
+                case 'U' : GEN_PROFILE_CALL.PROFILE_ZMAX = atof(optarg);
                 GEN_PROFILE_CALL.numInputsSet += 1;
                 break;
-            case 'V' : GEN_PROFILE_CALL.PROFILE_ZMIN = atof(optarg);
+                case 'V' : GEN_PROFILE_CALL.PROFILE_ZMIN = atof(optarg);
                 GEN_PROFILE_CALL.numInputsSet += 1;
                 break;
-            case 'W' : GEN_PROFILE_CALL.PROFILE_MIN_VS = atof(optarg);
+                case 'W' : GEN_PROFILE_CALL.PROFILE_MIN_VS = atof(optarg);
                 GEN_PROFILE_CALL.numInputsSet += 1;
                 break;
-            case 'X' : GEN_PROFILE_CALL.EXTENT_Z_SPACING_PROFILE = atof(optarg);
+                case 'X' : GEN_PROFILE_CALL.EXTENT_Z_SPACING_PROFILE = atof(optarg);
                 GEN_PROFILE_CALL.numInputsSet += 1;
                 break;
                 
@@ -277,7 +277,7 @@ int main(int argc, char *argv[])
                 exit(EXIT_FAILURE);
                 break;
         }
-         opt = getopt( argc, argv, optString );
+        opt = getopt( argc, argv, optString );
         
     }
     

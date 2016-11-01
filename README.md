@@ -1,6 +1,6 @@
 # Velocity Model
 
-This is the repository for the source code for South Island Velocity Model (SIVM) generation and interrogation. The model generation is a serial process. There are four general call types which are outlined in this readme.
+This is the repository for the source code for South Island Velocity Model (SIVM) generation and interrogation. The model generation is a serial process. There are five general call types which are outlined in this readme.
 
 To clone the code from the github repository:
 ```
@@ -21,7 +21,7 @@ make
 ./NZVM (OPTIONS HERE)
 ```
 
-All four call types and required inputs are explained here.
+All five call types and required inputs are explained here.
 
 Call type 1) GENERATE_VELOCITY_MOD
 
@@ -87,9 +87,24 @@ Call type 4) GENERATE_INDIVIDUAL_PROFILE - All parameters must be set and the ou
 
 - See readme in GeneratedSliceParameters directory for additional information
 
+Call type 5) EXTRACT_THRESHOLD
+
+Extracts Vs30 Vs500 Z1.0 Z2.5
+
+- 1	-A GENERATE_VELOCITY_MOD
+- 2	-B MODEL_VERSION (model version - select from list of model versions at bottom of readme)
+- 3	-C OUTPUT_DIR (directory to save outputs to)
+- 4	-D ORIGIN_LAT (origin latitude - in decimal format)
+- 5	-E ORIGIN_LON (origin longitude - in decimal format)
+- 6	-F ORIGIN_ROT (model rotation - clockwise is positive)
+- 7	-G EXTENT_X (model extent in the X direction in km)
+- 8	-H EXTENT_Y (model extent in the Y direction in km)
+- 9 -L	EXTENT_LATLON_SPACING (gridspacing in the Y and X direction in km)
+- 10 -M	MIN_VS (minimium shear wave velocity to enforce, in km/s - typically 0.5)
+- 11 -Z VS_TYPE (set as VS30 VS500 Z1.0 Z2.5)
 
 
-Execute one of these four call types and open the output directory to view saved outputs.
+Execute one of these five call types and open the output directory to view saved outputs.
 
 
 
@@ -155,8 +170,10 @@ Summary of velocity model version numbers
 - Linear relationship between 0 and 100m depth
 
 - v1.64 Same as v1.63 with updated 1D velocity model
-- 1D model version (Cant. 1D velocity model v2)
+- 1D model version (Cant1D_v2.fd_modfile)
 
+- v1.65 Same as v1.64 with updated 1D velocity model to ensure Vs_1dmax < Vs_pliocene
+- 1D model version (Cant1D_v2_Pliocene_Enforced.fd_modfile)
 
 
 

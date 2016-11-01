@@ -211,7 +211,7 @@ int main(void)
      argv[19] = "-M";
      argv[20] = "0";
      argv[21] = "-Z";
-     argv[22] = "Z1.0";
+    argv[22] = "Z2.5"; // VS30 VS500 Z1.0 Z2.5
      //*/
 
 
@@ -434,7 +434,7 @@ int main(void)
         if (stat(OUTPUT_DIR, &st) != -1)
         {
             printf("Output directory must not exist for this call type. See readme.\n");
-//            exit(EXIT_FAILURE);
+            exit(EXIT_FAILURE);
         }
         else
         {

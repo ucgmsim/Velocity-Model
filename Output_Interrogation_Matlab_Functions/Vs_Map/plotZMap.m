@@ -1,12 +1,13 @@
 function plotZMap
-
+close all
 folderName = 'v1.65';
 type = 'Z_1.0';
+% type = 'Z_2.5';
 fileName = sprintf('%s/Z/%s.txt',folderName,type);
 
 map = loadMap(fileName);
 markerSize = 1;
-figure();
+F1 = figure(1);
 hold on;
 scatter(map.Lon,map.Lat,markerSize,map.Vs)
 [NZcoastLat,NZcoastLong]=NZCoastlineData;
@@ -15,8 +16,11 @@ axisLimits = [165 176 -48 -38];
 axis(axisLimits)
 
 c1 = colorbar;
-ylabel(c1,sprintf('%s(m)','Z1.0'));
-
+ylabel(c1,sprintf('%s(m)','Z'));
+hold off
+% saveas(F1,sprintf('%s.fig',type),'fig');
+% saveas(F1,sprintf('%s.png',type),'png');
+% close all
 
 
 end

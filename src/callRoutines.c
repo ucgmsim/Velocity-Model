@@ -380,34 +380,34 @@ void runThresholdVelocityModel(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extrac
     MODEL_EXTENT->Xmax = GEN_EXTRACT_VELO_MOD_CALL.EXTENT_X;
     MODEL_EXTENT->Ymax = GEN_EXTRACT_VELO_MOD_CALL.EXTENT_Y;
     MODEL_EXTENT->hLatLon = GEN_EXTRACT_VELO_MOD_CALL.EXTENT_LATLON_SPACING;
-    double Z_THRESH = 0;
+    char *Z_THRESH;
 
     
     if (strcmp(GEN_EXTRACT_VELO_MOD_CALL.VS_TYPE, "VS500") == 0)
     {
-        MODEL_EXTENT->Zmax = 0.5; // 0.5km downwards
-        MODEL_EXTENT->Zmin = 0; 
-        MODEL_EXTENT->hDep = 0.001;
+        MODEL_EXTENT->Zmax = 0.505;
+        MODEL_EXTENT->Zmin = 0.005;
+        MODEL_EXTENT->hDep = 0.01;
     }
     else if (strcmp(GEN_EXTRACT_VELO_MOD_CALL.VS_TYPE, "VS30") == 0)
     {
-        MODEL_EXTENT->Zmax = 0.03; // 0.5km downwards
-        MODEL_EXTENT->Zmin = 0;
+        MODEL_EXTENT->Zmax = 0.0305;
+        MODEL_EXTENT->Zmin = 0.0005;
         MODEL_EXTENT->hDep = 0.001;
     }
     else if (strcmp(GEN_EXTRACT_VELO_MOD_CALL.VS_TYPE, "Z1.0") == 0)
     {
-        MODEL_EXTENT->Zmax = 2; // 0.5km downwards
+        MODEL_EXTENT->Zmax = 2; // 2km downwards
         MODEL_EXTENT->Zmin = 0;
         MODEL_EXTENT->hDep = 0.01;
-        Z_THRESH = 1.0;
+        Z_THRESH = "1.0";
     }
     else if (strcmp(GEN_EXTRACT_VELO_MOD_CALL.VS_TYPE, "Z2.5") == 0)
     {
-        MODEL_EXTENT->Zmax = 3; // 0.5km downwards
+        MODEL_EXTENT->Zmax = 12; // 10km downwards
         MODEL_EXTENT->Zmin = 0;
-        MODEL_EXTENT->hDep = 0.01;
-        Z_THRESH = 2.5;
+        MODEL_EXTENT->hDep = 0.05;
+        Z_THRESH = "2.5";
     }
     else
     {
@@ -561,9 +561,7 @@ void runThresholdVelocityModel(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extrac
         }
         free(PARTIAL_GLOBAL_MESH);
         free(PARTIAL_GLOBAL_QUALITIES);
-    }
-    printf("Model generation complete.\n");
-    
+    }    
     
     free(VELO_MOD_1D_DATA);
     freeEPtomoSurfaceData(NZ_TOMOGRAPHY_DATA);
@@ -573,14 +571,6 @@ void runThresholdVelocityModel(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extrac
     free(GLOBAL_SURFACES);
     freeAllBasinSurfaces(BASIN_DATA, GLOBAL_MODEL_PARAMETERS);
     free(BASIN_DATA);
-
-    
-    
-    
-
-    
-    extractSlicesFromBinaryFiles(OUTPUT_DIR, GEN_EXTRACT_VELO_MOD_CALL, CALCULATION_LOG, GLOBAL_MESH, MODEL_EXTENT);
-    
     free(GLOBAL_MESH);
     free(MODEL_EXTENT);
 }

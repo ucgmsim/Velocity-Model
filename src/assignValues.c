@@ -165,6 +165,8 @@ void assignQualities(global_model_parameters *GLOBAL_MODEL_PARAMETERS, velo_mod_
         basinFlag = 0;
         
     }
+    
+    free(SHIFTED_MESH_VECTOR);
 }
 
 

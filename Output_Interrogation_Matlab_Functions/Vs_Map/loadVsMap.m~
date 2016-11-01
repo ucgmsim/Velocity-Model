@@ -1,13 +1,13 @@
 function plotVsMap
-close all
+
 folderName = 'v1.65';
 type = 'Vs_500';
 % type = 'Vs_30';
-fileName = sprintf('%s/Vs/%s.txt',folderName,type);
+fileName = sprintf('%s/Vs/%s.txt',folderName,type)
 
 map = loadMap(fileName);
 markerSize = 1;
-F1 = figure(1);
+F1 = figure();
 hold on;
 scatter(map.Lon,map.Lat,markerSize,map.Vs)
 [NZcoastLat,NZcoastLong]=NZCoastlineData;
@@ -20,8 +20,8 @@ ylabel(c1,sprintf('%s(km/s)','Vs'));
 set(c1,'YDir','reverse')
 hold off
 % saveas(F1,sprintf('%s.fig',type),'fig');
-% saveas(F1,sprintf('%s.png',type),'png');
-% close all
+saveas(F1,sprintf('%s.png',type),'png');
+close all
 
 
 end

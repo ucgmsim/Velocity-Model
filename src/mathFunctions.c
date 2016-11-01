@@ -474,15 +474,17 @@ void gcproj(double xf,double yf,double *rlon,double *rlat,double ref_rad,double 
     }
 }
 
-void calcAndSaveZThreshold(char *OUTPUT_DIR, partial_global_mesh *PARTIAL_GLOBAL_MESH, partial_global_qualities *PARTIAL_GLOBAL_QUALITIES, calculation_log *CALCULATION_LOG, double Z_THRESHOLD, int latInd)
+void calcAndSaveZThreshold(char *OUTPUT_DIR, partial_global_mesh *PARTIAL_GLOBAL_MESH, partial_global_qualities *PARTIAL_GLOBAL_QUALITIES, calculation_log *CALCULATION_LOG, char *Z_THRESHOLD, int latInd)
 {
     double Z_WRITE = 0;
-    for( int i = 0; i < PARTIAL_GLOBAL_MESH->nX; i++)
+    double Z_THRESH_DOUBLE = atof(Z_THRESHOLD);
+    int i, j;
+    for(i = 0; i < PARTIAL_GLOBAL_MESH->nX; i++)
     {
         Z_WRITE = 0;
-        for (int j = 0; j < PARTIAL_GLOBAL_MESH->nZ-1; j++)
+        for (j = 0; j < PARTIAL_GLOBAL_MESH->nZ-1; j++)
         {
-            if( PARTIAL_GLOBAL_QUALITIES->Vs[i][j] >= Z_THRESHOLD)
+            if( PARTIAL_GLOBAL_QUALITIES->Vs[i][j] >= Z_THRESH_DOUBLE)
             {
                 Z_WRITE = PARTIAL_GLOBAL_MESH->Z[j];
                 break;
@@ -490,6 +492,7 @@ void calcAndSaveZThreshold(char *OUTPUT_DIR, partial_global_mesh *PARTIAL_GLOBAL
         }
         if (Z_WRITE == 0)
         {
+            printf("%i %i %lf %lf.\n", i, j, PARTIAL_GLOBAL_QUALITIES->Vs[i][j], Z_THRESH_DOUBLE);
             printf("Z_Threshold outside of limits.\n");
             exit(EXIT_FAILURE);
         }
@@ -498,16 +501,16 @@ void calcAndSaveZThreshold(char *OUTPUT_DIR, partial_global_mesh *PARTIAL_GLOBAL
     
 }
 
-void writeZThresholdFile(char *OUTPUT_DIR, double Lat, double Lon, double Z_WRITE, double latInd, double Z_THRESHOLD)
+void writeZThresholdFile(char *OUTPUT_DIR, double Lat, double Lon, double Z_WRITE, double latInd, char *Z_THRESHOLD)
 {
     char zFile[MAX_FILENAME_STRING_LEN];
     FILE *zFileTxt = NULL;
-    sprintf(zFile,"%s/Z/Z_%lf.txt",OUTPUT_DIR,Z_THRESHOLD);
+    sprintf(zFile,"%s/Z/Z_%s.txt",OUTPUT_DIR,Z_THRESHOLD);
     
     if( latInd == 0) // if first time generate file
     {
         zFileTxt = fopen(zFile, "w");
-        fprintf(zFileTxt,"Lat\tLon\tZ_%lf(m)\n",Z_THRESHOLD);
+        fprintf(zFileTxt,"Lat\tLon\tZ_%s(m)\n",Z_THRESHOLD);
         fprintf(zFileTxt,"%lf\t%lf\t%lf\n",Lat,Lon,Z_WRITE);
     }
     else // append to existing file
@@ -527,16 +530,16 @@ void calcAndSaveVs(char *OUTPUT_DIR, partial_global_mesh *PARTIAL_GLOBAL_MESH, p
 {
     double Vs;
     double VsTotal;
-    double one = 1.0;
+    double dZ = PARTIAL_GLOBAL_MESH->Z[0] - PARTIAL_GLOBAL_MESH->Z[1];
     
     
     for( int i = 0; i < PARTIAL_GLOBAL_MESH->nX; i++)
     {
         Vs = 0;
         //        printf("%i.\n",PARTIAL_GLOBAL_MESH->nZ-1);
-        for (int j = 0; j < PARTIAL_GLOBAL_MESH->nZ-1; j++)
+        for (int j = 0; j < PARTIAL_GLOBAL_MESH->nZ; j++)
         {
-            Vs += one/PARTIAL_GLOBAL_QUALITIES->Vs[i][j];
+            Vs += dZ/PARTIAL_GLOBAL_QUALITIES->Vs[i][j];
         }
         VsTotal = -PARTIAL_GLOBAL_MESH->Z[PARTIAL_GLOBAL_MESH->nZ-1]/Vs; // in km/s
         //        printf("%lf %lf %lf.\n",VsDepth,PARTIAL_GLOBAL_MESH->Z[PARTIAL_GLOBAL_MESH->nZ-1],Vs );

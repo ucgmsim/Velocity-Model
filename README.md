@@ -91,7 +91,7 @@ Call type 5) EXTRACT_THRESHOLD
 
 Extracts Vs30 Vs500 Z1.0 Z2.5
 
-- 1	-A GENERATE_VELOCITY_MOD
+- 1	-A EXTRACT_THRESHOLD
 - 2	-B MODEL_VERSION (model version - select from list of model versions at bottom of readme)
 - 3	-C OUTPUT_DIR (directory to save outputs to)
 - 4	-D ORIGIN_LAT (origin latitude - in decimal format)

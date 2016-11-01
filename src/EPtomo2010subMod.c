@@ -148,7 +148,7 @@ void loadEPtomoSurfaceData(char *tomoType, nz_tomography_data *NZ_TOMOGRAPHY_DAT
 
     if(strcmp(tomoType, "2010_Full_South_Island") == 0)
     {
-        nElev = 12; // read in only the necessary surfaces
+        nElev = 20; // read in only the necessary surfaces
         elev[0] = 15;
         elev[1] = 1;
         elev[2] = -3;
@@ -166,6 +166,9 @@ void loadEPtomoSurfaceData(char *tomoType, nz_tomography_data *NZ_TOMOGRAPHY_DAT
         elev[14] = -185;
         elev[15] = -225;
         elev[16] = -275;
+        elev[17] = -370;
+        elev[18] = -620;
+        elev[19] = -750;
     }
     else if(strcmp(tomoType, "2010_Update_Canterbury") == 0)
     {

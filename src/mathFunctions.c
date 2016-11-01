@@ -285,7 +285,7 @@ float float_swap(const float inFloat)
  n.a.
  
  Output variables:
- return  - int designating big or little endianess 
+ return  - int designating big or little endianess
  #define LITTLE_ENDIAN_CONFIRMED 0
  #define BIG_ENDIAN_CONFIRMED    1
  */
@@ -358,13 +358,13 @@ double interpolateQuad(double lons[4], double lats[4], double values[4], double 
         a[1] += AI1[i]*lons[i];
         a[2] += AI2[i]*lons[i];
         a[3] += AI3[i]*lons[i];
-
+        
         b[0] += AI0[i]*lats[i];
         b[1] += AI1[i]*lats[i];
         b[2] += AI2[i]*lats[i];
         b[3] += AI3[i]*lats[i];
     }
-
+    
     a0 = a[0];
     a1 = a[1];
     a2 = a[2];
@@ -374,7 +374,7 @@ double interpolateQuad(double lons[4], double lats[4], double values[4], double 
     b1 = b[1];
     b2 = b[2];
     b3 = b[3];
-
+    
     AA = a1*b3 - a3*b1;
     BB = a1*b2 - b3*lonA + a0*b3 - b1*a2 + latA*a3 -b0*a3;
     CC = a2*latA - a2*b0 -b2*lonA + a0*b2;
@@ -388,7 +388,7 @@ double interpolateQuad(double lons[4], double lats[4], double values[4], double 
     N2 = (0.25)*(1+e)*(1-n)*values[1];
     N3 = (0.25)*(1+e)*(1+n)*values[2];
     N4 = (0.25)*(1-e)*(1+n)*values[3];
-
+    
     interpVal = N1 + N2 + N3 + N4;
     printf("%lf\n",interpVal);
     
@@ -474,7 +474,102 @@ void gcproj(double xf,double yf,double *rlon,double *rlat,double ref_rad,double 
     }
 }
 
+void calcAndSaveZThreshold(char *OUTPUT_DIR, partial_global_mesh *PARTIAL_GLOBAL_MESH, partial_global_qualities *PARTIAL_GLOBAL_QUALITIES, calculation_log *CALCULATION_LOG, double Z_THRESHOLD, int latInd)
+{
+    double Z_WRITE = 0;
+    for( int i = 0; i < PARTIAL_GLOBAL_MESH->nX; i++)
+    {
+        Z_WRITE = 0;
+        for (int j = 0; j < PARTIAL_GLOBAL_MESH->nZ-1; j++)
+        {
+            if( PARTIAL_GLOBAL_QUALITIES->Vs[i][j] >= Z_THRESHOLD)
+            {
+                Z_WRITE = PARTIAL_GLOBAL_MESH->Z[j];
+                break;
+            }
+        }
+        if (Z_WRITE == 0)
+        {
+            printf("Z_Threshold outside of limits.\n");
+            exit(EXIT_FAILURE);
+        }
+        writeZThresholdFile(OUTPUT_DIR, PARTIAL_GLOBAL_MESH->Lat[i], PARTIAL_GLOBAL_MESH->Lon[i], Z_WRITE, latInd, Z_THRESHOLD);
+    }
+    
+}
 
+void writeZThresholdFile(char *OUTPUT_DIR, double Lat, double Lon, double Z_WRITE, double latInd, double Z_THRESHOLD)
+{
+    char zFile[MAX_FILENAME_STRING_LEN];
+    FILE *zFileTxt = NULL;
+    sprintf(zFile,"%s/Z/Z_%lf.txt",OUTPUT_DIR,Z_THRESHOLD);
+    
+    if( latInd == 0) // if first time generate file
+    {
+        zFileTxt = fopen(zFile, "w");
+        fprintf(zFileTxt,"Lat\tLon\tZ_%lf(m)\n",Z_THRESHOLD);
+        fprintf(zFileTxt,"%lf\t%lf\t%lf\n",Lat,Lon,Z_WRITE);
+    }
+    else // append to existing file
+    {
+        zFileTxt = fopen(zFile, "a");
+        fprintf(zFileTxt,"%lf\t%lf\t%lf\n",Lat,Lon,Z_WRITE);
+    }
+    fclose(zFileTxt);
+    
+    
+}
+
+
+
+
+void calcAndSaveVs(char *OUTPUT_DIR, partial_global_mesh *PARTIAL_GLOBAL_MESH, partial_global_qualities *PARTIAL_GLOBAL_QUALITIES, calculation_log *CALCULATION_LOG, char *VS_DEPTH, int latInd)
+{
+    double Vs;
+    double VsTotal;
+    double one = 1.0;
+    
+    
+    for( int i = 0; i < PARTIAL_GLOBAL_MESH->nX; i++)
+    {
+        Vs = 0;
+        //        printf("%i.\n",PARTIAL_GLOBAL_MESH->nZ-1);
+        for (int j = 0; j < PARTIAL_GLOBAL_MESH->nZ-1; j++)
+        {
+            Vs += one/PARTIAL_GLOBAL_QUALITIES->Vs[i][j];
+        }
+        VsTotal = -PARTIAL_GLOBAL_MESH->Z[PARTIAL_GLOBAL_MESH->nZ-1]/Vs; // in km/s
+        //        printf("%lf %lf %lf.\n",VsDepth,PARTIAL_GLOBAL_MESH->Z[PARTIAL_GLOBAL_MESH->nZ-1],Vs );
+        writeVsFile(OUTPUT_DIR, PARTIAL_GLOBAL_MESH->Lat[i], PARTIAL_GLOBAL_MESH->Lon[i], VsTotal, latInd, VS_DEPTH);
+    }
+    
+    
+    
+    
+    
+}
+
+void writeVsFile(char *OUTPUT_DIR, double Lat, double Lon, double VsTotal, double latInd, char *VS_DEPTH)
+{
+    char vsFile[MAX_FILENAME_STRING_LEN];
+    FILE *vsFileTxt = NULL;
+    sprintf(vsFile,"%s/Vs/Vs_%s.txt",OUTPUT_DIR,VS_DEPTH);
+    
+    if( latInd == 0) // if first time generate file
+    {
+        vsFileTxt = fopen(vsFile, "w");
+        fprintf(vsFileTxt,"Lat\tLon\tVs_%s(km/s)\n",VS_DEPTH);
+        fprintf(vsFileTxt,"%lf\t%lf\t%lf\n",Lat,Lon,VsTotal);
+    }
+    else // append to existing file
+    {
+        vsFileTxt = fopen(vsFile, "a");
+        fprintf(vsFileTxt,"%lf\t%lf\t%lf\n",Lat,Lon,VsTotal);
+    }
+    fclose(vsFileTxt);
+    
+    
+}
 
 
 

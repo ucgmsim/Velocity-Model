@@ -50,6 +50,7 @@ extern void interpolateBasinSurfaceDepths(basin_data *BASIN_DATA, global_model_p
 extern void runGenerateVelocityModel(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extract_velo_mod_call GEN_EXTRACT_VELO_MOD_CALL, calculation_log *CALCULATION_LOG);
 extern void runExtractFromVelocityModel(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extract_velo_mod_call GEN_EXTRACT_VELO_MOD_CALL, calculation_log *CALCULATION_LOG);
 extern void runGenerateVelocitySlices(char *MODEL_VERSION, char *OUTPUT_DIR, gen_velo_slices_call GEN_VELO_SLICES_CALL, calculation_log *CALCULATION_LOG);
+extern void runThresholdVelocityModel(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extract_velo_mod_call GEN_EXTRACT_VELO_MOD_CALL, calculation_log *CALCULATION_LOG);
 
 extern void runGenerateProfile(char *MODEL_VERSION, char *OUTPUT_DIR, gen_profile_call GEN_PROFILE_CALL, calculation_log *CALCULATION_LOG);
 extern void gcprojRev(double *xf,double *yf,double rlon,double rlat,double ref_rad,double g0,double b0,double amat[8],double ainv[8]);
@@ -203,6 +204,12 @@ extern double findMinValueArray(int nPts, double pts[5]);
 extern double findMaxValueArray(int nPts, double pts[5]);
 extern double interpolateQuad(double lons[4], double lats[4], double values[4], double latA, double lonA);
 extern void gcproj(double xf,double yf,double *rlon,double *rlat,double ref_rad,double g0,double b0,double amat[8],double ainv[8]);
+extern void calcAndSaveVs(char *OUTPUT_DIR, partial_global_mesh *PARTIAL_GLOBAL_MESH, partial_global_qualities *PARTIAL_GLOBAL_QUALITIES, calculation_log *CALCULATION_LOG, char *VS_DEPTH, int latInd);
+extern void writeVsFile(char *OUTPUT_DIR, double Lat, double Lon, double VsTotal, double latInd, char *VS_DEPTH);
+extern void writeZThresholdFile(char *OUTPUT_DIR, double Lat, double Lon, double Z_WRITE, double latInd, double Z_THRESHOLD);
+void calcAndSaveZThreshold(char *OUTPUT_DIR, partial_global_mesh *PARTIAL_GLOBAL_MESH, partial_global_qualities *PARTIAL_GLOBAL_QUALITIES, calculation_log *CALCULATION_LOG, double Z_THRESHOLD, int latInd);
+
+
 
 
 

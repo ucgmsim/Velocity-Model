@@ -319,6 +319,7 @@ typedef struct{
     char *TOPO_TYPE;
     int numInputsSet;
     char *EXTRACTED_SLICE_PARAMETERS_DIRECTORY;
+    char *VS_TYPE; // for vs_500 etc.
 }gen_extract_velo_mod_call;
 
 
@@ -338,6 +339,8 @@ typedef struct{
     double EXTENT_Z_SPACING_PROFILE;
     int numInputsSet;
 }gen_profile_call;
+
+
 
 
 

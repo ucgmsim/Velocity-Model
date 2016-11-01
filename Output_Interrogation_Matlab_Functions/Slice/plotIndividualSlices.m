@@ -3,17 +3,20 @@ function plotIndividualSlices
 close all
 
 
-dirName{1} = 'v1.65_SQUASHED';
-% dirName{1} = 'v1.65_BULLDOZED';
+dirName{1} = 'SliceA';
+% dirName{2} = 'PreQFenceNZAllBasins';
+% dirName{1} = 'PreQFenceCantTomoOnly';
+% dirName{2} = 'PreQFenceCantAllBasins';
 % dirName{2} = 'v1.01ModelRemote';
 
 % dirName{2} = 'v1.22';
 
 
 type{1} = 'Generated';
+type{2} = 'Generated';
+
 % type{1} = 'Extracted';
 
-% type{2} = 'Generated';
 % type{3} = 'Generated';
 % type{4} = 'Generated';
 % type{5} = 'Generated';

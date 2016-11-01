@@ -24,8 +24,8 @@
 #include "structs.h"
 #include "functions.h"
 
-int main(int argc, char *argv[])
-//int main(void)
+//int main(int argc, char *argv[])
+int main(void)
 {
     /*
      int argc = 29;
@@ -102,21 +102,21 @@ int main(int argc, char *argv[])
      argv[1] = "-A";
      argv[2] = "GENERATE_PROFILE";
      argv[3] = "-B";
-     argv[4] = "Test_0.1";
+     argv[4] = "1.11";
      argv[5] = "-C";
-     argv[6] = "CACS";
-     argv[7] = "-Q";
-     argv[8] = "-43.5968";
-     argv[9] = "-R";
-     argv[10] = "172.5";
-     argv[11] = "-S";
-     argv[12] = "5";
-     argv[13] = "-T";
-     argv[14] = "-1";
-     argv[15] = "-U";
-     argv[16] = "-0.5";
-     argv[17] = "-V";
-     argv[18] = "0.05";
+     argv[6] = "Site_E";
+     argv[7] = "-S";
+     argv[8] = "-45.84";
+     argv[9] = "-T";
+     argv[10] = "166.81";
+     argv[11] = "-U";
+     argv[12] = "749.5";
+     argv[13] = "-V";
+     argv[14] = "-14.5";
+     argv[15] = "-W";
+     argv[16] = "0";
+     argv[17] = "-X";
+     argv[18] = "1";
      */
     
     
@@ -128,14 +128,93 @@ int main(int argc, char *argv[])
      argv[3] = "-B";
      argv[4] = "1.65";
      argv[5] = "-C";
-     argv[6] = "v1.65_SQUASHED";
+     argv[6] = "1.65";//PreQFenceCantAllBasins";//PreQFenceNZAllBasins";
      argv[7] = "-P";
      argv[8] = "0"; //minVs
      argv[9] = "-Q";
-     argv[10] = "SliceParametersCant";
+     argv[10] = "SliceParametersLiamsPaper";//"SliceParametersForRobinPreFencePlot";//";
      argv[11] = "-R";
-     argv[12] = "SQUASHED_TAPERED"; //"SQUASHED" BULLDOZED SQUASHED_TAPERED
+     argv[12] = "BULLDOZED"; //"SQUASHED" BULLDOZED SQUASHED_TAPERED
      */
+    /*
+    int argc = 13;
+    char *argv[13];
+    argv[1] = "-A";
+    argv[2] = "GENERATE_VELOCITY_SLICES";
+    argv[3] = "-B";
+    argv[4] = "1.11";
+    argv[5] = "-C";
+    argv[6] = "1.11"; //"PreQFenceCantTomoOnly";//
+    argv[7] = "-P";
+    argv[8] = "0"; //minVs
+    argv[9] = "-Q";
+    argv[10] = "SliceParametersLiamsPaper"; //SliceParametersForRobinPreFencePlot";//
+    argv[11] = "-R";
+    argv[12] = "BULLDOZED"; //"SQUASHED" BULLDOZED SQUASHED_TAPERED
+    */
+    
+    
+    /*
+    int argc = 13;
+    char *argv[13];
+    argv[1] = "-A";
+    argv[2] = "GENERATE_VELOCITY_SLICES";
+    argv[3] = "-B";
+    argv[4] = "1.65";
+    argv[5] = "-C";
+    argv[6] = "PreQFenceCantAllBasins";//PreQFenceNZAllBasins";
+    argv[7] = "-P";
+    argv[8] = "0"; //minVs
+    argv[9] = "-Q";
+    argv[10] = "SliceParametersForRobinPreFencePlot";//";
+    argv[11] = "-R";
+    argv[12] = "BULLDOZED"; //"SQUASHED" BULLDOZED SQUASHED_TAPERED
+    */
+    /*
+     int argc = 13;
+     char *argv[13];
+     argv[1] = "-A";
+     argv[2] = "GENERATE_VELOCITY_SLICES";
+     argv[3] = "-B";
+     argv[4] = "1.11_DEM";
+     argv[5] = "-C";
+     argv[6] = "PreQFenceCantTomoOnly";//
+     argv[7] = "-P";
+     argv[8] = "0"; //minVs
+     argv[9] = "-Q";
+     argv[10] = "SliceParametersForRobinPreFencePlot";//
+     argv[11] = "-R";
+     argv[12] = "BULLDOZED"; //"SQUASHED" BULLDOZED SQUASHED_TAPERED
+     */
+    
+    ///*
+     int argc = 23;
+     char *argv[23];
+     argv[1] = "-A";
+     argv[2] = "EXTRACT_THRESHOLD";
+     argv[3] = "-B";
+     argv[4] = "1.65";
+     argv[5] = "-C";
+     argv[6] = "v1.65";
+     argv[7] = "-D";
+     argv[8] = "-43.75";
+     argv[9] = "-E";
+     argv[10] = "170.75";
+     argv[11] = "-F";
+     argv[12] = "-50";
+     argv[13] = "-G";
+     argv[14] = "850";
+     argv[15] = "-H";
+     argv[16] = "300";
+     argv[17] = "-L";
+     argv[18] = "1";
+     argv[19] = "-M";
+     argv[20] = "0";
+     argv[21] = "-Z";
+     argv[22] = "Z1.0";
+     //*/
+
+
     
     
     // set call type flags to zero (0)
@@ -143,6 +222,7 @@ int main(int argc, char *argv[])
     int GENERATE_VELOCITY_MOD = 0;
     int GENERATE_VELOCITY_SLICES = 0;
     int GENERATE_PROFILE = 0;
+    int EXTRACT_THRESHOLD = 0;
     
     // generate structs to house paramteters for each call type
     gen_extract_velo_mod_call GEN_EXTRACT_VELO_MOD_CALL;
@@ -158,7 +238,7 @@ int main(int argc, char *argv[])
     int numCallTypesSet = 0;
     int opt = 0;
     
-    char *optString = "A:B:C:D:E:F:G:H:I:J:K:L:M:N:O:P:Q:R:S:T:U:V:";
+    char *optString = "A:B:C:D:E:F:G:H:I:J:K:L:M:N:O:P:Q:R:S:T:U:V:W:X:Z:";
     
     opt = getopt( argc, argv, optString  );
     while( opt != -1 )
@@ -187,9 +267,14 @@ int main(int argc, char *argv[])
                 genCallType = "GENERATE_PROFILE";
                 GENERATE_PROFILE = 1;
             }
-                else
+                else if (strcmp(optarg, "EXTRACT_THRESHOLD") == 0)
             {
-                printf("Option -A set incorrectly, see readme.\n");
+                genCallType = "EXTRACT_THRESHOLD";
+                EXTRACT_THRESHOLD = 1;
+            }
+                else
+                {
+                    printf("Option -A set incorrectly, see readme.\n");
                 exit(EXIT_FAILURE);
             }
                 numCallTypesSet += 1;
@@ -272,7 +357,12 @@ int main(int argc, char *argv[])
                 GEN_PROFILE_CALL.numInputsSet += 1;
                 break;
                 
-            default:
+                // Optional inputs (EXTRACT_THRESHOLD)
+                case 'Z' : GEN_EXTRACT_VELO_MOD_CALL.VS_TYPE = optarg;
+                GEN_EXTRACT_VELO_MOD_CALL.numInputsSet += 1;
+                break;
+                
+                default:
                 printf("Non existant option set, see readme.\n");
                 exit(EXIT_FAILURE);
                 break;
@@ -327,16 +417,24 @@ int main(int argc, char *argv[])
             exit(EXIT_FAILURE);
         }
     }
+    else if (EXTRACT_THRESHOLD == 1)
+    {
+        if(GEN_EXTRACT_VELO_MOD_CALL.numInputsSet != 8)
+        {
+            printf("Incorrect number of parameters set for EXTRACT_THRESHOLD call, see readme for instructions.\n");
+            exit(EXIT_FAILURE);
+        }
+    }
     
     // check if the output directory exists, exit if necessary
-    if (GENERATE_VELOCITY_MOD == 1 || GENERATE_VELOCITY_SLICES == 1 || GENERATE_PROFILE == 1)
+    if (GENERATE_VELOCITY_MOD == 1 || GENERATE_VELOCITY_SLICES == 1 || GENERATE_PROFILE == 1 || EXTRACT_THRESHOLD == 1)
     {
         struct stat st;
         
         if (stat(OUTPUT_DIR, &st) != -1)
         {
             printf("Output directory must not exist for this call type. See readme.\n");
-            exit(EXIT_FAILURE);
+//            exit(EXIT_FAILURE);
         }
         else
         {
@@ -409,6 +507,16 @@ int main(int argc, char *argv[])
         runGenerateProfile(MODEL_VERSION, OUTPUT_DIR, GEN_PROFILE_CALL, CALCULATION_LOG);
         printf("==========================================\n");
         printf("Completed running GENERATE_PROFILE.\n");
+        printf("==========================================\n");
+    }
+    else if (EXTRACT_THRESHOLD == 1)
+    {
+        printf("==========================================\n");
+        printf("Running EXTRACT_THRESHOLD.\n");
+        printf("==========================================\n");
+        runThresholdVelocityModel(MODEL_VERSION, OUTPUT_DIR, GEN_EXTRACT_VELO_MOD_CALL, CALCULATION_LOG);
+        printf("==========================================\n");
+        printf("Completed running EXTRACT_THRESHOLD.\n");
         printf("==========================================\n");
     }
     

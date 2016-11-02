@@ -571,7 +571,6 @@ void runThresholdVelocityModel(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extrac
     free(GLOBAL_SURFACES);
     freeAllBasinSurfaces(BASIN_DATA, GLOBAL_MODEL_PARAMETERS);
     free(BASIN_DATA);
-    free(GLOBAL_MESH);
     free(MODEL_EXTENT);
 }
 

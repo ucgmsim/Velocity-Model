@@ -239,7 +239,7 @@ int main(int argc, char *argv[])
      argv[19] = "-M";
      argv[20] = "0";
      argv[21] = "-Z";
-    argv[22] = "VS500"; // VS30 VS500 Z1.0 Z2.5
+    argv[22] = "Z2.5"; // VS30 VS500 Z1.0 Z2.5
      */
 
 

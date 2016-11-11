@@ -171,7 +171,7 @@ void writeIndividualProfile(qualities_vector *QUALITIES_VECTOR, gen_profile_call
     fprintf(fp,"Depth \t Vp \t Vs \t Rho\n");
     
     
-    for(int i = 0; i < *MESH_VECTOR->nZ; i++)
+    for(int i = 0; i < MESH_VECTOR->nZ; i++)
     {
         if(QUALITIES_VECTOR->Vs[i] <= GEN_PROFILE_CALL.PROFILE_MIN_VS)
         {

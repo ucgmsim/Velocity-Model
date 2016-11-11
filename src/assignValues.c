@@ -38,7 +38,6 @@ void assignQualities(global_model_parameters *GLOBAL_MODEL_PARAMETERS, velo_mod_
     int nVeloModInd;
     
     interpolateGlobalSurfaceDepths(GLOBAL_SURFACES, MESH_VECTOR, PARTIAL_GLOBAL_SURFACE_DEPTHS, CALCULATION_LOG);
-    double half = 0.5;
     double dZ;
     double depthChange;
 
@@ -60,12 +59,10 @@ void assignQualities(global_model_parameters *GLOBAL_MODEL_PARAMETERS, velo_mod_
         SHIFTED_MESH_VECTOR->Lon = MESH_VECTOR->Lon;
         SHIFTED_MESH_VECTOR->nZ = MESH_VECTOR->nZ;
 
-        for (int k = 0; k < *MESH_VECTOR->nZ; k++)
+        for (int k = 0; k < MESH_VECTOR->nZ; k++)
         {
-            depthChange = (k+half) * dZ;
-            //printf("%lf %lf %lf.\n",PARTIAL_GLOBAL_SURFACE_DEPTHS->dep[1], dZ, depthChange);
+            depthChange = (-1000 * MESH_VECTOR->referenceDepth) - MESH_VECTOR->Z[k];
             SHIFTED_MESH_VECTOR->Z[k] = PARTIAL_GLOBAL_SURFACE_DEPTHS->dep[1] - depthChange;
-            //printf("%lf.\n",SHIFTED_MESH_VECTOR->Z[k]);
         }
         interpolateBasinSurfaceDepths(BASIN_DATA, GLOBAL_MODEL_PARAMETERS, IN_BASIN, PARTIAL_BASIN_SURFACE_DEPTHS, SHIFTED_MESH_VECTOR);
 
@@ -88,25 +85,21 @@ void assignQualities(global_model_parameters *GLOBAL_MODEL_PARAMETERS, velo_mod_
         SHIFTED_MESH_VECTOR->Lon = MESH_VECTOR->Lon;
         SHIFTED_MESH_VECTOR->nZ = MESH_VECTOR->nZ;
         
-        for (int k = 0; k < *MESH_VECTOR->nZ; k++)
+        for (int k = 0; k < MESH_VECTOR->nZ; k++)
         {
-            depthChange = (k+half) * dZ;
+            depthChange = (-1000 * MESH_VECTOR->referenceDepth) - MESH_VECTOR->Z[k];
             TAPER_VAL = 1.0 - (depthChange/(PARTIAL_GLOBAL_SURFACE_DEPTHS->dep[1]*TAPER_DIST));
             if(TAPER_VAL < 0)
             {
                 TAPER_VAL = 0;
             }
             SHIFTED_MESH_VECTOR->Z[k] = PARTIAL_GLOBAL_SURFACE_DEPTHS->dep[1]*TAPER_VAL - depthChange;
-//            printf("%i %lf  %lf %lf %lf %lf.\n",k,MESH_VECTOR->Z[k],SHIFTED_MESH_VECTOR->Z[k],PARTIAL_GLOBAL_SURFACE_DEPTHS->dep[1], depthChange,TAPER_VAL);
-
-            //printf("%lf.\n",SHIFTED_MESH_VECTOR->Z[k]);
         }
         interpolateBasinSurfaceDepths(BASIN_DATA, GLOBAL_MODEL_PARAMETERS, IN_BASIN, PARTIAL_BASIN_SURFACE_DEPTHS, SHIFTED_MESH_VECTOR);
     }
     else if(strcmp(TOPO_TYPE, "BULLDOZED") == 0)
     {
         interpolateBasinSurfaceDepths(BASIN_DATA, GLOBAL_MODEL_PARAMETERS, IN_BASIN, PARTIAL_BASIN_SURFACE_DEPTHS, MESH_VECTOR);
-
     }
     else
     {
@@ -119,7 +112,7 @@ void assignQualities(global_model_parameters *GLOBAL_MODEL_PARAMETERS, velo_mod_
     int basinFlag = 0;
     double Z = 0;
 
-    for (int k = 0; k < *MESH_VECTOR->nZ; k++)
+    for (int k = 0; k < MESH_VECTOR->nZ; k++)
     {
         if(strcmp(TOPO_TYPE, "BULLDOZED") == 0)
         {
@@ -160,6 +153,18 @@ void assignQualities(global_model_parameters *GLOBAL_MODEL_PARAMETERS, velo_mod_
             else if(strcmp(GLOBAL_MODEL_PARAMETERS->veloSubMod[nVeloModInd], "NaNsubMod") == 0)
             {
                 NaNsubMod(k, QUALITIES_VECTOR);
+            }
+            else if(strcmp(GLOBAL_MODEL_PARAMETERS->veloSubMod[nVeloModInd], "GenericSubModA") == 0)
+            {
+                GenericSubModA(k, QUALITIES_VECTOR);
+            }
+            else if(strcmp(GLOBAL_MODEL_PARAMETERS->veloSubMod[nVeloModInd], "GenericSubModB") == 0)
+            {
+                GenericSubModB(k, QUALITIES_VECTOR);
+            }
+            else if(strcmp(GLOBAL_MODEL_PARAMETERS->veloSubMod[nVeloModInd], "GenericSubModC") == 0)
+            {
+                GenericSubModC(k, QUALITIES_VECTOR);
             }
         }
         basinFlag = 0;

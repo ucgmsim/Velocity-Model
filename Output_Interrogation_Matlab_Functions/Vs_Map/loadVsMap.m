@@ -1,8 +1,8 @@
 function plotVsMap
 close all
 folderName = 'v1.65';
-type = 'Vs_500';
-% type = 'Vs_30';
+% type = 'Vs_500';
+ type = 'Vs_30';
 fileName = sprintf('%s/Vs/%s.txt',folderName,type);
 
 map = loadMap(fileName);

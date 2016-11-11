@@ -20,7 +20,6 @@
 
 void runGenerateVelocitySlices(char *MODEL_VERSION, char *OUTPUT_DIR, gen_velo_slices_call GEN_VELO_SLICES_CALL, calculation_log *CALCULATION_LOG)
 {
-    
     slice_parameters *SLICE_PARAMETERS;
     SLICE_PARAMETERS = readGeneratedSliceParametersFile(GEN_VELO_SLICES_CALL.GENERATED_SLICE_PARAMETERS_DIRECTORY);
     
@@ -139,9 +138,10 @@ void runGenerateVelocitySlices(char *MODEL_VERSION, char *OUTPUT_DIR, gen_velo_s
                 printf("Memory allocation of QUALITIES_VECTOR failed.\n");
                 exit(EXIT_FAILURE);
             }
-
+            
             
             MESH_VECTOR = extractMeshVector(PARTIAL_GLOBAL_MESH, k);
+            MESH_VECTOR->referenceDepth = INDIVIDUAL_SLICE_PARAMETERS.zMin;
             
             assignQualities(GLOBAL_MODEL_PARAMETERS, VELO_MOD_1D_DATA, NZ_TOMOGRAPHY_DATA, GLOBAL_SURFACES, BASIN_DATA, MESH_VECTOR, PARTIAL_GLOBAL_SURFACE_DEPTHS, PARTIAL_BASIN_SURFACE_DEPTHS, IN_BASIN, QUALITIES_VECTOR, CALCULATION_LOG, GEN_VELO_SLICES_CALL.TOPO_TYPE);
             for(int i = 0; i < PARTIAL_GLOBAL_MESH->nZ; i++)
@@ -149,9 +149,9 @@ void runGenerateVelocitySlices(char *MODEL_VERSION, char *OUTPUT_DIR, gen_velo_s
                 PARTIAL_GLOBAL_QUALITIES->Rho[k][i] = QUALITIES_VECTOR->Rho[i];
                 PARTIAL_GLOBAL_QUALITIES->Vp[k][i] = QUALITIES_VECTOR->Vp[i];
                 PARTIAL_GLOBAL_QUALITIES->Vs[k][i] = QUALITIES_VECTOR->Vs[i];
-//                printf("%lf %lf %lf.\n",PARTIAL_GLOBAL_QUALITIES->Vp[i], PARTIAL_GLOBAL_QUALITIES->Vs[i],PARTIAL_GLOBAL_QUALITIES->Rho[i]);
-//                printf("%lf %lf %lf.\n\n",QUALITIES_VECTOR->Vp[i],QUALITIES_VECTOR->Vs[i],QUALITIES_VECTOR->Rho[i]);
-
+                //                printf("%lf %lf %lf.\n",PARTIAL_GLOBAL_QUALITIES->Vp[i], PARTIAL_GLOBAL_QUALITIES->Vs[i],PARTIAL_GLOBAL_QUALITIES->Rho[i]);
+                //                printf("%lf %lf %lf.\n\n",QUALITIES_VECTOR->Vp[i],QUALITIES_VECTOR->Vs[i],QUALITIES_VECTOR->Rho[i]);
+                
                 
             }
             for(int i = 0; i < GLOBAL_MODEL_PARAMETERS->nBasins; i++)
@@ -160,13 +160,13 @@ void runGenerateVelocitySlices(char *MODEL_VERSION, char *OUTPUT_DIR, gen_velo_s
                 {
                     SLICE_SURFACE_DEPTHS->basinSurfdep[i][j][k] = PARTIAL_BASIN_SURFACE_DEPTHS->dep[i][j];
                 }
-
+                
             }
             for(int i = 0; i < GLOBAL_MODEL_PARAMETERS->nSurf; i++)
             {
                 SLICE_SURFACE_DEPTHS->globSurfdep[i][k] = PARTIAL_GLOBAL_SURFACE_DEPTHS->dep[i];
             }
-
+            
             
             free(MESH_VECTOR);
             free(QUALITIES_VECTOR);
@@ -380,8 +380,8 @@ void runThresholdVelocityModel(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extrac
     MODEL_EXTENT->Xmax = GEN_EXTRACT_VELO_MOD_CALL.EXTENT_X;
     MODEL_EXTENT->Ymax = GEN_EXTRACT_VELO_MOD_CALL.EXTENT_Y;
     MODEL_EXTENT->hLatLon = GEN_EXTRACT_VELO_MOD_CALL.EXTENT_LATLON_SPACING;
-    char *Z_THRESH;
-
+    char *Z_THRESH = "";
+    
     
     if (strcmp(GEN_EXTRACT_VELO_MOD_CALL.VS_TYPE, "VS500") == 0)
     {
@@ -416,7 +416,7 @@ void runThresholdVelocityModel(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extrac
     }
     
     
-
+    
     
     // generate the model grid
     global_mesh *GLOBAL_MESH;
@@ -561,7 +561,7 @@ void runThresholdVelocityModel(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extrac
         }
         free(PARTIAL_GLOBAL_MESH);
         free(PARTIAL_GLOBAL_QUALITIES);
-    }    
+    }
     
     free(VELO_MOD_1D_DATA);
     freeEPtomoSurfaceData(NZ_TOMOGRAPHY_DATA);
@@ -578,6 +578,8 @@ void runThresholdVelocityModel(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extrac
 
 void runGenerateVelocityModel(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extract_velo_mod_call GEN_EXTRACT_VELO_MOD_CALL, calculation_log *CALCULATION_LOG)
 {
+    int smoothingRequired = 0; // set as zero if no smoothing is required
+    int nPtsSmooth = 1; // number of points (eitherside of gridpoint) to incorporate for smoothing
     
     model_extent *MODEL_EXTENT = malloc(sizeof(model_extent));
     if (MODEL_EXTENT == NULL)
@@ -616,7 +618,11 @@ void runGenerateVelocityModel(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extract
     
     partial_global_mesh *PARTIAL_GLOBAL_MESH;
     mesh_vector *MESH_VECTOR;
+    mesh_vector *EXTENDED_MESH_VECTOR;
     qualities_vector *QUALITIES_VECTOR;
+    qualities_vector *EXTENDED_QUALITIES_VECTOR;
+
+
     partial_global_qualities *PARTIAL_GLOBAL_QUALITIES;
     
     // read in velocity model data (surfaces, 1D models, tomography etc)
@@ -665,6 +671,10 @@ void runGenerateVelocityModel(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extract
     partial_global_surface_depths *PARTIAL_GLOBAL_SURFACE_DEPTHS;
     partial_basin_surface_depths *PARTIAL_BASIN_SURFACE_DEPTHS;
     in_basin *IN_BASIN;
+    double oneThird = 1.0/3.0;
+    double half = 1.0/2.0;
+    double fourThirds = 4.0/3.0;
+    double A, B, C;
     // Load Data
     loadAllGlobalData(GLOBAL_MODEL_PARAMETERS, CALCULATION_LOG, VELO_MOD_1D_DATA, NZ_TOMOGRAPHY_DATA, GLOBAL_SURFACES, BASIN_DATA);
     
@@ -706,19 +716,66 @@ void runGenerateVelocityModel(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extract
                 printf("Memory allocation of QUALITIES_VECTOR failed.\n");
                 exit(EXIT_FAILURE);
             }
-            
-            MESH_VECTOR = extractMeshVector(PARTIAL_GLOBAL_MESH, k);
-            
-            assignQualities(GLOBAL_MODEL_PARAMETERS, VELO_MOD_1D_DATA, NZ_TOMOGRAPHY_DATA, GLOBAL_SURFACES, BASIN_DATA, MESH_VECTOR, PARTIAL_GLOBAL_SURFACE_DEPTHS, PARTIAL_BASIN_SURFACE_DEPTHS, IN_BASIN, QUALITIES_VECTOR, CALCULATION_LOG, GEN_EXTRACT_VELO_MOD_CALL.TOPO_TYPE);
-            for(int i = 0; i < PARTIAL_GLOBAL_MESH->nZ; i++)
+            EXTENDED_QUALITIES_VECTOR = malloc(sizeof(qualities_vector));
+            if (QUALITIES_VECTOR == NULL)
             {
-                PARTIAL_GLOBAL_QUALITIES->Rho[k][i] = QUALITIES_VECTOR->Rho[i];
-                PARTIAL_GLOBAL_QUALITIES->Vp[k][i] = QUALITIES_VECTOR->Vp[i];
-                PARTIAL_GLOBAL_QUALITIES->Vs[k][i] = QUALITIES_VECTOR->Vs[i];
-                
+                printf("Memory allocation of QUALITIES_VECTOR failed.\n");
+                exit(EXIT_FAILURE);
             }
-            free(MESH_VECTOR);
-            free(QUALITIES_VECTOR); 
+            
+            if (smoothingRequired == 1)
+            {
+                EXTENDED_MESH_VECTOR = extendMeshVector(PARTIAL_GLOBAL_MESH, nPtsSmooth, MODEL_EXTENT->hDep*1000, k);
+                EXTENDED_MESH_VECTOR->referenceDepth = GEN_EXTRACT_VELO_MOD_CALL.EXTENT_ZMIN;
+                assignQualities(GLOBAL_MODEL_PARAMETERS, VELO_MOD_1D_DATA, NZ_TOMOGRAPHY_DATA, GLOBAL_SURFACES, BASIN_DATA, EXTENDED_MESH_VECTOR, PARTIAL_GLOBAL_SURFACE_DEPTHS, PARTIAL_BASIN_SURFACE_DEPTHS, IN_BASIN, EXTENDED_QUALITIES_VECTOR, CALCULATION_LOG, GEN_EXTRACT_VELO_MOD_CALL.TOPO_TYPE);
+                int midPtCount, midPtCountPlus, midPtCountMinus;
+                
+                for(int i = 0; i < PARTIAL_GLOBAL_MESH->nZ; i++)
+                {
+                    midPtCount = i * (1+2*nPtsSmooth) + 1 ;
+                    midPtCountPlus = midPtCount + 1;
+                    midPtCountMinus = midPtCount - 1;
+
+                    //(1/2)*{(1/3)Vs(i-1)+(4/3)Vs(i)+(1/3)Vs(i+1)}.
+                    A = oneThird*EXTENDED_QUALITIES_VECTOR->Rho[midPtCountMinus];
+                    B = fourThirds*EXTENDED_QUALITIES_VECTOR->Rho[midPtCount];
+                    C = oneThird*EXTENDED_QUALITIES_VECTOR->Rho[midPtCountPlus];
+//                    printf("%i %i %i %lf %lf %lf.\n",midPtCount,midPtCountPlus, midPtCountMinus, A,B,C);
+                    PARTIAL_GLOBAL_QUALITIES->Rho[k][i] = half *( A + B + C);
+                    
+                    A = oneThird*EXTENDED_QUALITIES_VECTOR->Vp[midPtCountMinus];
+                    B = fourThirds*EXTENDED_QUALITIES_VECTOR->Vp[midPtCount];
+                    C = oneThird*EXTENDED_QUALITIES_VECTOR->Vp[midPtCountPlus];
+//                                        printf("%lf %lf %lf.\n",A,B,C);
+                    PARTIAL_GLOBAL_QUALITIES->Vp[k][i] = half *( A + B + C);
+                    
+                    A = oneThird*EXTENDED_QUALITIES_VECTOR->Vs[midPtCountMinus];
+                    B = fourThirds*EXTENDED_QUALITIES_VECTOR->Vs[midPtCount];
+                    C = oneThird*EXTENDED_QUALITIES_VECTOR->Vs[midPtCountPlus];
+//                                        printf("%lf %lf %lf.\n",A,B,C);
+                    PARTIAL_GLOBAL_QUALITIES->Vs[k][i] = half *( A + B + C);
+
+                }
+                free(EXTENDED_MESH_VECTOR);
+                free(EXTENDED_QUALITIES_VECTOR);
+            }
+            else
+            {
+                MESH_VECTOR = extractMeshVector(PARTIAL_GLOBAL_MESH, k);
+                MESH_VECTOR->referenceDepth = GEN_EXTRACT_VELO_MOD_CALL.EXTENT_ZMIN;
+                assignQualities(GLOBAL_MODEL_PARAMETERS, VELO_MOD_1D_DATA, NZ_TOMOGRAPHY_DATA, GLOBAL_SURFACES, BASIN_DATA, MESH_VECTOR, PARTIAL_GLOBAL_SURFACE_DEPTHS, PARTIAL_BASIN_SURFACE_DEPTHS, IN_BASIN, QUALITIES_VECTOR, CALCULATION_LOG, GEN_EXTRACT_VELO_MOD_CALL.TOPO_TYPE);
+                for(int i = 0; i < PARTIAL_GLOBAL_MESH->nZ; i++)
+                {
+                    PARTIAL_GLOBAL_QUALITIES->Rho[k][i] = QUALITIES_VECTOR->Rho[i];
+                    PARTIAL_GLOBAL_QUALITIES->Vp[k][i] = QUALITIES_VECTOR->Vp[i];
+                    PARTIAL_GLOBAL_QUALITIES->Vs[k][i] = QUALITIES_VECTOR->Vs[i];
+                    
+                }
+                free(MESH_VECTOR);
+
+            }
+            
+            free(QUALITIES_VECTOR);
             free(PARTIAL_BASIN_SURFACE_DEPTHS);
             free(PARTIAL_GLOBAL_SURFACE_DEPTHS);
             free(IN_BASIN);

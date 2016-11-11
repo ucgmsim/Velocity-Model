@@ -51,7 +51,8 @@ typedef struct{
     double *Lon;
     double *Lat;
     double Z[DEP_GRID_DIM_MAX];
-    int *nZ;
+    int nZ;
+    double referenceDepth;
 }mesh_vector;
 
 

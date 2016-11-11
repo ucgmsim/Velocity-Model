@@ -144,7 +144,52 @@ mesh_vector *extractMeshVector(partial_global_mesh *PARTIAL_GLOBAL_MESH, int lon
     {
         MESH_VECTOR->Z[i] = PARTIAL_GLOBAL_MESH->Z[i];
     }
-    MESH_VECTOR->nZ = &PARTIAL_GLOBAL_MESH->nZ;
+    MESH_VECTOR->nZ = PARTIAL_GLOBAL_MESH->nZ;
+    
+    return MESH_VECTOR;
+}
+
+mesh_vector *extendMeshVector(partial_global_mesh *PARTIAL_GLOBAL_MESH, int nPts, double dZPt, int lonInd)
+{
+    mesh_vector *MESH_VECTOR;
+    MESH_VECTOR = malloc(sizeof(mesh_vector));
+    if(MESH_VECTOR == NULL)
+    {
+        printf("Memory allocation failed for MESH_VECTOR array.\n");
+        exit(EXIT_FAILURE);
+    }
+    int nPtsSmooth = 1 + 2 * nPts;
+
+    int nZ = nPtsSmooth * PARTIAL_GLOBAL_MESH->nZ;
+    if(nZ>=DEP_GRID_DIM_MAX)
+    {
+        printf("nZ required for smoothing exceeds the allowable value of %i.\n",DEP_GRID_DIM_MAX);
+        exit(EXIT_FAILURE);
+    }
+    
+    
+    MESH_VECTOR->Lat = &PARTIAL_GLOBAL_MESH->Lat[lonInd];
+    MESH_VECTOR->Lon = &PARTIAL_GLOBAL_MESH->Lon[lonInd];
+    
+    int count = 0;
+    double half = 0.9999*1.0/2.0;
+    for(int i = 0; i < PARTIAL_GLOBAL_MESH->nZ; i++)
+    {
+        for (int j = 0; j < nPtsSmooth; j ++)
+        {
+            count = i*nPtsSmooth + j;
+            if(count == 0)
+            {
+                MESH_VECTOR->Z[count] = PARTIAL_GLOBAL_MESH->Z[i] - (j - nPts)*dZPt*half;
+            }
+            else
+            {
+                MESH_VECTOR->Z[count] = PARTIAL_GLOBAL_MESH->Z[i] - (j - nPts)*dZPt;
+            }
+            
+        }
+    }
+    MESH_VECTOR->nZ = nZ;
     
     return MESH_VECTOR;
 }

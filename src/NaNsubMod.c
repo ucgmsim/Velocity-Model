@@ -33,3 +33,25 @@ void NaNsubMod(int zInd, qualities_vector *QUALITIES_VECTOR)
     QUALITIES_VECTOR->Vs[zInd] = NAN;
 }
 
+void GenericSubModA(int zInd, qualities_vector *QUALITIES_VECTOR)
+{
+    QUALITIES_VECTOR->Rho[zInd] = 1;
+    QUALITIES_VECTOR->Vp[zInd] = 1;
+    QUALITIES_VECTOR->Vs[zInd] = 1;
+}
+
+void GenericSubModB(int zInd, qualities_vector *QUALITIES_VECTOR)
+{
+    QUALITIES_VECTOR->Rho[zInd] = 2;
+    QUALITIES_VECTOR->Vp[zInd] = 2;
+    QUALITIES_VECTOR->Vs[zInd] = 2;
+}
+
+void GenericSubModC(int zInd, qualities_vector *QUALITIES_VECTOR)
+{
+    QUALITIES_VECTOR->Rho[zInd] = 3;
+    QUALITIES_VECTOR->Vp[zInd] = 3;
+    QUALITIES_VECTOR->Vs[zInd] = 3;
+}
+
+

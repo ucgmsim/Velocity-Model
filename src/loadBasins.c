@@ -128,7 +128,7 @@ void enforceBasinSurfaceDepths(basin_data *BASIN_DATA, global_model_parameters *
             topLim = PARTIAL_BASIN_SURFACE_DEPTHS->dep[i][0];
             botLim = PARTIAL_BASIN_SURFACE_DEPTHS->dep[i][GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[i]-1];
             
-            for(int k  = 0; k < *MESH_VECTOR->nZ; k++)
+            for(int k  = 0; k < MESH_VECTOR->nZ; k++)
             {
                 if(MESH_VECTOR->Z[k] > topLim)
                 {
@@ -146,7 +146,7 @@ void enforceBasinSurfaceDepths(basin_data *BASIN_DATA, global_model_parameters *
         }
         else
         {
-            for(int k  = 0; k < *MESH_VECTOR->nZ; k++)
+            for(int k  = 0; k < MESH_VECTOR->nZ; k++)
             {
                 IN_BASIN->inBasinDep[i][k] = 0;
             }

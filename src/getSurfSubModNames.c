@@ -189,6 +189,33 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion)
         
         
     }
+    // Model Version 0.1, 1D velocity sub Model
+    else if(strcmp(modelVersion,"FULL_DOMAIN_PLOTTING") == 0)
+    {
+        // define the number of surfaces and sub models
+        GLOBAL_MODEL_PARAMETERS->nSurf = 4;
+        GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 3;
+        
+        // insert surface surface keywords and filenames
+        GLOBAL_MODEL_PARAMETERS->surf[0] = "posInfSurf";
+        GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[0] = "Data/Global_Surfaces/posInf.in";
+        GLOBAL_MODEL_PARAMETERS->surf[1] = "demSurf";
+        GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[1] = "Data/DEM/DEM.in";
+        GLOBAL_MODEL_PARAMETERS->surf[2] = "basementSurf";
+        GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[2] = "Data/Canterbury_Basin/Pre_Quaternary/BasementTop.in";
+        GLOBAL_MODEL_PARAMETERS->surf[3] = "negInfSurf";
+        GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[3] = "Data/Global_Surfaces/negInf.in";
+        
+        // insert velocity submodel keywords and filenames (if necessary)
+        GLOBAL_MODEL_PARAMETERS->veloSubMod[0] = "GenericSubModA";
+        
+        GLOBAL_MODEL_PARAMETERS->veloSubMod[1] = "GenericSubModB";
+        
+        GLOBAL_MODEL_PARAMETERS->veloSubMod[2] = "GenericSubModC";
+        
+        
+        GLOBAL_MODEL_PARAMETERS->nBasins = 0;
+    }
 
     // Model Version 0.1, 1D velocity sub Model
     else if(strcmp(modelVersion,"Test_0.1") == 0)

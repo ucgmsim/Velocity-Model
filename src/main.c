@@ -24,8 +24,8 @@
 #include "structs.h"
 #include "functions.h"
 
-//int main(int argc, char *argv[])
-int main(void)
+int main(int argc, char *argv[])
+//int main(void)
 {
     /*
      int argc = 29;
@@ -35,7 +35,7 @@ int main(void)
      argv[3] = "-B";
      argv[4] = "1.65";
      argv[5] = "-C";
-     argv[6] = "v1.65";
+     argv[6] = "v1.65_no_taper";
      argv[7] = "-D";
      argv[8] = "-43.6";
      argv[9] = "-E";
@@ -45,17 +45,17 @@ int main(void)
      argv[13] = "-G";
      argv[14] = "140.";
      argv[15] = "-H";
-     argv[16] = "210.";
+     argv[16] = "120";
      argv[17] = "-I";
-     argv[18] = "46.";
+     argv[18] = "4";
      argv[19] = "-J";
      argv[20] = "0";
      argv[21] = "-K";
      argv[22] = "0.1";
      argv[23] = "-L";
-     argv[24] = "1";
+     argv[24] = "0.1";
      argv[25] = "-M";
-     argv[26] = "0.1";
+     argv[26] = "0";
      argv[27] = "-N";
      argv[28] = "SQUASHED_TAPERED"; //"SQUASHED" BULLDOZED
      */
@@ -66,33 +66,33 @@ int main(void)
      argv[1] = "-A";
      argv[2] = "EXTRACT_VELOCITY_SLICES";
      argv[3] = "-B";
-     argv[4] = "1.64";
+     argv[4] = "1.65";
      argv[5] = "-C";
-     argv[6] = "v1.64_CF";
+     argv[6] = "v1.65_no_taper";
      argv[7] = "-D";
-     argv[8] = "-43.65";
+     argv[8] = "-43.6";
      argv[9] = "-E";
-     argv[10] = "172.1";
+     argv[10] = "172.3";
      argv[11] = "-F";
-     argv[12] = "-42.00";
+     argv[12] = "-10";
      argv[13] = "-G";
-     argv[14] = "210.";
+     argv[14] = "140.";
      argv[15] = "-H";
-     argv[16] = "146.";
+     argv[16] = "120";
      argv[17] = "-I";
-     argv[18] = "70.";
+     argv[18] = "4";
      argv[19] = "-J";
      argv[20] = "0";
      argv[21] = "-K";
-     argv[22] = "1";
+     argv[22] = "0.1";
      argv[23] = "-L";
-     argv[24] = "1";
+     argv[24] = "0.1";
      argv[25] = "-M";
-     argv[26] = "0.5";
+     argv[26] = "0";
      argv[27] = "-N";
-     argv[28] = "BULLDOZED"; //"SQUASHED"
+     argv[28] = "SQUASHED_TAPERED"; //"SQUASHED" BULLDOZED
      argv[29] = "-O";
-     argv[30] = "ExtractedSliceParametersECVM";
+     argv[30] = "SliceParametersCant";
      */
     
     
@@ -126,13 +126,13 @@ int main(void)
      argv[1] = "-A";
      argv[2] = "GENERATE_VELOCITY_SLICES";
      argv[3] = "-B";
-     argv[4] = "1.65";
+     argv[4] = "FULL_DOMAIN_PLOTTING";
      argv[5] = "-C";
-     argv[6] = "1.65";//PreQFenceCantAllBasins";//PreQFenceNZAllBasins";
+     argv[6] = "1.11";//PreQFenceCantAllBasins";//PreQFenceNZAllBasins";
      argv[7] = "-P";
      argv[8] = "0"; //minVs
      argv[9] = "-Q";
-     argv[10] = "SliceParametersLiamsPaper";//"SliceParametersForRobinPreFencePlot";//";
+     argv[10] = "SliceParametersGlobalSurface";//"SliceParametersForRobinPreFencePlot";//";
      argv[11] = "-R";
      argv[12] = "BULLDOZED"; //"SQUASHED" BULLDOZED SQUASHED_TAPERED
      */
@@ -187,7 +187,35 @@ int main(void)
      argv[12] = "BULLDOZED"; //"SQUASHED" BULLDOZED SQUASHED_TAPERED
      */
     
-    ///*
+    /*
+    int argc = 23;
+    char *argv[23];
+    argv[1] = "-A";
+    argv[2] = "EXTRACT_THRESHOLD";
+    argv[3] = "-B";
+    argv[4] = "1.65";
+    argv[5] = "-C";
+    argv[6] = "v1.65";
+    argv[7] = "-D";
+    argv[8] = "-43.6";
+    argv[9] = "-E";
+    argv[10] = "172.3";
+    argv[11] = "-F";
+    argv[12] = "-10";
+    argv[13] = "-G";
+    argv[14] = "140";
+    argv[15] = "-H";
+    argv[16] = "120";
+    argv[17] = "-L";
+    argv[18] = "0.1";
+    argv[19] = "-M";
+    argv[20] = "0";
+    argv[21] = "-Z";
+    argv[22] = "VS500"; // VS30 VS500 Z1.0 Z2.5
+    */
+    
+    
+    /*
      int argc = 23;
      char *argv[23];
      argv[1] = "-A";
@@ -207,12 +235,12 @@ int main(void)
      argv[15] = "-H";
      argv[16] = "300";
      argv[17] = "-L";
-     argv[18] = "1";
+     argv[18] = "0.1";
      argv[19] = "-M";
      argv[20] = "0";
      argv[21] = "-Z";
-    argv[22] = "Z2.5"; // VS30 VS500 Z1.0 Z2.5
-     //*/
+    argv[22] = "VS500"; // VS30 VS500 Z1.0 Z2.5
+     */
 
 
     

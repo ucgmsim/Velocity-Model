@@ -33,32 +33,34 @@ int main(int argc, char *argv[])
      argv[1] = "-A";
      argv[2] = "GENERATE_VELOCITY_MOD";
      argv[3] = "-B";
-     argv[4] = "1.65";
+     argv[4] = "1.65_NZ";
      argv[5] = "-C";
-     argv[6] = "v1.65_no_taper";
+     argv[6] = "v1.65";
      argv[7] = "-D";
-     argv[8] = "-43.6";
+     argv[8] = "-41.8";
      argv[9] = "-E";
-     argv[10] = "172.3";
+     argv[10] = "173.2";
      argv[11] = "-F";
-     argv[12] = "-10";
+     argv[12] = "-50";
      argv[13] = "-G";
-     argv[14] = "140.";
+     argv[14] = "890";
      argv[15] = "-H";
-     argv[16] = "120";
+     argv[16] = "300";
      argv[17] = "-I";
-     argv[18] = "4";
+     argv[18] = "80";
      argv[19] = "-J";
      argv[20] = "0";
      argv[21] = "-K";
-     argv[22] = "0.1";
+     argv[22] = "1";
      argv[23] = "-L";
-     argv[24] = "0.1";
+     argv[24] = "1";
      argv[25] = "-M";
-     argv[26] = "0";
+     argv[26] = "0.5";
      argv[27] = "-N";
-     argv[28] = "SQUASHED_TAPERED"; //"SQUASHED" BULLDOZED
+     argv[28] = "BULLDOZED";//"SQUASHED_TAPERED"; //"SQUASHED" BULLDOZED
      */
+    
+//    -41.8 -E 173.2 -F -50 -G 890 -H 300 -I 2 -J 0 -K 2.0 -L 2.0 -M 0.5 -N BULLDOZED
     
     /*
      int argc = 31;
@@ -66,33 +68,33 @@ int main(int argc, char *argv[])
      argv[1] = "-A";
      argv[2] = "EXTRACT_VELOCITY_SLICES";
      argv[3] = "-B";
-     argv[4] = "1.65";
+     argv[4] = "1.65_NZ";
      argv[5] = "-C";
-     argv[6] = "v1.65_no_taper";
+     argv[6] = "v1.65";
      argv[7] = "-D";
-     argv[8] = "-43.6";
+     argv[8] = "-41.8";
      argv[9] = "-E";
-     argv[10] = "172.3";
+     argv[10] = "173.2";
      argv[11] = "-F";
-     argv[12] = "-10";
+     argv[12] = "-50";
      argv[13] = "-G";
-     argv[14] = "140.";
+     argv[14] = "890";
      argv[15] = "-H";
-     argv[16] = "120";
+     argv[16] = "300";
      argv[17] = "-I";
-     argv[18] = "4";
+     argv[18] = "80";
      argv[19] = "-J";
      argv[20] = "0";
      argv[21] = "-K";
-     argv[22] = "0.1";
+     argv[22] = "1";
      argv[23] = "-L";
-     argv[24] = "0.1";
+     argv[24] = "1";
      argv[25] = "-M";
-     argv[26] = "0";
+     argv[26] = "0.5";
      argv[27] = "-N";
-     argv[28] = "SQUASHED_TAPERED"; //"SQUASHED" BULLDOZED
+     argv[28] = "BULLDOZED";//"SQUASHED_TAPERED"; //"SQUASHED" BULLDOZED
      argv[29] = "-O";
-     argv[30] = "SliceParametersCant";
+     argv[30] = "SliceParametersNZ";
      */
     
     

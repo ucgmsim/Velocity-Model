@@ -577,7 +577,7 @@ void runThresholdVelocityModel(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extrac
 
 void runGenerateVelocityModel(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extract_velo_mod_call GEN_EXTRACT_VELO_MOD_CALL, calculation_log *CALCULATION_LOG)
 {
-    int smoothingRequired = 0; // set as zero if no smoothing is required
+    int smoothingRequired = 0; // set as zero if no smoothing is required, set as 1 for smoothing
     int nPtsSmooth = 1; // number of points (eitherside of gridpoint) to incorporate for smoothing
     
     model_extent *MODEL_EXTENT = malloc(sizeof(model_extent));

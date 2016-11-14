@@ -47,6 +47,7 @@ global_surf_read *loadGlobalSurface(char *fileName)
     GLOBAL_SURF_READ->nLon = nLon;
     
     // assure the preallocation of the surface struct is not exceeded
+//    printf("%i.\n",GLOBAL_SURF_IN_DIM_MAX);
     assert(nLat<=GLOBAL_SURF_IN_DIM_MAX);
     assert(nLon<=GLOBAL_SURF_IN_DIM_MAX);
     

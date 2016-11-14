@@ -3,7 +3,7 @@ function plotIndividualSlices
 close all
 
 
-dirName{1} = 'v1.65_no_taper';
+dirName{1} = 'v1.65';
 % dirName{2} = '1.11';
 
 % dirName{2} = 'PreQFenceNZAllBasins';
@@ -480,7 +480,8 @@ for j = 1 : length(dirName)
     legend(sliceLetter);
     [NZcoastLat,NZcoastLong]=NZCoastlineData;
     plot(NZcoastLong,NZcoastLat,'LineWidth',lineWidth3)
-%     axis([170. 173.8 -44.8 -42.4]);
+    axis([168 179 -46 -37.5]);
+%     xmin xmax ymin yma
     if strcmp(type{j},'Extracted') == 1
         latDom = [sliceParameters.latA  sliceParameters.latB sliceParameters.latC sliceParameters.latD sliceParameters.latA];
         lonDom = [sliceParameters.lonA  sliceParameters.lonB sliceParameters.lonC sliceParameters.lonD sliceParameters.lonA];

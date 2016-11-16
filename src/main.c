@@ -24,8 +24,8 @@
 #include "structs.h"
 #include "functions.h"
 
-//int main(int argc, char *argv[])
-int main(void)
+int main(int argc, char *argv[])
+//int main(void)
 {
     /*
      int argc = 29;
@@ -62,7 +62,7 @@ int main(void)
     
 //    -41.8 -E 173.2 -F -50 -G 890 -H 300 -I 2 -J 0 -K 2.0 -L 2.0 -M 0.5 -N BULLDOZED
     
-    ///*
+    /*
      int argc = 31;
      char *argv[31];
      argv[1] = "-A";
@@ -95,7 +95,7 @@ int main(void)
      argv[28] = "BULLDOZED";//"SQUASHED_TAPERED"; //"SQUASHED" BULLDOZED
      argv[29] = "-O";
      argv[30] = "SliceParametersNZ";
-     //*/
+     */
     
     
     /*

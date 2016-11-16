@@ -640,7 +640,8 @@ void generateGlobalIndsForRead(global_mesh *GLOBAL_MESH, global_data_for_interpo
     double xPt, yPt;
     for(int i = 0; i < GLOBAL_DATA_FOR_INTERPOLATION->INDIVIDUAL_SLICE_DATA[sliceNum]->nPts; i++)
     {
-        printf("Searching slice #%i, point #%i of %i.\n", sliceNum+1,i+1,GLOBAL_DATA_FOR_INTERPOLATION->INDIVIDUAL_SLICE_DATA[sliceNum]->nPts );
+        printf("Searching slice #%i, point #%i of %i.\r", sliceNum+1,i+1,GLOBAL_DATA_FOR_INTERPOLATION->INDIVIDUAL_SLICE_DATA[sliceNum]->nPts );
+        fflush(stdout);
         pointsFound = findGlobalMeshAdjacentPoints(GLOBAL_MESH,  MODEL_EXTENT, GLOBAL_DATA_FOR_INTERPOLATION->INDIVIDUAL_SLICE_DATA[sliceNum]->latPts[i], GLOBAL_DATA_FOR_INTERPOLATION->INDIVIDUAL_SLICE_DATA[sliceNum]->lonPts[i], MODEL_EXTENT->originRot, adjYInds, adjXInds, &xPt, &yPt);
         if( pointsFound == 1)
         {

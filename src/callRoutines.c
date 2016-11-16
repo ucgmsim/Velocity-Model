@@ -611,6 +611,8 @@ void runGenerateVelocityModel(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extract
     }
     generateFullModelGridGreatCircle(MODEL_EXTENT, GLOBAL_MESH);
     
+    writeVeloModCornersTextFile(GLOBAL_MESH, OUTPUT_DIR);
+    
     // obtain surface filenames based off version number
     global_model_parameters *GLOBAL_MODEL_PARAMETERS;
     GLOBAL_MODEL_PARAMETERS = getGlobalModelParameters(MODEL_EXTENT->version);
@@ -687,7 +689,7 @@ void runGenerateVelocityModel(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extract
             printf("Memory allocation of PARTIAL_GLOBAL_QUALITIES failed.\n");
             exit(EXIT_FAILURE);
         }
-        printf("Slice %i of %i\r",j+1,GLOBAL_MESH->nY);
+        printf("Velocities at latitude %i of %i written to file.\r",j+1,GLOBAL_MESH->nY);
         fflush(stdout);
         for(int k = 0; k < PARTIAL_GLOBAL_MESH->nX; k++)
         {

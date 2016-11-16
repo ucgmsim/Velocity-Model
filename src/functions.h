@@ -76,7 +76,10 @@ extern void ll2xy(double originLat, double originLon, double originRot, double *
 extern void createAllOutputDirectories(char *OUTPUT_DIR, char *genCallType);
 extern void writeVeloModInputsLogFile(int argc, char *argv[], char *OUTPUT_DIR);
 extern void writeVeloModLogFile(calculation_log *CALCULATION_LOG);
+extern void writeVeloModCornersTextFile(global_mesh *GLOBAL_MESH, char *OUTPUT_DIR);
 extern void checkVeloModInputsLogFile(int argc, char *argv[], char *OUTPUT_DIR);
+
+
 
 //extern void writeSliceParametersLogFile(sliceParams *sliceParameters, modVersion modelVersion, gridStruct *location, char *outputDirectory, char *type);
 //extern indexStruct calculateSurfaceLatLonIndex(surfRead currentSurface, double x, double y);

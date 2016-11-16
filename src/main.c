@@ -24,8 +24,8 @@
 #include "structs.h"
 #include "functions.h"
 
-int main(int argc, char *argv[])
-//int main(void)
+//int main(int argc, char *argv[])
+int main(void)
 {
     /*
      int argc = 29;
@@ -43,7 +43,7 @@ int main(int argc, char *argv[])
      argv[11] = "-F";
      argv[12] = "-50";
      argv[13] = "-G";
-     argv[14] = "890";
+     argv[14] = "900";
      argv[15] = "-H";
      argv[16] = "300";
      argv[17] = "-I";
@@ -51,9 +51,9 @@ int main(int argc, char *argv[])
      argv[19] = "-J";
      argv[20] = "0";
      argv[21] = "-K";
-     argv[22] = "1";
+     argv[22] = "10";
      argv[23] = "-L";
-     argv[24] = "1";
+     argv[24] = "10";
      argv[25] = "-M";
      argv[26] = "0.5";
      argv[27] = "-N";
@@ -62,7 +62,7 @@ int main(int argc, char *argv[])
     
 //    -41.8 -E 173.2 -F -50 -G 890 -H 300 -I 2 -J 0 -K 2.0 -L 2.0 -M 0.5 -N BULLDOZED
     
-    /*
+    ///*
      int argc = 31;
      char *argv[31];
      argv[1] = "-A";
@@ -78,7 +78,7 @@ int main(int argc, char *argv[])
      argv[11] = "-F";
      argv[12] = "-50";
      argv[13] = "-G";
-     argv[14] = "890";
+     argv[14] = "900";
      argv[15] = "-H";
      argv[16] = "300";
      argv[17] = "-I";
@@ -86,16 +86,16 @@ int main(int argc, char *argv[])
      argv[19] = "-J";
      argv[20] = "0";
      argv[21] = "-K";
-     argv[22] = "1";
+     argv[22] = "10";
      argv[23] = "-L";
-     argv[24] = "1";
+     argv[24] = "10";
      argv[25] = "-M";
      argv[26] = "0.5";
      argv[27] = "-N";
      argv[28] = "BULLDOZED";//"SQUASHED_TAPERED"; //"SQUASHED" BULLDOZED
      argv[29] = "-O";
      argv[30] = "SliceParametersNZ";
-     */
+     //*/
     
     
     /*

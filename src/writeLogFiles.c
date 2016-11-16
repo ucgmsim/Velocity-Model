@@ -118,6 +118,27 @@ void writeVeloModInputsLogFile(int argc, char *argv[], char *OUTPUT_DIR)
     
 }
 
+void writeVeloModCornersTextFile(global_mesh *GLOBAL_MESH, char *OUTPUT_DIR)
+{
+    FILE *fp;
+    char logFileName[MAX_FILENAME_STRING_LEN];
+    sprintf(logFileName,"%s/Log/VeloModCorners.txt",OUTPUT_DIR);
+    fp = fopen(logFileName,"w");
+    
+    
+    fprintf(fp,">Velocity model corners.\n");
+    fprintf(fp,">Lon\tLat\n");
+    fprintf(fp,"%lf\t%lf\n",GLOBAL_MESH->Lon[0][0],GLOBAL_MESH->Lat[0][0]);
+    fprintf(fp,"%lf\t%lf\n",GLOBAL_MESH->Lon[0][GLOBAL_MESH->nY-1],GLOBAL_MESH->Lat[0][GLOBAL_MESH->nY-1]);
+    fprintf(fp,"%lf\t%lf\n",GLOBAL_MESH->Lon[GLOBAL_MESH->nX-1][0],GLOBAL_MESH->Lat[GLOBAL_MESH->nX-1][0]);
+    fprintf(fp,"%lf\t%lf\n",GLOBAL_MESH->Lon[GLOBAL_MESH->nX-1][GLOBAL_MESH->nY-1],GLOBAL_MESH->Lat[GLOBAL_MESH->nX-1][GLOBAL_MESH->nY-1]);
+
+    fclose(fp);
+    printf("Velocity model corners file write complete.\n");
+    
+    
+}
+
 void checkVeloModInputsLogFile(int argc, char *argv[], char *OUTPUT_DIR)
 {
     int count = 0;

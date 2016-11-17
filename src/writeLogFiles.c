@@ -128,8 +128,8 @@ void writeVeloModCornersTextFile(global_mesh *GLOBAL_MESH, char *OUTPUT_DIR)
     
     fprintf(fp,">Velocity model corners.\n");
     fprintf(fp,">Lon\tLat\n");
-    fprintf(fp,"%lf\t%lf\n",GLOBAL_MESH->Lon[0][0],GLOBAL_MESH->Lat[0][0]);
     fprintf(fp,"%lf\t%lf\n",GLOBAL_MESH->Lon[0][GLOBAL_MESH->nY-1],GLOBAL_MESH->Lat[0][GLOBAL_MESH->nY-1]);
+    fprintf(fp,"%lf\t%lf\n",GLOBAL_MESH->Lon[0][0],GLOBAL_MESH->Lat[0][0]);
     fprintf(fp,"%lf\t%lf\n",GLOBAL_MESH->Lon[GLOBAL_MESH->nX-1][0],GLOBAL_MESH->Lat[GLOBAL_MESH->nX-1][0]);
     fprintf(fp,"%lf\t%lf\n",GLOBAL_MESH->Lon[GLOBAL_MESH->nX-1][GLOBAL_MESH->nY-1],GLOBAL_MESH->Lat[GLOBAL_MESH->nX-1][GLOBAL_MESH->nY-1]);
 

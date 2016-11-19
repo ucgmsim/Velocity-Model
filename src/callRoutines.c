@@ -682,6 +682,8 @@ void runGenerateVelocityModel(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extract
     // Loop over grid points and assign values
     for(int j = 0; j < GLOBAL_MESH->nY; j++)
     {
+        printf("\rGenerating velocity model %d%% complete.", j*100/GLOBAL_MESH->nY);
+        fflush(stdout);
         PARTIAL_GLOBAL_MESH = extractPartialMesh(GLOBAL_MESH, j);
         PARTIAL_GLOBAL_QUALITIES = malloc(sizeof(partial_global_qualities));
         if (PARTIAL_GLOBAL_QUALITIES == NULL)
@@ -689,8 +691,6 @@ void runGenerateVelocityModel(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extract
             printf("Memory allocation of PARTIAL_GLOBAL_QUALITIES failed.\n");
             exit(EXIT_FAILURE);
         }
-        printf("Velocities at latitude %i of %i written to file.\r",j+1,GLOBAL_MESH->nY);
-        fflush(stdout);
         for(int k = 0; k < PARTIAL_GLOBAL_MESH->nX; k++)
         {
             IN_BASIN = malloc(sizeof(in_basin));
@@ -785,6 +785,9 @@ void runGenerateVelocityModel(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extract
         free(PARTIAL_GLOBAL_MESH);
         free(PARTIAL_GLOBAL_QUALITIES);
     }
+    printf("\rGeneration of velocity model 100%% complete.");
+    fflush(stdout);
+    printf("\n");
     printf("Model generation complete.\n");
     
     

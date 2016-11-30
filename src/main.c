@@ -35,15 +35,15 @@ int main(int argc, char *argv[])
      argv[3] = "-B";
      argv[4] = "1.65_NZ";
      argv[5] = "-C";
-     argv[6] = "v1.65";
+     argv[6] = "v1.65_Amberly_200";
      argv[7] = "-D";
-     argv[8] = "-41.8";
+     argv[8] = "-41.6";
      argv[9] = "-E";
-     argv[10] = "173.2";
+     argv[10] = "173.5";
      argv[11] = "-F";
      argv[12] = "-50";
      argv[13] = "-G";
-     argv[14] = "900";
+     argv[14] = "640";
      argv[15] = "-H";
      argv[16] = "300";
      argv[17] = "-I";
@@ -51,17 +51,16 @@ int main(int argc, char *argv[])
      argv[19] = "-J";
      argv[20] = "0";
      argv[21] = "-K";
-     argv[22] = "10";
+     argv[22] = "0.2";
      argv[23] = "-L";
-     argv[24] = "10";
+     argv[24] = "0.2";
      argv[25] = "-M";
      argv[26] = "0.5";
      argv[27] = "-N";
      argv[28] = "BULLDOZED";//"SQUASHED_TAPERED"; //"SQUASHED" BULLDOZED
      */
     
-//    -41.8 -E 173.2 -F -50 -G 890 -H 300 -I 2 -J 0 -K 2.0 -L 2.0 -M 0.5 -N BULLDOZED
-    
+//    /NZVM -A GENERATE_VELOCITY_MOD -B 1.65_NZ -C v1.65_Amberly_200 -D -41.6 -E 173.5 -F -50 -G 640 -H 300 -I 80 -J 0 -K 0.2 -L 0.2 -M 0.5 -N BULLDOZED
     /*
      int argc = 31;
      char *argv[31];

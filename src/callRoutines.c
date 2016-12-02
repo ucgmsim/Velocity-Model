@@ -758,7 +758,6 @@ void runGenerateVelocityModel(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extract
 
                 }
                 free(EXTENDED_MESH_VECTOR);
-                free(EXTENDED_QUALITIES_VECTOR);
             }
             else
             {
@@ -775,7 +774,7 @@ void runGenerateVelocityModel(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extract
                 free(MESH_VECTOR);
 
             }
-            
+            free(EXTENDED_QUALITIES_VECTOR);
             free(QUALITIES_VECTOR);
             free(PARTIAL_BASIN_SURFACE_DEPTHS);
             free(PARTIAL_GLOBAL_SURFACE_DEPTHS);

@@ -4,5 +4,5 @@ all:
 
 
 clean:
-	cd src; make clean
+	cd src; make -f makefile.linux clean
 	rm -f NZVM

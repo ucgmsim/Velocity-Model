@@ -37,4 +37,6 @@ Velocity_Model-UCGMSIM.xcodeproj/
 
 NZVM
 .DS_Store
-
+.idea*
+cmake*
+test/*

@@ -22,7 +22,7 @@
 void runGenerateVelocitySlices(char *MODEL_VERSION, char *OUTPUT_DIR, gen_velo_slices_call GEN_VELO_SLICES_CALL, calculation_log *CALCULATION_LOG)
 {
     slice_parameters *SLICE_PARAMETERS;
-	SLICE_PARAMETERS = readGeneratedSliceParametersFile(GEN_VELO_SLICES_CALL.GENERATED_SLICE_PARAMETERS_DIRECTORY);
+    SLICE_PARAMETERS = readGeneratedSliceParametersFile(GEN_VELO_SLICES_CALL.GENERATED_SLICE_PARAMETERS_DIRECTORY);
     
     model_extent *MODEL_EXTENT = malloc(sizeof(model_extent));
     if (MODEL_EXTENT == NULL)
@@ -781,7 +781,7 @@ void runGenerateVelocityModel(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extract
             free(PARTIAL_GLOBAL_SURFACE_DEPTHS);
             free(IN_BASIN);
         }
-		#pragma omp ordered
+        #pragma omp ordered
         writeGlobalQualities(OUTPUT_DIR, PARTIAL_GLOBAL_MESH, PARTIAL_GLOBAL_QUALITIES, GEN_EXTRACT_VELO_MOD_CALL,CALCULATION_LOG, j);
         free(PARTIAL_GLOBAL_MESH);
         free(PARTIAL_GLOBAL_QUALITIES);

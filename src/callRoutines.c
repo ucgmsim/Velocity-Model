@@ -13,6 +13,7 @@
 #include <assert.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include "omp.h"
 
 #include "constants.h"
 #include "structs.h"
@@ -616,16 +617,7 @@ void runGenerateVelocityModel(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extract
     // obtain surface filenames based off version number
     global_model_parameters *GLOBAL_MODEL_PARAMETERS;
     GLOBAL_MODEL_PARAMETERS = getGlobalModelParameters(MODEL_EXTENT->version);
-    
-    partial_global_mesh *PARTIAL_GLOBAL_MESH;
-    mesh_vector *MESH_VECTOR;
-    mesh_vector *EXTENDED_MESH_VECTOR;
-    qualities_vector *QUALITIES_VECTOR;
-    qualities_vector *EXTENDED_QUALITIES_VECTOR;
 
-
-    partial_global_qualities *PARTIAL_GLOBAL_QUALITIES;
-    
     // read in velocity model data (surfaces, 1D models, tomography etc)
     velo_mod_1d_data *VELO_MOD_1D_DATA;
     VELO_MOD_1D_DATA = malloc(sizeof(velo_mod_1d_data));
@@ -669,19 +661,18 @@ void runGenerateVelocityModel(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extract
     CALCULATION_LOG->lonC3 = GLOBAL_MESH->Lon[GLOBAL_MESH->nX-1][0];
     CALCULATION_LOG->lonC4 = GLOBAL_MESH->Lon[GLOBAL_MESH->nX-1][GLOBAL_MESH->nY-1];
     
-    partial_global_surface_depths *PARTIAL_GLOBAL_SURFACE_DEPTHS;
-    partial_basin_surface_depths *PARTIAL_BASIN_SURFACE_DEPTHS;
-    in_basin *IN_BASIN;
     double oneThird = 1.0/3.0;
     double half = 1.0/2.0;
     double fourThirds = 4.0/3.0;
     double A, B, C;
     // Load Data
     loadAllGlobalData(GLOBAL_MODEL_PARAMETERS, CALCULATION_LOG, VELO_MOD_1D_DATA, NZ_TOMOGRAPHY_DATA, GLOBAL_SURFACES, BASIN_DATA);
-    
     // Loop over grid points and assign values
     for(int j = 0; j < GLOBAL_MESH->nY; j++)
     {
+        partial_global_mesh *PARTIAL_GLOBAL_MESH;
+        partial_global_qualities *PARTIAL_GLOBAL_QUALITIES;
+
         printf("\rGenerating velocity model %d%% complete.", j*100/GLOBAL_MESH->nY);
         fflush(stdout);
         PARTIAL_GLOBAL_MESH = extractPartialMesh(GLOBAL_MESH, j);
@@ -691,8 +682,17 @@ void runGenerateVelocityModel(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extract
             printf("Memory allocation of PARTIAL_GLOBAL_QUALITIES failed.\n");
             exit(EXIT_FAILURE);
         }
+        #pragma omp parallel for
         for(int k = 0; k < PARTIAL_GLOBAL_MESH->nX; k++)
         {
+            in_basin *IN_BASIN;
+            partial_global_surface_depths *PARTIAL_GLOBAL_SURFACE_DEPTHS;
+            partial_basin_surface_depths *PARTIAL_BASIN_SURFACE_DEPTHS;
+            mesh_vector *MESH_VECTOR;
+            mesh_vector *EXTENDED_MESH_VECTOR;
+            qualities_vector *QUALITIES_VECTOR;
+            qualities_vector *EXTENDED_QUALITIES_VECTOR;
+
             IN_BASIN = malloc(sizeof(in_basin));
             if (IN_BASIN == NULL)
             {

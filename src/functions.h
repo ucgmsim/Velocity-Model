@@ -58,7 +58,15 @@ extern void runGenerateProfile(char *MODEL_VERSION, char *OUTPUT_DIR, gen_profil
 extern void gcprojRev(double *xf,double *yf,double rlon,double rlat,double ref_rad,double g0,double b0,double amat[8],double ainv[8]);
 extern void ll2xy(double originLat, double originLon, double originRot, double *xp, double *yp, double latA, double lonA);
 
-
+extern void writeSampleInputTextFiles(void);
+extern gen_extract_velo_mod_call readGenVMInputTextFile(char *fileName);
+extern gen_extract_velo_mod_call readExtractVMInputTextFile(char *fileName);
+extern gen_velo_slices_call readGenerateSliceInputTextFile(char *fileName);
+extern gen_profile_call readGenerateProfileInputTextFile(char *fileName);
+extern gen_extract_velo_mod_call readThresholdInputTextFile(char *fileName);
+extern gen_multi_profiles_call readGenMultiProfileInputTextFile(char *fileName);
+extern gen_extract_multi_gridpoint_vs_call readExtractMultiInputTextFile(char *fileName);
+extern char *readParameter(char *fileName, char *quality);
 
 
 

@@ -21,11 +21,11 @@
 calculation_log *initializeCalculationLog(int argc, char *argv[])
 /*
  Purpose: to initialize the calculation log, insert values from the primary inputs etc
- 
+
  Input variables:
     argc - argument count (global)
     *argv[] - argument vector (global)
- 
+
  Output variables:
     *CALCULATION_LOG - struct containing calculation data and output directory (tracks various parameters for error reporting etc)
 
@@ -33,15 +33,6 @@ calculation_log *initializeCalculationLog(int argc, char *argv[])
 {
     calculation_log *CALCULATION_LOG;
     CALCULATION_LOG = malloc(sizeof(calculation_log));
-//    CALCULATION_LOG->minVs = atof(argv[13]);
-//    CALCULATION_LOG->outputDirectory = argv[3];
-    
-    
-    CALCULATION_LOG->nPointsInGlobalCornerSurfaceExtensionZone = 0;
-    CALCULATION_LOG->nPointsInGlobalLatSurfaceExtensionZone = 0;
-    CALCULATION_LOG->nPointsInGlobalLonSurfaceExtensionZone = 0;
-    CALCULATION_LOG->nPointsGlobalSurfacesEnforced = 0;
-    
     return(CALCULATION_LOG);
 }
 
@@ -97,26 +88,26 @@ void writeSliceParametersLogFile(char *OUTPUT_DIR, slice_parameters *SLICE_PARAM
 
 
 
-void writeVeloModInputsLogFile(int argc, char *argv[], char *OUTPUT_DIR)
-{
-    FILE *fp;
-    char logFileName[MAX_FILENAME_STRING_LEN];
-    sprintf(logFileName,"%s/Log/GlobalInputs.txt",OUTPUT_DIR);
-    fp = fopen(logFileName,"w");
-
-    
-    fprintf(fp,"Code called with the following inputs.\n");
-    
-    for( int i = 1; i < argc; i ++)
-    {
-        fprintf(fp,"%s\n",argv[i]);
-    }
-
-    fclose(fp);
-    printf("Input file write complete.\n");
-    
-    
-}
+//void writeVeloModInputsLogFile(int argc, char *argv[], char *OUTPUT_DIR)
+//{
+//    FILE *fp;
+//    char logFileName[MAX_FILENAME_STRING_LEN];
+//    sprintf(logFileName,"%s/Log/GlobalInputs.txt",OUTPUT_DIR);
+//    fp = fopen(logFileName,"w");
+//
+//
+//    fprintf(fp,"Code called with the following inputs.\n");
+//
+//    for( int i = 1; i < argc; i ++)
+//    {
+//        fprintf(fp,"%s\n",argv[i]);
+//    }
+//
+//    fclose(fp);
+//    printf("Input file write complete.\n");
+//
+//
+//}
 
 void writeVeloModCornersTextFile(global_mesh *GLOBAL_MESH, char *OUTPUT_DIR)
 {
@@ -139,40 +130,40 @@ void writeVeloModCornersTextFile(global_mesh *GLOBAL_MESH, char *OUTPUT_DIR)
     
 }
 
-void checkVeloModInputsLogFile(int argc, char *argv[], char *OUTPUT_DIR)
-{
-    int count = 0;
-    FILE *fp;
-    char logFileName[MAX_FILENAME_STRING_LEN];
-    char line[MAX_FILENAME_STRING_LEN];
-    char tempLineCheck[MAX_FILENAME_STRING_LEN];
-    sprintf(logFileName,"%s/Log/GlobalInputs.txt",OUTPUT_DIR);
-    fp = fopen(logFileName,"r");
-    if (fp == NULL)
-    {
-        exit(EXIT_FAILURE);
-    }
-    
-    
-    while( fgets(line,MAX_FILENAME_STRING_LEN,fp) )
-    {
-        if (count > 2)
-        {
-            sprintf(tempLineCheck,"%s\n",argv[count]);
-            
-            if (strcmp(line,tempLineCheck) != 0)
-            {
-                printf("Parameters for saved model do not match those of the model that is to be extracted from. See readme.\n");
-                exit(EXIT_FAILURE);
-            }
-
-        }
-        count += 1;
-    }
-    
-    fclose(fp);
-    
-}
+//void checkVeloModInputsLogFile(int argc, char *argv[], char *OUTPUT_DIR)
+//{
+//    int count = 0;
+//    FILE *fp;
+//    char logFileName[MAX_FILENAME_STRING_LEN];
+//    char line[MAX_FILENAME_STRING_LEN];
+//    char tempLineCheck[MAX_FILENAME_STRING_LEN];
+//    sprintf(logFileName,"%s/Log/GlobalInputs.txt",OUTPUT_DIR);
+//    fp = fopen(logFileName,"r");
+//    if (fp == NULL)
+//    {
+//        exit(EXIT_FAILURE);
+//    }
+//
+//
+//    while( fgets(line,MAX_FILENAME_STRING_LEN,fp) )
+//    {
+//        if (count > 2)
+//        {
+//            sprintf(tempLineCheck,"%s\n",argv[count]);
+//
+//            if (strcmp(line,tempLineCheck) != 0)
+//            {
+//                printf("Parameters for saved model do not match those of the model that is to be extracted from. See readme.\n");
+//                exit(EXIT_FAILURE);
+//            }
+//
+//        }
+//        count += 1;
+//    }
+//
+//    fclose(fp);
+//
+//}
 
 
 

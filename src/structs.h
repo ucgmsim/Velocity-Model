@@ -318,7 +318,6 @@ typedef struct{
     double EXTENT_LATLON_SPACING;
     double MIN_VS;
     char *TOPO_TYPE;
-    int numInputsSet;
     char *EXTRACTED_SLICE_PARAMETERS_DIRECTORY;
     char *VS_TYPE; // for vs_500 etc.
 }gen_extract_velo_mod_call;
@@ -328,7 +327,6 @@ typedef struct{
     char *GENERATED_SLICE_PARAMETERS_DIRECTORY;
     double MIN_VS_SLICE;
     char *TOPO_TYPE;
-    int numInputsSet;
 }gen_velo_slices_call;
 
 typedef struct{
@@ -338,9 +336,23 @@ typedef struct{
     double PROFILE_ZMIN;
     double PROFILE_MIN_VS;
     double EXTENT_Z_SPACING_PROFILE;
-    int numInputsSet;
 }gen_profile_call;
 
+
+typedef struct{
+    double PROFILE_ZMAX;
+    double PROFILE_ZMIN;
+    double EXTENT_Z_SPACING_PROFILE;
+    char *COORDINATES_DIRECTORY;
+    double PROFILE_MIN_VS;
+}gen_multi_profiles_call;
+
+typedef struct {
+    char *TOPO_TYPE;
+    double VS_DEPTH;
+    double MIN_VS;
+    char *COORDINATES_DIRECTORY;
+}gen_extract_multi_gridpoint_vs_call;
 
 
 

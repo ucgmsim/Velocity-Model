@@ -29,7 +29,7 @@
 
 #define MAX_DIM_BOUNDARY_FILE 1500 // maximum number of points to define a basin boundary
 //#define MAX_NUM_VELOSUBMOD 15 // max number of velo sub models in the basin
-#define MAX_NUM_SLICE_GRIDPTS 5000 // the maximum number of grid points for slice extraction
+#define MAX_NUM_SLICE_GRIDPTS 2000 // the maximum number of grid points for slice extraction
 //#define MAX_NUM_SLICE_PIVOTS 4
 #define MAX_NUM_TOMO_SURFACES 21 // the maximun number of Tomography surfaces able to be loaded
 #define SURF_IN_DIM_MAX_TOMO 1200 // maximum dimension of tomography surfaces

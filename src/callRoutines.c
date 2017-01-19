@@ -225,7 +225,7 @@ void runGenerateProfile(char *MODEL_VERSION, char *OUTPUT_DIR, gen_profile_call 
         exit(EXIT_FAILURE);
     }
     generateFullModelGridGreatCircle(MODEL_EXTENT, GLOBAL_MESH);
-    
+
     // obtain surface filenames based off version number
     global_model_parameters *GLOBAL_MODEL_PARAMETERS;
     GLOBAL_MODEL_PARAMETERS = getGlobalModelParameters(MODEL_EXTENT->version);

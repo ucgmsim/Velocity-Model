@@ -75,14 +75,14 @@ void runGenerateVelocitySlices(char *MODEL_VERSION, char *OUTPUT_DIR, gen_velo_s
         printf("Memory allocation of BASIN_DATA failed.\n");
         exit(EXIT_FAILURE);
     }
-    
+
     partial_global_surface_depths *PARTIAL_GLOBAL_SURFACE_DEPTHS;
     partial_basin_surface_depths *PARTIAL_BASIN_SURFACE_DEPTHS;
     in_basin *IN_BASIN;
     slice_surface_depths *SLICE_SURFACE_DEPTHS;
     // Load Data
     loadAllGlobalData(GLOBAL_MODEL_PARAMETERS, CALCULATION_LOG, VELO_MOD_1D_DATA, NZ_TOMOGRAPHY_DATA, GLOBAL_SURFACES, BASIN_DATA);
-    
+
     // Loop over grid points and assign values
     for(int j = 0; j < SLICE_PARAMETERS->nSlices; j++)
     {
@@ -97,7 +97,7 @@ void runGenerateVelocitySlices(char *MODEL_VERSION, char *OUTPUT_DIR, gen_velo_s
         INDIVIDUAL_SLICE_PARAMETERS.resXY = SLICE_PARAMETERS->LatLonRes[j];
         INDIVIDUAL_SLICE_PARAMETERS.zMin = SLICE_PARAMETERS->depMin[j];
         INDIVIDUAL_SLICE_PARAMETERS.zMax = SLICE_PARAMETERS->depMax[j];
-        
+
         partial_global_mesh *PARTIAL_GLOBAL_MESH;
         PARTIAL_GLOBAL_MESH = generateSlicePartialMesh(INDIVIDUAL_SLICE_PARAMETERS);
         PARTIAL_GLOBAL_QUALITIES = malloc(sizeof(partial_global_qualities));
@@ -112,7 +112,7 @@ void runGenerateVelocitySlices(char *MODEL_VERSION, char *OUTPUT_DIR, gen_velo_s
             printf("Memory allocation of SLICE_SURFACE_DEPTHS failed.\n");
             exit(EXIT_FAILURE);
         }
-        
+
         for(int k = 0; k < PARTIAL_GLOBAL_MESH->nX; k++)
         {
             IN_BASIN = malloc(sizeof(in_basin));
@@ -167,8 +167,8 @@ void runGenerateVelocitySlices(char *MODEL_VERSION, char *OUTPUT_DIR, gen_velo_s
             {
                 SLICE_SURFACE_DEPTHS->globSurfdep[i][k] = PARTIAL_GLOBAL_SURFACE_DEPTHS->dep[i];
             }
-            
-            
+
+
             free(MESH_VECTOR);
             free(QUALITIES_VECTOR);
             free(PARTIAL_BASIN_SURFACE_DEPTHS);

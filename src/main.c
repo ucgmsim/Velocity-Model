@@ -27,11 +27,11 @@
 int main(int argc, char *argv[])
 //int main(void)
 {
-//     int argc = 2;
+  //   int argc = 2;
 ////    int argc = 1;
-//     char *argv[2];
-//     argv[1] = "Sample_Input_Text_Files/GENERATE_PROFILE.txt";
-    char *inputFName;
+     //char *argv[2];
+     //argv[1] = "TOPO_SLICES_EXTRACT/GENERATE_VELOCITY_SLICES.txt";
+    //char *inputFName;
 
     // set call type flags to zero (0)
     int EXTRACT_VELOCITY_SLICES = 0;

@@ -35,7 +35,6 @@ void interpolateGlobalSurfaceDepths(global_surfaces *GLOBAL_SURFACES, mesh_vecto
     
     double p1, p2, p3, v1, v2;
     double X1, X2, Y1, Y2, Q11, Q12, Q21, Q22, X, Y;
-    
     // loop over the number of global surfaces
     for(int i = 0; i < GLOBAL_SURFACES->nSurf; i++)
     {

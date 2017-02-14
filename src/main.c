@@ -45,6 +45,7 @@ int main(int argc, char *argv[])
     char *MODEL_VERSION;
     char *OUTPUT_DIR;
     char *parametersTextFile = (char*) malloc(MAX_FILENAME_STRING_LEN*sizeof(char));
+    char *inputFName;
 
     // generate structs to house paramteters for each call type
     gen_extract_velo_mod_call GEN_EXTRACT_VELO_MOD_CALL;

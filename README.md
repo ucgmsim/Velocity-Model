@@ -14,7 +14,7 @@ make
 ```
 or alternatively
 ```
-make parallen
+make parallel
 ```
 2) Execute the code using one of the four call types:
 - GENERATE_VELOCITY_MOD - Generates a velocity model from input parameters
@@ -27,7 +27,7 @@ First run
 ```
 ./NZVM 
 ```
-which creates example input text files (if desired)
+which creates example input text files (if desired otherwise skip this step)
 
 Then modify the desired parameters and use the text file as an input to NZVM
 ```

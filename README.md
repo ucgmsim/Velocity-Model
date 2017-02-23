@@ -12,78 +12,91 @@ In order to execute the code:
 ```
 make
 ```
+or alternatively
+```
+make parallen
+```
 2) Execute the code using one of the four call types:
 - GENERATE_VELOCITY_MOD - Generates a velocity model from input parameters
 - EXTRACT_VELOCITY_SLICES - Extracts velocity slices from a saved model (Model need to have been previously generated to use this call)
 - GENERATE_VELOCITY_SLICES - Generated velocity slices for plotting (slices generated from scratch)
 - GENERATE_INDIVIDUAL_PROFILE - Generates a velocity profile at a single lat/lon location
+- EXTRACT_THRESHOLD - Generates a map of Vs30, Z1.0 or Z2.5 
+
+First run
 ```
-./NZVM (OPTIONS HERE)
+./NZVM 
+```
+which creates example input text files (if desired)
+
+Then modify the desired parameters and use the text file as an input to NZVM
+```
+./NZVM "MyParametersFile.txt"
 ```
 
 All five call types and required inputs are explained here.
 
 Call type 1) GENERATE_VELOCITY_MOD
 
-- 1	-A GENERATE_VELOCITY_MOD
-- 2	-B MODEL_VERSION (model version - select from list of model versions at bottom of readme)
-- 3	-C OUTPUT_DIR (directory to save outputs to)
-- 4	-D ORIGIN_LAT (origin latitude - in decimal format)
-- 5	-E ORIGIN_LON (origin longitude - in decimal format)
-- 6	-F ORIGIN_ROT (model rotation - clockwise is positive)
-- 7	-G EXTENT_X (model extent in the X direction in km)
-- 8	-H EXTENT_Y (model extent in the Y direction in km)
-- 9	-I EXTENT_ZMAX (maximum model extent in the Z direction - positive downwards in km)
-- 10	-J EXTENT_ZMIN (minimum model extent in the Z direction - positive downwards i.e -1 represents +1km above mean sea level)
-- 11 -K	EXTENT_Z_SPACING (gridspacing in the Z direction in km)
-- 12 -L	EXTENT_LATLON_SPACING (gridspacing in the Y and X direction in km)
-- 13 -M	MIN_VS (minimium shear wave velocity to enforce, in km/s - typically 0.5)
-- 14 -N TOPO_TYPE (SQUASHED or BULLDOZED)
+- 1	GENERATE_VELOCITY_MOD
+- 2	MODEL_VERSION (model version - select from list of model versions at bottom of readme)
+- 3	OUTPUT_DIR (directory to save outputs to)
+- 4	ORIGIN_LAT (origin latitude - in decimal format)
+- 5	ORIGIN_LON (origin longitude - in decimal format)
+- 6	ORIGIN_ROT (model rotation - clockwise is positive)
+- 7	EXTENT_X (model extent in the X direction in km)
+- 8	EXTENT_Y (model extent in the Y direction in km)
+- 9	EXTENT_ZMAX (maximum model extent in the Z direction - positive downwards in km)
+- 10 EXTENT_ZMIN (minimum model extent in the Z direction - positive downwards i.e -1 represents +1km above mean sea level)
+- 11 EXTENT_Z_SPACING (gridspacing in the Z direction in km)
+- 12 EXTENT_LATLON_SPACING (gridspacing in the Y and X direction in km)
+- 13 MIN_VS (minimium shear wave velocity to enforce, in km/s - typically 0.5)
+- 14 TOPO_TYPE (SQUASHED or BULLDOZED)
 
 The output directory must not exist
 
 Call type 2) EXTRACT_VELOCITY_SLICES - All parameters must be set and the output directory must have been generated previously using GENERATE_VELOCITY_MOD call
 
-- 1	-A EXTRACT_VELOCITY_SLICES
-- 2	-B MODEL_VERSION (model version - select from list of model versions at bottom of readme)
-- 3	-C OUTPUT_DIR (directory to save outputs to)
-- 4	-D ORIGIN_LAT (origin latitude - in decimal format)
-- 5	-E ORIGIN_LON (origin longitude - in decimal format)
-- 6	-F ORIGIN_ROT (model rotation - clockwise is positive)
-- 7	-G EXTENT_X (model extent in the X direction in km)
-- 8	-H EXTENT_Y (model extent in the Y direction in km)
-- 9	-I EXTENT_ZMAX (maximum model extent in the Z direction - positive downwards in km)
-- 10	-J EXTENT_ZMIN (minimum model extent in the Z direction - positive downwards i.e -1 represents +1km above mean sea level)
-- 11 -K	EXTENT_Z_SPACING (gridspacing in the Z direction in km)
-- 12 -L	EXTENT_LATLON_SPACING (gridspacing in the Y and X direction in km)
-- 13 -M	MIN_VS (minimium shear wave velocity to enforce, in km/s - typically 0.5)
-- 14 -N TOPO_TYPE (SQUASHED or BULLDOZED)
-- 15 -O	EXTRACTED_SLICE_PARAMETERS_DIRECTORY (directory housing slice parameters text file)
+- 1 EXTRACT_VELOCITY_SLICES
+- 2 MODEL_VERSION (model version - select from list of model versions at bottom of readme)
+- 3 OUTPUT_DIR (directory to save outputs to)
+- 4 ORIGIN_LAT (origin latitude - in decimal format)
+- 5 ORIGIN_LON (origin longitude - in decimal format)
+- 6 ORIGIN_ROT (model rotation - clockwise is positive)
+- 7 EXTENT_X (model extent in the X direction in km)
+- 8	EXTENT_Y (model extent in the Y direction in km)
+- 9	EXTENT_ZMAX (maximum model extent in the Z direction - positive downwards in km)
+- 10 EXTENT_ZMIN (minimum model extent in the Z direction - positive downwards i.e -1 represents +1km above mean sea level)
+- 11 EXTENT_Z_SPACING (gridspacing in the Z direction in km)
+- 12 EXTENT_LATLON_SPACING (gridspacing in the Y and X direction in km)
+- 13 MIN_VS (minimium shear wave velocity to enforce, in km/s - typically 0.5)
+- 14 TOPO_TYPE (SQUASHED or BULLDOZED)
+- 15 EXTRACTED_SLICE_PARAMETERS_DIRECTORY (directory housing slice parameters text file)
 
 - See readme in ExtractedSliceParameters directory for additional information
 
 
 Call type 3) GENERATE_VELOCITY_SLICES
 
-- 1	-A GENERATE_VELOCITY_SLICES
-- 2	-B MODEL_VERSION (model version - select from list of model versions at bottom of readme)
-- 3	-C OUTPUT_DIR (directory to save outputs to)
-- 4 -P MIN_VS (minimium shear wave velocity to enforce, in km/s - typically 0.5)
-- 5	-Q GENERATED_SLICE_PARAMETERS_DIRECTORY (directory housing slice parameters text file)
-- 6 -R TOPO_TYPE (SQUASHED or BULLDOZED)
+- 1 GENERATE_VELOCITY_SLICES
+- 2 MODEL_VERSION (model version - select from list of model versions at bottom of readme)
+- 3 OUTPUT_DIR (directory to save outputs to)
+- 4 MIN_VS (minimium shear wave velocity to enforce, in km/s - typically 0.5)
+- 5 GENERATED_SLICE_PARAMETERS_DIRECTORY (directory housing slice parameters text file)
+- 6 TOPO_TYPE (SQUASHED or BULLDOZED)
 
 
 Call type 4) GENERATE_INDIVIDUAL_PROFILE - All parameters must be set and the output directory must not exist
 
-- 1 -A	GENERATE_INDIVIDUAL_PROFILE
-- 2	-B MODEL_VERSION (model version - select from list of model versions at bottom of readme)
-- 3	-C OUTPUT_DIR (directory to save outputs to)
-- 4	-S PROFILE_LAT (latitude point of profile - in decimal format)
-- 5	-T PROFILE_LON (longitude point of profile - in decimal format)
-- 6	-U PROFILE_ZMAX (maximum depth of profile +ve downwards in km) 
-- 7	-V PROFILE_ZMIN (minimum depth of profile +ve downwards in km ie. -0.1 corresponds to the top of the profile at +0.1km above mean sea level)
-- 8 -W PROFILE_MIN_VS=0.5 (minimium shear wave velocity to enforce, in km/s - typically 0.5, set as 0.0 for no restriction)
-- 9	-X EXTENT_Z_SPACING_PROFILE (z spacing of the profile in km)
+- 1 GENERATE_INDIVIDUAL_PROFILE
+- 2 MODEL_VERSION (model version - select from list of model versions at bottom of readme)
+- 3 OUTPUT_DIR (directory to save outputs to)
+- 4 PROFILE_LAT (latitude point of profile - in decimal format)
+- 5 PROFILE_LON (longitude point of profile - in decimal format)
+- 6 PROFILE_ZMAX (maximum depth of profile +ve downwards in km) 
+- 7 PROFILE_ZMIN (minimum depth of profile +ve downwards in km ie. -0.1 corresponds to the top of the profile at +0.1km above mean sea level)
+- 8 PROFILE_MIN_VS=0.5 (minimium shear wave velocity to enforce, in km/s - typically 0.5, set as 0.0 for no restriction)
+- 9	 EXTENT_Z_SPACING_PROFILE (z spacing of the profile in km)
 
 - See readme in GeneratedSliceParameters directory for additional information
 
@@ -91,17 +104,17 @@ Call type 5) EXTRACT_THRESHOLD
 
 Extracts Vs30 Vs500 Z1.0 Z2.5
 
-- 1	-A EXTRACT_THRESHOLD
-- 2	-B MODEL_VERSION (model version - select from list of model versions at bottom of readme)
-- 3	-C OUTPUT_DIR (directory to save outputs to)
-- 4	-D ORIGIN_LAT (origin latitude - in decimal format)
-- 5	-E ORIGIN_LON (origin longitude - in decimal format)
-- 6	-F ORIGIN_ROT (model rotation - clockwise is positive)
-- 7	-G EXTENT_X (model extent in the X direction in km)
-- 8	-H EXTENT_Y (model extent in the Y direction in km)
-- 9 -L	EXTENT_LATLON_SPACING (gridspacing in the Y and X direction in km)
-- 10 -M	MIN_VS (minimium shear wave velocity to enforce, in km/s - typically 0.5)
-- 11 -Z VS_TYPE (set as VS30 VS500 Z1.0 Z2.5)
+- 1	EXTRACT_THRESHOLD
+- 2 MODEL_VERSION (model version - select from list of model versions at bottom of readme)
+- 3 OUTPUT_DIR (directory to save outputs to)
+- 4 ORIGIN_LAT (origin latitude - in decimal format)
+- 5 ORIGIN_LON (origin longitude - in decimal format)
+- 6 ORIGIN_ROT (model rotation - clockwise is positive)
+- 7 EXTENT_X (model extent in the X direction in km)
+- 8 EXTENT_Y (model extent in the Y direction in km)
+- 9 EXTENT_LATLON_SPACING (gridspacing in the Y and X direction in km)
+- 10 MIN_VS (minimium shear wave velocity to enforce, in km/s - typically 0.5)
+- 11 VS_TYPE (set as VS30 VS500 Z1.0 Z2.5)
 
 
 Execute one of these five call types and open the output directory to view saved outputs.

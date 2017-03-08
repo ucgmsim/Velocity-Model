@@ -82,7 +82,6 @@ void assignQualities(global_model_parameters *GLOBAL_MODEL_PARAMETERS, velo_mod_
         SHIFTED_MESH_VECTOR->Lat = MESH_VECTOR->Lat;
         SHIFTED_MESH_VECTOR->Lon = MESH_VECTOR->Lon;
         SHIFTED_MESH_VECTOR->nZ = MESH_VECTOR->nZ;
-        printf("ShiftedMESHVEC.\n");
         for (int k = 0; k < MESH_VECTOR->nZ; k++)
         {
             depthChange = (-1000 * MESH_VECTOR->referenceDepth) - MESH_VECTOR->Z[k];
@@ -102,7 +101,7 @@ void assignQualities(global_model_parameters *GLOBAL_MODEL_PARAMETERS, velo_mod_
         }
         interpolateBasinSurfaceDepths(BASIN_DATA, GLOBAL_MODEL_PARAMETERS, IN_BASIN, PARTIAL_BASIN_SURFACE_DEPTHS, SHIFTED_MESH_VECTOR);
     }
-    else if(strcmp(TOPO_TYPE, "BULLDOZED") == 0)
+    else if(strcmp(TOPO_TYPE, "BULLDOZED") == 0 || (strcmp(TOPO_TYPE, "TRUE") == 0))
     {
         interpolateBasinSurfaceDepths(BASIN_DATA, GLOBAL_MODEL_PARAMETERS, IN_BASIN, PARTIAL_BASIN_SURFACE_DEPTHS, MESH_VECTOR);
     }
@@ -123,6 +122,10 @@ void assignQualities(global_model_parameters *GLOBAL_MODEL_PARAMETERS, velo_mod_
         {
             Z = MESH_VECTOR->Z[k];
         }
+        else if(strcmp(TOPO_TYPE, "TRUE") == 0)
+        {
+            Z = MESH_VECTOR->Z[k];
+        }
         else if(strcmp(TOPO_TYPE, "SQUASHED") == 0)
         {
             Z = SHIFTED_MESH_VECTOR->Z[k];
@@ -131,6 +134,7 @@ void assignQualities(global_model_parameters *GLOBAL_MODEL_PARAMETERS, velo_mod_
         {
             Z = SHIFTED_MESH_VECTOR->Z[k];
         }
+
         for(int i = 0; i < GLOBAL_MODEL_PARAMETERS->nBasins; i++)
         {
             if (IN_BASIN->inBasinDep[i][k] == 1)
@@ -175,6 +179,16 @@ void assignQualities(global_model_parameters *GLOBAL_MODEL_PARAMETERS, velo_mod_
         }
         basinFlag = 0;
 
+    }
+    if(strcmp(TOPO_TYPE, "BULLDOZED") == 0)
+    {
+        for (int k = 0; k < MESH_VECTOR->nZ; k++) // write over values if BULLDOZED
+        {
+            if (MESH_VECTOR->Z[k] >= 0)
+            {
+                NaNsubMod(k, QUALITIES_VECTOR);
+            }
+        }
     }
 
     free(SHIFTED_MESH_VECTOR);

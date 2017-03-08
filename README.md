@@ -1,6 +1,6 @@
 # Velocity Model
 
-This is the repository for the source code for South Island Velocity Model (SIVM) generation and interrogation. The model generation is a serial process. There are five general call types which are outlined in this readme.
+This is the repository for the source code for South Island Velocity Model (SIVM) generation and interrogation. There are five general call types which are outlined in this readme (others are under development)
 
 To clone the code from the github repository:
 ```
@@ -12,11 +12,15 @@ In order to execute the code:
 ```
 make
 ```
-2) Execute the code using one of the four call types:
+or alternatively if openmp is installed
+```
+make parallel
+```
+2) Execute the code using one of the five call types: (if no input is given at first, sample input text files are written)
 - GENERATE_VELOCITY_MOD - Generates a velocity model from input parameters
 - EXTRACT_VELOCITY_SLICES - Extracts velocity slices from a saved model (Model need to have been previously generated to use this call)
 - GENERATE_VELOCITY_SLICES - Generated velocity slices for plotting (slices generated from scratch)
-- GENERATE_INDIVIDUAL_PROFILE - Generates a velocity profile at a single lat/lon location
+- GENERATE_PROFILE - Generates a velocity profile at a single lat/lon location
 ```
 ./NZVM (OPTIONS HERE)
 ```

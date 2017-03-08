@@ -1,7 +1,7 @@
 To extract slices from a saved model a text file containing parameters is necessary.
 The model must have been generated previously using the GENERATE_VELOCITY_MOD call.
 
-This text file must be called ‘SliceParametersExtracted.txt’
+This text file must can be of any name, but must be set within the VM input textfile as the variable "EXTRACTED_SLICE_PARAMETERS_TEXTFILE=myParametersFile.txt"
 
 It is possible to extract one or more slices using the following syntax. 
 

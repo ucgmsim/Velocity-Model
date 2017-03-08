@@ -561,12 +561,22 @@ void writeVsFile(char *OUTPUT_DIR, double Lat, double Lon, double VsTotal, doubl
     if( latInd == 0) // if first time generate file
     {
         vsFileTxt = fopen(vsFile, "w");
+        if (vsFileTxt == NULL)
+        {
+            printf("Unable to open file to write data to (%s).\n",vsFile);
+            exit(EXIT_FAILURE);
+        }
         fprintf(vsFileTxt,"Lat\tLon\tVs_%s(km/s)\n",VS_DEPTH);
         fprintf(vsFileTxt,"%lf\t%lf\t%lf\n",Lat,Lon,VsTotal);
     }
     else // append to existing file
     {
         vsFileTxt = fopen(vsFile, "a");
+        if (vsFileTxt == NULL)
+        {
+            printf("Unable to append data to file (%s).\n",vsFile);
+            exit(EXIT_FAILURE);
+        }
         fprintf(vsFileTxt,"%lf\t%lf\t%lf\n",Lat,Lon,VsTotal);
     }
     fclose(vsFileTxt);

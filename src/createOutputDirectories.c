@@ -48,7 +48,7 @@ void createAllOutputDirectories(char *OUTPUT_DIR, char *genCallType)
         sprintf(tempDir,"%s/Profile",OUTPUT_DIR);
         mkdir(tempDir, 0700);
     }
-    else if (strcmp(genCallType,"EXTRACT_THRESHOLD")== 0)
+    else if (strcmp(genCallType,"GENERATE_THRESHOLD")== 0)
     {
         char tempDir[MAX_FILENAME_STRING_LEN];
         sprintf(tempDir,"%s/Vs",OUTPUT_DIR);
@@ -56,10 +56,10 @@ void createAllOutputDirectories(char *OUTPUT_DIR, char *genCallType)
         sprintf(tempDir,"%s/Z",OUTPUT_DIR);
         mkdir(tempDir, 0700);
     }
-    else if (strcmp(genCallType,"EXTRACT_MULTIPLE_GRIDPOINT_VS")== 0)
+    else if (strcmp(genCallType,"GENERATE_VELOCITIES_ON_GRID")== 0)
     {
         char tempDir[MAX_FILENAME_STRING_LEN];
-        sprintf(tempDir,"%s/Vs_at_gridpoint",OUTPUT_DIR);
+        sprintf(tempDir,"%s/Velocities_At_Gridpoints",OUTPUT_DIR);
         mkdir(tempDir, 0700);
     }
     else if (strcmp(genCallType,"GENERATE_MULTIPLE_PROFILES")== 0)

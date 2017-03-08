@@ -55,6 +55,7 @@ extern void runGenerateVelocitySlices(char *MODEL_VERSION, char *OUTPUT_DIR, gen
 extern void runThresholdVelocityModel(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extract_velo_mod_call GEN_EXTRACT_VELO_MOD_CALL, calculation_log *CALCULATION_LOG);
 
 extern void runGenerateProfile(char *MODEL_VERSION, char *OUTPUT_DIR, gen_profile_call GEN_PROFILE_CALL, calculation_log *CALCULATION_LOG);
+extern void runGenerateMultipleProfiles(char *MODEL_VERSION, char *OUTPUT_DIR, gen_multi_profiles_call GEN_MULTI_PROFILES_CALL, calculation_log *CALCULATION_LOG);
 extern void gcprojRev(double *xf,double *yf,double rlon,double rlat,double ref_rad,double g0,double b0,double amat[8],double ainv[8]);
 extern void ll2xy(double originLat, double originLon, double originRot, double *xp, double *yp, double latA, double lonA);
 
@@ -66,6 +67,7 @@ extern gen_profile_call readGenerateProfileInputTextFile(char *fileName);
 extern gen_extract_velo_mod_call readThresholdInputTextFile(char *fileName);
 extern gen_multi_profiles_call readGenMultiProfileInputTextFile(char *fileName);
 extern gen_extract_multi_gridpoint_vs_call readExtractMultiInputTextFile(char *fileName);
+extern multi_profile_parameters *readProfilesTextFile(char *fileName);
 extern char *readParameter(char *fileName, char *quality);
 
 
@@ -145,8 +147,8 @@ extern void marineSubModel(int zInd, qualities_vector *QUALITIES_VECTOR);
 
 //slice functions
 extern void extractSlicesFromBinaryFiles(char *OUTPUT_DIR, gen_extract_velo_mod_call GEN_EXTRACT_VELO_MOD_CALL, calculation_log *CALCULATION_LOG, global_mesh *GLOBAL_MESH, model_extent *MODEL_EXTENT);
-extern slice_parameters *readGeneratedSliceParametersFile(char *sliceParametersDirectory);
-extern slice_parameters *readExtractedSliceParametersFile(char *sliceParametersDirectory);
+extern slice_parameters *readGeneratedSliceParametersFile(char *sliceParametersTextFile);
+extern slice_parameters *readExtractedSliceParametersFile(char *sliceParametersTextFile);
 extern void generateSlicePoints(individual_slice_data *INDIVIDUAL_SLICE_DATA, individual_slice_parameters *INDIVIDUAL_SLICE_PARAMETERS,  global_mesh *GLOBAL_MESH);
 extern void generateGlobalIndsForRead(global_mesh *GLOBAL_MESH, global_data_for_interpolation *GLOBAL_DATA_FOR_INTERPOLATION, model_extent *MODEL_EXTENT, int sliceNum);
 extern void globalIndReduction(global_data_for_interpolation *GLOBAL_DATA_FOR_INTERPOLATION);

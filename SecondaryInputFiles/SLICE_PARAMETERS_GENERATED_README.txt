@@ -1,6 +1,6 @@
 To generate slices from a scratch, a text file containing parameters is necessary.
 
-This text file must be called ‘SliceParametersGenerated.txt’
+This text file must can be of any name, but must be set within the VM input textfile as the variable "GENERATED_SLICE_PARAMETERS_TEXTFILE=myParametersFile.txt"
 
 It is possible to generate one or more slices using the following syntax. 
 

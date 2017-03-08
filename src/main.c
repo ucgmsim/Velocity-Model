@@ -27,19 +27,25 @@
 int main(int argc, char *argv[])
 //int main(void)
 {
-  //   int argc = 2;
-////    int argc = 1;
+     //int argc = 2;
      //char *argv[2];
-     //argv[1] = "TOPO_SLICES_EXTRACT/GENERATE_VELOCITY_SLICES.txt";
-    //char *inputFName;
+//     argv[1] = "Sample_Input_Text_FilesA/GENERATE_MULTIPLE_PROFILES.txt";
+ //   argv[1] = "Sample_Input_Text_Files/GENERATE_VELOCITY_MOD.txt";
+//    argv[1] = "Sample_Input_Text_Files/GENERATE_PROFILE.txt";
+ //   argv[1] = "Sample_Input_Text_Files/GENERATE_THRESHOLD.txt";
+//    argv[1] = "Sample_Input_Text_Files/GENERATE_VELOCITY_SLICES.txt";
+   // argv[1] = "Sample_Input_Text_Files/EXTRACT_VELOCITY_SLICES.txt";
+
 
     // set call type flags to zero (0)
     int EXTRACT_VELOCITY_SLICES = 0;
     int GENERATE_VELOCITY_MOD = 0;
     int GENERATE_VELOCITY_SLICES = 0;
     int GENERATE_PROFILE = 0;
-    int EXTRACT_THRESHOLD = 0;
-    int EXTRACT_MULTIPLE_GRIDPOINT_VS = 0;
+//    int EXTRACT_THRESHOLD = 0;
+    int GENERATE_THRESHOLD = 0;
+//    int EXTRACT_MULTIPLE_GRIDPOINT_VS = 0;
+    int GENERATE_VELOCITIES_ON_GRID = 0;
     int GENERATE_MULTIPLE_PROFILES = 0;
     char *CALL_TYPE = NULL;
     char *MODEL_VERSION;
@@ -47,7 +53,7 @@ int main(int argc, char *argv[])
     char *parametersTextFile = (char*) malloc(MAX_FILENAME_STRING_LEN*sizeof(char));
     char *inputFName;
 
-    // generate structs to house paramteters for each call type
+    // generate structs to house parameters for each call type
     gen_extract_velo_mod_call GEN_EXTRACT_VELO_MOD_CALL;
     gen_velo_slices_call GEN_VELO_SLICES_CALL;
     gen_profile_call GEN_PROFILE_CALL;
@@ -93,11 +99,11 @@ int main(int argc, char *argv[])
             inputFName = "GENERATE_PROFILE";
 
         }
-        else if (strcmp(CALL_TYPE, "EXTRACT_THRESHOLD") == 0)
+        else if (strcmp(CALL_TYPE, "GENERATE_THRESHOLD") == 0)
         {
-            EXTRACT_THRESHOLD = 1;
+            GENERATE_THRESHOLD = 1;
             GEN_EXTRACT_VELO_MOD_CALL = readThresholdInputTextFile(parametersTextFile);
-            inputFName = "EXTRACT_THRESHOLD";
+            inputFName = "GENERATE_THRESHOLD";
         }
         else if (strcmp(CALL_TYPE, "GENERATE_MULTIPLE_PROFILES") == 0)
         {
@@ -105,11 +111,11 @@ int main(int argc, char *argv[])
             GEN_MULTI_PROFILES_CALL = readGenMultiProfileInputTextFile(parametersTextFile);
             inputFName = "GENERATE_MULTIPLE_PROFILES";
         }
-        else if (strcmp(CALL_TYPE, "EXTRACT_MULTIPLE_GRIDPOINT_VS") == 0)
+        else if (strcmp(CALL_TYPE, "GENERATE_VELOCITIES_ON_GRID") == 0)
         {
-            EXTRACT_MULTIPLE_GRIDPOINT_VS = 1;
+            GENERATE_VELOCITIES_ON_GRID = 1;
             GEN_EXTRACT_MULTI_GRIDPOINT_VS_CALL = readExtractMultiInputTextFile(parametersTextFile);
-            inputFName = "EXTRACT_MULTIPLE_GRIDPOINT_VS";
+            inputFName = "GENERATE_VELOCITIES_ON_GRID";
         }
 
 
@@ -124,7 +130,7 @@ int main(int argc, char *argv[])
 
     
     // check if the output directory exists, exit if necessary
-    if (GENERATE_VELOCITY_MOD == 1 || GENERATE_VELOCITY_SLICES == 1 || GENERATE_PROFILE == 1 || EXTRACT_THRESHOLD == 1 || EXTRACT_MULTIPLE_GRIDPOINT_VS == 1 || GENERATE_MULTIPLE_PROFILES == 1)
+    if (GENERATE_VELOCITY_MOD == 1 || GENERATE_VELOCITY_SLICES == 1 || GENERATE_PROFILE == 1 || GENERATE_THRESHOLD == 1 || GENERATE_VELOCITIES_ON_GRID == 1 || GENERATE_MULTIPLE_PROFILES == 1)
     {
         struct stat st;
         
@@ -201,14 +207,14 @@ int main(int argc, char *argv[])
         printf("Completed running GENERATE_PROFILE.\n");
         printf("==========================================\n");
     }
-    else if (EXTRACT_THRESHOLD == 1)
+    else if (GENERATE_THRESHOLD == 1)
     {
         printf("==========================================\n");
-        printf("Running EXTRACT_THRESHOLD.\n");
+        printf("Running GENERATE_THRESHOLD.\n");
         printf("==========================================\n");
         runThresholdVelocityModel(MODEL_VERSION, OUTPUT_DIR, GEN_EXTRACT_VELO_MOD_CALL, CALCULATION_LOG);
         printf("==========================================\n");
-        printf("Completed running EXTRACT_THRESHOLD.\n");
+        printf("Completed running GENERATE_THRESHOLD.\n");
         printf("==========================================\n");
     }
     else if (GENERATE_MULTIPLE_PROFILES == 1)
@@ -216,19 +222,19 @@ int main(int argc, char *argv[])
         printf("==========================================\n");
         printf("Running GENERATE_MULTIPLE_PROFILES.\n");
         printf("==========================================\n");
-//        runGenerateProfile(MODEL_VERSION, OUTPUT_DIR, GEN_PROFILE_CALL, CALCULATION_LOG);
+//        runGenerateMultipleProfiles(MODEL_VERSION, OUTPUT_DIR, GEN_MULTI_PROFILES_CALL, CALCULATION_LOG);
         printf("==========================================\n");
         printf("Completed running GENERATE_MULTIPLE_PROFILES.\n");
         printf("==========================================\n");
     }
-    else if (EXTRACT_MULTIPLE_GRIDPOINT_VS == 1)
+    else if (GENERATE_VELOCITIES_ON_GRID == 1)
     {
         printf("==========================================\n");
-        printf("Running EXTRACT_MULTIPLE_GRIDPOINT_VS.\n");
+        printf("Running GENERATE_VELOCITIES_ON_GRID.\n");
         printf("==========================================\n");
-//        runThresholdVelocityModel(MODEL_VERSION, OUTPUT_DIR, GEN_EXTRACT_VELO_MOD_CALL, CALCULATION_LOG);
+//        runThresholdVelocityModel(MODEL_VERSION, OUTPUT_DIR, GEN_EXTRACT_VELO_MOD_CALL, CALCULATION_LOG); # need to write functionality for this
         printf("==========================================\n");
-        printf("Completed running EXTRACT_MULTIPLE_GRIDPOINT_VS.\n");
+        printf("Completed running GENERATE_VELOCITIES_ON_GRID.\n");
         printf("==========================================\n");
     }
 
@@ -237,10 +243,7 @@ int main(int argc, char *argv[])
     char a;
     fp1 = fopen(parametersTextFile, "r");
     char outFileCat[MAX_FILENAME_STRING_LEN];
-    printf("%s.\n",parametersTextFile);
-    printf("%s.\n",inputFName);
     sprintf(outFileCat,"%s/Log/%s.txt",OUTPUT_DIR,inputFName);
-    printf("%s.\n",outFileCat);
     fp2 = fopen(outFileCat, "w");
     if (fp2 == NULL)
     {

@@ -68,7 +68,7 @@ void writeSampleInputTextFiles(void)
     fprintf(fNameWrite,"EXTENT_LATLON_SPACING=1.0\n");
     fprintf(fNameWrite,"MIN_VS=0.5\n");
     fprintf(fNameWrite,"TOPO_TYPE=BULLDOZED\n");
-    fprintf(fNameWrite,"EXTRACTED_SLICE_PARAMETERS_DIRECTORY=ExtractedSliceParameters\n");
+    fprintf(fNameWrite,"EXTRACTED_SLICE_PARAMETERS_TEXTFILE=SecondaryInputFiles/SliceParametersExtracted.txt\n");
     fclose(fNameWrite);
     
     //////////// GENERATE_VELOCITY_SLICES
@@ -79,7 +79,7 @@ void writeSampleInputTextFiles(void)
     fprintf(fNameWrite,"CALL_TYPE=GENERATE_VELOCITY_SLICES\n");
     fprintf(fNameWrite,"MODEL_VERSION=1.65\n");
     fprintf(fNameWrite,"OUTPUT_DIR=Generated_Slices\n");
-    fprintf(fNameWrite,"GENERATED_SLICE_PARAMETERS_DIRECTORY=GeneratedSliceParameters\n");
+    fprintf(fNameWrite,"GENERATED_SLICE_PARAMETERS_TEXTFILE=SecondaryInputFiles/SliceParametersGenerated.txt\n");
     fprintf(fNameWrite,"TOPO_TYPE=BULLDOZED\n");
     fclose(fNameWrite);
     
@@ -99,16 +99,17 @@ void writeSampleInputTextFiles(void)
     fprintf(fNameWrite,"PROFILE_ZMIN=0.00\n");
     fprintf(fNameWrite,"PROFILE_MIN_VS=0.500\n");
     fprintf(fNameWrite,"EXTENT_Z_SPACING_PROFILE=0.01\n");
+    fprintf(fNameWrite,"TOPO_TYPE=BULLDOZED\n");
     fclose(fNameWrite);
     
     //////////// EXTRACT_THRESHOLD
     fNameWrite = NULL;
-    type = "EXTRACT_THRESHOLD";
+    type = "GENERATE_THRESHOLD";
     sprintf(fName,"%s/%s.txt",sampleDir,type);
     fNameWrite  = fopen(fName, "w");
-    fprintf(fNameWrite,"CALL_TYPE=EXTRACT_THRESHOLD\n");
+    fprintf(fNameWrite,"CALL_TYPE=GENERATE_THRESHOLD\n");
     fprintf(fNameWrite,"MODEL_VERSION=1.65\n");
-    fprintf(fNameWrite,"OUTPUT_DIR=Extracted_Threshold\n");
+    fprintf(fNameWrite,"OUTPUT_DIR=Generated_Threshold\n");
     fprintf(fNameWrite,"ORIGIN_LAT=-43.60\n");
     fprintf(fNameWrite,"ORIGIN_LON=172.30\n");
     fprintf(fNameWrite,"ORIGIN_ROT=-10\n");
@@ -116,7 +117,6 @@ void writeSampleInputTextFiles(void)
     fprintf(fNameWrite,"EXTENT_Y=120\n");
     fprintf(fNameWrite,"EXTENT_LATLON_SPACING=1.00\n");
     fprintf(fNameWrite,"VS_TYPE=VS30\n");
-    fprintf(fNameWrite,"MIN_VS=0.500\n");
     fclose(fNameWrite);
 
 
@@ -128,19 +128,16 @@ void writeSampleInputTextFiles(void)
     fprintf(fNameWrite,"CALL_TYPE=GENERATE_MULTIPLE_PROFILES\n");
     fprintf(fNameWrite,"MODEL_VERSION=1.65\n");
     fprintf(fNameWrite,"OUTPUT_DIR=Multiple_Profiles\n");
-    fprintf(fNameWrite,"PROFILE_ZMAX=1.00\n");
-    fprintf(fNameWrite,"PROFILE_ZMIN=0.00\n");
-    fprintf(fNameWrite,"EXTENT_Z_SPACING_PROFILE=0.01\n");
     fprintf(fNameWrite,"PROFILE_MIN_VS=0.500\n");
-    fprintf(fNameWrite,"COORDINATES_DIRECTORY=Profile_Coords\n");
+    fprintf(fNameWrite,"COORDINATES_TEXTFILE=SecondaryInputFiles/MultipleProfileParameters.txt\n");
     fclose(fNameWrite);
 
     //////////// EXTRACT_MULTIPLE_GRIDPOINT_VS
     fNameWrite = NULL;
-    type = "EXTRACT_MULTIPLE_GRIDPOINT_VS";
+    type = "GENERATE_VELOCITIES_ON_GRID";
     sprintf(fName,"%s/%s.txt",sampleDir,type);
     fNameWrite  = fopen(fName, "w");
-    fprintf(fNameWrite,"CALL_TYPE=EXTRACT_MULTIPLE_GRIDPOINT_VS\n");
+    fprintf(fNameWrite,"CALL_TYPE=GENERATE_VELOCITIES_ON_GRID\n");
     fprintf(fNameWrite,"MODEL_VERSION=1.65\n");
     fprintf(fNameWrite,"OUTPUT_DIR=Gridpoint_Vs\n");
     fprintf(fNameWrite,"TOPO_TYPE=BULLDOZED\n");
@@ -222,7 +219,7 @@ gen_extract_velo_mod_call readExtractVMInputTextFile(char *fileName)
     GEN_EXTRACT_VELO_MOD_CALL.EXTENT_LATLON_SPACING = atof(readParameter(fileName,"EXTENT_LATLON_SPACING"));
     GEN_EXTRACT_VELO_MOD_CALL.MIN_VS = atof(readParameter(fileName,"MIN_VS"));
     GEN_EXTRACT_VELO_MOD_CALL.TOPO_TYPE = readParameter(fileName,"TOPO_TYPE");
-    GEN_EXTRACT_VELO_MOD_CALL.EXTRACTED_SLICE_PARAMETERS_DIRECTORY = readParameter(fileName,"EXTRACTED_SLICE_PARAMETERS_DIRECTORY");
+    GEN_EXTRACT_VELO_MOD_CALL.EXTRACTED_SLICE_PARAMETERS_TEXTFILE = readParameter(fileName,"EXTRACTED_SLICE_PARAMETERS_TEXTFILE");
 
     return GEN_EXTRACT_VELO_MOD_CALL;
 }
@@ -230,7 +227,7 @@ gen_extract_velo_mod_call readExtractVMInputTextFile(char *fileName)
 gen_velo_slices_call readGenerateSliceInputTextFile(char *fileName)
 {
     gen_velo_slices_call GEN_VELO_SLICES_CALL;
-    GEN_VELO_SLICES_CALL.GENERATED_SLICE_PARAMETERS_DIRECTORY = readParameter(fileName,"GENERATED_SLICE_PARAMETERS_DIRECTORY");
+    GEN_VELO_SLICES_CALL.GENERATED_SLICE_PARAMETERS_TEXTFILE = readParameter(fileName,"GENERATED_SLICE_PARAMETERS_TEXTFILE");
     GEN_VELO_SLICES_CALL.TOPO_TYPE = readParameter(fileName,"TOPO_TYPE");
 
     return GEN_VELO_SLICES_CALL;
@@ -245,6 +242,7 @@ gen_profile_call readGenerateProfileInputTextFile(char *fileName)
     GEN_PROFILE_CALL.PROFILE_ZMIN = atof(readParameter(fileName,"PROFILE_ZMIN"));
     GEN_PROFILE_CALL.PROFILE_MIN_VS = atof(readParameter(fileName,"PROFILE_MIN_VS"));
     GEN_PROFILE_CALL.EXTENT_Z_SPACING_PROFILE = atof(readParameter(fileName,"EXTENT_Z_SPACING_PROFILE"));
+    GEN_PROFILE_CALL.TOPO_TYPE = readParameter(fileName,"TOPO_TYPE");
 
     return GEN_PROFILE_CALL;
 }
@@ -259,7 +257,6 @@ gen_extract_velo_mod_call readThresholdInputTextFile(char *fileName)
     GEN_EXTRACT_VELO_MOD_CALL.EXTENT_X = atof(readParameter(fileName,"EXTENT_X"));
     GEN_EXTRACT_VELO_MOD_CALL.EXTENT_Y = atof(readParameter(fileName,"EXTENT_Y"));
     GEN_EXTRACT_VELO_MOD_CALL.EXTENT_LATLON_SPACING = atof(readParameter(fileName,"EXTENT_LATLON_SPACING"));
-    GEN_EXTRACT_VELO_MOD_CALL.MIN_VS = atof(readParameter(fileName,"MIN_VS"));
     GEN_EXTRACT_VELO_MOD_CALL.VS_TYPE = readParameter(fileName,"VS_TYPE");
 
     return GEN_EXTRACT_VELO_MOD_CALL;
@@ -270,10 +267,7 @@ gen_extract_velo_mod_call readThresholdInputTextFile(char *fileName)
 gen_multi_profiles_call readGenMultiProfileInputTextFile(char *fileName)
 {
     gen_multi_profiles_call GEN_MULTI_PROFILES_CALL;
-    GEN_MULTI_PROFILES_CALL.PROFILE_ZMAX = atof(readParameter(fileName,"PROFILE_ZMAX"));
-    GEN_MULTI_PROFILES_CALL.PROFILE_ZMIN = atof(readParameter(fileName,"PROFILE_ZMIN"));
-    GEN_MULTI_PROFILES_CALL.EXTENT_Z_SPACING_PROFILE = atof(readParameter(fileName,"EXTENT_Z_SPACING_PROFILE"));
-    GEN_MULTI_PROFILES_CALL.COORDINATES_DIRECTORY = readParameter(fileName,"COORDINATES_DIRECTORY");
+    GEN_MULTI_PROFILES_CALL.COORDINATES_TEXTFILE = readParameter(fileName,"COORDINATES_TEXTFILE");
     GEN_MULTI_PROFILES_CALL.PROFILE_MIN_VS = atof(readParameter(fileName,"PROFILE_MIN_VS"));
 
     return GEN_MULTI_PROFILES_CALL;
@@ -291,6 +285,52 @@ gen_extract_multi_gridpoint_vs_call readExtractMultiInputTextFile(char *fileName
 
 
     return GEN_EXTRACT_MULTI_GRIDPOINT_VS_CALL;
+}
+
+multi_profile_parameters *readProfilesTextFile(char *coordsTextFile)
+{
+    multi_profile_parameters  *MULTI_PROFILE_PARAMETERS;
+    MULTI_PROFILE_PARAMETERS = malloc(sizeof(multi_profile_parameters));
+    if (MULTI_PROFILE_PARAMETERS == NULL)
+    {
+        printf("Memory allocation of MULTI_PROFILE_PARAMETERS failed.\n");
+        exit(EXIT_FAILURE);
+    }
+
+
+    slice_parameters *SLICE_PARAMETERS;
+    SLICE_PARAMETERS = malloc(sizeof(slice_parameters));
+
+    FILE *file;
+
+    file = fopen(coordsTextFile, "r");
+
+    if (file == NULL)
+    {
+        printf("Profile parameters text file %s not found.\n",coordsTextFile);
+        exit(EXIT_FAILURE);
+    }
+
+    fscanf(file, "%d", &MULTI_PROFILE_PARAMETERS->nProfiles);
+
+    if(MULTI_PROFILE_PARAMETERS->nProfiles>=MAX_NUM_SLICES)
+    {
+        printf("Number of profiles in the text file exceeds the maximum allowable value of %i.\n",MAX_NUM_GEN_MULTI_PROFILES);
+        exit(EXIT_FAILURE);
+    }
+
+    for(int i = 0; i < MULTI_PROFILE_PARAMETERS->nProfiles; i++)
+    {
+        fscanf(file, "%lf %lf %lf %lf %lf", &MULTI_PROFILE_PARAMETERS->lats[i], &MULTI_PROFILE_PARAMETERS->lons[i], &MULTI_PROFILE_PARAMETERS->zMax[i], &MULTI_PROFILE_PARAMETERS->zMin[i], &MULTI_PROFILE_PARAMETERS->zSpacing[i]);
+    }
+
+    printf("Profiles text file read complete.\n");
+    fclose(file);
+    return MULTI_PROFILE_PARAMETERS;
+
+
+
+
 }
 
 

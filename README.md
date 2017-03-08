@@ -20,7 +20,7 @@ make parallel
 - GENERATE_VELOCITY_MOD - Generates a velocity model from input parameters
 - EXTRACT_VELOCITY_SLICES - Extracts velocity slices from a saved model (Model need to have been previously generated to use this call)
 - GENERATE_VELOCITY_SLICES - Generated velocity slices for plotting (slices generated from scratch)
-- GENERATEPROFILE - Generates a velocity profile at a single lat/lon location
+- GENERATE_PROFILE - Generates a velocity profile at a single lat/lon location
 - EXTRACT_THRESHOLD - Generates a map of Vs30, Z1.0 or Z2.5 
 
 First run

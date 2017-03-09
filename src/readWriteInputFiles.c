@@ -95,10 +95,10 @@ void writeSampleInputTextFiles(void)
     fprintf(fNameWrite,"OUTPUT_DIR=Generated_Profile\n");
     fprintf(fNameWrite,"PROFILE_LAT=-43.60\n");
     fprintf(fNameWrite,"PROFILE_LON=172.30\n");
+    fprintf(fNameWrite,"PROFILE_ZMIN=-0.10\n");
     fprintf(fNameWrite,"PROFILE_ZMAX=1.00\n");
-    fprintf(fNameWrite,"PROFILE_ZMIN=0.00\n");
-    fprintf(fNameWrite,"PROFILE_MIN_VS=0.500\n");
     fprintf(fNameWrite,"EXTENT_Z_SPACING_PROFILE=0.01\n");
+    fprintf(fNameWrite,"PROFILE_MIN_VS=0.500\n");
     fprintf(fNameWrite,"TOPO_TYPE=BULLDOZED\n");
     fclose(fNameWrite);
     
@@ -122,15 +122,35 @@ void writeSampleInputTextFiles(void)
 
     //////////// GENERATE_MULTIPLE_PROFILES
     fNameWrite = NULL;
-    type = "GENERATE_MULTIPLE_PROFILES";
+    type = "GENERATE_MULTIPLE_PROFILES(constant_spacing_example)";
     sprintf(fName,"%s/%s.txt",sampleDir,type);
     fNameWrite  = fopen(fName, "w");
     fprintf(fNameWrite,"CALL_TYPE=GENERATE_MULTIPLE_PROFILES\n");
     fprintf(fNameWrite,"MODEL_VERSION=1.65\n");
     fprintf(fNameWrite,"OUTPUT_DIR=Multiple_Profiles\n");
     fprintf(fNameWrite,"PROFILE_MIN_VS=0.500\n");
+    fprintf(fNameWrite,"TOPO_TYPE=BULLDOZED\n");
     fprintf(fNameWrite,"COORDINATES_TEXTFILE=SecondaryInputFiles/MultipleProfileParameters.txt\n");
+    fprintf(fNameWrite,"SPACING_TYPE=CONSTANT\n");
+    fprintf(fNameWrite,"PROFILE_ZMIN=-0.10\n");
+    fprintf(fNameWrite,"PROFILE_ZMAX=2.00\n");
+    fprintf(fNameWrite,"SPACING_PROFILE=0.01\n");
     fclose(fNameWrite);
+
+    fNameWrite = NULL;
+    type = "GENERATE_MULTIPLE_PROFILES(variable_spacing_example)";
+    sprintf(fName,"%s/%s.txt",sampleDir,type);
+    fNameWrite  = fopen(fName, "w");
+    fprintf(fNameWrite,"CALL_TYPE=GENERATE_MULTIPLE_PROFILES\n");
+    fprintf(fNameWrite,"MODEL_VERSION=1.65\n");
+    fprintf(fNameWrite,"OUTPUT_DIR=Multiple_Profiles\n");
+    fprintf(fNameWrite,"PROFILE_MIN_VS=0.500\n");
+    fprintf(fNameWrite,"TOPO_TYPE=BULLDOZED\n");
+    fprintf(fNameWrite,"COORDINATES_TEXTFILE=SecondaryInputFiles/MultipleProfileParameters.txt\n");
+    fprintf(fNameWrite,"SPACING_TYPE=VARIABLE\n");
+    fprintf(fNameWrite,"PROFILE_DEPTHS_TEXTFILE=SecondaryInputFiles/ProfileDepthPoints.txt\n");
+    fclose(fNameWrite);
+
 
     //////////// EXTRACT_MULTIPLE_GRIDPOINT_VS
     fNameWrite = NULL;
@@ -269,7 +289,25 @@ gen_multi_profiles_call readGenMultiProfileInputTextFile(char *fileName)
     gen_multi_profiles_call GEN_MULTI_PROFILES_CALL;
     GEN_MULTI_PROFILES_CALL.COORDINATES_TEXTFILE = readParameter(fileName,"COORDINATES_TEXTFILE");
     GEN_MULTI_PROFILES_CALL.PROFILE_MIN_VS = atof(readParameter(fileName,"PROFILE_MIN_VS"));
+    GEN_MULTI_PROFILES_CALL.TOPO_TYPE = readParameter(fileName,"TOPO_TYPE");
 
+    GEN_MULTI_PROFILES_CALL.SPACING_TYPE = readParameter(fileName,"SPACING_TYPE");
+    if (strcmp(GEN_MULTI_PROFILES_CALL.SPACING_TYPE,"CONSTANT") == 0)
+    {
+        GEN_MULTI_PROFILES_CALL.PROFILE_ZMAX = atof(readParameter(fileName,"PROFILE_ZMAX"));
+        GEN_MULTI_PROFILES_CALL.PROFILE_ZMIN = atof(readParameter(fileName,"PROFILE_ZMIN"));
+        GEN_MULTI_PROFILES_CALL.SPACING_PROFILE = atof(readParameter(fileName,"SPACING_PROFILE"));
+
+    }
+    else if (strcmp(GEN_MULTI_PROFILES_CALL.SPACING_TYPE,"VARIABLE") == 0)
+    {
+        GEN_MULTI_PROFILES_CALL.PROFILE_DEPTHS_TEXTFILE = readParameter(fileName,"PROFILE_DEPTHS_TEXTFILE");
+    }
+    else
+    {
+        printf("Unrecognised profile spacing type set: %s. See readme.\n", GEN_MULTI_PROFILES_CALL.SPACING_TYPE);
+        exit(EXIT_FAILURE);
+    }
     return GEN_MULTI_PROFILES_CALL;
 
 }
@@ -313,7 +351,7 @@ multi_profile_parameters *readProfilesTextFile(char *coordsTextFile)
 
     fscanf(file, "%d", &MULTI_PROFILE_PARAMETERS->nProfiles);
 
-    if(MULTI_PROFILE_PARAMETERS->nProfiles>=MAX_NUM_SLICES)
+    if(MULTI_PROFILE_PARAMETERS->nProfiles>=MAX_NUM_GEN_MULTI_PROFILES)
     {
         printf("Number of profiles in the text file exceeds the maximum allowable value of %i.\n",MAX_NUM_GEN_MULTI_PROFILES);
         exit(EXIT_FAILURE);
@@ -321,18 +359,55 @@ multi_profile_parameters *readProfilesTextFile(char *coordsTextFile)
 
     for(int i = 0; i < MULTI_PROFILE_PARAMETERS->nProfiles; i++)
     {
-        fscanf(file, "%lf %lf %lf %lf %lf", &MULTI_PROFILE_PARAMETERS->lats[i], &MULTI_PROFILE_PARAMETERS->lons[i], &MULTI_PROFILE_PARAMETERS->zMax[i], &MULTI_PROFILE_PARAMETERS->zMin[i], &MULTI_PROFILE_PARAMETERS->zSpacing[i]);
+        fscanf(file, "%lf %lf", &MULTI_PROFILE_PARAMETERS->lats[i], &MULTI_PROFILE_PARAMETERS->lons[i]);
     }
 
     printf("Profiles text file read complete.\n");
     fclose(file);
     return MULTI_PROFILE_PARAMETERS;
 
+}
+
+variable_depth_points *readDepthPointsTextFile(char *depthsTextFile)
+{
+    variable_depth_points *VARIABLE_DEPTH_POINTS;
+    VARIABLE_DEPTH_POINTS = malloc(sizeof(variable_depth_points));
+    if (VARIABLE_DEPTH_POINTS == NULL)
+    {
+        printf("Memory allocation of VARIABLE_DEPTH_POINTS failed.\n");
+        exit(EXIT_FAILURE);
+    }
+    FILE *file;
+
+    file = fopen(depthsTextFile, "r");
+
+    if (file == NULL)
+    {
+        printf("Depth point text file %s not found.\n",depthsTextFile);
+        exit(EXIT_FAILURE);
+    }
+    fscanf(file, "%d", &VARIABLE_DEPTH_POINTS->nDep);
+
+    if(VARIABLE_DEPTH_POINTS->nDep>=MAX_NUM_SLICES)
+    {
+        printf("Number of depth points in the text file exceeds the maximum allowable value of %i.\n",DEP_GRID_DIM_MAX);
+        exit(EXIT_FAILURE);
+    }
+
+    for(int i = 0; i < VARIABLE_DEPTH_POINTS->nDep; i++)
+    {
+        fscanf(file, "%lf", &VARIABLE_DEPTH_POINTS->dep[i]);
+    }
+
+    printf("Depth points text file read complete.\n");
+    fclose(file);
+    return VARIABLE_DEPTH_POINTS;
+
+
 
 
 
 }
-
 
 
 

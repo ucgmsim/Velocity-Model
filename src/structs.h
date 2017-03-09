@@ -52,7 +52,7 @@ typedef struct{
     double *Lat;
     double Z[DEP_GRID_DIM_MAX];
     int nZ;
-    double referenceDepth;
+//    double referenceDepth;
 }mesh_vector;
 
 
@@ -343,16 +343,24 @@ typedef struct{
 typedef struct{
     char *COORDINATES_TEXTFILE;
     double PROFILE_MIN_VS;
+    char *TOPO_TYPE;
+    char *SPACING_TYPE;
+    double PROFILE_ZMAX;
+    double PROFILE_ZMIN;
+    double SPACING_PROFILE;
+    char *PROFILE_DEPTHS_TEXTFILE;
 }gen_multi_profiles_call;
 
 typedef struct{
     int nProfiles;
     double lats[MAX_NUM_GEN_MULTI_PROFILES];
     double lons[MAX_NUM_GEN_MULTI_PROFILES];
-    double zMin[MAX_NUM_GEN_MULTI_PROFILES];
-    double zMax[MAX_NUM_GEN_MULTI_PROFILES];
-    double zSpacing[MAX_NUM_GEN_MULTI_PROFILES];
 }multi_profile_parameters;
+
+typedef struct{
+    int nDep;
+    double dep[DEP_GRID_DIM_MAX];
+}variable_depth_points;
 
 typedef struct {
     char *TOPO_TYPE;
@@ -360,9 +368,6 @@ typedef struct {
     double MIN_VS;
     char *COORDINATES_DIRECTORY;
 }gen_extract_multi_gridpoint_vs_call;
-
-
-
 
 
 // struct to house the indices of adjacent points for bilinear interpolation

@@ -184,15 +184,83 @@ void writeIndividualProfile(qualities_vector *QUALITIES_VECTOR, gen_profile_call
     
 }
 
-void writeProfileSurfaceDepths(global_model_parameters *GLOBAL_MODEL_PARAMETERS, basin_data *BASIN_DATA, partial_global_surface_depths *PARTIAL_GLOBAL_SURFACE_DEPTHS, partial_basin_surface_depths *PARTIAL_BASIN_SURFACE_DEPTHS, in_basin *IN_BASIN,mesh_vector *MESH_VECTOR, char *OUTPUT_DIR, calculation_log *CALCULATION_LOG)
+void writeMultipleProfiles(qualities_vector *QUALITIES_VECTOR, gen_multi_profiles_call GEN_MULTI_PROFILES_CALL, mesh_vector *MESH_VECTOR, char *OUTPUT_DIR, calculation_log *CALCULATION_LOG, int profileNumber)
 {
     FILE *fp;
     char fName[MAX_FILENAME_STRING_LEN];
-    sprintf(fName,"%s/Profile/ProfileSurfaceDepths.txt", OUTPUT_DIR);
+    sprintf(fName,"%s/Profiles/Profile%i.txt",OUTPUT_DIR,profileNumber);
     fp = fopen(fName, "w");
     if (fp == NULL)
     {
         printf("Unable to open text file to write profile to.\n");
+        exit(EXIT_FAILURE);
+    }
+    fprintf(fp,"Properties at Lat: %lf Lon: %lf\n",*MESH_VECTOR->Lat, *MESH_VECTOR->Lon);
+    fprintf(fp,"Depth \t Vp \t Vs \t Rho\n");
+
+
+    for(int i = 0; i < MESH_VECTOR->nZ; i++)
+    {
+        if(QUALITIES_VECTOR->Vs[i] <= GEN_MULTI_PROFILES_CALL.PROFILE_MIN_VS)
+        {
+            QUALITIES_VECTOR->Vs[i] = GEN_MULTI_PROFILES_CALL.PROFILE_MIN_VS;
+        }
+        fprintf(fp,"%lf \t %lf \t %lf \t %lf\n",MESH_VECTOR->Z[i], QUALITIES_VECTOR->Vp[i],QUALITIES_VECTOR->Vs[i],QUALITIES_VECTOR->Rho[i]);
+    }
+    fclose(fp);
+    printf("Profile text file write complete.\n");
+
+}
+
+void writeMultipleProfileSurfaceDepths(global_model_parameters *GLOBAL_MODEL_PARAMETERS, basin_data *BASIN_DATA, partial_global_surface_depths *PARTIAL_GLOBAL_SURFACE_DEPTHS, partial_basin_surface_depths *PARTIAL_BASIN_SURFACE_DEPTHS, in_basin *IN_BASIN,mesh_vector *MESH_VECTOR, char *OUTPUT_DIR, calculation_log *CALCULATION_LOG, int profileNum)
+{
+    FILE *fp;
+    char fName[MAX_FILENAME_STRING_LEN];
+    sprintf(fName,"%s/Profiles/ProfileSurfaceDepths%i.txt", OUTPUT_DIR,profileNum);
+
+    fp = fopen(fName, "w");
+    if (fp == NULL)
+    {
+        printf("Unable to open text file to write profile surface depths to.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    fprintf(fp,"Surface Depths (in m) at Lat: %lf Lon: %lf\n\n",*MESH_VECTOR->Lat,*MESH_VECTOR->Lon);
+    fprintf(fp,"Global surfaces\n");
+    fprintf(fp,"Surface_name \t Depth (m)\n");
+
+    for ( int i = 0 ; i < GLOBAL_MODEL_PARAMETERS->nSurf; i++)
+    {
+        fprintf(fp,"%s\t%lf\n",GLOBAL_MODEL_PARAMETERS->surf[i],PARTIAL_GLOBAL_SURFACE_DEPTHS->dep[i]);
+    }
+
+    fprintf(fp,"\nBasin surfaces (if applicable)\n");
+
+    for ( int i = 0 ; i < GLOBAL_MODEL_PARAMETERS->nBasins; i++)
+    {
+        if(IN_BASIN->inBasinLatLon[i][0])
+        {
+            fprintf(fp,"\n%s\n",GLOBAL_MODEL_PARAMETERS->basin[i]);
+            for(int j = 0; j < GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[i]; j++)
+            {
+                fprintf(fp,"%s\t%lf\n",GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[i][j],PARTIAL_BASIN_SURFACE_DEPTHS->dep[i][j]);
+            }
+        }
+    }
+
+    fclose(fp);
+    printf("Completed write of surface depths at the location.\n");
+
+}
+
+void writeProfileSurfaceDepths(global_model_parameters *GLOBAL_MODEL_PARAMETERS, basin_data *BASIN_DATA, partial_global_surface_depths *PARTIAL_GLOBAL_SURFACE_DEPTHS, partial_basin_surface_depths *PARTIAL_BASIN_SURFACE_DEPTHS, in_basin *IN_BASIN,mesh_vector *MESH_VECTOR, char *OUTPUT_DIR, calculation_log *CALCULATION_LOG)
+{
+    FILE *fp;
+    char fName[MAX_FILENAME_STRING_LEN];
+    fp = fopen(fName, "w");
+    if (fp == NULL)
+    {
+        printf("Unable to open text file to write profile surface depths to.\n");
         exit(EXIT_FAILURE);
     }
     

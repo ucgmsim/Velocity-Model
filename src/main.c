@@ -25,16 +25,22 @@
 #include "functions.h"
 
 int main(int argc, char *argv[])
-//int main(void)
 {
-     //int argc = 2;
-     //char *argv[2];
-//     argv[1] = "Sample_Input_Text_FilesA/GENERATE_MULTIPLE_PROFILES.txt";
- //   argv[1] = "Sample_Input_Text_Files/GENERATE_VELOCITY_MOD.txt";
+//
+//    int main(void)
+//    {
+//    int argc = 2;
+//    char *argv[2];
+//        argv[1] = "Sample_Input_Text_Files/GENERATE_MULTIPLE_PROFILES.txt";
+
+
+//    argv[1] = "Sample_Input_Text_FilesA/GENERATE_MULTIPLE_PROFILES.txt";
+//    argv[1] = "Sample_Input_Text_Files/GENERATE_VELOCITY_MOD.txt";
 //    argv[1] = "Sample_Input_Text_Files/GENERATE_PROFILE.txt";
- //   argv[1] = "Sample_Input_Text_Files/GENERATE_THRESHOLD.txt";
+//    argv[1] = "Sample_Input_Text_Files/GENERATE_THRESHOLD.txt";
 //    argv[1] = "Sample_Input_Text_Files/GENERATE_VELOCITY_SLICES.txt";
-   // argv[1] = "Sample_Input_Text_Files/EXTRACT_VELOCITY_SLICES.txt";
+//    argv[1] = "Sample_Input_Text_Files/GENERATE_MULTIPLE_PROFILES.txt";
+//    argv[1] = "Sample_Input_Text_Files/GENERATE_VELOCITIES_ON_GRID.txt";
 
 
     // set call type flags to zero (0)
@@ -222,7 +228,7 @@ int main(int argc, char *argv[])
         printf("==========================================\n");
         printf("Running GENERATE_MULTIPLE_PROFILES.\n");
         printf("==========================================\n");
-//        runGenerateMultipleProfiles(MODEL_VERSION, OUTPUT_DIR, GEN_MULTI_PROFILES_CALL, CALCULATION_LOG);
+        runGenerateMultipleProfiles(MODEL_VERSION, OUTPUT_DIR, GEN_MULTI_PROFILES_CALL, CALCULATION_LOG);
         printf("==========================================\n");
         printf("Completed running GENERATE_MULTIPLE_PROFILES.\n");
         printf("==========================================\n");
@@ -242,6 +248,11 @@ int main(int argc, char *argv[])
     FILE *fp1, *fp2;
     char a;
     fp1 = fopen(parametersTextFile, "r");
+        if (fp1 == NULL)
+        {
+            printf("Cannot open file %c.\n",parametersTextFile);
+            exit(EXIT_FAILURE);
+        }
     char outFileCat[MAX_FILENAME_STRING_LEN];
     sprintf(outFileCat,"%s/Log/%s.txt",OUTPUT_DIR,inputFName);
     fp2 = fopen(outFileCat, "w");

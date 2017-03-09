@@ -22,7 +22,7 @@ make parallel
 - GENERATE_VELOCITY_SLICES - Generated velocity slices for plotting (slices generated from scratch)
 - GENERATE_PROFILE - Generates a velocity profile at a single lat-lon location
 - GENERATE_MULTIPLE_PROFILES - Generates profiles for a list of lat-lon locations
-- EXTRACT_THRESHOLD - Generates a map of Vs30, Z1.0 or Z2.5 
+- GENERATE_THRESHOLD - Generates a map of Vs30, Z1.0 or Z2.5 
 
 First run
 ```
@@ -117,11 +117,11 @@ if SPACING_TYPE=CONSTANT, then set:
 if SPACING_TYPE=VARIABLE, then set:
 - 11 PROFILE_DEPTHS_TEXTFILE (textfile location with vector of depths to prescribe velocities to)
 
-Call type 6) EXTRACT_THRESHOLD
+Call type 6) GENERATE_THRESHOLD
 
 Extracts Vs30 Vs500 Z1.0 Z2.5
 
-- 1	CALL_TYPE=EXTRACT_THRESHOLD
+- 1	CALL_TYPE=GENERATE_THRESHOLD
 - 2 MODEL_VERSION (model version - select from list of model versions at bottom of readme)
 - 3 OUTPUT_DIR (directory to save outputs to)
 - 4 ORIGIN_LAT (origin latitude - in decimal format)
@@ -136,6 +136,7 @@ Extracts Vs30 Vs500 Z1.0 Z2.5
 Execute one of these six call types and open the output directory to view saved outputs.
 
 List of TOPO_TYPES
+
 Unshifted representations: 
 - TRUE
 - BULLDOZED - Cuts off all gridpoints above Mean Sea Level (0km)

@@ -185,7 +185,7 @@ void assignQualities(global_model_parameters *GLOBAL_MODEL_PARAMETERS, velo_mod_
     {
         for (int k = 0; k < MESH_VECTOR->nZ; k++) // write over values if BULLDOZED
         {
-            if (MESH_VECTOR->Z[k] >= 0)
+            if (MESH_VECTOR->Z[k] > 0)
             {
                 NaNsubMod(k, QUALITIES_VECTOR);
             }

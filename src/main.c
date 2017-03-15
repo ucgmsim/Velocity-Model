@@ -134,12 +134,12 @@ int main(int argc, char *argv[])
 
 
 
-    
+
     // check if the output directory exists, exit if necessary
     if (GENERATE_VELOCITY_MOD == 1 || GENERATE_VELOCITY_SLICES == 1 || GENERATE_PROFILE == 1 || GENERATE_THRESHOLD == 1 || GENERATE_VELOCITIES_ON_GRID == 1 || GENERATE_MULTIPLE_PROFILES == 1)
     {
         struct stat st;
-        
+
         if (stat(OUTPUT_DIR, &st) != -1)
         {
             printf("Output directory must not exist for this call type. See readme.\n");
@@ -149,7 +149,7 @@ int main(int argc, char *argv[])
         {
             createAllOutputDirectories(OUTPUT_DIR, CALL_TYPE);
         }
-        
+
     }
     else if (EXTRACT_VELOCITY_SLICES == 1)
     {
@@ -169,7 +169,7 @@ int main(int argc, char *argv[])
     // generate the log file struct
     calculation_log *CALCULATION_LOG;
     CALCULATION_LOG = initializeCalculationLog(argc, argv);
-    
+
     // run the routines associated with each calltype
     if (GENERATE_VELOCITY_MOD == 1)
     {
@@ -191,7 +191,7 @@ int main(int argc, char *argv[])
         printf("==========================================\n");
         printf("Completed running EXTRACT_VELOCITY_SLICES.\n");
         printf("==========================================\n");
-        
+
     }
     else if (GENERATE_VELOCITY_SLICES == 1)
     {
@@ -238,7 +238,7 @@ int main(int argc, char *argv[])
         printf("==========================================\n");
         printf("Running GENERATE_VELOCITIES_ON_GRID.\n");
         printf("==========================================\n");
-//        runThresholdVelocityModel(MODEL_VERSION, OUTPUT_DIR, GEN_EXTRACT_VELO_MOD_CALL, CALCULATION_LOG); # need to write functionality for this
+//        runGenerateMultipleVSonGrid(MODEL_VERSION, OUTPUT_DIR, GEN_EXTRACT_MULTI_GRIDPOINT_VS_CALL, CALCULATION_LOG);
         printf("==========================================\n");
         printf("Completed running GENERATE_VELOCITIES_ON_GRID.\n");
         printf("==========================================\n");

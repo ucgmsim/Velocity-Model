@@ -364,11 +364,15 @@ typedef struct{
 
 typedef struct {
     char *TOPO_TYPE;
-    double VS_DEPTH;
     double MIN_VS;
-    char *COORDINATES_DIRECTORY;
+    char *COORDINATES_TEXT_FILE;
 }gen_extract_multi_gridpoint_vs_call;
 
+typedef struct {
+    double lat[MAX_NUM_GRIDPOINTS];
+    double lon[MAX_NUM_GRIDPOINTS];
+    double dep[MAX_NUM_GRIDPOINTS];
+}multi_gridpoint_parameters;
 
 // struct to house the indices of adjacent points for bilinear interpolation
 typedef struct{

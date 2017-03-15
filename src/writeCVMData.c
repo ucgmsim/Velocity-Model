@@ -168,7 +168,7 @@ void writeIndividualProfile(qualities_vector *QUALITIES_VECTOR, gen_profile_call
         exit(EXIT_FAILURE);
     }
     fprintf(fp,"Properties at Lat: %lf Lon: %lf\n",*MESH_VECTOR->Lat, *MESH_VECTOR->Lon);
-    fprintf(fp,"Depth \t Vp \t Vs \t Rho\n");
+    fprintf(fp,"Depth (km) \t Vp (km/s) \t Vs (km/s) \t Rho (t/m^3)\n");
     
     
     for(int i = 0; i < MESH_VECTOR->nZ; i++)
@@ -177,7 +177,7 @@ void writeIndividualProfile(qualities_vector *QUALITIES_VECTOR, gen_profile_call
         {
             QUALITIES_VECTOR->Vs[i] = GEN_PROFILE_CALL.PROFILE_MIN_VS;
         }
-        fprintf(fp,"%lf \t %lf \t %lf \t %lf\n",MESH_VECTOR->Z[i], QUALITIES_VECTOR->Vp[i],QUALITIES_VECTOR->Vs[i],QUALITIES_VECTOR->Rho[i]);
+        fprintf(fp,"%lf \t %lf \t %lf \t %lf\n",MESH_VECTOR->Z[i]/1000, QUALITIES_VECTOR->Vp[i],QUALITIES_VECTOR->Vs[i],QUALITIES_VECTOR->Rho[i]);
     }
     fclose(fp);
     printf("Profile text file write complete.\n");
@@ -196,7 +196,7 @@ void writeMultipleProfiles(qualities_vector *QUALITIES_VECTOR, gen_multi_profile
         exit(EXIT_FAILURE);
     }
     fprintf(fp,"Properties at Lat: %lf Lon: %lf\n",*MESH_VECTOR->Lat, *MESH_VECTOR->Lon);
-    fprintf(fp,"Depth \t Vp \t Vs \t Rho\n");
+    fprintf(fp,"Depth (km) \t Vp (km/s) \t Vs (km/s) \t Rho (t/m^3)\n");
 
 
     for(int i = 0; i < MESH_VECTOR->nZ; i++)
@@ -205,7 +205,7 @@ void writeMultipleProfiles(qualities_vector *QUALITIES_VECTOR, gen_multi_profile
         {
             QUALITIES_VECTOR->Vs[i] = GEN_MULTI_PROFILES_CALL.PROFILE_MIN_VS;
         }
-        fprintf(fp,"%lf \t %lf \t %lf \t %lf\n",MESH_VECTOR->Z[i], QUALITIES_VECTOR->Vp[i],QUALITIES_VECTOR->Vs[i],QUALITIES_VECTOR->Rho[i]);
+        fprintf(fp,"%lf \t %lf \t %lf \t %lf\n",MESH_VECTOR->Z[i]/1000, QUALITIES_VECTOR->Vp[i],QUALITIES_VECTOR->Vs[i],QUALITIES_VECTOR->Rho[i]);
     }
     fclose(fp);
     printf("Profile text file write complete.\n");

@@ -52,9 +52,11 @@ void generateFullModelGridGreatCircle(model_extent *MODEL_EXTENT, global_mesh *G
         printf("(EXTENT_ZMAX - EXTENT_Z_MAX) / EXTENT_Z_SPACING does not yield a whole number.\n");
         exit(EXIT_FAILURE);
     }
-    
-    printf("Number of model points. nx: %i, ny: %i, nz: %i.\n", GLOBAL_MESH->nX, GLOBAL_MESH->nY, GLOBAL_MESH->nZ);
-    
+
+    if (GLOBAL_MESH->nZ != 1)
+    {
+        printf("Number of model points. nx: %i, ny: %i, nz: %i.\n", GLOBAL_MESH->nX, GLOBAL_MESH->nY, GLOBAL_MESH->nZ);
+    }
     // enforce the grid is of allowable size
     if(GLOBAL_MESH->nX>=LON_GRID_DIM_MAX)
     {

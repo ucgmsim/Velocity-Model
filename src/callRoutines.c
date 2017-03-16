@@ -355,20 +355,14 @@ void runGenerateMultipleProfiles(char *MODEL_VERSION, char *OUTPUT_DIR, gen_mult
     free(MULTI_PROFILE_PARAMETERS);
 }
 
-/*
+
 void runGenerateMultipleVSonGrid(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extract_multi_gridpoint_vs_call GEN_EXTRACT_MULTI_GRIDPOINT_VS_CALL, calculation_log *CALCULATION_LOG)
 {
     // Read in text file with parameters
     multi_gridpoint_parameters *MULTI_GRIDPOINT_PARAMETERS;
-    MULTI_GRIDPOINT_PARAMETERS = readGridpointTextFile(GEN_EXTRACT_MULTI_GRIDPOINT_VS_CALL.COORDINATES_TEXT_FILE);
+    MULTI_GRIDPOINT_PARAMETERS = readGridpointsTextFile(GEN_EXTRACT_MULTI_GRIDPOINT_VS_CALL.COORDINATES_TEXT_FILE);
     variable_depth_points *VARIABLE_DEPTH_POINTS;
 
-    if (strcmp(GEN_MULTI_PROFILES_CALL.SPACING_TYPE,"VARIABLE") == 0)
-    {
-        VARIABLE_DEPTH_POINTS = readDepthPointsTextFile(GEN_MULTI_PROFILES_CALL.PROFILE_DEPTHS_TEXTFILE);
-    }
-
-    double half = 0.5;
     // obtain surface filenames based off version number
     global_model_parameters *GLOBAL_MODEL_PARAMETERS;
     GLOBAL_MODEL_PARAMETERS = getGlobalModelParameters(MODEL_VERSION);
@@ -404,119 +398,89 @@ void runGenerateMultipleVSonGrid(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extr
     }
 
     loadAllGlobalData(GLOBAL_MODEL_PARAMETERS, CALCULATION_LOG, VELO_MOD_1D_DATA, NZ_TOMOGRAPHY_DATA, GLOBAL_SURFACES, BASIN_DATA);
-
-    // loop over nProfiles
-    for( int i = 0; i < MULTI_PROFILE_PARAMETERS->nProfiles; i++ )
+    mesh_vector *MESH_VECTOR;
+    MESH_VECTOR = malloc(sizeof(mesh_vector));
+    if (MESH_VECTOR == NULL)
     {
-        printf("Generating profile %i of %i.\n",i+1, MULTI_PROFILE_PARAMETERS->nProfiles);
-        model_extent *MODEL_EXTENT = malloc(sizeof(model_extent));
-        MODEL_EXTENT->version = MODEL_VERSION;
-        MODEL_EXTENT->originRot = 0;
-        MODEL_EXTENT->Xmax = 1;
-        MODEL_EXTENT->Ymax = 1;
-        MODEL_EXTENT->hLatLon = 1;
-        MODEL_EXTENT->originLat = MULTI_PROFILE_PARAMETERS->lats[i];
-        MODEL_EXTENT->originLon = MULTI_PROFILE_PARAMETERS->lons[i];
+        printf("Memory allocation of MESH_VECTOR failed.\n");
+        exit(EXIT_FAILURE);
+    }
 
 
-        if (strcmp(GEN_MULTI_PROFILES_CALL.SPACING_TYPE,"CONSTANT") == 0)
+    int grdPtsCount = 0;
+    // loop over gridpoints
+    for( int i = 0; i < MULTI_GRIDPOINT_PARAMETERS->nGroupings; i++ )
+    {
+        MESH_VECTOR->nZ = 0;
+        while (MULTI_GRIDPOINT_PARAMETERS->grouping[grdPtsCount] == i)
         {
-            MODEL_EXTENT->Zmax = GEN_MULTI_PROFILES_CALL.PROFILE_ZMAX + half*GEN_MULTI_PROFILES_CALL.SPACING_PROFILE; // max depth (positive downwards)
-            MODEL_EXTENT->Zmin = GEN_MULTI_PROFILES_CALL.PROFILE_ZMIN - half*GEN_MULTI_PROFILES_CALL.SPACING_PROFILE;
-            MODEL_EXTENT->hDep = GEN_MULTI_PROFILES_CALL.SPACING_PROFILE;
+            MESH_VECTOR->Z[MESH_VECTOR->nZ] = MULTI_GRIDPOINT_PARAMETERS->dep[grdPtsCount];
+            MESH_VECTOR->nZ += 1;
+            grdPtsCount += 1;
         }
-        else if (strcmp(GEN_MULTI_PROFILES_CALL.SPACING_TYPE,"VARIABLE") == 0)
-        {
-            // insert place holder values to be wirtten over once variable depth points have been read from file
-            MODEL_EXTENT->Zmax = 1;
-            MODEL_EXTENT->Zmin = 0;
-            MODEL_EXTENT->hDep = 1;
-        }
-        // generate the model grid
-        global_mesh *GLOBAL_MESH;
-        GLOBAL_MESH = malloc(sizeof(global_mesh));
-        if (GLOBAL_MESH == NULL)
-        {
-            printf("Memory allocation of GLOBAL_MESH failed.\n");
-            exit(EXIT_FAILURE);
-        }
-        generateFullModelGridGreatCircle(MODEL_EXTENT, GLOBAL_MESH);
-
-        if (strcmp(GEN_MULTI_PROFILES_CALL.SPACING_TYPE,"VARIABLE") == 0)
-        {
-            GLOBAL_MESH->nZ = VARIABLE_DEPTH_POINTS->nDep;
-            for ( int j = 0; j < VARIABLE_DEPTH_POINTS->nDep; j++)
-            {
-                GLOBAL_MESH->Z[j] = -1000*VARIABLE_DEPTH_POINTS->dep[j];
-            }
-        }
-
-        partial_global_mesh *PARTIAL_GLOBAL_MESH;
-        mesh_vector *MESH_VECTOR;
+        MESH_VECTOR->Lat = &MULTI_GRIDPOINT_PARAMETERS->lat[i];
+        MESH_VECTOR->Lon = &MULTI_GRIDPOINT_PARAMETERS->lon[i];
 
 
         in_basin *IN_BASIN;
         IN_BASIN = malloc(sizeof(in_basin));
-        if (IN_BASIN == NULL)
-        {
+        if (IN_BASIN == NULL) {
             printf("Memory allocation of IN_BASIN failed.\n");
             exit(EXIT_FAILURE);
         }
 
-
-
-        PARTIAL_GLOBAL_MESH = extractPartialMesh(GLOBAL_MESH, 0);
-        MESH_VECTOR = extractMeshVector(PARTIAL_GLOBAL_MESH, 0);
-
         partial_global_surface_depths *PARTIAL_GLOBAL_SURFACE_DEPTHS;
         PARTIAL_GLOBAL_SURFACE_DEPTHS = malloc(sizeof(partial_global_surface_depths));
-        if (PARTIAL_GLOBAL_SURFACE_DEPTHS == NULL)
-        {
+        if (PARTIAL_GLOBAL_SURFACE_DEPTHS == NULL) {
             printf("Memory allocation of PARTIAL_GLOBAL_SURFACE_DEPTHS failed.\n");
             exit(EXIT_FAILURE);
         }
 
         partial_basin_surface_depths *PARTIAL_BASIN_SURFACE_DEPTHS;
         PARTIAL_BASIN_SURFACE_DEPTHS = malloc(sizeof(partial_basin_surface_depths));
-        if (PARTIAL_BASIN_SURFACE_DEPTHS == NULL)
-        {
+        if (PARTIAL_BASIN_SURFACE_DEPTHS == NULL) {
             printf("Memory allocation of PARTIAL_BASIN_SURFACE_DEPTHS failed.\n");
             exit(EXIT_FAILURE);
         }
 
         qualities_vector *QUALITIES_VECTOR;
         QUALITIES_VECTOR = malloc(sizeof(qualities_vector));
-        if (QUALITIES_VECTOR == NULL)
-        {
+        if (QUALITIES_VECTOR == NULL) {
             printf("Memory allocation of QUALITIES_VECTOR failed.\n");
             exit(EXIT_FAILURE);
         }
-//        loadAllGlobalData(GLOBAL_MODEL_PARAMETERS, CALCULATION_LOG, VELO_MOD_1D_DATA, NZ_TOMOGRAPHY_DATA, GLOBAL_SURFACES, BASIN_DATA);
-        assignQualities(GLOBAL_MODEL_PARAMETERS, VELO_MOD_1D_DATA, NZ_TOMOGRAPHY_DATA, GLOBAL_SURFACES, BASIN_DATA, MESH_VECTOR, PARTIAL_GLOBAL_SURFACE_DEPTHS, PARTIAL_BASIN_SURFACE_DEPTHS, IN_BASIN, QUALITIES_VECTOR, CALCULATION_LOG, GEN_MULTI_PROFILES_CALL.TOPO_TYPE);
-        writeMultipleProfiles(QUALITIES_VECTOR, GEN_MULTI_PROFILES_CALL, MESH_VECTOR, OUTPUT_DIR, CALCULATION_LOG,i);
-        writeMultipleProfileSurfaceDepths(GLOBAL_MODEL_PARAMETERS, BASIN_DATA, PARTIAL_GLOBAL_SURFACE_DEPTHS, PARTIAL_BASIN_SURFACE_DEPTHS, IN_BASIN, MESH_VECTOR, OUTPUT_DIR, CALCULATION_LOG,i);
-        printf("Profile %i of %i complete.\n",i+1, MULTI_PROFILE_PARAMETERS->nProfiles);
-        free(GLOBAL_MESH);
+        assignQualities(GLOBAL_MODEL_PARAMETERS, VELO_MOD_1D_DATA, NZ_TOMOGRAPHY_DATA, GLOBAL_SURFACES, BASIN_DATA,
+                        MESH_VECTOR, PARTIAL_GLOBAL_SURFACE_DEPTHS, PARTIAL_BASIN_SURFACE_DEPTHS, IN_BASIN,
+                        QUALITIES_VECTOR, CALCULATION_LOG, GEN_EXTRACT_MULTI_GRIDPOINT_VS_CALL.TOPO_TYPE);
+        writeGridpointVelocities(QUALITIES_VECTOR, GEN_EXTRACT_MULTI_GRIDPOINT_VS_CALL, MESH_VECTOR, OUTPUT_DIR, CALCULATION_LOG, i);
+
+        printf("Gridpoint lat-lon %i of %i complete.\n", i + 1, MULTI_GRIDPOINT_PARAMETERS->nGroupings);
+
+
         free(IN_BASIN);
         free(PARTIAL_BASIN_SURFACE_DEPTHS);
         free(PARTIAL_GLOBAL_SURFACE_DEPTHS);
         free(MESH_VECTOR);
         free(QUALITIES_VECTOR);
+
+        MESH_VECTOR = malloc(sizeof(mesh_vector));
+        if (MESH_VECTOR == NULL)
+        {
+            printf("Memory allocation of MESH_VECTOR failed.\n");
+            exit(EXIT_FAILURE);
+        }
     }
-    free(VELO_MOD_1D_DATA);
-    freeEPtomoSurfaceData(NZ_TOMOGRAPHY_DATA);
-    free(NZ_TOMOGRAPHY_DATA);
-    free(GLOBAL_SURFACES);
-    freeGlobalSurfaceData(GLOBAL_SURFACES, GLOBAL_MODEL_PARAMETERS);
-    freeAllBasinSurfaces(BASIN_DATA, GLOBAL_MODEL_PARAMETERS);
-    free(BASIN_DATA);
-    if (strcmp(GEN_MULTI_PROFILES_CALL.SPACING_TYPE,"VARIABLE") == 0)
-    {
-        free(VARIABLE_DEPTH_POINTS);
-    }
-    free(MULTI_PROFILE_PARAMETERS);
+//    free(VELO_MOD_1D_DATA);
+//    freeEPtomoSurfaceData(NZ_TOMOGRAPHY_DATA);
+//    free(NZ_TOMOGRAPHY_DATA);
+//    free(GLOBAL_SURFACES);
+//    freeGlobalSurfaceData(GLOBAL_SURFACES, GLOBAL_MODEL_PARAMETERS);
+//    freeAllBasinSurfaces(BASIN_DATA, GLOBAL_MODEL_PARAMETERS);
+//    free(BASIN_DATA);
+//
+//    free(MULTI_GRIDPOINT_PARAMETERS);
 }
- */
+
 
 
 void runGenerateProfile(char *MODEL_VERSION, char *OUTPUT_DIR, gen_profile_call GEN_PROFILE_CALL, calculation_log *CALCULATION_LOG)

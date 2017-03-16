@@ -369,9 +369,13 @@ typedef struct {
 }gen_extract_multi_gridpoint_vs_call;
 
 typedef struct {
+    int nPts;
     double lat[MAX_NUM_GRIDPOINTS];
     double lon[MAX_NUM_GRIDPOINTS];
     double dep[MAX_NUM_GRIDPOINTS];
+    int grouping[MAX_NUM_GRIDPOINTS];
+    int nGroupings;
+
 }multi_gridpoint_parameters;
 
 // struct to house the indices of adjacent points for bilinear interpolation

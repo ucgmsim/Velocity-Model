@@ -26,12 +26,12 @@
 
 int main(int argc, char *argv[])
 {
-//
+
 //    int main(void)
 //    {
 //    int argc = 2;
 //    char *argv[2];
-//        argv[1] = "Sample_Input_Text_Files/GENERATE_MULTIPLE_PROFILES.txt";
+//    argv[1] = "Sample_Input_Text_Files/GENERATE_VELOCITIES_ON_GRID.txt";
 
 
 //    argv[1] = "Sample_Input_Text_FilesA/GENERATE_MULTIPLE_PROFILES.txt";
@@ -238,7 +238,7 @@ int main(int argc, char *argv[])
         printf("==========================================\n");
         printf("Running GENERATE_VELOCITIES_ON_GRID.\n");
         printf("==========================================\n");
-//        runGenerateMultipleVSonGrid(MODEL_VERSION, OUTPUT_DIR, GEN_EXTRACT_MULTI_GRIDPOINT_VS_CALL, CALCULATION_LOG);
+        runGenerateMultipleVSonGrid(MODEL_VERSION, OUTPUT_DIR, GEN_EXTRACT_MULTI_GRIDPOINT_VS_CALL, CALCULATION_LOG);
         printf("==========================================\n");
         printf("Completed running GENERATE_VELOCITIES_ON_GRID.\n");
         printf("==========================================\n");

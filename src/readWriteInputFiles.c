@@ -162,7 +162,7 @@ void writeSampleInputTextFiles(void)
     fprintf(fNameWrite,"OUTPUT_DIR=Vs_At_Gridpoints\n");
     fprintf(fNameWrite,"TOPO_TYPE=BULLDOZED\n");
     fprintf(fNameWrite,"MIN_VS=0.500\n");
-    fprintf(fNameWrite,"COORDINATES_TEXT_FILE=SecondaryInputFiles/Gridpoint_Coords.txt\n");
+    fprintf(fNameWrite,"COORDINATES_TEXT_FILE=SecondaryInputFiles/GridpointCoords.txt\n");
     fclose(fNameWrite);
 }
 
@@ -369,7 +369,6 @@ multi_profile_parameters *readProfilesTextFile(char *coordsTextFile)
 multi_gridpoint_parameters *readGridpointsTextFile(char *gridpointsTextFile)
 {
     multi_gridpoint_parameters  *MULTI_GRIDPOINT_PARAMETERS;
-    /*
     MULTI_GRIDPOINT_PARAMETERS = malloc(sizeof(multi_gridpoint_parameters));
     if (MULTI_GRIDPOINT_PARAMETERS == NULL)
     {
@@ -377,36 +376,49 @@ multi_gridpoint_parameters *readGridpointsTextFile(char *gridpointsTextFile)
         exit(EXIT_FAILURE);
     }
 
-
-    slice_parameters *SLICE_PARAMETERS;
-    SLICE_PARAMETERS = malloc(sizeof(slice_parameters));
-
     FILE *file;
 
     file = fopen(gridpointsTextFile, "r");
 
     if (file == NULL)
     {
-        printf("Profile parameters text file %s not found.\n",gridpointsTextFile);
+        printf("Gridpoints text file %s not found.\n",gridpointsTextFile);
         exit(EXIT_FAILURE);
     }
 
-    fscanf(file, "%d", &MULTI_PROFILE_PARAMETERS->nProfiles);
+    fscanf(file, "%d", &MULTI_GRIDPOINT_PARAMETERS->nPts);
 
-    if(MULTI_PROFILE_PARAMETERS->nProfiles>=MAX_NUM_GEN_MULTI_PROFILES)
+    if(MULTI_GRIDPOINT_PARAMETERS->nPts>=MAX_NUM_GRIDPOINTS)
     {
-        printf("Number of profiles in the text file exceeds the maximum allowable value of %i.\n",MAX_NUM_GEN_MULTI_PROFILES);
+        printf("Number of gridpoints in the text file exceeds the maximum allowable value of %i.\n",MAX_NUM_GRIDPOINTS);
         exit(EXIT_FAILURE);
     }
 
-    for(int i = 0; i < MULTI_PROFILE_PARAMETERS->nProfiles; i++)
+    for(int i = 0; i < MULTI_GRIDPOINT_PARAMETERS->nPts; i++)
     {
-        fscanf(file, "%lf %lf", &MULTI_PROFILE_PARAMETERS->lats[i], &MULTI_PROFILE_PARAMETERS->lons[i]);
+        fscanf(file, "%lf %lf %lf", &MULTI_GRIDPOINT_PARAMETERS->lat[i], &MULTI_GRIDPOINT_PARAMETERS->lon[i], &MULTI_GRIDPOINT_PARAMETERS->dep[i]);
     }
 
-    printf("Profiles text file read complete.\n");
+    printf("Gridpoints text file read complete.\n");
     fclose(file);
-     */
+    MULTI_GRIDPOINT_PARAMETERS->lat[MULTI_GRIDPOINT_PARAMETERS->nPts] = 0;
+    MULTI_GRIDPOINT_PARAMETERS->lon[MULTI_GRIDPOINT_PARAMETERS->nPts] = 0;
+    MULTI_GRIDPOINT_PARAMETERS->dep[MULTI_GRIDPOINT_PARAMETERS->nPts] = 0;
+    int groupingCount = 0;
+    for (int i = 0; i < MULTI_GRIDPOINT_PARAMETERS->nPts; i++)
+    {
+        MULTI_GRIDPOINT_PARAMETERS->dep[i] = -1000*MULTI_GRIDPOINT_PARAMETERS->dep[i];
+        if ((MULTI_GRIDPOINT_PARAMETERS->lat[i] == MULTI_GRIDPOINT_PARAMETERS->lat[i+1]) &&  (MULTI_GRIDPOINT_PARAMETERS->lon[i] == MULTI_GRIDPOINT_PARAMETERS->lon[i+1]))
+        {
+            MULTI_GRIDPOINT_PARAMETERS->grouping[i] = groupingCount;
+        }
+        else
+        {
+            MULTI_GRIDPOINT_PARAMETERS->grouping[i] = groupingCount;
+            groupingCount += 1;
+        }
+    }
+    MULTI_GRIDPOINT_PARAMETERS->nGroupings = groupingCount;
     return MULTI_GRIDPOINT_PARAMETERS;
 
 }
@@ -447,12 +459,7 @@ variable_depth_points *readDepthPointsTextFile(char *depthsTextFile)
     fclose(file);
     return VARIABLE_DEPTH_POINTS;
 
-
-
-
-
 }
-
 
 
 

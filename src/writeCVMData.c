@@ -369,7 +369,38 @@ void writeAllGlobalSurfaceDepths(slice_surface_depths *SLICE_SURFACE_DEPTHS, par
     
 }
 
-
+void writeGridpointVelocities(qualities_vector *QUALITIES_VECTOR, gen_extract_multi_gridpoint_vs_call GEN_EXTRACT_MULTI_GRIDPOINT_VS_CALL, mesh_vector *MESH_VECTOR, char *OUTPUT_DIR, calculation_log *CALCULATION_LOG, int groupingNum)
+{
+    FILE *fp;
+    char fName[MAX_FILENAME_STRING_LEN];
+    sprintf(fName,"%s/Velocities_At_Gridpoints/Velocities.txt",OUTPUT_DIR);
+    if (groupingNum == 0)
+    {
+        fp = fopen(fName, "w");
+        if (fp == NULL)
+        {
+            printf("Unable to open text file to write velocities to.\n");
+            exit(EXIT_FAILURE);
+        }
+        fprintf(fp, "Latitude\tLongitude\tDepth(km)\tVp(km/s)\tVs(km/s)\tRho(t/m^3)\n");
+        fclose(fp);
+    }
+    fp = fopen(fName, "a");
+    if (fp == NULL)
+    {
+        printf("Unable to open text file to write velocities to.\n");
+        exit(EXIT_FAILURE);
+    }
+    for(int i = 0; i < MESH_VECTOR->nZ; i++)
+    {
+        if(QUALITIES_VECTOR->Vs[i] <= GEN_EXTRACT_MULTI_GRIDPOINT_VS_CALL.MIN_VS)
+        {
+            QUALITIES_VECTOR->Vs[i] = GEN_EXTRACT_MULTI_GRIDPOINT_VS_CALL.MIN_VS;
+        }
+        fprintf(fp,"%lf \t %lf \t %lf \t %lf \t %lf \t %lf\n",*MESH_VECTOR->Lat,*MESH_VECTOR->Lon,MESH_VECTOR->Z[i]/1000, QUALITIES_VECTOR->Vp[i],QUALITIES_VECTOR->Vs[i],QUALITIES_VECTOR->Rho[i]);
+    }
+    fclose(fp);
+}
 
 
 

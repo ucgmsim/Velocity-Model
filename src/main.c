@@ -26,7 +26,7 @@
 
 int main(int argc, char *argv[])
 {
-//
+
 //    int main(void)
 //    {
 //    int argc = 2;
@@ -243,35 +243,39 @@ int main(int argc, char *argv[])
         printf("Completed running GENERATE_VELOCITIES_ON_GRID.\n");
         printf("==========================================\n");
     }
-
+/*
     /// Copy the original input file to output_directory/Log
     FILE *fp1, *fp2;
-    char a;
+//    char a;
     fp1 = fopen(parametersTextFile, "r");
-        if (fp1 == NULL)
-        {
-            printf("Cannot open file %c.\n",parametersTextFile);
-            exit(EXIT_FAILURE);
-        }
+    if (fp1 == NULL)
+    {
+        printf("Cannot open file %c.\n",parametersTextFile);
+        exit(EXIT_FAILURE);
+    }
     char outFileCat[MAX_FILENAME_STRING_LEN];
+    char line[MAX_FILENAME_STRING_LEN];
+    char linec[MAX_FILENAME_STRING_LEN];
+
+    int count = 0;
     sprintf(outFileCat,"%s/Log/%s.txt",OUTPUT_DIR,inputFName);
     fp2 = fopen(outFileCat, "w");
     if (fp2 == NULL)
     {
-        printf("Cannot open file %c.\n",outFileCat);
+        printf("Cannot open file %c.\n", outFileCat);
         exit(EXIT_FAILURE);
     }
-    do
+    printf("%s \n%s \n",outFileCat,parametersTextFile);
+    while ( fgets ( line, sizeof line, fp1 ) != NULL )
     {
-        a = fgetc(fp1);
-        fputc(a, fp2);
-    } while (a != EOF);
-    close(fp1);
-    close(fp2);
+        fputs(line, stdout);
+        strcpy(linec, line);
+        fprintf(fp2, linec);
+    }
+    fclose (fp1);
+    fclose (fp2);
 
-
-
-
+*/
 }
 
 

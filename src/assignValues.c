@@ -178,6 +178,10 @@ void assignQualities(global_model_parameters *GLOBAL_MODEL_PARAMETERS, velo_mod_
                 GenericSubModC(k, QUALITIES_VECTOR);
             }
         }
+        else if(Z > PARTIAL_GLOBAL_SURFACE_DEPTHS->dep[1]) // if Z is above the DEM (always the surf number 1) set vals as NAN
+        {
+            NaNsubMod(k, QUALITIES_VECTOR);
+        }
         basinFlag = 0;
 
     }

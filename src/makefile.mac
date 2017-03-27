@@ -1,0 +1,25 @@
+TARGET = NZVM
+LIBS = -lm
+CC = gcc-6
+CFLAGS = -std=c99 -g -Wall -O3 -fopenmp #-D_AIX
+
+.PHONY: default all clean
+
+default: $(TARGET)
+all: default
+
+OBJECTS = $(patsubst %.c, %.o, $(wildcard *.c))
+HEADERS = $(wildcard *.h)
+
+%.o: %.c $(HEADERS)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+.PRECIOUS: $(TARGET) $(OBJECTS)
+
+$(TARGET): $(OBJECTS)
+	$(CC) $(OBJECTS) -Wall $(LIBS) -fopenmp -o $@
+	mv NZVM ..
+
+clean:
+	rm -f *.o
+	rm -f $(TARGET)

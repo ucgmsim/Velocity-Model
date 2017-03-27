@@ -57,8 +57,8 @@ function profile = loadIndividualProfile(directoryName)
 
 
 % open primary data file
-strcat('/',directoryName,'/Profile/','Profile.txt')
-fidProfile = fopen(strcat('/',directoryName,'/Profile/','Profile.txt'))
+fName = strcat('/',directoryName,'/Profiles/','Profile0.txt')
+fidProfile = fopen(fName);
 
 temp = fgetl(fidProfile);
 temp = fgetl(fidProfile); % discard first two lines

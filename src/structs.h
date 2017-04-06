@@ -303,7 +303,6 @@ typedef struct{
 
 typedef struct{
     double dep[MAX_NUM_BASINS][MAX_NUM_BASIN_SURFACES];
-    
 }partial_basin_surface_depths;
 
 typedef struct{

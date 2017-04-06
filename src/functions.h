@@ -150,7 +150,7 @@ extern void plioceneSubModelv1(int zInd, qualities_vector *QUALITIES_VECTOR);
 extern void BPVSubModelv1(int zInd, qualities_vector *QUALITIES_VECTOR);
 extern void BPVSubModelv2(int zInd, qualities_vector *QUALITIES_VECTOR);
 extern void BPVSubModelv3(int zInd, qualities_vector *QUALITIES_VECTOR, partial_basin_surface_depths *PARTIAL_BASIN_SURFACE_DEPTHS, int basinNum, double depth);
-extern void gravelSubModel(int zInd, qualities_vector *QUALITIES_VECTOR);
+extern void gravelSubModel(int zInd, qualities_vector *QUALITIES_VECTOR, partial_basin_surface_depths *PARTIAL_BASIN_SURFACE_DEPTHS, double depth, int basinNum);
 extern void marineSubModel(int zInd, qualities_vector *QUALITIES_VECTOR);
 
 

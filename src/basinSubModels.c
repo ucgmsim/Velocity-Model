@@ -111,7 +111,7 @@ void callBasinSubVelocityModels(global_model_parameters *GLOBAL_MODEL_PARAMETERS
     }
     else if(strcmp(GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][basinSubModelInd], "BromleySubMod_v1") == 0)
     {
-        marineSubModel(zInd, QUALITIES_VECTOR);
+        marineSubModel(zInd, QUALITIES_VECTOR,PARTIAL_BASIN_SURFACE_DEPTHS, depth, basinNum);
     }
     else if(strcmp(GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][basinSubModelInd], "LinwoodSubMod_v1") == 0)
     {
@@ -119,7 +119,7 @@ void callBasinSubVelocityModels(global_model_parameters *GLOBAL_MODEL_PARAMETERS
     }
     else if(strcmp(GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][basinSubModelInd], "HeathcoteSubMod_v1") == 0)
     {
-        marineSubModel(zInd, QUALITIES_VECTOR);
+        marineSubModel(zInd, QUALITIES_VECTOR,PARTIAL_BASIN_SURFACE_DEPTHS, depth, basinNum);
     }
     else if(strcmp(GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][basinSubModelInd], "BurwoodSubMod_v1") == 0)
     {
@@ -127,7 +127,7 @@ void callBasinSubVelocityModels(global_model_parameters *GLOBAL_MODEL_PARAMETERS
     }
     else if(strcmp(GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][basinSubModelInd], "ShirleySubMod_v1") == 0)
     {
-        marineSubModel(zInd, QUALITIES_VECTOR);
+        marineSubModel(zInd, QUALITIES_VECTOR,PARTIAL_BASIN_SURFACE_DEPTHS, depth, basinNum);
     }
     else if(strcmp(GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][basinSubModelInd], "WainoniSubMod_v1") == 0)
     {
@@ -214,11 +214,6 @@ int determineBasinSurfaceAbove(global_model_parameters *GLOBAL_MODEL_PARAMETERS,
 // Gravel sub-model
 void gravelSubModel(int zInd, qualities_vector *QUALITIES_VECTOR, partial_basin_surface_depths *PARTIAL_BASIN_SURFACE_DEPTHS, double depth, int basinNum)
 {
-    // placeholder values
-    QUALITIES_VECTOR->Rho[zInd] =  2;
-    QUALITIES_VECTOR->Vp[zInd] = 2;
-    QUALITIES_VECTOR->Vs[zInd] = 2;
-    
     double Z, totalStress, effectiveStress, Vs;
     Z = PARTIAL_BASIN_SURFACE_DEPTHS->dep[basinNum][0] - depth; // first indice represents the DEM
     totalStress = Z * rho_const; // kPa
@@ -250,12 +245,16 @@ void gravelSubModel(int zInd, qualities_vector *QUALITIES_VECTOR, partial_basin_
 }
 
 // Marine sub-model
-void marineSubModel(int zInd, qualities_vector *QUALITIES_VECTOR)
+void marineSubModel(int zInd, qualities_vector *QUALITIES_VECTOR, partial_basin_surface_depths *PARTIAL_BASIN_SURFACE_DEPTHS, double depth, int basinNum)
 {
-    //placeholder values
-    QUALITIES_VECTOR->Rho[zInd] = 1;
-    QUALITIES_VECTOR->Vp[zInd] = 1;
-    QUALITIES_VECTOR->Vs[zInd] = 1;
+    double Z, totalStress, effectiveStress, Vs;
+    Z = PARTIAL_BASIN_SURFACE_DEPTHS->dep[basinNum][0] - depth; // first indice represents the DEM
+    totalStress = Z * rho_const; // kPa
+    effectiveStress = totalStress - Z * 9.81;
+    Vs = As_silt * pow((effectiveStress/P_a),ns_marine);
+    QUALITIES_VECTOR->Vs[zInd] = Vs;
+    QUALITIES_VECTOR->Rho[zInd] = 1.6971;
+    QUALITIES_VECTOR->Vp[zInd] = 1.6;
     
     //// Bromley formation sub-model
     //valStructLocal *bromleySubModel(gridStruct *location, globalBasinData *basinData, int xInd, int yInd, int zInd, int basinNum)

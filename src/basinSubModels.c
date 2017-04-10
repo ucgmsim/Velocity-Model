@@ -105,6 +105,10 @@ void callBasinSubVelocityModels(global_model_parameters *GLOBAL_MODEL_PARAMETERS
     }
     
     // Quaternary models
+    else if(strcmp(GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][basinSubModelInd], "ChristchurchSubMod_v1") == 0)
+    {
+        marineSubModel(zInd, QUALITIES_VECTOR,PARTIAL_BASIN_SURFACE_DEPTHS, depth, basinNum);
+    }
     else if(strcmp(GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][basinSubModelInd], "RiccartonSubMod_v1") == 0)
     {
         gravelSubModel(zInd, QUALITIES_VECTOR,PARTIAL_BASIN_SURFACE_DEPTHS, depth, basinNum);

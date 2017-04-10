@@ -249,7 +249,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion)
         GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[0][0] = "DEM";
         GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[0][0] = "Data/DEM/DEM.in";
         GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[0][0] = 0;
-        GLOBAL_MODEL_PARAMETERS->basinSubModelNames[0][0] = "Cant1D_v2";
+        GLOBAL_MODEL_PARAMETERS->basinSubModelNames[0][0] = "ChristchurchSubMod_v1";
         
         GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[0][1] = "RiccartonTop";
         GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[0][1] = "Data/Canterbury_Basin/Quaternary/RiccartonTop.in";
@@ -289,7 +289,6 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion)
         GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[0][8] = "PlioceneTop";
         GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[0][8] = "Data/Canterbury_Basin/Pre_Quaternary/Pliocene_46_v8p9p18.in";
         GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[0][8] = 0;
-        GLOBAL_MODEL_PARAMETERS->basinSubModelNames[0][8] = "PlioceneSubMod_v1";
 
 
 

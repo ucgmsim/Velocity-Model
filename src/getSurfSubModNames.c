@@ -683,18 +683,21 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion)
     else if(strcmp(modelVersion,"1.01") == 0)
     {
         // define the number of surfaces and sub models
-        GLOBAL_MODEL_PARAMETERS->nSurf = 2;
-        GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 1;
+        GLOBAL_MODEL_PARAMETERS->nSurf = 3;
+        GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 2;
         
         // insert surface surface keywords and filenames
         GLOBAL_MODEL_PARAMETERS->surf[0] = "posInfSurf";
         GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[0] = "Data/Global_Surfaces/posInf.in";
-        GLOBAL_MODEL_PARAMETERS->surf[1] = "negInfSurf";
-        GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[1] = "Data/Global_Surfaces/negInf.in";
+        GLOBAL_MODEL_PARAMETERS->surf[1] = "DEM";
+        GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[1] = "Data/DEM/NZ_DEM.in";
+        GLOBAL_MODEL_PARAMETERS->surf[2] = "negInfSurf";
+        GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[2] = "Data/Global_Surfaces/negInf.in";
         
         
         // insert velocity submodel keywords and filenames (if necessary)
-        GLOBAL_MODEL_PARAMETERS->veloSubMod[0] = "v1DsubMod";
+        GLOBAL_MODEL_PARAMETERS->veloSubMod[0] = "NaNsubMod";
+        GLOBAL_MODEL_PARAMETERS->veloSubMod[1] = "v1DsubMod";
         GLOBAL_MODEL_PARAMETERS->veloMod1dFileName[0] = "Cant1D_v1.fd_modfile";
         
         
@@ -725,18 +728,21 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion)
     else if(strcmp(modelVersion,"1.11") == 0)
     {
         // define the number of surfaces and sub models
-        GLOBAL_MODEL_PARAMETERS->nSurf = 2;
-        GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 1;
+        GLOBAL_MODEL_PARAMETERS->nSurf = 3;
+        GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 2;
         
         // insert surface surface keywords and filenames
         GLOBAL_MODEL_PARAMETERS->surf[0] = "posInfSurf";
         GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[0] = "Data/Global_Surfaces/posInf.in";
-        GLOBAL_MODEL_PARAMETERS->surf[1] = "negInfSurf";
-        GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[1] = "Data/Global_Surfaces/negInf.in";
+        GLOBAL_MODEL_PARAMETERS->surf[1] = "DEM";
+        GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[1] = "Data/DEM/NZ_DEM.in";
+        GLOBAL_MODEL_PARAMETERS->surf[2] = "negInfSurf";
+        GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[2] = "Data/Global_Surfaces/negInf.in";
         
         
         // insert velocity submodel keywords and filenames (if necessary)
-        GLOBAL_MODEL_PARAMETERS->veloSubMod[0] = "EPtomo2010subMod";
+        GLOBAL_MODEL_PARAMETERS->veloSubMod[0] = "NaNsubMod";
+        GLOBAL_MODEL_PARAMETERS->veloSubMod[1] = "EPtomo2010subMod";
         GLOBAL_MODEL_PARAMETERS->tomographyName = "2010_Full_South_Island";
         //GLOBAL_MODEL_PARAMETERS->tomographyName = "2010_Update_Canterbury";
         //GLOBAL_MODEL_PARAMETERS->tomographyName = "2010_Update_Hybrid";
@@ -753,21 +759,36 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion)
         // insert surface surface keywords and filenames
         GLOBAL_MODEL_PARAMETERS->surf[0] = "posInfSurf";
         GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[0] = "Data/Global_Surfaces/posInf.in";
-        GLOBAL_MODEL_PARAMETERS->surf[1] = "BasementTopSurf";
-        GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[1] = "Data/Canterbury_Basin/Quaternary/BasementTop.in";
+        GLOBAL_MODEL_PARAMETERS->surf[1] = "DEM";
+        GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[1] = "Data/DEM/NZ_DEM.in";
         GLOBAL_MODEL_PARAMETERS->surf[2] = "negInfSurf";
         GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[2] = "Data/Global_Surfaces/negInf.in";
         
-        // insert velocity submodel keywords and filenames (if necessary)
-        GLOBAL_MODEL_PARAMETERS->veloSubMod[0] = "v1DsubMod";
-        GLOBAL_MODEL_PARAMETERS->veloMod1dFileName[0] = "Cant1D_v2.fd_modfile";
         
+        // insert velocity submodel keywords and filenames (if necessary)
+        GLOBAL_MODEL_PARAMETERS->veloSubMod[0] = "NaNsubMod";
         GLOBAL_MODEL_PARAMETERS->veloSubMod[1] = "EPtomo2010subMod";
         GLOBAL_MODEL_PARAMETERS->tomographyName = "2010_Full_South_Island";
         //GLOBAL_MODEL_PARAMETERS->tomographyName = "2010_Update_Canterbury";
         //GLOBAL_MODEL_PARAMETERS->tomographyName = "2010_Update_Hybrid";
         
-        GLOBAL_MODEL_PARAMETERS->nBasins = 0;
+        // CANTERBURY Basin (1D above basement)
+        GLOBAL_MODEL_PARAMETERS->basin[0] = "CANTERBURY_BASIN_1D";
+        GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[0] = 2;
+        GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[0] = 1;
+        GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[0][0] = "Data/Boundaries/CanterburyBasinBoundary.txt";
+        
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[0][0] = "DEM";
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[0][0] = "Data/DEM/DEM.in";
+        GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[0][0] = 0;
+        GLOBAL_MODEL_PARAMETERS->basinSubModelNames[0][0] = "Cant1D_v2";
+        
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[0][1] = "BasementTopSurf";
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[0][1] = "Data/Canterbury_Basin/Quaternary/BasementTop.in";
+        GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[0][1] = 0;
+        
+        GLOBAL_MODEL_PARAMETERS->nBasins = 1;
+
 
     }
     else if(strcmp(modelVersion,"1.22") == 0)

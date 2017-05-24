@@ -566,8 +566,8 @@ void writeVsFile(char *OUTPUT_DIR, double Lat, double Lon, double VsTotal, doubl
             printf("Unable to open file to write data to (%s).\n",vsFile);
             exit(EXIT_FAILURE);
         }
-        fprintf(vsFileTxt,"Lat\tLon\tVs_%s(km/s)\n",VS_DEPTH);
-        fprintf(vsFileTxt,"%lf\t%lf\t%lf\n",Lat,Lon,VsTotal);
+        fprintf(vsFileTxt,"Lon\tLat\tVs_%s(km/s)\n",VS_DEPTH);
+        fprintf(vsFileTxt,"%lf\t%lf\t%lf\n",Lon,Lat,VsTotal);
     }
     else // append to existing file
     {
@@ -577,7 +577,7 @@ void writeVsFile(char *OUTPUT_DIR, double Lat, double Lon, double VsTotal, doubl
             printf("Unable to append data to file (%s).\n",vsFile);
             exit(EXIT_FAILURE);
         }
-        fprintf(vsFileTxt,"%lf\t%lf\t%lf\n",Lat,Lon,VsTotal);
+        fprintf(vsFileTxt,"%lf\t%lf\t%lf\n",Lon,Lat,VsTotal);
     }
     fclose(vsFileTxt);
     

@@ -6,7 +6,7 @@ It is possible to generate one or more profiles using the following syntax.
 
 1) The first line of the text file is an integer representing the number of profiles to extract.
 2) Each subsequent line represents the lat-lon points of the profile 
-i.e. [Profile_Lat] [Profile_Lon] 
+i.e. [Profile_Lon] [Profile_Lat] [site_code(alphanumeric)]
 
 refer to ‘MultipleProfileParameters.txt’ for an example
 

@@ -354,6 +354,7 @@ typedef struct{
     int nProfiles;
     double lats[MAX_NUM_GEN_MULTI_PROFILES];
     double lons[MAX_NUM_GEN_MULTI_PROFILES];
+    char codes[MAX_NUM_GEN_MULTI_PROFILES][MAX_FILENAME_STRING_LEN];
 }multi_profile_parameters;
 
 typedef struct{

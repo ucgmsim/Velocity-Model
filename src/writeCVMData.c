@@ -184,11 +184,11 @@ void writeIndividualProfile(qualities_vector *QUALITIES_VECTOR, gen_profile_call
     
 }
 
-void writeMultipleProfiles(qualities_vector *QUALITIES_VECTOR, gen_multi_profiles_call GEN_MULTI_PROFILES_CALL, mesh_vector *MESH_VECTOR, char *OUTPUT_DIR, calculation_log *CALCULATION_LOG, int profileNumber)
+void writeMultipleProfiles(qualities_vector *QUALITIES_VECTOR, gen_multi_profiles_call GEN_MULTI_PROFILES_CALL, mesh_vector *MESH_VECTOR, char *OUTPUT_DIR, calculation_log *CALCULATION_LOG, multi_profile_parameters *MULTI_PROFILE_PARAMETERS, int profileNum)
 {
     FILE *fp;
     char fName[MAX_FILENAME_STRING_LEN];
-    sprintf(fName,"%s/Profiles/Profile%i.txt",OUTPUT_DIR,profileNumber);
+    sprintf(fName,"%s/Profiles/Profile%s.txt",OUTPUT_DIR,&MULTI_PROFILE_PARAMETERS->codes[profileNum]);
     fp = fopen(fName, "w");
     if (fp == NULL)
     {
@@ -212,11 +212,11 @@ void writeMultipleProfiles(qualities_vector *QUALITIES_VECTOR, gen_multi_profile
 
 }
 
-void writeMultipleProfileSurfaceDepths(global_model_parameters *GLOBAL_MODEL_PARAMETERS, basin_data *BASIN_DATA, partial_global_surface_depths *PARTIAL_GLOBAL_SURFACE_DEPTHS, partial_basin_surface_depths *PARTIAL_BASIN_SURFACE_DEPTHS, in_basin *IN_BASIN,mesh_vector *MESH_VECTOR, char *OUTPUT_DIR, calculation_log *CALCULATION_LOG, int profileNum)
+void writeMultipleProfileSurfaceDepths(global_model_parameters *GLOBAL_MODEL_PARAMETERS, basin_data *BASIN_DATA, partial_global_surface_depths *PARTIAL_GLOBAL_SURFACE_DEPTHS, partial_basin_surface_depths *PARTIAL_BASIN_SURFACE_DEPTHS, in_basin *IN_BASIN,mesh_vector *MESH_VECTOR, char *OUTPUT_DIR, calculation_log *CALCULATION_LOG, multi_profile_parameters *MULTI_PROFILE_PARAMETERS, int profileNum)
 {
     FILE *fp;
     char fName[MAX_FILENAME_STRING_LEN];
-    sprintf(fName,"%s/Profiles/ProfileSurfaceDepths%i.txt", OUTPUT_DIR,profileNum);
+    sprintf(fName,"%s/Profiles/ProfileSurfaceDepths%s.txt", OUTPUT_DIR,&MULTI_PROFILE_PARAMETERS->codes[profileNum]);
 
     fp = fopen(fName, "w");
     if (fp == NULL)

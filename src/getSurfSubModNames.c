@@ -110,7 +110,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion)
         // insert surface surface keywords and filenames
         GLOBAL_MODEL_PARAMETERS->surf[0] = "posInfSurf";
         GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[0] = "Data/Global_Surfaces/posInf.in";
-        GLOBAL_MODEL_PARAMETERS->surf[1] = "DEM";
+        GLOBAL_MODEL_PARAMETERS->surf[1] = "DEMa";
         GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[1] = "Data/DEM/NZ_DEM.in";
         GLOBAL_MODEL_PARAMETERS->surf[2] = "negInfSurf";
         GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[2] = "Data/Global_Surfaces/negInf.in";

@@ -397,7 +397,8 @@ void writeGridpointVelocities(qualities_vector *QUALITIES_VECTOR, gen_extract_mu
         {
             QUALITIES_VECTOR->Vs[i] = GEN_EXTRACT_MULTI_GRIDPOINT_VS_CALL.MIN_VS;
         }
-        fprintf(fp,"%lf \t %lf \t %lf \t %lf \t %lf \t %lf\n",*MESH_VECTOR->Lat,*MESH_VECTOR->Lon,MESH_VECTOR->Z[i]/1000, QUALITIES_VECTOR->Vp[i],QUALITIES_VECTOR->Vs[i],QUALITIES_VECTOR->Rho[i]);
+//        printf("%lf \t %lf \n",MESH_VECTOR->Lat,MESH_VECTOR->Lon);
+        fprintf(fp,"%lf \t %lf \t %lf \t %lf \t %lf \t %lf\n",*MESH_VECTOR->Lat,*MESH_VECTOR->Lon,-MESH_VECTOR->Z[i]/1000, QUALITIES_VECTOR->Vp[i],QUALITIES_VECTOR->Vs[i],QUALITIES_VECTOR->Rho[i]);
     }
     fclose(fp);
 }

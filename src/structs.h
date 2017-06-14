@@ -375,7 +375,8 @@ typedef struct {
     double dep[MAX_NUM_GRIDPOINTS];
     int grouping[MAX_NUM_GRIDPOINTS];
     int nGroupings;
-
+    double groupingLat[MAX_NUM_GRIDPOINTS];
+    double groupingLon[MAX_NUM_GRIDPOINTS];
 }multi_gridpoint_parameters;
 
 // struct to house the indices of adjacent points for bilinear interpolation

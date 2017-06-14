@@ -404,21 +404,28 @@ multi_gridpoint_parameters *readGridpointsTextFile(char *gridpointsTextFile)
     MULTI_GRIDPOINT_PARAMETERS->lat[MULTI_GRIDPOINT_PARAMETERS->nPts] = 0;
     MULTI_GRIDPOINT_PARAMETERS->lon[MULTI_GRIDPOINT_PARAMETERS->nPts] = 0;
     MULTI_GRIDPOINT_PARAMETERS->dep[MULTI_GRIDPOINT_PARAMETERS->nPts] = 0;
-    int groupingCount = 0;
+    MULTI_GRIDPOINT_PARAMETERS->nGroupings = 0;
     for (int i = 0; i < MULTI_GRIDPOINT_PARAMETERS->nPts; i++)
     {
         MULTI_GRIDPOINT_PARAMETERS->dep[i] = -1000*MULTI_GRIDPOINT_PARAMETERS->dep[i];
         if ((MULTI_GRIDPOINT_PARAMETERS->lat[i] == MULTI_GRIDPOINT_PARAMETERS->lat[i+1]) &&  (MULTI_GRIDPOINT_PARAMETERS->lon[i] == MULTI_GRIDPOINT_PARAMETERS->lon[i+1]))
         {
-            MULTI_GRIDPOINT_PARAMETERS->grouping[i] = groupingCount;
+            MULTI_GRIDPOINT_PARAMETERS->grouping[i] = MULTI_GRIDPOINT_PARAMETERS->nGroupings;
         }
         else
         {
-            MULTI_GRIDPOINT_PARAMETERS->grouping[i] = groupingCount;
-            groupingCount += 1;
+//            printf("number of groupings %i.\n",MULTI_GRIDPOINT_PARAMETERS->nGroupings);
+//            printf("Group Lats Lons %lf %lf.\n", MULTI_GRIDPOINT_PARAMETERS->lat[i], MULTI_GRIDPOINT_PARAMETERS->lon[i]);
+            MULTI_GRIDPOINT_PARAMETERS->groupingLat[MULTI_GRIDPOINT_PARAMETERS->nGroupings] = MULTI_GRIDPOINT_PARAMETERS->lat[i];
+            MULTI_GRIDPOINT_PARAMETERS->groupingLon[MULTI_GRIDPOINT_PARAMETERS->nGroupings] = MULTI_GRIDPOINT_PARAMETERS->lon[i];
+            MULTI_GRIDPOINT_PARAMETERS->grouping[i] = MULTI_GRIDPOINT_PARAMETERS->nGroupings;
+            MULTI_GRIDPOINT_PARAMETERS->nGroupings += 1;
+//            printf("designating groupings %lf %lf %i\n", &MULTI_GRIDPOINT_PARAMETERS->groupingLat[MULTI_GRIDPOINT_PARAMETERS->nGroupings],&MULTI_GRIDPOINT_PARAMETERS->groupingLon[MULTI_GRIDPOINT_PARAMETERS->nGroupings], MULTI_GRIDPOINT_PARAMETERS->nGroupings);
+//            printf("%i.\n",MULTI_GRIDPOINT_PARAMETERS->nGroupings );
         }
     }
-    MULTI_GRIDPOINT_PARAMETERS->nGroupings = groupingCount;
+//    printf("number of groupings %i.\n",MULTI_GRIDPOINT_PARAMETERS->nGroupings);
+//    exit(0);
     return MULTI_GRIDPOINT_PARAMETERS;
 
 }

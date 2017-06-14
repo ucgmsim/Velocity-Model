@@ -421,10 +421,8 @@ void runGenerateMultipleVSonGrid(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extr
             MESH_VECTOR->nZ += 1;
             grdPtsCount += 1;
         }
-        MESH_VECTOR->Lat = &MULTI_GRIDPOINT_PARAMETERS->lat[i];
-        MESH_VECTOR->Lon = &MULTI_GRIDPOINT_PARAMETERS->lon[i];
-
-
+        MESH_VECTOR->Lat = &MULTI_GRIDPOINT_PARAMETERS->groupingLat[i];
+        MESH_VECTOR->Lon = &MULTI_GRIDPOINT_PARAMETERS->groupingLon[i];
         in_basin *IN_BASIN;
         IN_BASIN = malloc(sizeof(in_basin));
         if (IN_BASIN == NULL) {
@@ -452,6 +450,7 @@ void runGenerateMultipleVSonGrid(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extr
             printf("Memory allocation of QUALITIES_VECTOR failed.\n");
             exit(EXIT_FAILURE);
         }
+        
         assignQualities(GLOBAL_MODEL_PARAMETERS, VELO_MOD_1D_DATA, NZ_TOMOGRAPHY_DATA, GLOBAL_SURFACES, BASIN_DATA,
                         MESH_VECTOR, PARTIAL_GLOBAL_SURFACE_DEPTHS, PARTIAL_BASIN_SURFACE_DEPTHS, IN_BASIN,
                         QUALITIES_VECTOR, CALCULATION_LOG, GEN_EXTRACT_MULTI_GRIDPOINT_VS_CALL.TOPO_TYPE);

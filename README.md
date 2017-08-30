@@ -132,6 +132,15 @@ Extracts Vs30 Vs500 Z1.0 Z2.5
 - 9 EXTENT_LATLON_SPACING (gridspacing in the Y and X direction in km)
 - 10 VS_TYPE (set as VS30 VS500 Z1.0 Z2.5)
 
+Call type 7) GENERATE_VELOCITIES_ON_GRID
+
+- 1	CALL_TYPE=GENERATE_VELOCITIES_ON_GRID
+- 2 MODEL_VERSION (model version - select from list of model versions at bottom of readme)
+- 3 OUTPUT_DIR (directory to save outputs to)
+- 4 TOPO_TYPE (SQUASHED, BULLDOZED etc)
+- 5 MIN_VS (minimium shear wave velocity to enforce, in km/s - typically 0.5)
+- 6 COORDINATES_TEXT_FILE (text file name containing gridpoints to presribe velocities at)
+
 
 Execute one of these six call types and open the output directory to view saved outputs.
 

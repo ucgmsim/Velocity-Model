@@ -101,93 +101,126 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion)
         
     }
     
-    else if(strcmp(modelVersion,"0.04") == 0)
+    else if(strcmp(modelVersion,"Test_0.02") == 0)
     {
         // define the number of surfaces and sub models
-        GLOBAL_MODEL_PARAMETERS->nSurf = 2;
-        GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 1;
+        GLOBAL_MODEL_PARAMETERS->nSurf = 3;
+        GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 2;
         
         // insert surface surface keywords and filenames
         GLOBAL_MODEL_PARAMETERS->surf[0] = "posInfSurf";
         GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[0] = "Data/Global_Surfaces/posInf.in";
-        GLOBAL_MODEL_PARAMETERS->surf[1] = "negInfSurf";
-        GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[1] = "Data/Global_Surfaces/negInf.in";
+        GLOBAL_MODEL_PARAMETERS->surf[1] = "DEMa";
+        GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[1] = "Data/DEM/NZ_DEM.in";
+        GLOBAL_MODEL_PARAMETERS->surf[2] = "negInfSurf";
+        GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[2] = "Data/Global_Surfaces/negInf.in";
         
         // insert velocity submodel keywords and filenames (if necessary)
-        GLOBAL_MODEL_PARAMETERS->veloSubMod[0] = "v1DsubMod";
-        GLOBAL_MODEL_PARAMETERS->veloMod1dFileName[0] = "Cant1D_v1.fd_modfile";
+        GLOBAL_MODEL_PARAMETERS->veloSubMod[0] = "NaNsubMod";
+        GLOBAL_MODEL_PARAMETERS->veloSubMod[1] = "EPtomo2010subMod";
+        GLOBAL_MODEL_PARAMETERS->tomographyName = "2010_NZ";
+        //GLOBAL_MODEL_PARAMETERS->tomographyName = "2010_Full_South_Island";
+        //GLOBAL_MODEL_PARAMETERS->tomographyName = "2010_Update_Canterbury";
+        //GLOBAL_MODEL_PARAMETERS->tomographyName = "2010_Update_Hybrid";
         
         
-        GLOBAL_MODEL_PARAMETERS->nBasins = 1;
+        // CANTERBURY Basin (1D above basement)
+        GLOBAL_MODEL_PARAMETERS->basin[0] = "CANTERBURY_BASIN_1D";
+        GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[0] = 5;
+        GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[0] = 1;
+        GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[0][0] = "Data/Boundaries/CanterburyBasinBoundary.txt";
         
-        // CANTERBURY Basin
-        GLOBAL_MODEL_PARAMETERS->basin[0] = "CANTERBURY_BASIN";
-        GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[0] = 12;
-        GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[0] = 2;
-        GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[0][0] = "Data/Boundaries/QuaternarySurfacesBoundary.txt";
-        GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[0][1] = "Data/Boundaries/CanterburyBasinBoundary.txt";
-        //  CHANGE THE BOUNDARYS SO THAT BOUNDARY 0 HS THE LARGER BOUND
         GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[0][0] = "DEM";
         GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[0][0] = "Data/DEM/DEM.in";
-        GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[0][0] = 1;
-        GLOBAL_MODEL_PARAMETERS->basinSubModelNames[0][0] = "Above_RIC";
+        GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[0][0] = 0;
+        GLOBAL_MODEL_PARAMETERS->basinSubModelNames[0][0] = "Cant1D_v2_Pliocene_Enforced";
         
-        GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[0][1] = "RiccartonTop";
-        GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[0][1] = "Data/Canterbury_Basin/Quaternary/RiccartonTop.in";
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[0][1] = "PlioceneTop";
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[0][1] = "Data/Canterbury_Basin/Pre_Quaternary/Pliocene_46_v8p9p18.in";
         GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[0][1] = 0;
-        GLOBAL_MODEL_PARAMETERS->basinSubModelNames[0][1] = "Riccarton";
+        GLOBAL_MODEL_PARAMETERS->basinSubModelNames[0][1] = "PlioceneSubMod_v1";
         
-        GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[0][2] = "BromleyTop";
-        GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[0][2] = "Data/Canterbury_Basin/Quaternary/BromleyTop.in";
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[0][2] = "MioceneTop";
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[0][2] = "Data/Canterbury_Basin/Pre_Quaternary/MioceneTop.in";
         GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[0][2] = 0;
-        GLOBAL_MODEL_PARAMETERS->basinSubModelNames[0][2] = "Bromley";
+        GLOBAL_MODEL_PARAMETERS->basinSubModelNames[0][2] = "MioceneSubMod_v1";
         
-        GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[0][3] = "LinwoodTop";
-        GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[0][3] = "Data/Canterbury_Basin/Quaternary/LinwoodTop.in";
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[0][3] = "PaleogeneTop";
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[0][3] = "Data/Canterbury_Basin/Pre_Quaternary/PaleogeneTop.in";
         GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[0][3] = 0;
-        GLOBAL_MODEL_PARAMETERS->basinSubModelNames[0][3] = "Linwood";
+        GLOBAL_MODEL_PARAMETERS->basinSubModelNames[0][3] = "PaleogeneSubMod_v1";
         
-        GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[0][4] = "HeathcoteTop";
-        GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[0][4] = "Data/Canterbury_Basin/Quaternary/HeathcoteTop.in";
-        GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[0][5] = 0;
-        GLOBAL_MODEL_PARAMETERS->basinSubModelNames[0][4] = "Heathcote";
-        
-        GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[0][5] = "BurwoodTop";
-        GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[0][5] = "Data/Canterbury_Basin/Quaternary/BurwoodTop.in";
-        GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[0][5] = 0;
-        GLOBAL_MODEL_PARAMETERS->basinSubModelNames[0][5] = "Burwood";
-        
-        GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[0][6] = "ShirleyTop";
-        GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[0][6] = "Data/Canterbury_Basin/Quaternary/ShirleyTop.in";
-        GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[0][6] = 0;
-        GLOBAL_MODEL_PARAMETERS->basinSubModelNames[0][6] = "Shirley";
-        
-        GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[0][7] = "WainoniTop";
-        GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[0][7] =  "Data/Canterbury_Basin/Quaternary/WainoniTop.in";
-        GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[0][7] = 0;
-        GLOBAL_MODEL_PARAMETERS->basinSubModelNames[0][7] = "Wainoni";
-        
-        GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[0][8] = "PlioceneTop";
-        GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[0][8] = "Data/Canterbury_Basin/Pre_Quaternary/PlioceneTop.in";
-        GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[0][8] = 1;
-        GLOBAL_MODEL_PARAMETERS->basinSubModelNames[0][8] = "Pliocene";
-        
-        GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[0][9] = "MioceneTop";
-        GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[0][9] = "Data/Canterbury_Basin/Pre_Quaternary/MioceneTop.in";
-        GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[0][9] = 1;
-        GLOBAL_MODEL_PARAMETERS->basinSubModelNames[0][9] = "Miocene";
-        
-        GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[0][10] = "PaleogeneTop";
-        GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[0][10] = "Data/Canterbury_Basin/Pre_Quaternary/PaleogeneTop.in";
-        GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[0][10] = 1;
-        GLOBAL_MODEL_PARAMETERS->basinSubModelNames[0][10] = "Paleogene";
-        
-        GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[0][11] = "BasementTop";
-        GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[0][11] = "Data/Canterbury_Basin/Pre_Quaternary/BasementTop.in";
-        GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[0][11] = 1;
-
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[0][4] = "BasementTopSurf";
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[0][4] = "Data/Canterbury_Basin/Quaternary/BasementTop.in";
+        GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[0][4] = 0;
         
         
+        // BPV Basin
+        GLOBAL_MODEL_PARAMETERS->basin[1] = "BPV_BASIN";
+        GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[1] = 2;
+        GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[1] = 1;
+        GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[1][0] = "Data/Boundaries/BPVBoundary.txt";
+        
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[1][0] = "BPVTop";
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[1][0] = "Data/Canterbury_Basin/BPV/BPVTop.in";
+        GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[1][0] = 0;
+        GLOBAL_MODEL_PARAMETERS->basinSubModelNames[1][0] = "BPVSubMod_v3";
+        
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[1][1] = "MioceneTop";
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[1][1] = "Data/Canterbury_Basin/Pre_Quaternary/MioceneTop.in";
+        GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[1][1] = 0;
+        
+        // CANTERBURY Basin
+        GLOBAL_MODEL_PARAMETERS->basin[2] = "CANTERBURY_BASIN_Q";
+        GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[2] = 9;
+        GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[2] = 1;
+        GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[2][0] = "Data/Boundaries/QuaternarySurfacesBoundary.txt";
+        
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[2][0] = "DEM";
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[2][0] = "Data/DEM/DEM.in";
+        GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[2][0] = 0;
+        GLOBAL_MODEL_PARAMETERS->basinSubModelNames[2][0] = "ChristchurchSubMod_v1";
+        
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[2][1] = "RiccartonTop";
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[2][1] = "Data/Canterbury_Basin/Quaternary/RiccartonTop.in";
+        GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[2][1] = 0;
+        GLOBAL_MODEL_PARAMETERS->basinSubModelNames[2][1] = "RiccartonSubMod_v1";
+        
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[2][2] = "BromleyTop";
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[2][2] = "Data/Canterbury_Basin/Quaternary/BromleyTop.in";
+        GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[2][2] = 0;
+        GLOBAL_MODEL_PARAMETERS->basinSubModelNames[2][2] = "BromleySubMod_v1";
+        
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[2][3] = "LinwoodTop";
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[2][3] = "Data/Canterbury_Basin/Quaternary/LinwoodTop.in";
+        GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[2][3] = 0;
+        GLOBAL_MODEL_PARAMETERS->basinSubModelNames[2][3] = "LinwoodSubMod_v1";
+        
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[2][4] = "HeathcoteTop";
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[2][4] = "Data/Canterbury_Basin/Quaternary/HeathcoteTop.in";
+        GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[2][4] = 0;
+        GLOBAL_MODEL_PARAMETERS->basinSubModelNames[2][4] = "HeathcoteSubMod_v1";
+        
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[2][5] = "BurwoodTop";
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[2][5] = "Data/Canterbury_Basin/Quaternary/BurwoodTop.in";
+        GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[2][5] = 0;
+        GLOBAL_MODEL_PARAMETERS->basinSubModelNames[2][5] = "BurwoodSubMod_v1";
+        
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[2][6] = "ShirleyTop";
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[2][6] = "Data/Canterbury_Basin/Quaternary/ShirleyTop.in";
+        GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[2][6] = 0;
+        GLOBAL_MODEL_PARAMETERS->basinSubModelNames[2][6] = "ShirleySubMod_v1";
+        
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[2][7] = "WainoniTop";
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[2][7] =  "Data/Canterbury_Basin/Quaternary/WainoniTop.in";
+        GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[2][7] = 0;
+        GLOBAL_MODEL_PARAMETERS->basinSubModelNames[2][7] = "WainoniSubMod_v1";
+        
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[2][8] = "PlioceneTop";
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[2][8] = "Data/Canterbury_Basin/Pre_Quaternary/Pliocene_46_v8p9p18.in";
+        GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[2][8] = 0;
+        
+        GLOBAL_MODEL_PARAMETERS->nBasins = 3;
     }
     // Model Version 0.1, 1D velocity sub Model
     else if(strcmp(modelVersion,"FULL_DOMAIN_PLOTTING") == 0)
@@ -683,18 +716,21 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion)
     else if(strcmp(modelVersion,"1.01") == 0)
     {
         // define the number of surfaces and sub models
-        GLOBAL_MODEL_PARAMETERS->nSurf = 2;
-        GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 1;
+        GLOBAL_MODEL_PARAMETERS->nSurf = 3;
+        GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 2;
         
         // insert surface surface keywords and filenames
         GLOBAL_MODEL_PARAMETERS->surf[0] = "posInfSurf";
         GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[0] = "Data/Global_Surfaces/posInf.in";
-        GLOBAL_MODEL_PARAMETERS->surf[1] = "negInfSurf";
-        GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[1] = "Data/Global_Surfaces/negInf.in";
+        GLOBAL_MODEL_PARAMETERS->surf[1] = "DEM";
+        GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[1] = "Data/DEM/NZ_DEM.in";
+        GLOBAL_MODEL_PARAMETERS->surf[2] = "negInfSurf";
+        GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[2] = "Data/Global_Surfaces/negInf.in";
         
         
         // insert velocity submodel keywords and filenames (if necessary)
-        GLOBAL_MODEL_PARAMETERS->veloSubMod[0] = "v1DsubMod";
+        GLOBAL_MODEL_PARAMETERS->veloSubMod[0] = "NaNsubMod";
+        GLOBAL_MODEL_PARAMETERS->veloSubMod[1] = "v1DsubMod";
         GLOBAL_MODEL_PARAMETERS->veloMod1dFileName[0] = "Cant1D_v1.fd_modfile";
         
         
@@ -725,18 +761,21 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion)
     else if(strcmp(modelVersion,"1.11") == 0)
     {
         // define the number of surfaces and sub models
-        GLOBAL_MODEL_PARAMETERS->nSurf = 2;
-        GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 1;
+        GLOBAL_MODEL_PARAMETERS->nSurf = 3;
+        GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 2;
         
         // insert surface surface keywords and filenames
         GLOBAL_MODEL_PARAMETERS->surf[0] = "posInfSurf";
         GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[0] = "Data/Global_Surfaces/posInf.in";
-        GLOBAL_MODEL_PARAMETERS->surf[1] = "negInfSurf";
-        GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[1] = "Data/Global_Surfaces/negInf.in";
+        GLOBAL_MODEL_PARAMETERS->surf[1] = "DEM";
+        GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[1] = "Data/DEM/NZ_DEM.in";
+        GLOBAL_MODEL_PARAMETERS->surf[2] = "negInfSurf";
+        GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[2] = "Data/Global_Surfaces/negInf.in";
         
         
         // insert velocity submodel keywords and filenames (if necessary)
-        GLOBAL_MODEL_PARAMETERS->veloSubMod[0] = "EPtomo2010subMod";
+        GLOBAL_MODEL_PARAMETERS->veloSubMod[0] = "NaNsubMod";
+        GLOBAL_MODEL_PARAMETERS->veloSubMod[1] = "EPtomo2010subMod";
         GLOBAL_MODEL_PARAMETERS->tomographyName = "2010_Full_South_Island";
         //GLOBAL_MODEL_PARAMETERS->tomographyName = "2010_Update_Canterbury";
         //GLOBAL_MODEL_PARAMETERS->tomographyName = "2010_Update_Hybrid";
@@ -753,21 +792,36 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion)
         // insert surface surface keywords and filenames
         GLOBAL_MODEL_PARAMETERS->surf[0] = "posInfSurf";
         GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[0] = "Data/Global_Surfaces/posInf.in";
-        GLOBAL_MODEL_PARAMETERS->surf[1] = "BasementTopSurf";
-        GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[1] = "Data/Canterbury_Basin/Quaternary/BasementTop.in";
+        GLOBAL_MODEL_PARAMETERS->surf[1] = "DEM";
+        GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[1] = "Data/DEM/NZ_DEM.in";
         GLOBAL_MODEL_PARAMETERS->surf[2] = "negInfSurf";
         GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[2] = "Data/Global_Surfaces/negInf.in";
         
-        // insert velocity submodel keywords and filenames (if necessary)
-        GLOBAL_MODEL_PARAMETERS->veloSubMod[0] = "v1DsubMod";
-        GLOBAL_MODEL_PARAMETERS->veloMod1dFileName[0] = "Cant1D_v2.fd_modfile";
         
+        // insert velocity submodel keywords and filenames (if necessary)
+        GLOBAL_MODEL_PARAMETERS->veloSubMod[0] = "NaNsubMod";
         GLOBAL_MODEL_PARAMETERS->veloSubMod[1] = "EPtomo2010subMod";
         GLOBAL_MODEL_PARAMETERS->tomographyName = "2010_Full_South_Island";
         //GLOBAL_MODEL_PARAMETERS->tomographyName = "2010_Update_Canterbury";
         //GLOBAL_MODEL_PARAMETERS->tomographyName = "2010_Update_Hybrid";
         
-        GLOBAL_MODEL_PARAMETERS->nBasins = 0;
+        // CANTERBURY Basin (1D above basement)
+        GLOBAL_MODEL_PARAMETERS->basin[0] = "CANTERBURY_BASIN_1D";
+        GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[0] = 2;
+        GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[0] = 1;
+        GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[0][0] = "Data/Boundaries/CanterburyBasinBoundary.txt";
+        
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[0][0] = "DEM";
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[0][0] = "Data/DEM/DEM.in";
+        GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[0][0] = 0;
+        GLOBAL_MODEL_PARAMETERS->basinSubModelNames[0][0] = "Cant1D_v2";
+        
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[0][1] = "BasementTopSurf";
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[0][1] = "Data/Canterbury_Basin/Quaternary/BasementTop.in";
+        GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[0][1] = 0;
+        
+        GLOBAL_MODEL_PARAMETERS->nBasins = 1;
+
 
     }
     else if(strcmp(modelVersion,"1.22") == 0)

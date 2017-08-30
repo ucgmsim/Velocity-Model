@@ -135,7 +135,8 @@ void assignQualities(global_model_parameters *GLOBAL_MODEL_PARAMETERS, velo_mod_
         {
             Z = SHIFTED_MESH_VECTOR->Z[k];
         }
-
+//        printf("%lf %lf %lf.\n", Z, *MESH_VECTOR->Lat, *MESH_VECTOR->Lon);
+        
         for(int i = 0; i < GLOBAL_MODEL_PARAMETERS->nBasins; i++)
         {
             if (IN_BASIN->inBasinDep[i][k] == 1)

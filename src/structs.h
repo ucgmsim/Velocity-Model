@@ -354,6 +354,7 @@ typedef struct{
     int nProfiles;
     double lats[MAX_NUM_GEN_MULTI_PROFILES];
     double lons[MAX_NUM_GEN_MULTI_PROFILES];
+    char codes[MAX_NUM_GEN_MULTI_PROFILES][MAX_FILENAME_STRING_LEN];
 }multi_profile_parameters;
 
 typedef struct{
@@ -374,7 +375,8 @@ typedef struct {
     double dep[MAX_NUM_GRIDPOINTS];
     int grouping[MAX_NUM_GRIDPOINTS];
     int nGroupings;
-
+    double groupingLat[MAX_NUM_GRIDPOINTS];
+    double groupingLon[MAX_NUM_GRIDPOINTS];
 }multi_gridpoint_parameters;
 
 // struct to house the indices of adjacent points for bilinear interpolation

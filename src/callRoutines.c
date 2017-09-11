@@ -954,6 +954,7 @@ void runGenerateVelocityModel(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extract
     // Load Data
     loadAllGlobalData(GLOBAL_MODEL_PARAMETERS, CALCULATION_LOG, VELO_MOD_1D_DATA, NZ_TOMOGRAPHY_DATA, GLOBAL_SURFACES, BASIN_DATA);
     // Loop over grid points and assign values
+	#pragma omp parallel for ordered schedule(dynamic)
     for(int j = 0; j < GLOBAL_MESH->nY; j++)
     {
         partial_global_mesh *PARTIAL_GLOBAL_MESH;
@@ -968,7 +969,7 @@ void runGenerateVelocityModel(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extract
             printf("Memory allocation of PARTIAL_GLOBAL_QUALITIES failed.\n");
             exit(EXIT_FAILURE);
         }
-        #pragma omp parallel for
+        //#pragma omp parallel for
         for(int k = 0; k < PARTIAL_GLOBAL_MESH->nX; k++)
         {
             in_basin *IN_BASIN;
@@ -1065,6 +1066,7 @@ void runGenerateVelocityModel(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extract
             free(PARTIAL_GLOBAL_SURFACE_DEPTHS);
             free(IN_BASIN);
         }
+        #pragma omp ordered
         writeGlobalQualities(OUTPUT_DIR, PARTIAL_GLOBAL_MESH, PARTIAL_GLOBAL_QUALITIES, GEN_EXTRACT_VELO_MOD_CALL,CALCULATION_LOG, j);
         free(PARTIAL_GLOBAL_MESH);
         free(PARTIAL_GLOBAL_QUALITIES);

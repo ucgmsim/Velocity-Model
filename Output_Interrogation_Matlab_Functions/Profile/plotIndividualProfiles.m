@@ -5,7 +5,7 @@ close all
 
 % taylored to suit either one grid point location and different models or
 % different grid points for the same model
-dirName{1} = 'Napier_EPTOMO_Profile';
+dirName{1} = 'Multiple_Profiles';
 % dirName{2} = 'GeneratedProfile1D';
 
 % dirName{2} = 'GeneratedProfileV0.2';
@@ -100,35 +100,35 @@ if length(dirName) ~= 1
     set(rhoLeg, 'location', legLocation);
    
 elseif length(dirName) == 1
-    titleVp = sprintf('Vp profile for lat. %.2f, lon. %.2f. Ver. %.1f',lat(1),lon(1),ver(1));
-    titleVs = sprintf('Vs profile for lat. %.2f, lon. %.2f. Ver. %.1f',lat(1),lon(1),ver(1));
-    titleRho = sprintf('Rho profile for lat. %.2f, lon. %.2f.  Ver. %.1f',lat(1),lon(1),ver(1));
+    titleVp = sprintf('Vp profile');
+    titleVs = sprintf('Vs profile');
+    titleRho = sprintf('Rho profile');
     %         for i = 1 : profile.
 end
-zMin = profile.zmin*1000;
-zMax = profile.zmax*1000;
-axisVecVp = ([min(minVp)/minMult max(maxVp)*maxMult zMin zMax]);
-axisVecVs = ([min(minVs)/minMult max(maxVs)*maxMult zMin zMax]);
-axisVecRho = ([min(minRho)/minMult max(maxRho)*maxMult zMin zMax]);
+zMin = -0.51;
+zMax = 0;
+axisVecVp = ([1.6 3.6 zMin zMax]);
+axisVecVs = ([0.3 2.0 zMin zMax]);
+axisVecRho = ([1.8 2.6 zMin zMax]);
 
 
     
 figure(1);
 title(titleVp);
 xlabel('Vp (km/s)');
-ylabel('Depth (m)');
+ylabel('Depth (km)');
 axis(axisVecVp);
 
 figure(2);
 title(titleVs);
 xlabel('Vs (km/s)');
-ylabel('Depth (m)');
+ylabel('Depth (km)');
 axis(axisVecVs);
 
 figure(3);
 title(titleRho);
 xlabel('Rho (T/m^3)');
-ylabel('Depth (m)');
+ylabel('Depth (km)');
 axis(axisVecRho);
 
 
@@ -139,9 +139,9 @@ figure(2);
 
 figure(3);
 
-saveTitleVp = strcat(titleVp,sprintf(' (dep %.0fm to %.0fm)',zMax,zMin));
-saveTitleVs = strcat(titleVs,sprintf(' (dep %.0fm to %.0fm)',zMax,zMin));
-saveTitleRho = strcat(titleRho,sprintf(' (dep %.0fm to %.0fm)',zMax,zMin));
+saveTitleVp = strcat(titleVp);
+saveTitleVs = strcat(titleVs);
+saveTitleRho = strcat(titleRho);
 
 
 figure(1);

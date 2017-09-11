@@ -14,9 +14,17 @@
 //extern void writeAllBasinSurfaceDepths(globalBasinData *basinData, gridStruct *location, char *outputDirectory);
 //extern void writeBasinSurfaceDepths(globalBasinData *basinData,  int basinNum, gridStruct *location, char *outputDirectory);
 //extern void writeIndividualProfile(globalDataValues *globalValues, gridStruct *location, char *outputDirectory);
-extern void writeIndividualProfile(qualities_vector *QUALITIES_VECTOR, gen_profile_call GEN_PROFILE_CALL, mesh_vector *MESH_VECTOR, char *OUTPUT_DIR, calculation_log *CALCULATION_LOG);
+ extern void writeMultipleProfiles(qualities_vector *QUALITIES_VECTOR, gen_multi_profiles_call GEN_MULTI_PROFILES_CALL, mesh_vector *MESH_VECTOR, char *OUTPUT_DIR, calculation_log *CALCULATION_LOG, multi_profile_parameters *MULTI_PROFILE_PARAMETERS, int profileNum);
+ extern void writeIndividualProfile(qualities_vector *QUALITIES_VECTOR, gen_profile_call GEN_PROFILE_CALL, mesh_vector *MESH_VECTOR, char *OUTPUT_DIR, calculation_log *CALCULATION_LOG);
 extern void writeProfileSurfaceDepths(global_model_parameters *GLOBAL_MODEL_PARAMETERS, basin_data *BASIN_DATA, partial_global_surface_depths *PARTIAL_GLOBAL_SURFACE_DEPTHS, partial_basin_surface_depths *PARTIAL_BASIN_SURFACE_DEPTHS, in_basin *IN_BASIN, mesh_vector *MESH_VECTOR, char *OUTPUT_DIR, calculation_log *CALCULATION_LOG);
-extern void writeAllBasinSurfaceDepths(global_model_parameters *GLOBAL_MODEL_PARAMETERS, partial_global_mesh *PARTIAL_GLOBAL_MESH, int basinNum, char *OUTPUT_DIR,slice_surface_depths *SLICE_SURFACE_DEPTHS);
+extern void writeMultipleProfileSurfaceDepths(global_model_parameters *GLOBAL_MODEL_PARAMETERS, basin_data *BASIN_DATA, partial_global_surface_depths *PARTIAL_GLOBAL_SURFACE_DEPTHS, partial_basin_surface_depths *PARTIAL_BASIN_SURFACE_DEPTHS, in_basin *IN_BASIN,mesh_vector *MESH_VECTOR, char *OUTPUT_DIR, calculation_log *CALCULATION_LOG, multi_profile_parameters *MULTI_PROFILE_PARAMETERS, int profileNum);
+ extern multi_gridpoint_parameters *readGridpointsTextFile(char *gridpointsTextFile);
+ extern void runGenerateMultipleVSonGrid(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extract_multi_gridpoint_vs_call GEN_EXTRACT_MULTI_GRIDPOINT_VS_CALL, calculation_log *CALCULATION_LOG);
+ extern void writeGridpointVelocities(qualities_vector *QUALITIES_VECTOR, gen_extract_multi_gridpoint_vs_call GEN_EXTRACT_MULTI_GRIDPOINT_VS_CALL, mesh_vector *MESH_VECTOR, char *OUTPUT_DIR, calculation_log *CALCULATION_LOG, int groupingNum);
+
+
+
+         extern void writeAllBasinSurfaceDepths(global_model_parameters *GLOBAL_MODEL_PARAMETERS, partial_global_mesh *PARTIAL_GLOBAL_MESH, int basinNum, char *OUTPUT_DIR,slice_surface_depths *SLICE_SURFACE_DEPTHS);
 extern void writeSliceSurfaceDepths(global_model_parameters *GLOBAL_MODEL_PARAMETERS,partial_global_mesh *PARTIAL_GLOBAL_MESH, char *OUTPUT_DIR, slice_surface_depths *SLICE_SURFACE_DEPTHS);
 extern void writeAllGlobalSurfaceDepths(slice_surface_depths *SLICE_SURFACE_DEPTHS, partial_global_mesh *PARTIAL_GLOBAL_MESH, global_model_parameters *GLOBAL_MODEL_PARAMETERS,char *OUTPUT_DIR);
 
@@ -55,10 +63,20 @@ extern void runGenerateVelocitySlices(char *MODEL_VERSION, char *OUTPUT_DIR, gen
 extern void runThresholdVelocityModel(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extract_velo_mod_call GEN_EXTRACT_VELO_MOD_CALL, calculation_log *CALCULATION_LOG);
 
 extern void runGenerateProfile(char *MODEL_VERSION, char *OUTPUT_DIR, gen_profile_call GEN_PROFILE_CALL, calculation_log *CALCULATION_LOG);
+extern void runGenerateMultipleProfiles(char *MODEL_VERSION, char *OUTPUT_DIR, gen_multi_profiles_call GEN_MULTI_PROFILES_CALL, calculation_log *CALCULATION_LOG);
 extern void gcprojRev(double *xf,double *yf,double rlon,double rlat,double ref_rad,double g0,double b0,double amat[8],double ainv[8]);
 extern void ll2xy(double originLat, double originLon, double originRot, double *xp, double *yp, double latA, double lonA);
 
-
+extern void writeSampleInputTextFiles(void);
+extern gen_extract_velo_mod_call readGenVMInputTextFile(char *fileName);
+extern gen_extract_velo_mod_call readExtractVMInputTextFile(char *fileName);
+extern gen_velo_slices_call readGenerateSliceInputTextFile(char *fileName);
+extern gen_profile_call readGenerateProfileInputTextFile(char *fileName);
+extern gen_extract_velo_mod_call readThresholdInputTextFile(char *fileName);
+extern gen_multi_profiles_call readGenMultiProfileInputTextFile(char *fileName);
+extern gen_extract_multi_gridpoint_vs_call readExtractMultiInputTextFile(char *fileName);
+extern multi_profile_parameters *readProfilesTextFile(char *fileName);
+extern char *readParameter(char *fileName, char *quality);
 
 
 
@@ -110,6 +128,7 @@ extern int determineBasinSurfaceAbove(global_model_parameters *GLOBAL_MODEL_PARA
 extern void assignBasinQualities(global_model_parameters *GLOBAL_MODEL_PARAMETERS, basin_data *BASIN_DATA, partial_basin_surface_depths *PARTIAL_BASIN_SURFACE_DEPTHS, qualities_vector *QUALITIES_VECTOR, double depth, int basinNum, int zInd);
 extern void loadBasinSubModelData(int basinNum, basin_data *BASIN_DATA, global_model_parameters *GLOBAL_MODEL_PARAMETERS);
 void callBasinSubVelocityModels(global_model_parameters *GLOBAL_MODEL_PARAMETERS, basin_data *BASIN_DATA, partial_basin_surface_depths *PARTIAL_BASIN_SURFACE_DEPTHS, qualities_vector *QUALITIES_VECTOR, double depth, int basinSubModelInd, int basinNum, int zInd);
+ extern variable_depth_points *readDepthPointsTextFile(char *depthsTextFile);
 
 // surface functions
 //extern void enforceSurfaceDepths(globalBasinData *basinData, int xInd, int yInd, int basinNum);
@@ -131,14 +150,15 @@ extern void plioceneSubModelv1(int zInd, qualities_vector *QUALITIES_VECTOR);
 extern void BPVSubModelv1(int zInd, qualities_vector *QUALITIES_VECTOR);
 extern void BPVSubModelv2(int zInd, qualities_vector *QUALITIES_VECTOR);
 extern void BPVSubModelv3(int zInd, qualities_vector *QUALITIES_VECTOR, partial_basin_surface_depths *PARTIAL_BASIN_SURFACE_DEPTHS, int basinNum, double depth);
-extern void gravelSubModel(int zInd, qualities_vector *QUALITIES_VECTOR);
-extern void marineSubModel(int zInd, qualities_vector *QUALITIES_VECTOR);
+extern void gravelSubModel(int zInd, qualities_vector *QUALITIES_VECTOR, partial_basin_surface_depths *PARTIAL_BASIN_SURFACE_DEPTHS, double depth, int basinNum);
+extern void marineSubModel(int zInd, qualities_vector *QUALITIES_VECTOR, partial_basin_surface_depths *PARTIAL_BASIN_SURFACE_DEPTHS, double depth, int basinNum);
+
 
 
 //slice functions
 extern void extractSlicesFromBinaryFiles(char *OUTPUT_DIR, gen_extract_velo_mod_call GEN_EXTRACT_VELO_MOD_CALL, calculation_log *CALCULATION_LOG, global_mesh *GLOBAL_MESH, model_extent *MODEL_EXTENT);
-extern slice_parameters *readGeneratedSliceParametersFile(char *sliceParametersDirectory);
-extern slice_parameters *readExtractedSliceParametersFile(char *sliceParametersDirectory);
+extern slice_parameters *readGeneratedSliceParametersFile(char *sliceParametersTextFile);
+extern slice_parameters *readExtractedSliceParametersFile(char *sliceParametersTextFile);
 extern void generateSlicePoints(individual_slice_data *INDIVIDUAL_SLICE_DATA, individual_slice_parameters *INDIVIDUAL_SLICE_PARAMETERS,  global_mesh *GLOBAL_MESH);
 extern void generateGlobalIndsForRead(global_mesh *GLOBAL_MESH, global_data_for_interpolation *GLOBAL_DATA_FOR_INTERPOLATION, model_extent *MODEL_EXTENT, int sliceNum);
 extern void globalIndReduction(global_data_for_interpolation *GLOBAL_DATA_FOR_INTERPOLATION);

@@ -52,7 +52,7 @@ typedef struct{
     double *Lat;
     double Z[DEP_GRID_DIM_MAX];
     int nZ;
-    double referenceDepth;
+//    double referenceDepth;
 }mesh_vector;
 
 
@@ -303,7 +303,6 @@ typedef struct{
 
 typedef struct{
     double dep[MAX_NUM_BASINS][MAX_NUM_BASIN_SURFACES];
-    
 }partial_basin_surface_depths;
 
 typedef struct{
@@ -318,17 +317,15 @@ typedef struct{
     double EXTENT_LATLON_SPACING;
     double MIN_VS;
     char *TOPO_TYPE;
-    int numInputsSet;
-    char *EXTRACTED_SLICE_PARAMETERS_DIRECTORY;
+    char *EXTRACTED_SLICE_PARAMETERS_TEXTFILE;
     char *VS_TYPE; // for vs_500 etc.
 }gen_extract_velo_mod_call;
 
 
 typedef struct{
-    char *GENERATED_SLICE_PARAMETERS_DIRECTORY;
+    char *GENERATED_SLICE_PARAMETERS_TEXTFILE;
     double MIN_VS_SLICE;
     char *TOPO_TYPE;
-    int numInputsSet;
 }gen_velo_slices_call;
 
 typedef struct{
@@ -338,13 +335,49 @@ typedef struct{
     double PROFILE_ZMIN;
     double PROFILE_MIN_VS;
     double EXTENT_Z_SPACING_PROFILE;
-    int numInputsSet;
+    char *TOPO_TYPE;
 }gen_profile_call;
 
 
+typedef struct{
+    char *COORDINATES_TEXTFILE;
+    double PROFILE_MIN_VS;
+    char *TOPO_TYPE;
+    char *SPACING_TYPE;
+    double PROFILE_ZMAX;
+    double PROFILE_ZMIN;
+    double SPACING_PROFILE;
+    char *PROFILE_DEPTHS_TEXTFILE;
+}gen_multi_profiles_call;
 
+typedef struct{
+    int nProfiles;
+    double lats[MAX_NUM_GEN_MULTI_PROFILES];
+    double lons[MAX_NUM_GEN_MULTI_PROFILES];
+    char codes[MAX_NUM_GEN_MULTI_PROFILES][MAX_FILENAME_STRING_LEN];
+}multi_profile_parameters;
 
+typedef struct{
+    int nDep;
+    double dep[DEP_GRID_DIM_MAX];
+}variable_depth_points;
 
+typedef struct {
+    char *TOPO_TYPE;
+    double MIN_VS;
+    char *COORDINATES_TEXT_FILE;
+}gen_extract_multi_gridpoint_vs_call;
+
+typedef struct {
+    int nPts;
+    double lat[MAX_NUM_GRIDPOINTS];
+    double lon[MAX_NUM_GRIDPOINTS];
+    double dep[MAX_NUM_GRIDPOINTS];
+    int grouping[MAX_NUM_GRIDPOINTS];
+    int nGroupings;
+    double groupingLat[MAX_NUM_GRIDPOINTS];
+    double groupingLon[MAX_NUM_GRIDPOINTS];
+}multi_gridpoint_parameters;
 
 // struct to house the indices of adjacent points for bilinear interpolation
 typedef struct{

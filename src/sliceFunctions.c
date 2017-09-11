@@ -22,7 +22,7 @@
 void extractSlicesFromBinaryFiles(char *OUTPUT_DIR, gen_extract_velo_mod_call GEN_EXTRACT_VELO_MOD_CALL, calculation_log *CALCULATION_LOG, global_mesh *GLOBAL_MESH, model_extent *MODEL_EXTENT)
 {
     slice_parameters *SLICE_PARAMETERS;
-    SLICE_PARAMETERS = readExtractedSliceParametersFile(GEN_EXTRACT_VELO_MOD_CALL.EXTRACTED_SLICE_PARAMETERS_DIRECTORY);
+    SLICE_PARAMETERS = readExtractedSliceParametersFile(GEN_EXTRACT_VELO_MOD_CALL.EXTRACTED_SLICE_PARAMETERS_TEXTFILE);
     
     global_data_for_interpolation *GLOBAL_DATA_FOR_INTERPOLATION;
     GLOBAL_DATA_FOR_INTERPOLATION = malloc(sizeof(global_data_for_interpolation));
@@ -92,20 +92,20 @@ void extractSlicesFromBinaryFiles(char *OUTPUT_DIR, gen_extract_velo_mod_call GE
     
 }
 
-slice_parameters *readExtractedSliceParametersFile(char *sliceParametersDirectory)
+slice_parameters *readExtractedSliceParametersFile(char *sliceParametersTextFile)
 {
     slice_parameters *SLICE_PARAMETERS;
     SLICE_PARAMETERS = malloc(sizeof(slice_parameters));
     
     char sliceFileName[MAX_FILENAME_STRING_LEN];
-    sprintf(sliceFileName,"%s/SliceParametersExtracted.txt", sliceParametersDirectory);
+    sprintf(sliceFileName,"%s/SliceParametersExtracted.txt", sliceParametersTextFile);
     FILE *file;
     
-    file = fopen(sliceFileName, "r");
+    file = fopen(sliceParametersTextFile, "r");
     
     if (file == NULL)
     {
-        printf("Extracted slice parameters file %s not found.\n",sliceFileName);
+        printf("Extracted slice parameters file %s not found.\n",sliceParametersTextFile);
         exit(EXIT_FAILURE);
     }
     
@@ -128,20 +128,18 @@ slice_parameters *readExtractedSliceParametersFile(char *sliceParametersDirector
 }
 
 
-slice_parameters *readGeneratedSliceParametersFile(char *sliceParametersDirectory)
+slice_parameters *readGeneratedSliceParametersFile(char *sliceParametersTextFile)
 {
     slice_parameters *SLICE_PARAMETERS;
     SLICE_PARAMETERS = malloc(sizeof(slice_parameters));
-    
-    char sliceFileName[MAX_FILENAME_STRING_LEN];
-    sprintf(sliceFileName,"%s/SliceParametersGenerated.txt", sliceParametersDirectory);
+
     FILE *file;
     
-    file = fopen(sliceFileName, "r");
+    file = fopen(sliceParametersTextFile, "r");
     
     if (file == NULL)
     {
-        printf("Extracted slice parameters file %s not found.\n",sliceFileName);
+        printf("Extracted slice parameters file %s not found.\n",sliceParametersTextFile);
         exit(EXIT_FAILURE);
     }
     

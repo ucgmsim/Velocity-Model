@@ -510,13 +510,13 @@ void writeZThresholdFile(char *OUTPUT_DIR, double Lat, double Lon, double Z_WRIT
     if( latInd == 0) // if first time generate file
     {
         zFileTxt = fopen(zFile, "w");
-        fprintf(zFileTxt,"Lat\tLon\tZ_%s(m)\n",Z_THRESHOLD);
-        fprintf(zFileTxt,"%lf\t%lf\t%lf\n",Lat,Lon,Z_WRITE);
+        fprintf(zFileTxt,"Lon\tLat\tZ_%s(km)\n",Z_THRESHOLD);
+        fprintf(zFileTxt,"%lf\t%lf\t%lf\n",Lon,Lat,(Z_WRITE/-1000.00));
     }
     else // append to existing file
     {
         zFileTxt = fopen(zFile, "a");
-        fprintf(zFileTxt,"%lf\t%lf\t%lf\n",Lat,Lon,Z_WRITE);
+        fprintf(zFileTxt,"%lf\t%lf\t%lf\n",Lon,Lat,(Z_WRITE/-1000.00));
     }
     fclose(zFileTxt);
     
@@ -561,13 +561,23 @@ void writeVsFile(char *OUTPUT_DIR, double Lat, double Lon, double VsTotal, doubl
     if( latInd == 0) // if first time generate file
     {
         vsFileTxt = fopen(vsFile, "w");
-        fprintf(vsFileTxt,"Lat\tLon\tVs_%s(km/s)\n",VS_DEPTH);
-        fprintf(vsFileTxt,"%lf\t%lf\t%lf\n",Lat,Lon,VsTotal);
+        if (vsFileTxt == NULL)
+        {
+            printf("Unable to open file to write data to (%s).\n",vsFile);
+            exit(EXIT_FAILURE);
+        }
+        fprintf(vsFileTxt,"Lon\tLat\tVs_%s(km/s)\n",VS_DEPTH);
+        fprintf(vsFileTxt,"%lf\t%lf\t%lf\n",Lon,Lat,VsTotal);
     }
     else // append to existing file
     {
         vsFileTxt = fopen(vsFile, "a");
-        fprintf(vsFileTxt,"%lf\t%lf\t%lf\n",Lat,Lon,VsTotal);
+        if (vsFileTxt == NULL)
+        {
+            printf("Unable to append data to file (%s).\n",vsFile);
+            exit(EXIT_FAILURE);
+        }
+        fprintf(vsFileTxt,"%lf\t%lf\t%lf\n",Lon,Lat,VsTotal);
     }
     fclose(vsFileTxt);
     

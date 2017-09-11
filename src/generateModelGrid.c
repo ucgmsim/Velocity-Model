@@ -52,6 +52,10 @@ void generateFullModelGridGreatCircle(model_extent *MODEL_EXTENT, global_mesh *G
         printf("(EXTENT_ZMAX - EXTENT_Z_MAX) / EXTENT_Z_SPACING does not yield a whole number.\n");
         exit(EXIT_FAILURE);
     }
+    
+    GLOBAL_MESH->nX = round(MODEL_EXTENT->Xmax/MODEL_EXTENT->hLatLon);
+    GLOBAL_MESH->nY = round(MODEL_EXTENT->Ymax/MODEL_EXTENT->hLatLon);
+    GLOBAL_MESH->nZ = round((MODEL_EXTENT->Zmax-MODEL_EXTENT->Zmin) / MODEL_EXTENT->hDep);
 
     if (GLOBAL_MESH->nZ != 1)
     {

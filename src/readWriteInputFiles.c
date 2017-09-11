@@ -34,7 +34,7 @@ void writeSampleInputTextFiles(void)
     sprintf(fName,"%s/%s.txt",sampleDir,type);
     fNameWrite  = fopen(fName, "w");
     fprintf(fNameWrite,"CALL_TYPE=GENERATE_VELOCITY_MOD\n");
-    fprintf(fNameWrite,"MODEL_VERSION=1.65\n");
+    fprintf(fNameWrite,"MODEL_VERSION=1.66\n");
     fprintf(fNameWrite,"OUTPUT_DIR=Full_Velo_Mod\n");
     fprintf(fNameWrite,"ORIGIN_LAT=-43.60\n");
     fprintf(fNameWrite,"ORIGIN_LON=172.30\n");
@@ -46,7 +46,7 @@ void writeSampleInputTextFiles(void)
     fprintf(fNameWrite,"EXTENT_Z_SPACING=1.0\n");
     fprintf(fNameWrite,"EXTENT_LATLON_SPACING=1.0\n");
     fprintf(fNameWrite,"MIN_VS=0.5\n");
-    fprintf(fNameWrite,"TOPO_TYPE=BULLDOZED\n");
+    fprintf(fNameWrite,"TOPO_TYPE=SQUASHED_TAPERED\n");
     fclose(fNameWrite);
     
     //////////// EXTRACT_VELOCITY_SLICES
@@ -55,7 +55,7 @@ void writeSampleInputTextFiles(void)
     sprintf(fName,"%s/%s.txt",sampleDir,type);
     fNameWrite  = fopen(fName, "w");
     fprintf(fNameWrite,"CALL_TYPE=EXTRACT_VELOCITY_SLICES\n");
-    fprintf(fNameWrite,"MODEL_VERSION=1.65\n");
+    fprintf(fNameWrite,"MODEL_VERSION=1.66\n");
     fprintf(fNameWrite,"OUTPUT_DIR=Full_Velo_Mod\n");
     fprintf(fNameWrite,"ORIGIN_LAT=-43.60\n");
     fprintf(fNameWrite,"ORIGIN_LON=172.30\n");
@@ -67,7 +67,7 @@ void writeSampleInputTextFiles(void)
     fprintf(fNameWrite,"EXTENT_Z_SPACING=1.0\n");
     fprintf(fNameWrite,"EXTENT_LATLON_SPACING=1.0\n");
     fprintf(fNameWrite,"MIN_VS=0.5\n");
-    fprintf(fNameWrite,"TOPO_TYPE=BULLDOZED\n");
+    fprintf(fNameWrite,"TOPO_TYPE=SQUASHED_TAPERED\n");
     fprintf(fNameWrite,"EXTRACTED_SLICE_PARAMETERS_TEXTFILE=SecondaryInputFiles/SliceParametersExtracted.txt\n");
     fclose(fNameWrite);
     
@@ -77,10 +77,10 @@ void writeSampleInputTextFiles(void)
     sprintf(fName,"%s/%s.txt",sampleDir,type);
     fNameWrite  = fopen(fName, "w");
     fprintf(fNameWrite,"CALL_TYPE=GENERATE_VELOCITY_SLICES\n");
-    fprintf(fNameWrite,"MODEL_VERSION=1.65\n");
+    fprintf(fNameWrite,"MODEL_VERSION=1.66\n");
     fprintf(fNameWrite,"OUTPUT_DIR=Generated_Slices\n");
     fprintf(fNameWrite,"GENERATED_SLICE_PARAMETERS_TEXTFILE=SecondaryInputFiles/SliceParametersGenerated.txt\n");
-    fprintf(fNameWrite,"TOPO_TYPE=BULLDOZED\n");
+    fprintf(fNameWrite,"TOPO_TYPE=SQUASHED_TAPERED\n");
     fclose(fNameWrite);
     
     
@@ -91,7 +91,7 @@ void writeSampleInputTextFiles(void)
     sprintf(fName,"%s/%s.txt",sampleDir,type);
     fNameWrite  = fopen(fName, "w");
     fprintf(fNameWrite,"CALL_TYPE=GENERATE_PROFILE\n");
-    fprintf(fNameWrite,"MODEL_VERSION=1.65\n");
+    fprintf(fNameWrite,"MODEL_VERSION=1.66\n");
     fprintf(fNameWrite,"OUTPUT_DIR=Generated_Profile\n");
     fprintf(fNameWrite,"PROFILE_LAT=-43.60\n");
     fprintf(fNameWrite,"PROFILE_LON=172.30\n");
@@ -108,7 +108,7 @@ void writeSampleInputTextFiles(void)
     sprintf(fName,"%s/%s.txt",sampleDir,type);
     fNameWrite  = fopen(fName, "w");
     fprintf(fNameWrite,"CALL_TYPE=GENERATE_THRESHOLD\n");
-    fprintf(fNameWrite,"MODEL_VERSION=1.65\n");
+    fprintf(fNameWrite,"MODEL_VERSION=1.66\n");
     fprintf(fNameWrite,"OUTPUT_DIR=Generated_Threshold\n");
     fprintf(fNameWrite,"ORIGIN_LAT=-43.60\n");
     fprintf(fNameWrite,"ORIGIN_LON=172.30\n");
@@ -126,7 +126,7 @@ void writeSampleInputTextFiles(void)
     sprintf(fName,"%s/%s.txt",sampleDir,type);
     fNameWrite  = fopen(fName, "w");
     fprintf(fNameWrite,"CALL_TYPE=GENERATE_MULTIPLE_PROFILES\n");
-    fprintf(fNameWrite,"MODEL_VERSION=1.65\n");
+    fprintf(fNameWrite,"MODEL_VERSION=1.66\n");
     fprintf(fNameWrite,"OUTPUT_DIR=Multiple_Profiles\n");
     fprintf(fNameWrite,"PROFILE_MIN_VS=0.500\n");
     fprintf(fNameWrite,"TOPO_TYPE=BULLDOZED\n");
@@ -142,7 +142,7 @@ void writeSampleInputTextFiles(void)
     sprintf(fName,"%s/%s.txt",sampleDir,type);
     fNameWrite  = fopen(fName, "w");
     fprintf(fNameWrite,"CALL_TYPE=GENERATE_MULTIPLE_PROFILES\n");
-    fprintf(fNameWrite,"MODEL_VERSION=1.65\n");
+    fprintf(fNameWrite,"MODEL_VERSION=1.66\n");
     fprintf(fNameWrite,"OUTPUT_DIR=Multiple_Profiles\n");
     fprintf(fNameWrite,"PROFILE_MIN_VS=0.500\n");
     fprintf(fNameWrite,"TOPO_TYPE=BULLDOZED\n");
@@ -158,7 +158,7 @@ void writeSampleInputTextFiles(void)
     sprintf(fName,"%s/%s.txt",sampleDir,type);
     fNameWrite  = fopen(fName, "w");
     fprintf(fNameWrite,"CALL_TYPE=GENERATE_VELOCITIES_ON_GRID\n");
-    fprintf(fNameWrite,"MODEL_VERSION=1.65\n");
+    fprintf(fNameWrite,"MODEL_VERSION=1.66\n");
     fprintf(fNameWrite,"OUTPUT_DIR=Vs_At_Gridpoints\n");
     fprintf(fNameWrite,"TOPO_TYPE=BULLDOZED\n");
     fprintf(fNameWrite,"MIN_VS=0.500\n");

@@ -257,6 +257,7 @@ void writeProfileSurfaceDepths(global_model_parameters *GLOBAL_MODEL_PARAMETERS,
 {
     FILE *fp;
     char fName[MAX_FILENAME_STRING_LEN];
+    sprintf(fName,"%s/Profile/ProfileSurfaceDepths.txt", OUTPUT_DIR);
     fp = fopen(fName, "w");
     if (fp == NULL)
     {

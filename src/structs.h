@@ -348,6 +348,7 @@ typedef struct{
     double PROFILE_ZMIN;
     double SPACING_PROFILE;
     char *PROFILE_DEPTHS_TEXTFILE;
+    char *OUTPUT_TYPE;
 }gen_multi_profiles_call;
 
 typedef struct{

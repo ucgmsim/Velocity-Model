@@ -128,6 +128,7 @@ void writeSampleInputTextFiles(void)
     fprintf(fNameWrite,"CALL_TYPE=GENERATE_MULTIPLE_PROFILES\n");
     fprintf(fNameWrite,"MODEL_VERSION=1.66\n");
     fprintf(fNameWrite,"OUTPUT_DIR=Multiple_Profiles\n");
+    fprintf(fNameWrite,"OUTPUT_TYPE=1D_SITE_RESPONSE\n");
     fprintf(fNameWrite,"PROFILE_MIN_VS=0.500\n");
     fprintf(fNameWrite,"TOPO_TYPE=BULLDOZED\n");
     fprintf(fNameWrite,"COORDINATES_TEXTFILE=SecondaryInputFiles/MultipleProfileParameters.txt\n");
@@ -144,6 +145,7 @@ void writeSampleInputTextFiles(void)
     fprintf(fNameWrite,"CALL_TYPE=GENERATE_MULTIPLE_PROFILES\n");
     fprintf(fNameWrite,"MODEL_VERSION=1.66\n");
     fprintf(fNameWrite,"OUTPUT_DIR=Multiple_Profiles\n");
+    fprintf(fNameWrite,"OUTPUT_TYPE=1D_SITE_RESPONSE\n");
     fprintf(fNameWrite,"PROFILE_MIN_VS=0.500\n");
     fprintf(fNameWrite,"TOPO_TYPE=BULLDOZED\n");
     fprintf(fNameWrite,"COORDINATES_TEXTFILE=SecondaryInputFiles/MultipleProfileParameters.txt\n");
@@ -289,7 +291,7 @@ gen_multi_profiles_call readGenMultiProfileInputTextFile(char *fileName)
     GEN_MULTI_PROFILES_CALL.COORDINATES_TEXTFILE = readParameter(fileName,"COORDINATES_TEXTFILE");
     GEN_MULTI_PROFILES_CALL.PROFILE_MIN_VS = atof(readParameter(fileName,"PROFILE_MIN_VS"));
     GEN_MULTI_PROFILES_CALL.TOPO_TYPE = readParameter(fileName,"TOPO_TYPE");
-
+    GEN_MULTI_PROFILES_CALL.OUTPUT_TYPE = readParameter(fileName,"OUTPUT_TYPE");
     GEN_MULTI_PROFILES_CALL.SPACING_TYPE = readParameter(fileName,"SPACING_TYPE");
     if (strcmp(GEN_MULTI_PROFILES_CALL.SPACING_TYPE,"CONSTANT") == 0)
     {
@@ -451,8 +453,9 @@ variable_depth_points *readDepthPointsTextFile(char *depthsTextFile)
     }
     fscanf(file, "%d", &VARIABLE_DEPTH_POINTS->nDep);
 
-    if(VARIABLE_DEPTH_POINTS->nDep>=MAX_NUM_SLICES)
+    if(VARIABLE_DEPTH_POINTS->nDep>=DEP_GRID_DIM_MAX)
     {
+        printf("%i.\n",VARIABLE_DEPTH_POINTS->nDep);
         printf("Number of depth points in the text file exceeds the maximum allowable value of %i.\n",DEP_GRID_DIM_MAX);
         exit(EXIT_FAILURE);
     }

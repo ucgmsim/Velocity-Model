@@ -218,7 +218,7 @@ void writeMultipleProfiles(qualities_vector *QUALITIES_VECTOR, gen_multi_profile
             {
                 deltaDepth = MESH_VECTOR->Z[i] - MESH_VECTOR->Z[i-1]; // shifts the gridpoint to give layers in written file
             }
-            fprintf(fp,"\n%1.3lf \t %1.3lf \t %1.3lf \t %1.3lf \t %3.3lf \t %3.3lf",-deltaDepth/1000, QUALITIES_VECTOR->Vp[i],QUALITIES_VECTOR->Vs[i],QUALITIES_VECTOR->Rho[i], 41.0 + (34.0 * QUALITIES_VECTOR->Vs[i]),2.0*(41.0 + (34.0 * QUALITIES_VECTOR->Vs[i])));
+            fprintf(fp,"\n%1.3lf \t %1.3lf \t %1.3lf \t %1.3lf \t %3.3lf \t %3.3lf",-deltaDepth/1000, QUALITIES_VECTOR->Vp[i],QUALITIES_VECTOR->Vs[i],QUALITIES_VECTOR->Rho[i], 2.0*(41.0 + (34.0 * QUALITIES_VECTOR->Vs[i])),(41.0 + (34.0 * QUALITIES_VECTOR->Vs[i])));
         }
         fclose(fp);
         printf("1D Site response profile text file write complete.\n");

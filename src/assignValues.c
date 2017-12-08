@@ -41,7 +41,12 @@ void assignQualities(global_model_parameters *GLOBAL_MODEL_PARAMETERS, velo_mod_
     double depthChange;
 
     mesh_vector *SHIFTED_MESH_VECTOR = NULL;
-
+    
+    if(GLOBAL_MODEL_PARAMETERS->GTL == 1) // if GTL is required calculate the Vs30 for the lat-lon position
+    {
+        calculateVs30FromTomoVs30Surface(MESH_VECTOR,NZ_TOMOGRAPHY_DATA);
+    }
+    
     if(strcmp(TOPO_TYPE, "SQUASHED") == 0)
     {
         dZ = (MESH_VECTOR->Z[0] -  MESH_VECTOR->Z[1]);
@@ -86,7 +91,7 @@ void assignQualities(global_model_parameters *GLOBAL_MODEL_PARAMETERS, velo_mod_
         for (int k = 0; k < MESH_VECTOR->nZ; k++)
         {
             depthChange = - MESH_VECTOR->Z[k];
-            if(depthChange == 0)
+            if(depthChange == 0 || PARTIAL_GLOBAL_SURFACE_DEPTHS->dep[1] == 0)
             {
                 TAPER_VAL = 1.0;
             }
@@ -116,7 +121,7 @@ void assignQualities(global_model_parameters *GLOBAL_MODEL_PARAMETERS, velo_mod_
 
     int basinFlag = 0;
     double Z = 0;
-
+    double relativeDepth;
     for (int k = 0; k < MESH_VECTOR->nZ; k++)
     {
         if(strcmp(TOPO_TYPE, "BULLDOZED") == 0)
@@ -160,7 +165,7 @@ void assignQualities(global_model_parameters *GLOBAL_MODEL_PARAMETERS, velo_mod_
             }
             else if(strcmp(GLOBAL_MODEL_PARAMETERS->veloSubMod[nVeloModInd], "EPtomo2010subMod") == 0)
             {
-                EPtomo2010subMod(k, Z, MESH_VECTOR, QUALITIES_VECTOR, NZ_TOMOGRAPHY_DATA);
+                EPtomo2010subMod(k, Z, MESH_VECTOR, QUALITIES_VECTOR, NZ_TOMOGRAPHY_DATA, GLOBAL_MODEL_PARAMETERS, PARTIAL_GLOBAL_SURFACE_DEPTHS);
             }
             else if(strcmp(GLOBAL_MODEL_PARAMETERS->veloSubMod[nVeloModInd], "NaNsubMod") == 0)
             {
@@ -179,10 +184,11 @@ void assignQualities(global_model_parameters *GLOBAL_MODEL_PARAMETERS, velo_mod_
                 GenericSubModC(k, QUALITIES_VECTOR);
             }
         }
-        else if(Z > PARTIAL_GLOBAL_SURFACE_DEPTHS->dep[1]) // if Z is above the DEM (always the surf number 1) set vals as NAN
+        if(Z > PARTIAL_GLOBAL_SURFACE_DEPTHS->dep[1]) // if Z is above the DEM (always the surf number 1) set vals as NAN
         {
             NaNsubMod(k, QUALITIES_VECTOR);
         }
+
         basinFlag = 0;
 
     }
@@ -199,5 +205,7 @@ void assignQualities(global_model_parameters *GLOBAL_MODEL_PARAMETERS, velo_mod_
 
     free(SHIFTED_MESH_VECTOR);
 }
+
+
 
 

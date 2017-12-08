@@ -52,6 +52,7 @@ typedef struct{
     double *Lat;
     double Z[DEP_GRID_DIM_MAX];
     int nZ;
+    double Vs30;
 //    double referenceDepth;
 }mesh_vector;
 
@@ -242,6 +243,9 @@ typedef struct{
     char *basinBoundaryNames[MAX_NUM_BASINS][MAX_NUM_BASIN_BOUNDARIES];
     int basinBoundaryNumber[MAX_NUM_BASINS][MAX_NUM_BASIN_SURFACES];
     char *basinSubModelNames[MAX_NUM_BASINS][MAX_NUM_BASIN_SURFACES];
+    
+    // GTL
+    int GTL;
 }global_model_parameters;
 
 typedef struct{
@@ -471,7 +475,7 @@ typedef struct{
     int nSurf;
     double surfDeps[MAX_NUM_TOMO_SURFACES];
     global_surf_read *surf[3][MAX_NUM_TOMO_SURFACES]; // 3 for Vp Vs and Rho
-
+    global_surf_read *Vs30;
     
 //    
 //    int nLat[MAX_NUM_TOMO_SURFACES];

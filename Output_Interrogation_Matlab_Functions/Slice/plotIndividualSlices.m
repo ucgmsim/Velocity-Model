@@ -3,8 +3,8 @@ function plotIndividualSlices
 close all
 
 
-dirName{1} = 'Rapid_Model';
-% dirName{2} = '1.11';
+dirName{1} = 'Generated_Slices1.66';
+dirName{2} = 'Generated_Slices1.67';
 
 % dirName{2} = 'PreQFenceNZAllBasins';
 % dirName{1} = 'PreQFenceCantTomoOnly';
@@ -14,11 +14,11 @@ dirName{1} = 'Rapid_Model';
 % dirName{2} = 'v1.22';
 
 
-% type{1} = 'Generated';
-% type{2} = 'Generated';
+type{1} = 'Generated';
+type{2} = 'Generated';
 
-type{1} = 'Extracted';
-type{1} = 'Extracted';
+% type{1} = 'Extracted';
+% type{1} = 'Extracted';
 
 
 % type{3} = 'Generated';

@@ -50,6 +50,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion)
 
         
         GLOBAL_MODEL_PARAMETERS->nBasins = 0;
+        GLOBAL_MODEL_PARAMETERS->GTL = 0;
 
     }
     else if(strcmp(modelVersion,"0.02") == 0)
@@ -72,6 +73,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion)
         
         
         GLOBAL_MODEL_PARAMETERS->nBasins = 0;
+        GLOBAL_MODEL_PARAMETERS->GTL = 0;
         
     }
     else if(strcmp(modelVersion,"0.03") == 0)
@@ -98,6 +100,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion)
         
         
         GLOBAL_MODEL_PARAMETERS->nBasins = 0;
+        GLOBAL_MODEL_PARAMETERS->GTL = 0;
         
     }
     
@@ -221,6 +224,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion)
         GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[2][8] = 0;
         
         GLOBAL_MODEL_PARAMETERS->nBasins = 3;
+        GLOBAL_MODEL_PARAMETERS->GTL = 0;
     }
     // Model Version 0.1, 1D velocity sub Model
     else if(strcmp(modelVersion,"FULL_DOMAIN_PLOTTING") == 0)
@@ -248,6 +252,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion)
         
         
         GLOBAL_MODEL_PARAMETERS->nBasins = 0;
+        GLOBAL_MODEL_PARAMETERS->GTL = 0;
     }
 
     // Model Version 0.1, 1D velocity sub Model
@@ -272,7 +277,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion)
         
         
         GLOBAL_MODEL_PARAMETERS->nBasins = 1;
-
+        GLOBAL_MODEL_PARAMETERS->GTL = 0;
         // CANTERBURY Basin
         GLOBAL_MODEL_PARAMETERS->basin[0] = "CANTERBURY_BASIN_Q";
         GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[0] = 9;
@@ -346,6 +351,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion)
         GLOBAL_MODEL_PARAMETERS->tomographyName = "2010_Full_North_Island";
         
         GLOBAL_MODEL_PARAMETERS->nBasins = 0;
+        GLOBAL_MODEL_PARAMETERS->GTL = 0;
         
     }
     // Model Version 0.2, EP Tomography
@@ -363,6 +369,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion)
         GLOBAL_MODEL_PARAMETERS->veloSubMod[0] = "EPtomo2010subMod";
         
 //        GLOBAL_MODEL_PARAMETERS->nBasin = 0;
+        GLOBAL_MODEL_PARAMETERS->GTL = 0;
         
     }
     
@@ -735,6 +742,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion)
         
         
         GLOBAL_MODEL_PARAMETERS->nBasins = 0;
+        GLOBAL_MODEL_PARAMETERS->GTL = 0;
     }
     //  Model Version 1.02  w/ 1D velo mod (Cant. 1D v2)
     else if(strcmp(modelVersion,"1.02") == 0)
@@ -756,6 +764,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion)
         
         
         GLOBAL_MODEL_PARAMETERS->nBasins = 0;
+        GLOBAL_MODEL_PARAMETERS->GTL = 0;
     }
     //  Model Version 1.1  w/ Tomography
     else if(strcmp(modelVersion,"1.11") == 0)
@@ -776,11 +785,12 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion)
         // insert velocity submodel keywords and filenames (if necessary)
         GLOBAL_MODEL_PARAMETERS->veloSubMod[0] = "NaNsubMod";
         GLOBAL_MODEL_PARAMETERS->veloSubMod[1] = "EPtomo2010subMod";
-        GLOBAL_MODEL_PARAMETERS->tomographyName = "2010_Full_South_Island";
+        GLOBAL_MODEL_PARAMETERS->tomographyName = "2010_NZ";
         //GLOBAL_MODEL_PARAMETERS->tomographyName = "2010_Update_Canterbury";
         //GLOBAL_MODEL_PARAMETERS->tomographyName = "2010_Update_Hybrid";
         
         GLOBAL_MODEL_PARAMETERS->nBasins = 0;
+        GLOBAL_MODEL_PARAMETERS->GTL = 0;
     }
     //  Model Version 1.2  w/ 1D to basement w/ Tomography
     else if(strcmp(modelVersion,"1.21") == 0)
@@ -821,6 +831,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion)
         GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[0][1] = 0;
         
         GLOBAL_MODEL_PARAMETERS->nBasins = 1;
+        GLOBAL_MODEL_PARAMETERS->GTL = 0;
 
 
     }
@@ -859,6 +870,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion)
         GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[0][1] = 0;
         
         GLOBAL_MODEL_PARAMETERS->nBasins = 1;
+        GLOBAL_MODEL_PARAMETERS->GTL = 0;
 
         
         
@@ -905,6 +917,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion)
 
         
         GLOBAL_MODEL_PARAMETERS->nBasins = 1;
+        GLOBAL_MODEL_PARAMETERS->GTL = 0;
     }
     
     else if(strcmp(modelVersion,"1.32") == 0)
@@ -948,6 +961,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion)
         GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[0][2] = 0;
         
         GLOBAL_MODEL_PARAMETERS->nBasins = 1;
+        GLOBAL_MODEL_PARAMETERS->GTL = 0;
     }
     //  Model Version 1.4  w/ 1D to basement w/ Tomography w/ Paleogene + Miocene Basin layers
     else if(strcmp(modelVersion,"1.41") == 0)
@@ -995,6 +1009,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion)
         GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[0][3] = 0;
         
         GLOBAL_MODEL_PARAMETERS->nBasins = 1;
+        GLOBAL_MODEL_PARAMETERS->GTL = 0;
     }
     //  Model Version 1.5  w/ 1D to basement w/ Tomography w/ Paleogene + Miocene Basin layers w/ BPV Basin
     else if(strcmp(modelVersion,"1.51") == 0)
@@ -1058,6 +1073,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion)
         GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[1][1] = 0;
         
         GLOBAL_MODEL_PARAMETERS->nBasins = 2;
+        GLOBAL_MODEL_PARAMETERS->GTL = 0;
     }
     
     //  Model Version 1.6  w/ 1D to basement w/ Tomography w/ Paleogene + Miocene + Pliocene Basin layers (full PreqQ basin)
@@ -1127,6 +1143,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion)
         GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[1][1] = 0;
         
         GLOBAL_MODEL_PARAMETERS->nBasins = 2;
+        GLOBAL_MODEL_PARAMETERS->GTL = 0;
     }
     else if(strcmp(modelVersion,"1.62") == 0)
     {
@@ -1194,6 +1211,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion)
         GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[1][1] = 0;
         
         GLOBAL_MODEL_PARAMETERS->nBasins = 2;
+        GLOBAL_MODEL_PARAMETERS->GTL = 0;
     }
 
     else if(strcmp(modelVersion,"1.63") == 0)
@@ -1262,6 +1280,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion)
         GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[1][1] = 0;
         
         GLOBAL_MODEL_PARAMETERS->nBasins = 2;
+        GLOBAL_MODEL_PARAMETERS->GTL = 0;
     }
     else if(strcmp(modelVersion,"1.64") == 0)
     {
@@ -1329,6 +1348,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion)
         GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[1][1] = 0;
         
         GLOBAL_MODEL_PARAMETERS->nBasins = 2;
+        GLOBAL_MODEL_PARAMETERS->GTL = 0;
     }
     else if(strcmp(modelVersion,"1.65") == 0)
     {
@@ -1400,6 +1420,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion)
         GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[1][1] = 0;
         
         GLOBAL_MODEL_PARAMETERS->nBasins = 2;
+        GLOBAL_MODEL_PARAMETERS->GTL = 0;
     }
     else if(strcmp(modelVersion,"1.66") == 0)
     {
@@ -1471,6 +1492,79 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion)
         GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[1][1] = 0;
         
         GLOBAL_MODEL_PARAMETERS->nBasins = 2;
+        GLOBAL_MODEL_PARAMETERS->GTL = 0;
+    }
+    else if(strcmp(modelVersion,"1.67") == 0)
+    {
+        // define the number of surfaces and sub models
+        GLOBAL_MODEL_PARAMETERS->nSurf = 3;
+        GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 2;
+        
+        // insert surface surface keywords and filenames
+        GLOBAL_MODEL_PARAMETERS->surf[0] = "posInfSurf";
+        GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[0] = "Data/Global_Surfaces/posInf.in";
+        GLOBAL_MODEL_PARAMETERS->surf[1] = "DEM";
+        GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[1] = "Data/DEM/NZ_DEM.in";
+        GLOBAL_MODEL_PARAMETERS->surf[2] = "negInfSurf";
+        GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[2] = "Data/Global_Surfaces/negInf.in";
+        
+        // insert velocity submodel keywords and filenames (if necessary)
+        GLOBAL_MODEL_PARAMETERS->veloSubMod[0] = "NaNsubMod";
+        GLOBAL_MODEL_PARAMETERS->veloSubMod[1] = "EPtomo2010subMod";
+        GLOBAL_MODEL_PARAMETERS->tomographyName = "2010_NZ";
+        //GLOBAL_MODEL_PARAMETERS->tomographyName = "2010_Full_South_Island";
+        //GLOBAL_MODEL_PARAMETERS->tomographyName = "2010_Update_Canterbury";
+        //GLOBAL_MODEL_PARAMETERS->tomographyName = "2010_Update_Hybrid";
+        
+        
+        // CANTERBURY Basin (1D above basement)
+        GLOBAL_MODEL_PARAMETERS->basin[0] = "CANTERBURY_BASIN_1D";
+        GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[0] = 5;
+        GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[0] = 1;
+        GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[0][0] = "Data/Boundaries/CanterburyBasinBoundary.txt";
+        
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[0][0] = "DEM";
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[0][0] = "Data/DEM/DEM.in";
+        GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[0][0] = 0;
+        GLOBAL_MODEL_PARAMETERS->basinSubModelNames[0][0] = "Cant1D_v2_Pliocene_Enforced";
+        
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[0][1] = "PlioceneTop";
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[0][1] = "Data/Canterbury_Basin/Pre_Quaternary/Pliocene_46_v8p9p18.in";
+        GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[0][1] = 0;
+        GLOBAL_MODEL_PARAMETERS->basinSubModelNames[0][1] = "PlioceneSubMod_v1";
+        
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[0][2] = "MioceneTop";
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[0][2] = "Data/Canterbury_Basin/Pre_Quaternary/MioceneTop.in";
+        GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[0][2] = 0;
+        GLOBAL_MODEL_PARAMETERS->basinSubModelNames[0][2] = "MioceneSubMod_v1";
+        
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[0][3] = "PaleogeneTop";
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[0][3] = "Data/Canterbury_Basin/Pre_Quaternary/PaleogeneTop.in";
+        GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[0][3] = 0;
+        GLOBAL_MODEL_PARAMETERS->basinSubModelNames[0][3] = "PaleogeneSubMod_v1";
+        
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[0][4] = "BasementTopSurf";
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[0][4] = "Data/Canterbury_Basin/Quaternary/BasementTop.in";
+        GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[0][4] = 0;
+        
+        
+        // BPV Basin
+        GLOBAL_MODEL_PARAMETERS->basin[1] = "BPV_BASIN";
+        GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[1] = 2;
+        GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[1] = 1;
+        GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[1][0] = "Data/Boundaries/BPVBoundary.txt";
+        
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[1][0] = "BPVTop";
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[1][0] = "Data/Canterbury_Basin/BPV/BPVTop.in";
+        GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[1][0] = 0;
+        GLOBAL_MODEL_PARAMETERS->basinSubModelNames[1][0] = "BPVSubMod_v3";
+        
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[1][1] = "MioceneTop";
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[1][1] = "Data/Canterbury_Basin/Pre_Quaternary/MioceneTop.in";
+        GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[1][1] = 0;
+        
+        GLOBAL_MODEL_PARAMETERS->nBasins = 2;
+        GLOBAL_MODEL_PARAMETERS->GTL = 1;
     }
     else
     {

@@ -239,8 +239,8 @@ extern void writeVsFile(char *OUTPUT_DIR, double Lat, double Lon, double VsTotal
 extern void writeZThresholdFile(char *OUTPUT_DIR, double Lat, double Lon, double Z_WRITE, double latInd, char *Z_THRESHOLD);
 void calcAndSaveZThreshold(char *OUTPUT_DIR, partial_global_mesh *PARTIAL_GLOBAL_MESH, partial_global_qualities *PARTIAL_GLOBAL_QUALITIES, calculation_log *CALCULATION_LOG, char *Z_THRESHOLD, int latInd);
 extern void v30gtl(double vs30, double vt, double z, qualities_vector *QUALITIES_VECTOR, int zInd);
-
-
+extern double rhoFromVpBrocher(double vp);
+extern double vpFromVsBrocher(double vs);
 
 
 

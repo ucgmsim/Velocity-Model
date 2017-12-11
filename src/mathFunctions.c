@@ -598,7 +598,8 @@ void v30gtl(double vs30, double vt, double z, qualities_vector *QUALITIES_VECTOR
     f = z + b * (z - z * z);
     g = a - (a + 3.0 * c) * z + c * z * z + 2.0 * c * sqrt(z);
     QUALITIES_VECTOR->Vs[zInd] = (f * vt + g * vs30/1000);  //Vs30 must be in km/s
-
+    QUALITIES_VECTOR->Vp[zInd] = vpFromVsBrocher(QUALITIES_VECTOR->Vs[zInd]);
+    QUALITIES_VECTOR->Rho[zInd] = rhoFromVpBrocher(QUALITIES_VECTOR->Vp[zInd]);
     
     //printf("%f %f %f %f %f %f.\n",vs30/1000,z,f,g,vt,QUALITIES_VECTOR->Vs[zInd]);
 }

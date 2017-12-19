@@ -31,9 +31,15 @@ double rhoFromVpBrocher(double vp)
 {
     double density;
     
-    vp  = vp/1000;
-    
     density = vp*(1.6612+vp*(-.4721+vp*(.0671+vp*(-.0043+.000106*vp))));
     
-    return density*1000;
+    return density;
 }
+
+double vpFromVsBrocher(double vs)
+{
+    double vp;
+    vp = 0.9409 + 2.0947*vs - 0.8206*pow(vs,2) + 0.2683*pow(vs,3) - 0.0251*pow(vs,4);
+    return vp;
+}
+

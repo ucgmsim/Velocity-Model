@@ -100,22 +100,23 @@ Call type 4) GENERATE_PROFILE - All parameters must be set and the output direct
 - 9 PROFILE_MIN_VS (minimium shear wave velocity to enforce, in km/s - typically 0.5, set as 0.0 for no restriction)
 - 10 TOPO_TYPE (SQUASHED, BULLDOZED etc)
 
-Call type 5) GENERATE_MULTIPLE_PROFILES - Two different types: constant spacing, and irable spacing profile generation (the output directory must not exist)
+Call type 5) GENERATE_MULTIPLE_PROFILES - Two different types: constant spacing, and variable spacing profile generation (the output directory must not exist)
 
 - 1 CALL_TYPE=GENERATE_MULTIPLE_PROFILES
 - 2 MODEL_VERSION (model version - select from list of model versions at bottom of readme)
 - 3 OUTPUT_DIR (directory to save outputs to)
-- 4 PROFILE_MIN_VS (minimium shear wave velocity to enforce, in km/s - typically 0.5, set as 0.0 for no restriction)
-- 5 TOPO_TYPE (SQUASHED, BULLDOZED etc)
-- 6 COORDINATES_TEXTFILE (textfile location with coordinates to generate profiles at)
-- 7 SPACING_TYPE (Set as CONSTANT, or VARIABLE)
+- 4 OUTPUT_TYPE (Specify the toe of file output required - 1D_SITE_RESPONSE or STANDARD)
+- 5 PROFILE_MIN_VS (minimium shear wave velocity to enforce, in km/s - typically 0.5, set as 0.0 for no restriction)
+- 6 TOPO_TYPE (SQUASHED, BULLDOZED etc)
+- 7 COORDINATES_TEXTFILE (textfile location with coordinates to generate profiles at)
+- 8 SPACING_TYPE (Set as CONSTANT, or VARIABLE)
 Optional inputs
 if SPACING_TYPE=CONSTANT, then set:
-- 8 PROFILE_ZMIN (minimum depth of profile +ve downwards in km ie. -0.1 corresponds to the
-- 9 PROFILE_ZMAX (maximum depth of profile +ve downwards in km) 
-- 10 SPACING_PROFILE (z spacing of the profile in km)
+- 9 PROFILE_ZMIN (minimum depth of profile +ve downwards in km ie. -0.1 corresponds to the
+- 10 PROFILE_ZMAX (maximum depth of profile +ve downwards in km) 
+- 11 SPACING_PROFILE (z spacing of the profile in km)
 if SPACING_TYPE=VARIABLE, then set:
-- 11 PROFILE_DEPTHS_TEXTFILE (textfile location with vector of depths to prescribe velocities to)
+- 12 PROFILE_DEPTHS_TEXTFILE (textfile location with vector of depths to prescribe velocities to)
 
 Call type 6) GENERATE_THRESHOLD
 
@@ -221,3 +222,4 @@ Summary of velocity model version numbers
 - v1.65 Same as v1.64 with updated 1D velocity model to ensure Vs_1dmax < Vs_pliocene
 - 1D model version (Cant1D_v2_Pliocene_Enforced.fd_modfile)
 
+- v1.66 Same as v1.65 with updated pliocene layer model

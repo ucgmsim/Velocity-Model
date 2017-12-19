@@ -15,7 +15,7 @@
 #include "structs.h"
 #include "functions.h"
 
-void EPtomo2010subMod(int zInd, double dep, mesh_vector *MESH_VECTOR, qualities_vector *QUALITIES_VECTOR, nz_tomography_data *NZ_TOMOGRAPHY_DATA)
+void EPtomo2010subMod(int zInd, double dep, mesh_vector *MESH_VECTOR, qualities_vector *QUALITIES_VECTOR, nz_tomography_data *NZ_TOMOGRAPHY_DATA,global_model_parameters *GLOBAL_MODEL_PARAMETERS, partial_global_surface_depths *PARTIAL_GLOBAL_SURFACE_DEPTHS)
 /*
  Purpose:   calculate the rho vp and vs values at a single lat long point for all the depths within this velocity submodel
  
@@ -32,7 +32,7 @@ void EPtomo2010subMod(int zInd, double dep, mesh_vector *MESH_VECTOR, qualities_
  */
 {
     int count = 0;
-    
+    double relativeDepth;
     // find the indice of the first "surface" above the data point in question
     while(dep < NZ_TOMOGRAPHY_DATA->surfDeps[count]*1000)
     {
@@ -125,8 +125,20 @@ void EPtomo2010subMod(int zInd, double dep, mesh_vector *MESH_VECTOR, qualities_
         }
         
     }
+    
+    relativeDepth = PARTIAL_GLOBAL_SURFACE_DEPTHS->dep[1] - dep;
+    if(GLOBAL_MODEL_PARAMETERS->GTL == 1) // if GTL is required calculate the Vs30 for the lat-lon position
+    {
+        if (relativeDepth <= 350)
+        {
+            //printf("%f %f %f.\n",MESH_VECTOR->Vs30,PARTIAL_GLOBAL_SURFACE_DEPTHS->dep[1],dep);
+            v30gtl(MESH_VECTOR->Vs30, QUALITIES_VECTOR->Vs[zInd], relativeDepth, QUALITIES_VECTOR, zInd);
+            
+        }
+    }
     free(ADJACENT_POINTS);
     
+
 }
 
 void loadEPtomoSurfaceData(char *tomoType, nz_tomography_data *NZ_TOMOGRAPHY_DATA)
@@ -251,6 +263,10 @@ void loadEPtomoSurfaceData(char *tomoType, nz_tomography_data *NZ_TOMOGRAPHY_DAT
             
         }
     }
+    // load in Vs30 NZ surface
+    char vs30fileName[MAX_FILENAME_STRING_LEN];
+    sprintf(vs30fileName,"Data/Global_Surfaces/NZ_Vs30.in");
+    NZ_TOMOGRAPHY_DATA->Vs30 = loadGlobalSurface(vs30fileName);
 
 }
 
@@ -273,6 +289,30 @@ void freeEPtomoSurfaceData(nz_tomography_data *NZ_TOMOGRAPHY_DATA)
             
         }
     }
-    
+    free(NZ_TOMOGRAPHY_DATA->Vs30);
 }
+
+void calculateVs30FromTomoVs30Surface(mesh_vector *MESH_VECTOR, nz_tomography_data *NZ_TOMOGRAPHY_DATA)
+{
+    double X1, X2, Y1, Y2, Q11, Q12, Q21, Q22, X, Y;
+    adjacent_points *ADJACENT_POINTS;
+    global_surf_read *GLOBAL_SURF_READ;
+    GLOBAL_SURF_READ = NZ_TOMOGRAPHY_DATA->Vs30;
+    
+    // Vs30 calculation
+    ADJACENT_POINTS = findGlobalAdjacentPoints(GLOBAL_SURF_READ, *MESH_VECTOR->Lat, *MESH_VECTOR->Lon);
+    X1 = GLOBAL_SURF_READ->loni[ADJACENT_POINTS->lonInd[0]];
+    X2 = GLOBAL_SURF_READ->loni[ADJACENT_POINTS->lonInd[1]];
+    Y1 = GLOBAL_SURF_READ->lati[ADJACENT_POINTS->latInd[0]];
+    Y2 = GLOBAL_SURF_READ->lati[ADJACENT_POINTS->latInd[1]];
+    Q11 = GLOBAL_SURF_READ->raster[ADJACENT_POINTS->lonInd[0]][ADJACENT_POINTS->latInd[0]];
+    Q12 = GLOBAL_SURF_READ->raster[ADJACENT_POINTS->lonInd[0]][ADJACENT_POINTS->latInd[1]];
+    Q21 = GLOBAL_SURF_READ->raster[ADJACENT_POINTS->lonInd[1]][ADJACENT_POINTS->latInd[0]];
+    Q22 = GLOBAL_SURF_READ->raster[ADJACENT_POINTS->lonInd[1]][ADJACENT_POINTS->latInd[1]];
+    X = *MESH_VECTOR->Lon;
+    Y = *MESH_VECTOR->Lat;
+    MESH_VECTOR->Vs30 =  biLinearInterpolation(X1, X2, Y1, Y2, Q11, Q12, Q21, Q22, X, Y);
+    free(ADJACENT_POINTS);
+}
+
 

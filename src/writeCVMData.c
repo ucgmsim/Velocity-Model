@@ -190,7 +190,7 @@ void writeMultipleProfiles(qualities_vector *QUALITIES_VECTOR, gen_multi_profile
     {
         FILE *fp;
         char fName[MAX_FILENAME_STRING_LEN];
-        sprintf(fName,"%s/Profiles/Profile1DSiteRep%s.txt",OUTPUT_DIR,&MULTI_PROFILE_PARAMETERS->codes[profileNum]);
+        sprintf(fName,"%s/Profiles/%s.1d",OUTPUT_DIR,&MULTI_PROFILE_PARAMETERS->codes[profileNum]);
         fp = fopen(fName, "w");
         if (fp == NULL)
         {

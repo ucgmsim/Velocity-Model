@@ -4,8 +4,8 @@ close all
 
 
 dirName{1} = 'Generated_Slices1.67S';
-dirName{2} = 'Generated_Slices1.67ST';
-dirName{3} = 'Generated_Slices1.67T';
+% dirName{2} = 'Generated_Slices1.67ST';
+dirName{2} = 'Generated_Slices1.67T';
 % dirName{1} = 'v1.67_S';
 % dirName{2} = 'v1.66_ST';
 
@@ -20,7 +20,7 @@ dirName{3} = 'Generated_Slices1.67T';
 
 type{1} = 'Generated';
 type{2} = 'Generated';
-type{3} = 'Generated';
+% type{3} = 'Generated';
 % type{4} = 'Generated';
 
 % type{1} = 'Extracted';

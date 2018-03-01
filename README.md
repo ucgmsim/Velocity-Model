@@ -223,3 +223,6 @@ Summary of velocity model version numbers
 - 1D model version (Cant1D_v2_Pliocene_Enforced.fd_modfile)
 
 - v1.66 Same as v1.65 with updated pliocene layer model
+
+- v1.67 Same as v1.66 with ELY (2010) taper implemented in non-basin regions. New NZ-Wide HD DEM. Updated weathering in BPV region. 
+-

@@ -42,4 +42,10 @@ double vpFromVsBrocher(double vs)
     vp = 0.9409 + 2.0947*vs - 0.8206*pow(vs,2) + 0.2683*pow(vs,3) - 0.0251*pow(vs,4);
     return vp;
 }
-
+double vsFromVpBrocher(double Vp)
+{
+    double Vs;
+    
+    Vs = 0.7858 -  1.2344*Vp + 0.7949*pow(Vp,2) - 0.1238*pow(Vp,3)  + 0.0064*pow(Vp,4);
+    return Vs;
+}

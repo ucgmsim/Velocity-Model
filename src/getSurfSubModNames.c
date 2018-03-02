@@ -1504,7 +1504,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion)
         GLOBAL_MODEL_PARAMETERS->surf[0] = "posInfSurf";
         GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[0] = "Data/Global_Surfaces/posInf.in";
         GLOBAL_MODEL_PARAMETERS->surf[1] = "DEM";
-        GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[1] = "Data/DEM/NZ_DEM.in";
+        GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[1] = "Data/DEM/NZ_DEM_HD.in";
         GLOBAL_MODEL_PARAMETERS->surf[2] = "negInfSurf";
         GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[2] = "Data/Global_Surfaces/negInf.in";
         
@@ -1524,7 +1524,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion)
         GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[0][0] = "Data/Boundaries/CanterburyBasinBoundary.txt";
         
         GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[0][0] = "DEM";
-        GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[0][0] = "Data/DEM/DEM.in";
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[0][0] = "Data/DEM/CantDEM.in";
         GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[0][0] = 0;
         GLOBAL_MODEL_PARAMETERS->basinSubModelNames[0][0] = "Cant1D_v2_Pliocene_Enforced";
         
@@ -1557,7 +1557,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion)
         GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[1][0] = "BPVTop";
         GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[1][0] = "Data/Canterbury_Basin/BPV/BPVTop.in";
         GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[1][0] = 0;
-        GLOBAL_MODEL_PARAMETERS->basinSubModelNames[1][0] = "BPVSubMod_v3";
+        GLOBAL_MODEL_PARAMETERS->basinSubModelNames[1][0] = "BPVSubMod_v4";
         
         GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[1][1] = "MioceneTop";
         GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[1][1] = "Data/Canterbury_Basin/Pre_Quaternary/MioceneTop.in";

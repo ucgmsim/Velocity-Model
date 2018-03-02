@@ -16,7 +16,7 @@
 #include "functions.h"
 
 
-void assignBasinQualities(global_model_parameters *GLOBAL_MODEL_PARAMETERS, basin_data *BASIN_DATA, partial_basin_surface_depths *PARTIAL_BASIN_SURFACE_DEPTHS, qualities_vector *QUALITIES_VECTOR, double depth, int basinNum, int zInd)
+void assignBasinQualities(global_model_parameters *GLOBAL_MODEL_PARAMETERS, basin_data *BASIN_DATA, partial_basin_surface_depths *PARTIAL_BASIN_SURFACE_DEPTHS, partial_global_surface_depths *PARTIAL_GLOBAL_SURFACE_DEPTHS, qualities_vector *QUALITIES_VECTOR, double depth, int basinNum, int zInd)
 /*
  Purpose: assign Vp Vs and Rho to the individual grid point (determined by finding the surfaces adjacent to the grid point then using applicable sub-velocity model)
  
@@ -39,11 +39,12 @@ void assignBasinQualities(global_model_parameters *GLOBAL_MODEL_PARAMETERS, basi
     indBelow = determineBasinSurfaceBelow(GLOBAL_MODEL_PARAMETERS, PARTIAL_BASIN_SURFACE_DEPTHS, depth, basinNum);
     
 //    printf("%i %i %i %lf.\n",indAbove, basinNum, zInd, depth);
-    callBasinSubVelocityModels(GLOBAL_MODEL_PARAMETERS, BASIN_DATA, PARTIAL_BASIN_SURFACE_DEPTHS, QUALITIES_VECTOR,depth, indAbove, basinNum, zInd);
+    callBasinSubVelocityModels(GLOBAL_MODEL_PARAMETERS, BASIN_DATA, PARTIAL_BASIN_SURFACE_DEPTHS, PARTIAL_GLOBAL_SURFACE_DEPTHS, QUALITIES_VECTOR ,depth, indAbove, basinNum, zInd);
     
 }
 
-void callBasinSubVelocityModels(global_model_parameters *GLOBAL_MODEL_PARAMETERS, basin_data *BASIN_DATA, partial_basin_surface_depths *PARTIAL_BASIN_SURFACE_DEPTHS, qualities_vector *QUALITIES_VECTOR, double depth, int basinSubModelInd, int basinNum, int zInd)
+
+void callBasinSubVelocityModels(global_model_parameters *GLOBAL_MODEL_PARAMETERS, basin_data *BASIN_DATA, partial_basin_surface_depths *PARTIAL_BASIN_SURFACE_DEPTHS, partial_global_surface_depths *PARTIAL_GLOBAL_SURFACE_DEPTHS, qualities_vector *QUALITIES_VECTOR, double depth, int basinSubModelInd, int basinNum, int zInd)
 /*
  Purpose: assign Vp Vs and Rho to the individual grid point (by calling on the appropriate sub-velocity model)
  
@@ -102,6 +103,10 @@ void callBasinSubVelocityModels(global_model_parameters *GLOBAL_MODEL_PARAMETERS
     else if(strcmp(GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][basinSubModelInd], "BPVSubMod_v3") == 0)
     {
         BPVSubModelv3(zInd, QUALITIES_VECTOR, PARTIAL_BASIN_SURFACE_DEPTHS, basinNum, depth);
+    }
+    else if(strcmp(GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][basinSubModelInd], "BPVSubMod_v4") == 0)
+    {
+        BPVSubModelv4(zInd, QUALITIES_VECTOR, PARTIAL_BASIN_SURFACE_DEPTHS, PARTIAL_GLOBAL_SURFACE_DEPTHS, basinNum, depth);
     }
     
     // Quaternary models
@@ -365,6 +370,37 @@ void BPVSubModelv3(int zInd, qualities_vector *QUALITIES_VECTOR, partial_basin_s
         QUALITIES_VECTOR->Rho[zInd] = 2.393;
         QUALITIES_VECTOR->Vs[zInd] = 2.2818;
     }
+}
+void BPVSubModelv4(int zInd, qualities_vector *QUALITIES_VECTOR, partial_basin_surface_depths *PARTIAL_BASIN_SURFACE_DEPTHS, partial_global_surface_depths *PARTIAL_GLOBAL_SURFACE_DEPTHS, int basinNum, double depth)
+{
+    
+    double pointDepth, demDep, bpvTop, zDEMrelative, zBPVrelative, elyTaperDep, Vs30TaperDep, Vs0, VsDep, VsElyDep, VsBPVTop;
+    pointDepth = PARTIAL_BASIN_SURFACE_DEPTHS->dep[basinNum][0] - depth;
+    
+    demDep = PARTIAL_GLOBAL_SURFACE_DEPTHS->dep[1]; //value of the DEM
+    bpvTop = PARTIAL_BASIN_SURFACE_DEPTHS->dep[basinNum][0]; // value of the top of the BPV
+
+    zDEMrelative = demDep - depth; // depth of the gridpoint relative to the DEM
+    zBPVrelative = bpvTop - depth; // depth of the gridpoint relative to the BPV top
+    
+    elyTaperDep = 350;
+    Vs30TaperDep = 1000;
+    Vs0 = 0.700;
+    VsDep = 1.500;
+    VsElyDep = 2.2818;
+    
+    if ( zDEMrelative < Vs30TaperDep && zBPVrelative < elyTaperDep) // if point is in need of tapering
+    {
+        VsBPVTop = (Vs0 + ((VsDep - Vs0)* (zDEMrelative/Vs30TaperDep)))*1000;
+        v30gtl(VsBPVTop, VsElyDep, zBPVrelative, QUALITIES_VECTOR, zInd);
+    }
+    else
+    {
+        QUALITIES_VECTOR->Vp[zInd] = 4.0;
+        QUALITIES_VECTOR->Rho[zInd] = 2.393;
+        QUALITIES_VECTOR->Vs[zInd] = 2.2818;
+    }
+    
 }
 
 

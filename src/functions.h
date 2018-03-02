@@ -125,9 +125,9 @@ extern void enforceSurfaceDepths(global_model_parameters *GLOBAL_MODEL_PARAMETER
 extern void enforceBasinSurfaceDepths(basin_data *BASIN_DATA, global_model_parameters *GLOBAL_MODEL_PARAMETERS, in_basin *IN_BASIN, partial_basin_surface_depths *PARTIAL_BASIN_SURFACE_DEPTHS, mesh_vector *MESH_VECTOR);
 extern int determineBasinSurfaceBelow(global_model_parameters *GLOBAL_MODEL_PARAMETERS, partial_basin_surface_depths *PARTIAL_BASIN_SURFACE_DEPTHS, double depth, int basinNum);
 extern int determineBasinSurfaceAbove(global_model_parameters *GLOBAL_MODEL_PARAMETERS, partial_basin_surface_depths *PARTIAL_BASIN_SURFACE_DEPTHS, double depth, int basinNum);
-extern void assignBasinQualities(global_model_parameters *GLOBAL_MODEL_PARAMETERS, basin_data *BASIN_DATA, partial_basin_surface_depths *PARTIAL_BASIN_SURFACE_DEPTHS, qualities_vector *QUALITIES_VECTOR, double depth, int basinNum, int zInd);
+extern void assignBasinQualities(global_model_parameters *GLOBAL_MODEL_PARAMETERS, basin_data *BASIN_DATA, partial_basin_surface_depths *PARTIAL_BASIN_SURFACE_DEPTHS, partial_global_surface_depths *PARTIAL_GLOBAL_SURFACE_DEPTHS, qualities_vector *QUALITIES_VECTOR, double depth, int basinNum, int zInd);
 extern void loadBasinSubModelData(int basinNum, basin_data *BASIN_DATA, global_model_parameters *GLOBAL_MODEL_PARAMETERS);
-void callBasinSubVelocityModels(global_model_parameters *GLOBAL_MODEL_PARAMETERS, basin_data *BASIN_DATA, partial_basin_surface_depths *PARTIAL_BASIN_SURFACE_DEPTHS, qualities_vector *QUALITIES_VECTOR, double depth, int basinSubModelInd, int basinNum, int zInd);
+extern void callBasinSubVelocityModels(global_model_parameters *GLOBAL_MODEL_PARAMETERS, basin_data *BASIN_DATA, partial_basin_surface_depths *PARTIAL_BASIN_SURFACE_DEPTHS, partial_global_surface_depths *PARTIAL_GLOBAL_SURFACE_DEPTHS, qualities_vector *QUALITIES_VECTOR, double depth, int basinSubModelInd, int basinNum, int zInd);
  extern variable_depth_points *readDepthPointsTextFile(char *depthsTextFile);
 
 // surface functions
@@ -150,6 +150,10 @@ extern void plioceneSubModelv1(int zInd, qualities_vector *QUALITIES_VECTOR);
 extern void BPVSubModelv1(int zInd, qualities_vector *QUALITIES_VECTOR);
 extern void BPVSubModelv2(int zInd, qualities_vector *QUALITIES_VECTOR);
 extern void BPVSubModelv3(int zInd, qualities_vector *QUALITIES_VECTOR, partial_basin_surface_depths *PARTIAL_BASIN_SURFACE_DEPTHS, int basinNum, double depth);
+extern void BPVSubModelv4(int zInd, qualities_vector *QUALITIES_VECTOR, partial_basin_surface_depths *PARTIAL_BASIN_SURFACE_DEPTHS, partial_global_surface_depths *PARTIAL_GLOBAL_SURFACE_DEPTHS, int basinNum, double depth);
+
+
+
 extern void gravelSubModel(int zInd, qualities_vector *QUALITIES_VECTOR, partial_basin_surface_depths *PARTIAL_BASIN_SURFACE_DEPTHS, double depth, int basinNum);
 extern void marineSubModel(int zInd, qualities_vector *QUALITIES_VECTOR, partial_basin_surface_depths *PARTIAL_BASIN_SURFACE_DEPTHS, double depth, int basinNum);
 

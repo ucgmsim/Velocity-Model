@@ -9,6 +9,8 @@ Within the text file, the format must be:
 i.e. [Depth] 
 Depths are +ve downwards in km (ie -0.1 is 100m above mean sea level)
 
+if OUTPUT_TYPE=1D_SITE_RESPONSE, which writes profiles as layered models (not just velocities at grid points) be sure to specify depths proportional to the desired layer thicknesses 
+
 refer to ‘ProfileDepthPoints.txt’ for an example
 
 

@@ -200,23 +200,27 @@ void writeMultipleProfiles(qualities_vector *QUALITIES_VECTOR, gen_multi_profile
         fprintf(fp,"%i",MESH_VECTOR->nZ);
         float deltaDepth;
         
+        float depBot = 0;
         for(int i = 0; i < MESH_VECTOR->nZ; i++)
         {
             if(QUALITIES_VECTOR->Vs[i] <= GEN_MULTI_PROFILES_CALL.PROFILE_MIN_VS)
             {
                 QUALITIES_VECTOR->Vs[i] = GEN_MULTI_PROFILES_CALL.PROFILE_MIN_VS;
             }
-            if( i == 0 )
+            if( i == (MESH_VECTOR->nZ -1))
             {
-                deltaDepth = 2 * MESH_VECTOR->Z[0]; // shifts the gridpoint to give layers in written file
+                deltaDepth = -999999;
             }
-            else if ( i == (MESH_VECTOR->nZ -1))
+            else if( i == 0)
             {
-                deltaDepth = -999999; // shifts the gridpoint to give layers in written file
+                deltaDepth = 2 * MESH_VECTOR->Z[i]; // shifts the gridpoint to give layers in written file
+                depBot = deltaDepth;
             }
             else
             {
-                deltaDepth = MESH_VECTOR->Z[i] - MESH_VECTOR->Z[i-1]; // shifts the gridpoint to give layers in written file
+                deltaDepth = 2 * (MESH_VECTOR->Z[i] - depBot) ; // shifts the gridpoint to give layers in written file
+                depBot = depBot + deltaDepth;
+
             }
             fprintf(fp,"\n%1.3lf \t %1.3lf \t %1.3lf \t %1.3lf \t %3.3lf \t %3.3lf",-deltaDepth/1000, QUALITIES_VECTOR->Vp[i],QUALITIES_VECTOR->Vs[i],QUALITIES_VECTOR->Rho[i], 2.0*(41.0 + (34.0 * QUALITIES_VECTOR->Vs[i])),(41.0 + (34.0 * QUALITIES_VECTOR->Vs[i])));
         }

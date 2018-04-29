@@ -1,6 +1,6 @@
 # Velocity Model
 
-This is the repository for the source code for South Island Velocity Model (SIVM) generation and interrogation. The model generation is a serial process. There are five general call types which are outlined in this readme.
+This is the repository for the source code for South Island Velocity Model (SIVM) generation and interrogation. The model generation is a serial process. There are seven general call types which are outlined in this readme.
 
 To clone the code from the github repository:
 ```
@@ -110,12 +110,12 @@ Call type 5) GENERATE_MULTIPLE_PROFILES - Two different types: constant spacing,
 - 6 TOPO_TYPE (SQUASHED, BULLDOZED etc)
 - 7 COORDINATES_TEXTFILE (textfile location with coordinates to generate profiles at)
 - 8 SPACING_TYPE (Set as CONSTANT, or VARIABLE)
-Optional inputs
-if SPACING_TYPE=CONSTANT, then set:
+- Optional inputs
+- if SPACING_TYPE=CONSTANT, then set:
 - 9 PROFILE_ZMIN (minimum depth of profile +ve downwards in km ie. -0.1 corresponds to the
 - 10 PROFILE_ZMAX (maximum depth of profile +ve downwards in km) 
 - 11 SPACING_PROFILE (z spacing of the profile in km)
-if SPACING_TYPE=VARIABLE, then set:
+- if SPACING_TYPE=VARIABLE, then set:
 - 12 PROFILE_DEPTHS_TEXTFILE (textfile location with vector of depths to prescribe velocities to)
 
 Call type 6) GENERATE_THRESHOLD

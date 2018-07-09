@@ -5,8 +5,8 @@ close all
 
 % taylored to suit either one grid point location and different models or
 % different grid points for the same model
-dirName{1} = 'Multiple_Profiles';
-% dirName{2} = 'GeneratedProfile1D';
+dirName{1} = 'Generated_Profile_At';
+dirName{2} = 'Generated_Profile_Away';
 
 % dirName{2} = 'GeneratedProfileV0.2';
 % dirName{3} = 'GeneratedProfileV0.3';
@@ -69,6 +69,7 @@ for i = 1 : length(dirName)
  
 end
 
+
 if length(dirName) ~= 1
     if all(ver == ver(1)) % if all model versions are the same
         titleVp = sprintf('Vp profiles for model version %.1f',ver(1));
@@ -105,11 +106,11 @@ elseif length(dirName) == 1
     titleRho = sprintf('Rho profile');
     %         for i = 1 : profile.
 end
-zMin = -0.51;
-zMax = 0;
-axisVecVp = ([1.6 3.6 zMin zMax]);
-axisVecVs = ([0.3 2.0 zMin zMax]);
-axisVecRho = ([1.8 2.6 zMin zMax]);
+% zMin = -0.51;
+% zMax = 0;
+% axisVecVp = ([1.6 3.6 zMin zMax]);
+% axisVecVs = ([0.3 2.0 zMin zMax]);
+% axisVecRho = ([1.8 2.6 zMin zMax]);
 
 
     

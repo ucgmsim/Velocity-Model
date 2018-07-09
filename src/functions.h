@@ -38,13 +38,14 @@ extern void writeAllGlobalSurfaceDepths(slice_surface_depths *SLICE_SURFACE_DEPT
 
 
 // primary functions
-extern global_model_parameters *getGlobalModelParameters(char *modelVersion);
+extern global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO_TYPE);
 //extern surfaceDepthsGlobal *getSurfaceValues(surfNames *surfSubModNames);
 extern void loadAllGlobalData(global_model_parameters *GLOBAL_MODEL_PARAMETERS,calculation_log *CALCULATION_LOG, velo_mod_1d_data *VELO_MOD_1D_DATA, nz_tomography_data *NZ_TOMOGRAPHY_DATA, global_surfaces *GLOBAL_SURFACES, basin_data *BASIN_DATA);
 extern void generateFullModelGridPointRad(model_extent *MODEL_EXTENT, global_mesh *GLOBAL_MESH);
 extern void generateFullModelGridGreatCircle(model_extent *MODEL_EXTENT, global_mesh *GLOBAL_MESH);
 
 extern void assignQualities(global_model_parameters *GLOBAL_MODEL_PARAMETERS, velo_mod_1d_data *VELO_MOD_1D_DATA, nz_tomography_data *NZ_TOMOGRAPHY_DATA, global_surfaces *GLOBAL_SURFACES, basin_data *BASIN_DATA, mesh_vector *MESH_VECTOR,partial_global_surface_depths *PARTIAL_GLOBAL_SURFACE_DEPTHS, partial_basin_surface_depths *PARTIAL_BASIN_SURFACE_DEPTHS,in_basin *IN_BASIN, qualities_vector *QUALITIES_VECTOR, calculation_log *CALCULATION_LOG, char *TOPO_TYPE);
+extern void prescribeVelocities(global_model_parameters *GLOBAL_MODEL_PARAMETERS, velo_mod_1d_data *VELO_MOD_1D_DATA, nz_tomography_data *NZ_TOMOGRAPHY_DATA, global_surfaces *GLOBAL_SURFACES, basin_data *BASIN_DATA, mesh_vector *MESH_VECTOR,partial_global_surface_depths *PARTIAL_GLOBAL_SURFACE_DEPTHS, partial_basin_surface_depths *PARTIAL_BASIN_SURFACE_DEPTHS,in_basin *IN_BASIN, qualities_vector *QUALITIES_VECTOR, calculation_log *CALCULATION_LOG, char *TOPO_TYPE, int onBoundary);
 extern mesh_vector *extractMeshVector(partial_global_mesh *PARTIAL_GLOBAL_MESH, int lonInd);
 extern mesh_vector *extendMeshVector(partial_global_mesh *PARTIAL_GLOBAL_MESH, int nPts, double dZPt, int lonInd);
 
@@ -53,8 +54,10 @@ extern void writeGlobalQualities(char *OUTPUT_DIR, partial_global_mesh *PARTIAL_
 extern void loadGlobalSurfaceData(global_surfaces *GLOBAL_SURFACES, global_model_parameters *GLOBAL_MODEL_PARAMETERS);
 extern global_surf_read *loadGlobalSurface(char *fileName);
 extern basin_surf_read *loadBasinSurface(char *fileName);
-void loadBasinBoundaries(int basinNum, basin_data *BASIN_DATA, global_model_parameters *GLOBAL_MODEL_PARAMETERS);
+extern void loadBasinBoundaries(int basinNum, basin_data *BASIN_DATA, global_model_parameters *GLOBAL_MODEL_PARAMETERS);
+extern void loadSmoothBoundaries(nz_tomography_data *NZ_TOMOGRAPHY_DATA,char *fileName);
 extern void interpolateGlobalSurfaceDepths(global_surfaces *GLOBAL_SURFACES, mesh_vector *MESH_VECTOR ,partial_global_surface_depths *PARTIAL_GLOBAL_SURFACE_DEPTHS, calculation_log *CALCULATION_LOG);
+extern int determineIfWithinAnyBasinLatLon(basin_data *BASIN_DATA, global_model_parameters *GLOBAL_MODEL_PARAMETERS, double Lat, double Lon);
 extern void determineIfWithinBasinLatLon(basin_data *BASIN_DATA, global_model_parameters *GLOBAL_MODEL_PARAMETERS, in_basin *IN_BASIN, double Lat, double Lon);
 extern void interpolateBasinSurfaceDepths(basin_data *BASIN_DATA, global_model_parameters *GLOBAL_MODEL_PARAMETERS, in_basin *IN_BASIN, partial_basin_surface_depths *PARTIAL_BASIN_SURFACE_DEPTHS, mesh_vector *MESH_VECTOR);
 extern void runGenerateVelocityModel(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extract_velo_mod_call GEN_EXTRACT_VELO_MOD_CALL, calculation_log *CALCULATION_LOG);
@@ -190,7 +193,7 @@ extern partial_global_mesh *generateSlicePartialMesh(individual_slice_parameters
 extern void v1DsubMod(int zInd, double dep, qualities_vector *QUALITIES_VECTOR, velo_mod_1d_data *VELO_MOD_1D_DATA);
 extern void load1dVeloSubModel(char *fileName, velo_mod_1d_data *VELO_MOD_1D_DATA);
 
-extern void EPtomo2010subMod(int zInd, double dep, mesh_vector *MESH_VECTOR, qualities_vector *QUALITIES_VECTOR, nz_tomography_data *NZ_TOMOGRAPHY_DATA,global_model_parameters *GLOBAL_MODEL_PARAMETERS, partial_global_surface_depths *PARTIAL_GLOBAL_SURFACE_DEPTHS);
+extern void EPtomo2010subMod(int zInd, double dep, mesh_vector *MESH_VECTOR, qualities_vector *QUALITIES_VECTOR, nz_tomography_data *NZ_TOMOGRAPHY_DATA,global_model_parameters *GLOBAL_MODEL_PARAMETERS, partial_global_surface_depths *PARTIAL_GLOBAL_SURFACE_DEPTHS, int inAnyBasinLatLon, int onBoundary);
 extern void calculateVs30FromTomoVs30Surface(mesh_vector *MESH_VECTOR, nz_tomography_data *NZ_TOMOGRAPHY_DATA);
 extern void freeEPtomoSurfaceData(nz_tomography_data *NZ_TOMOGRAPHY_DATA);
 extern void loadEPtomoSurfaceData(char *tomoType, nz_tomography_data *NZ_TOMOGRAPHY_DATA);
@@ -242,7 +245,12 @@ extern void calcAndSaveVs(char *OUTPUT_DIR, partial_global_mesh *PARTIAL_GLOBAL_
 extern void writeVsFile(char *OUTPUT_DIR, double Lat, double Lon, double VsTotal, double latInd, char *VS_DEPTH);
 extern void writeZThresholdFile(char *OUTPUT_DIR, double Lat, double Lon, double Z_WRITE, double latInd, char *Z_THRESHOLD);
 void calcAndSaveZThreshold(char *OUTPUT_DIR, partial_global_mesh *PARTIAL_GLOBAL_MESH, partial_global_qualities *PARTIAL_GLOBAL_QUALITIES, calculation_log *CALCULATION_LOG, char *Z_THRESHOLD, int latInd);
-extern void v30gtl(double vs30, double vt, double z, qualities_vector *QUALITIES_VECTOR, int zInd);
+extern void v30gtl(double vs30, double vt, double z, double zt, qualities_vector *QUALITIES_VECTOR, int zInd);
+extern double dist(double p1x, double p1y, double p2x, double p2y);
+extern int bruteForce(smoothing_boundary *SMOOTHING_BOUNDARY, double originX, double originY);
+extern double min(float x, float y);
+extern int determineIfLatLonWithinSmoothingRegion(smoothing_boundary *SMOOTHING_BOUNDARY, mesh_vector *MESH_VECTOR);
+extern int pointOnVertex(basin_data *BASIN_DATA, int basinNum, int boundaryNum, double xLoc, double yLoc);
 extern double rhoFromVpBrocher(double vp);
 extern double vpFromVsBrocher(double vs);
 

@@ -13,6 +13,7 @@
 #include <assert.h>
 #include <sys/stat.h>
 #include <stdint.h>
+#include <float.h>
 #include "constants.h"
 #include "structs.h"
 #include "functions.h"
@@ -584,10 +585,10 @@ void writeVsFile(char *OUTPUT_DIR, double Lat, double Lon, double VsTotal, doubl
     
 }
 
-void v30gtl(double vs30, double vt, double z, qualities_vector *QUALITIES_VECTOR, int zInd)
+void v30gtl(double vs30, double vt, double z, double zt, qualities_vector *QUALITIES_VECTOR, int zInd)
 {
     // Vs30 Geotechnical Layer (GTL) based on Ely (2010)
-    double zt=350.0;
+//    double zt=350.0;
     double a=0.5;
     double b=2.0/3.0;
     double c=2;
@@ -604,6 +605,73 @@ void v30gtl(double vs30, double vt, double z, qualities_vector *QUALITIES_VECTOR
     //printf("%f %f %f %f %f %f.\n",vs30/1000,z,f,g,vt,QUALITIES_VECTOR->Vs[zInd]);
 }
 
+
+
+// A utility function to find the distance between two Pts
+double dist(double p1x, double p1y, double p2x, double p2y)
+{
+    return sqrt( (p1x - p2x)*(p1x - p2x) + (p1y - p2y)*(p1y - p2y));
+}
+
+
+// brute force method for determining the closest point to the origin point
+int bruteForce(smoothing_boundary *SMOOTHING_BOUNDARY, double originX, double originY)
+{
+    int pointInd = 0;
+    double min = FLT_MAX;
+    double distance;
+    double locationLatLon[2];
+    for (int i = 0; i < SMOOTHING_BOUNDARY->n; ++i)
+    {
+        locationLatLon[0] = SMOOTHING_BOUNDARY->yPts[i];
+        locationLatLon[1] = SMOOTHING_BOUNDARY->xPts[i];
+        distance = LatLonToDistance(locationLatLon, originY, originX);
+//        distance = dist(SMOOTHING_BOUNDARY->xPts[i], SMOOTHING_BOUNDARY->yPts[i], , );
+        if (distance < min)
+        {
+            min = distance;
+            pointInd = i;
+        }
+    }
+    return pointInd;
+}
+
+//find minimum of two float values
+double min(float x, float y)
+{
+    return (x < y)? x : y;
+}
+
+int determineIfLatLonWithinSmoothingRegion(smoothing_boundary *SMOOTHING_BOUNDARY, mesh_vector *MESH_VECTOR)
+{
+    int closestInd;
+    double distance;
+    closestInd = bruteForce(SMOOTHING_BOUNDARY, *MESH_VECTOR->Lon, *MESH_VECTOR->Lat);
+    double locationLatLon[2];
+    locationLatLon[0] = SMOOTHING_BOUNDARY->yPts[closestInd];
+    locationLatLon[1] = SMOOTHING_BOUNDARY->xPts[closestInd];
+    
+    distance = LatLonToDistance(locationLatLon, *MESH_VECTOR->Lat, *MESH_VECTOR->Lon);
+//    distance = dist(SMOOTHING_BOUNDARY->xPts[closestInd], SMOOTHING_BOUNDARY->yPts[closestInd],  *MESH_VECTOR->Lon, *MESH_VECTOR->Lat);
+    return closestInd;
+}
+
+int pointOnVertex(basin_data *BASIN_DATA, int basinNum, int boundaryNum, double xLoc, double yLoc)
+/*
+ Purpose: to determine if a lat - lon point is one of those that define the boundary
+ */
+{
+    int onVertex = 0;
+    for (int i = 0; i < BASIN_DATA->boundaryNumPoints[basinNum][boundaryNum]; i++)
+    {
+        if (BASIN_DATA->boundaryLat[basinNum][boundaryNum][i] == yLoc && BASIN_DATA->boundaryLon[basinNum][boundaryNum][i] == xLoc)
+        {
+            onVertex = 1;
+            return onVertex;
+        }
+    }
+    return onVertex;
+}
 
 
 

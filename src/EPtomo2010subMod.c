@@ -276,7 +276,7 @@ void loadEPtomoSurfaceData(char *tomoType, nz_tomography_data *NZ_TOMOGRAPHY_DAT
     
     else if (strcmp(tomoType, "2010_NZ_OFFSHORE") == 0)
     {
-        nElev = 3; //20; // read in only the necessary surfaces
+        nElev = 20; // read in only the necessary surfaces
         elev[0] = 15;
         elev[1] = 1;
         elev[2] = -3;

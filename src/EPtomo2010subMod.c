@@ -153,12 +153,13 @@ void EPtomo2010subMod(int zInd, double dep, mesh_vector *MESH_VECTOR, qualities_
             v30gtl(MESH_VECTOR->Vs30, QUALITIES_VECTOR->Vs[zInd], relativeDepth, elyTaperDepth, QUALITIES_VECTOR, zInd);
             
         }
+//        else
+//        {
+//            printf("Point within seismic tomography offshore tapering failed. Exiting.\n");
+//            exit(EXIT_FAILURE);
+//        }
     }
-    else
-    {
-        printf("Point within seismic tomography offshore tapering failed. Exiting.\n");
-        exit(EXIT_FAILURE);
-    }
+
     free(ADJACENT_POINTS);
     
 

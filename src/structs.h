@@ -46,7 +46,7 @@ typedef struct{
     int nX, nY, nZ;
 }partial_global_mesh;
 
-// individual point v
+// individual point vector
 typedef struct{
     double *Lon;
     double *Lat;
@@ -246,6 +246,9 @@ typedef struct{
     
     // GTL
     int GTL;
+    
+    // basin edge smoothing flag
+    int BasinEdgeSmoothing;
 }global_model_parameters;
 
 typedef struct{
@@ -470,23 +473,24 @@ typedef struct{
     int xyIndFlag[LON_GRID_DIM_MAX][LAT_GRID_DIM_MAX];
 }read_flags;
 
+typedef struct{
+    int n;
+    double xPts[MAX_NUM_POINTS_SMOOTH_VEC];
+    double yPts[MAX_NUM_POINTS_SMOOTH_VEC];
+}smoothing_boundary;
+
 
 typedef struct{
     int nSurf;
     double surfDeps[MAX_NUM_TOMO_SURFACES];
     global_surf_read *surf[3][MAX_NUM_TOMO_SURFACES]; // 3 for Vp Vs and Rho
     global_surf_read *Vs30;
-    
-//    
-//    int nLat[MAX_NUM_TOMO_SURFACES];
-//    int nLon[MAX_NUM_TOMO_SURFACES];
-//    double maxLat[MAX_NUM_TOMO_SURFACES], minLat[MAX_NUM_TOMO_SURFACES], maxLon[MAX_NUM_TOMO_SURFACES], minLon[MAX_NUM_TOMO_SURFACES];
-//    double lati[MAX_NUM_TOMO_SURFACES][SURF_IN_DIM_MAX_TOMO];
-//    double loni[MAX_NUM_TOMO_SURFACES][SURF_IN_DIM_MAX_TOMO];
-//    double Vp[MAX_NUM_TOMO_SURFACES][SURF_IN_DIM_MAX_TOMO][SURF_IN_DIM_MAX_TOMO];
-//    double Vs[MAX_NUM_TOMO_SURFACES][SURF_IN_DIM_MAX_TOMO][SURF_IN_DIM_MAX_TOMO];
-//    double Rho[MAX_NUM_TOMO_SURFACES][SURF_IN_DIM_MAX_TOMO][SURF_IN_DIM_MAX_TOMO];
+    // for smoothing
+    int nPtsSmoothVec;
+    smoothing_boundary *smooth_boundary;
+    int specialOffshoreTapering;
 }nz_tomography_data;
+
 
 
 

@@ -15,7 +15,7 @@
 #include "structs.h"
 #include "functions.h"
 
-void EPtomo2010subMod(int zInd, double dep, mesh_vector *MESH_VECTOR, qualities_vector *QUALITIES_VECTOR, nz_tomography_data *NZ_TOMOGRAPHY_DATA,global_model_parameters *GLOBAL_MODEL_PARAMETERS, partial_global_surface_depths *PARTIAL_GLOBAL_SURFACE_DEPTHS)
+void EPtomo2010subMod(int zInd, double dep, mesh_vector *MESH_VECTOR, qualities_vector *QUALITIES_VECTOR, nz_tomography_data *NZ_TOMOGRAPHY_DATA,global_model_parameters *GLOBAL_MODEL_PARAMETERS, partial_global_surface_depths *PARTIAL_GLOBAL_SURFACE_DEPTHS, int inAnyBasinLatLon, int onBoundary)
 /*
  Purpose:   calculate the rho vp and vs values at a single lat long point for all the depths within this velocity submodel
  
@@ -125,17 +125,41 @@ void EPtomo2010subMod(int zInd, double dep, mesh_vector *MESH_VECTOR, qualities_
         }
         
     }
-    
+    double elyTaperDepth;
     relativeDepth = PARTIAL_GLOBAL_SURFACE_DEPTHS->dep[1] - dep;
-    if(GLOBAL_MODEL_PARAMETERS->GTL == 1) // if GTL is required calculate the Vs30 for the lat-lon position
+    // if GTL and no special offshore smoothing
+    if(GLOBAL_MODEL_PARAMETERS->GTL == 1 &&  NZ_TOMOGRAPHY_DATA->specialOffshoreTapering == 0)
     {
         if (relativeDepth <= 350)
         {
-            //printf("%f %f %f.\n",MESH_VECTOR->Vs30,PARTIAL_GLOBAL_SURFACE_DEPTHS->dep[1],dep);
-            v30gtl(MESH_VECTOR->Vs30, QUALITIES_VECTOR->Vs[zInd], relativeDepth, QUALITIES_VECTOR, zInd);
+            elyTaperDepth = 350;
+            v30gtl(MESH_VECTOR->Vs30, QUALITIES_VECTOR->Vs[zInd], relativeDepth, elyTaperDepth, QUALITIES_VECTOR, zInd);
             
         }
     }
+    // if GTL AND special offshore smoothing
+    
+    else if(GLOBAL_MODEL_PARAMETERS->GTL == 1 &&  NZ_TOMOGRAPHY_DATA->specialOffshoreTapering == 1)
+    {
+        if (relativeDepth <= 1000 && MESH_VECTOR->Vs30 < 100 && inAnyBasinLatLon == 0 && onBoundary != 1) // if less than 1km and offshore (vs30 in offshore = 50m/s, allow some variability for interpolation)
+        {
+            elyTaperDepth = 1000;
+            v30gtl(MESH_VECTOR->Vs30, QUALITIES_VECTOR->Vs[zInd], relativeDepth, elyTaperDepth, QUALITIES_VECTOR, zInd);
+            
+        }
+        else if (relativeDepth <= 350) // if not offshore, apply regular taper
+        {
+            elyTaperDepth = 350;
+            v30gtl(MESH_VECTOR->Vs30, QUALITIES_VECTOR->Vs[zInd], relativeDepth, elyTaperDepth, QUALITIES_VECTOR, zInd);
+            
+        }
+//        else
+//        {
+//            printf("Point within seismic tomography offshore tapering failed. Exiting.\n");
+//            exit(EXIT_FAILURE);
+//        }
+    }
+
     free(ADJACENT_POINTS);
     
 
@@ -157,6 +181,8 @@ void loadEPtomoSurfaceData(char *tomoType, nz_tomography_data *NZ_TOMOGRAPHY_DAT
     varNames[0] = "vp", varNames[1] = "vs", varNames[2] = "rho";
     int elev[30];
     int nElev;
+    char vs30fileName[MAX_FILENAME_STRING_LEN];
+    char tomoDirectory[MAX_FILENAME_STRING_LEN];
 
     if(strcmp(tomoType, "2010_Full_South_Island") == 0)
     {
@@ -181,18 +207,9 @@ void loadEPtomoSurfaceData(char *tomoType, nz_tomography_data *NZ_TOMOGRAPHY_DAT
         elev[17] = -370;
         elev[18] = -620;
         elev[19] = -750;
-    }
-    else if(strcmp(tomoType, "2010_Update_Canterbury") == 0)
-    {
-//        nElev = 21;
-//        int elev[21] = {15, 1, -3, -5, -8, -11, -15, -23, -30, -38, -48, -65, -85, -105, -130, -155, -185, -225, -275, -370, -630};
-
-    }
-    else if (strcmp(tomoType, "2010_Update_Hybrid") == 0)
-    {
-//        int nElev = 20;
-//        int elev[20] = {10, 1, -5, -8, -11, -15, -23, -30, -38, -48, -65, -85, -105, -130, -155, -185, -225, -275, -370, -620};
-
+        
+        sprintf(tomoDirectory,"2010_Full_South_Island");
+        NZ_TOMOGRAPHY_DATA->specialOffshoreTapering = 0;
     }
     else if (strcmp(tomoType, "2010_Full_North_Island") == 0)
     {
@@ -218,6 +235,9 @@ void loadEPtomoSurfaceData(char *tomoType, nz_tomography_data *NZ_TOMOGRAPHY_DAT
         elev[18] = -620;
         elev[19] = -750;
         printf("Loading North Island Tomography.\n");
+        sprintf(tomoDirectory,"2010_Full_North_Island");
+        NZ_TOMOGRAPHY_DATA->specialOffshoreTapering = 0;
+
 
         
     }
@@ -245,6 +265,48 @@ void loadEPtomoSurfaceData(char *tomoType, nz_tomography_data *NZ_TOMOGRAPHY_DAT
         elev[18] = -620;
         elev[19] = -750;
         printf("Loading NZ Tomography.\n");
+        
+        // load in Vs30 NZ surface
+        sprintf(vs30fileName,"Data/Global_Surfaces/NZ_Vs30.in");
+        NZ_TOMOGRAPHY_DATA->Vs30 = loadGlobalSurface(vs30fileName);
+        
+        sprintf(tomoDirectory,"2010_NZ");
+        NZ_TOMOGRAPHY_DATA->specialOffshoreTapering = 0;
+
+    }
+    
+    else if (strcmp(tomoType, "2010_NZ_OFFSHORE") == 0)
+    {
+        nElev = 20; // read in only the necessary surfaces
+        elev[0] = 15;
+        elev[1] = 1;
+        elev[2] = -3;
+        elev[3] = -8;
+        elev[4] = -15;
+        elev[5] = -23;
+        elev[6] = -30;
+        elev[7] = -38;
+        elev[8] = -48;
+        elev[9] = -65;
+        elev[10] = -85;
+        elev[11] = -105;
+        elev[12] = -130;
+        elev[13] = -155;
+        elev[14] = -185;
+        elev[15] = -225;
+        elev[16] = -275;
+        elev[17] = -370;
+        elev[18] = -620;
+        elev[19] = -750;
+        printf("Loading NZ Tomography.\n");
+        
+        // load in Vs30 NZ surface
+        sprintf(vs30fileName,"Data/Global_Surfaces/NZ_Vs30_HD_With_Offshore.in");
+        NZ_TOMOGRAPHY_DATA->Vs30 = loadGlobalSurface(vs30fileName);
+        
+        sprintf(tomoDirectory,"2010_NZ");
+        NZ_TOMOGRAPHY_DATA->specialOffshoreTapering = 1;
+
     }
     
     char baseFilename[MAX_FILENAME_STRING_LEN];
@@ -257,18 +319,25 @@ void loadEPtomoSurfaceData(char *tomoType, nz_tomography_data *NZ_TOMOGRAPHY_DAT
         NZ_TOMOGRAPHY_DATA->surfDeps[i] = elev[i]; // depth in km
         for(int j = 0; j < 3; j++)
         {
-            sprintf(baseFilename,"Data/Tomography/%s/surf_tomography_%s_elev%i.in",tomoType,varNames[j],elev[i]);
+            sprintf(baseFilename,"Data/Tomography/%s/surf_tomography_%s_elev%i.in",tomoDirectory,varNames[j],elev[i]);
             // read the surface
             NZ_TOMOGRAPHY_DATA->surf[j][i] = loadGlobalSurface(baseFilename);
             
         }
     }
-    // load in Vs30 NZ surface
-    char vs30fileName[MAX_FILENAME_STRING_LEN];
-    sprintf(vs30fileName,"Data/Global_Surfaces/NZ_Vs30.in");
-    NZ_TOMOGRAPHY_DATA->Vs30 = loadGlobalSurface(vs30fileName);
+
+    
+    // load in vector containing basin 'wall-type' boundaries to apply smoothing near
+    char boundaryVecFilename[MAX_FILENAME_STRING_LEN];
+    sprintf(boundaryVecFilename,"Data/Boundaries/SmoothBoundaryVec.txt");
+    
+    NZ_TOMOGRAPHY_DATA->smooth_boundary = malloc(sizeof(smoothing_boundary));
+    
+    loadSmoothBoundaries(NZ_TOMOGRAPHY_DATA,boundaryVecFilename);
 
 }
+
+
 
 void freeEPtomoSurfaceData(nz_tomography_data *NZ_TOMOGRAPHY_DATA)
 /*
@@ -290,6 +359,7 @@ void freeEPtomoSurfaceData(nz_tomography_data *NZ_TOMOGRAPHY_DATA)
         }
     }
     free(NZ_TOMOGRAPHY_DATA->Vs30);
+    free(NZ_TOMOGRAPHY_DATA->smooth_boundary);
 }
 
 void calculateVs30FromTomoVs30Surface(mesh_vector *MESH_VECTOR, nz_tomography_data *NZ_TOMOGRAPHY_DATA)

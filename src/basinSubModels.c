@@ -392,7 +392,7 @@ void BPVSubModelv4(int zInd, qualities_vector *QUALITIES_VECTOR, partial_basin_s
     if ( zDEMrelative < Vs30TaperDep && zBPVrelative < elyTaperDep) // if point is in need of tapering
     {
         VsBPVTop = (Vs0 + ((VsDep - Vs0)* (zDEMrelative/Vs30TaperDep)))*1000;
-        v30gtl(VsBPVTop, VsElyDep, zBPVrelative, QUALITIES_VECTOR, zInd);
+        v30gtl(VsBPVTop, VsElyDep, zBPVrelative, elyTaperDep, QUALITIES_VECTOR, zInd);
     }
     else
     {

@@ -27,16 +27,18 @@
 int main(int argc, char *argv[])
 {
 
-//    int main(void)
-//    {
+//int main(void)
+//{
 //    int argc = 2;
 //    char *argv[2];
-//    argv[1] = "Generate_QSlices.txt";
+//    argv[1] = "GENERATE_PROFILE_testing.txt";
 
 
 //    argv[1] = "Sample_Input_Text_Files/GENERATE_MULTIPLE_PROFILES.txt";
 //    argv[1] = "Sample_Input_Text_Files/GENERATE_VELOCITY_MOD.txt";
-//    argv[1] = "Sample_Input_Text_Files/GENERATE_PROFILE.txt";
+//    argv[1] = "GENERATE_PROFILE_testing.txt";
+//        argv[1] = "Rapid_Model_Parameters_Extract.txt";
+
 //    argv[1] = "Sample_Input_Text_Files/GENERATE_THRESHOLD.txt";
 //    argv[1] = "Sample_Input_Text_Files/GENERATE_VELOCITY_SLICES.txt";
 //    argv[1] = "Sample_Input_Text_Files/GENERATE_MULTIPLE_PROFILES(constant_spacing_example).txt";

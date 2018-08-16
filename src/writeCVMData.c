@@ -392,12 +392,12 @@ void writeAllGlobalSurfaceDepths(slice_surface_depths *SLICE_SURFACE_DEPTHS, par
     char sliceDir[MAX_FILENAME_STRING_LEN];
     sprintf(sliceDir,"%s/Generated_Slices",OUTPUT_DIR);
     
-    static int sCount = 0;
-    sCount += 1;
+    static int sCountBasin = 0;
+    sCountBasin += 1;
     
     FILE *fp;
     char fName[MAX_FILENAME_STRING_LEN];
-    sprintf(fName,"%s/SliceSurfaceDepthsGlobal%i.txt",sliceDir,sCount);
+    sprintf(fName,"%s/SliceSurfaceDepthsGlobal%i.txt",sliceDir,sCountBasin);
     fp = fopen(fName, "w");
     fprintf(fp, "Lat\tLon\t");
     for(int k = 0; k < GLOBAL_MODEL_PARAMETERS->nSurf; k++)

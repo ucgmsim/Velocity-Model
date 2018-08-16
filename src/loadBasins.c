@@ -351,6 +351,71 @@ adjacent_points *findBasinAdjacentPoints(basin_surf_read *BASIN_SURF_READ, doubl
 }
 
 
+int determineIfWithinAnyBasinLatLon(basin_data *BASIN_DATA, global_model_parameters *GLOBAL_MODEL_PARAMETERS, double Lat, double Lon)
+/*
+ Purpose: determine if a point lies within the different basin boundaries
+ 
+ Input variables:
+ *BASIN_DATA - struct containing basin data (surfaces submodels etc)
+ *GLOBAL_MODEL_PARAMETERS - struct containing all model parameters (surface names, submodel names, basin names etc)
+ Lat - latitude value of point of concern
+ Lon - longitude value of point of concern
+ 
+ Output variables:
+ n.a.
+ */
+{
+    int basinFlag = 0;
+    int inPoly;
+    for( int i = 0; i < GLOBAL_MODEL_PARAMETERS->nBasins; i++)
+    {
+        for( int j = 0; j < GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[i]; j++)
+        {
+            if(Lon > BASIN_DATA->maxLonBoundary[i][j])
+            {
+                basinFlag = 0;
+            }
+            else if(Lon < BASIN_DATA->minLonBoundary[i][j])
+            {
+                basinFlag = 0;
+            }
+            else if(Lat > BASIN_DATA->maxLatBoundary[i][j])
+            {
+                basinFlag = 0;
+            }
+            else if(Lat < BASIN_DATA->minLatBoundary[i][j])
+            {
+                basinFlag = 0;
+            }
+            else
+            {
+                basinFlag = 1; // possibly in basin
+            }
+            
+            // assign flag to indicate if point is inside(1) or outside(0) basin
+            if(basinFlag == 0)
+            {
+//                return 0;
+            }
+            else if(basinFlag == 1)
+            {
+                inPoly = pointInPoly(BASIN_DATA, i, j, Lon, Lat); // check if in poly
+                if(inPoly == 1) // inside poly, check depth points at a later stage
+                {
+                    return 1; // inside a basin (any)
+                }
+                else if(inPoly == 0) // outside poly
+                {
+//                    return 0;
+                }
+                basinFlag = 0;
+            }
+            
+        }
+    }
+    return 0; // inside no basins
+}
+
 void determineIfWithinBasinLatLon(basin_data *BASIN_DATA, global_model_parameters *GLOBAL_MODEL_PARAMETERS, in_basin *IN_BASIN, double Lat, double Lon)
 /*
  Purpose: determine if a point lies within the different basin boundaries
@@ -368,23 +433,24 @@ void determineIfWithinBasinLatLon(basin_data *BASIN_DATA, global_model_parameter
 {
     int basinFlag = 0;
     int inPoly;
+    int onVertex;
     for( int i = 0; i < GLOBAL_MODEL_PARAMETERS->nBasins; i++)
     {
         for( int j = 0; j < GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[i]; j++)
         {
-            if(Lon >= BASIN_DATA->maxLonBoundary[i][j])
+            if(Lon > BASIN_DATA->maxLonBoundary[i][j])
             {
                 basinFlag = 0;
             }
-            else if(Lon <= BASIN_DATA->minLonBoundary[i][j])
+            else if(Lon < BASIN_DATA->minLonBoundary[i][j])
             {
                 basinFlag = 0;
             }
-            else if(Lat >= BASIN_DATA->maxLatBoundary[i][j])
+            else if(Lat > BASIN_DATA->maxLatBoundary[i][j])
             {
                 basinFlag = 0;
             }
-            else if(Lat <= BASIN_DATA->minLatBoundary[i][j])
+            else if(Lat < BASIN_DATA->minLatBoundary[i][j])
             {
                 basinFlag = 0;
             }
@@ -405,9 +471,17 @@ void determineIfWithinBasinLatLon(basin_data *BASIN_DATA, global_model_parameter
                 {
                     IN_BASIN->inBasinLatLon[i][j] = 1; // in lat lon poly
                 }
-                else if(inPoly == 0) // outside poly
+                else if(inPoly == 0) // outside poly, check if point is one of the nodes of the boundary
                 {
-                    IN_BASIN->inBasinLatLon[i][j] = 0;
+                    onVertex = pointOnVertex(BASIN_DATA, i, j, Lon, Lat);
+                    if(onVertex == 1) // point in on a vertex, assign as inside
+                    {
+                        IN_BASIN->inBasinLatLon[i][j] = 1;
+                    }
+                    else if(onVertex == 0) // point is not a vertex, assign as outside
+                    {
+                        IN_BASIN->inBasinLatLon[i][j] = 0;
+                    }
                 }
                 basinFlag = 0;
             }
@@ -508,5 +582,40 @@ void loadBasinBoundaries(int basinNum, basin_data *BASIN_DATA, global_model_para
         assert(BASIN_DATA->boundaryLon[basinNum][i][count-1] == BASIN_DATA->boundaryLon[basinNum][i][0]);
         assert(BASIN_DATA->boundaryLat[basinNum][i][count-1] == BASIN_DATA->boundaryLat[basinNum][i][0]);
     }
+}
+
+void loadSmoothBoundaries(nz_tomography_data *NZ_TOMOGRAPHY_DATA,char *fileName)
+/*
+ Purpose: load all smoothing boundary vector
+ 
+ Input variables:
+ 
+ Output variables:
+ n.a
+ */
+{
+    smoothing_boundary *SMOOTH_BOUND;
+    SMOOTH_BOUND = NZ_TOMOGRAPHY_DATA->smooth_boundary;
+    
+    FILE *file;
+    file = fopen(fileName, "r");
+    if (file == NULL)
+    {
+        printf("Error smoothing boundary vector file %s not found.\n",fileName);
+        exit(EXIT_FAILURE);
+    }
+    
+    int count = 0;
+
+    while(!feof(file))
+    {
+        fscanf(file, "%lf %lf", &SMOOTH_BOUND->xPts[count],&SMOOTH_BOUND->yPts[count]);
+        
+        count += 1;
+    }
+    fclose(file);
+//    printf("%i\n",count);
+    assert(count<=MAX_NUM_POINTS_SMOOTH_VEC);
+    SMOOTH_BOUND->n = count;
 }
 

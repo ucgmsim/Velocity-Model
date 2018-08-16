@@ -37,7 +37,7 @@ void runGenerateVelocitySlices(char *MODEL_VERSION, char *OUTPUT_DIR, gen_velo_s
     
     // obtain surface filenames based off version number
     global_model_parameters *GLOBAL_MODEL_PARAMETERS;
-    GLOBAL_MODEL_PARAMETERS = getGlobalModelParameters(MODEL_EXTENT->version);
+    GLOBAL_MODEL_PARAMETERS = getGlobalModelParameters(MODEL_EXTENT->version,GEN_VELO_SLICES_CALL.TOPO_TYPE);
     
     mesh_vector *MESH_VECTOR;
     qualities_vector *QUALITIES_VECTOR;
@@ -208,7 +208,7 @@ void runGenerateMultipleProfiles(char *MODEL_VERSION, char *OUTPUT_DIR, gen_mult
     double half = 0.5;
     // obtain surface filenames based off version number
     global_model_parameters *GLOBAL_MODEL_PARAMETERS;
-    GLOBAL_MODEL_PARAMETERS = getGlobalModelParameters(MODEL_VERSION);
+    GLOBAL_MODEL_PARAMETERS = getGlobalModelParameters(MODEL_VERSION,GEN_MULTI_PROFILES_CALL.TOPO_TYPE);
 
     // read in velocity model data (surfaces, 1D models, tomography etc)
     velo_mod_1d_data *VELO_MOD_1D_DATA;
@@ -368,7 +368,7 @@ void runGenerateMultipleVSonGrid(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extr
 
     // obtain surface filenames based off version number
     global_model_parameters *GLOBAL_MODEL_PARAMETERS;
-    GLOBAL_MODEL_PARAMETERS = getGlobalModelParameters(MODEL_VERSION);
+    GLOBAL_MODEL_PARAMETERS = getGlobalModelParameters(MODEL_VERSION,GEN_EXTRACT_MULTI_GRIDPOINT_VS_CALL.TOPO_TYPE);
 
     // read in velocity model data (surfaces, 1D models, tomography etc)
     velo_mod_1d_data *VELO_MOD_1D_DATA;
@@ -517,7 +517,7 @@ void runGenerateProfile(char *MODEL_VERSION, char *OUTPUT_DIR, gen_profile_call 
 
     // obtain surface filenames based off version number
     global_model_parameters *GLOBAL_MODEL_PARAMETERS;
-    GLOBAL_MODEL_PARAMETERS = getGlobalModelParameters(MODEL_EXTENT->version);
+    GLOBAL_MODEL_PARAMETERS = getGlobalModelParameters(MODEL_EXTENT->version,GEN_PROFILE_CALL.TOPO_TYPE);
     
     partial_global_mesh *PARTIAL_GLOBAL_MESH;
     mesh_vector *MESH_VECTOR;
@@ -719,7 +719,7 @@ void runThresholdVelocityModel(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extrac
     
     // obtain surface filenames based off version number
     global_model_parameters *GLOBAL_MODEL_PARAMETERS;
-    GLOBAL_MODEL_PARAMETERS = getGlobalModelParameters(MODEL_EXTENT->version);
+    GLOBAL_MODEL_PARAMETERS = getGlobalModelParameters(MODEL_EXTENT->version,GEN_EXTRACT_VELO_MOD_CALL.TOPO_TYPE);
     
     partial_global_mesh *PARTIAL_GLOBAL_MESH;
     mesh_vector *MESH_VECTOR;
@@ -902,7 +902,7 @@ void runGenerateVelocityModel(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extract
     
     // obtain surface filenames based off version number
     global_model_parameters *GLOBAL_MODEL_PARAMETERS;
-    GLOBAL_MODEL_PARAMETERS = getGlobalModelParameters(MODEL_EXTENT->version);
+    GLOBAL_MODEL_PARAMETERS = getGlobalModelParameters(MODEL_EXTENT->version,GEN_EXTRACT_VELO_MOD_CALL.TOPO_TYPE);
 
     // read in velocity model data (surfaces, 1D models, tomography etc)
     velo_mod_1d_data *VELO_MOD_1D_DATA;

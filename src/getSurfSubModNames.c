@@ -1583,7 +1583,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->GTL = 1;
         GLOBAL_MODEL_PARAMETERS->BasinEdgeSmoothing = 0;
     }
-    else if(strcmp(modelVersion,"1.68") == 0)
+    else if(strcmp(modelVersion,"2.01") == 0)
     {
         // define the number of surfaces and sub models
         GLOBAL_MODEL_PARAMETERS->nSurf = 3;

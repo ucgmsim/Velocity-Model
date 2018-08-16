@@ -13,7 +13,7 @@
 #include <assert.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include "omp.h"
+#include <omp.h>
 
 #include "constants.h"
 #include "structs.h"

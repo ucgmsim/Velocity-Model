@@ -1613,7 +1613,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[0][0] = "Data/Boundaries/CanterburyBasinBoundary.txt";
         
         GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[0][0] = "DEM";
-        GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[0][0] = "Data/DEM/CantDEM.in";
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[0][0] = "Data/DEM/NZ_DEM_HD.in";
         GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[0][0] = 0;
         GLOBAL_MODEL_PARAMETERS->basinSubModelNames[0][0] = "Cant1D_v2_Pliocene_Enforced";
         

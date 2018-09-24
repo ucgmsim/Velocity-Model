@@ -1881,8 +1881,40 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][1] = "Data/SI_BASINS/NorthCanterbury_Basement_WGS84_v0p0.in";
         GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][1] = 0;
         
+        // Nelson Basin
+        basinNum = 7;
+        GLOBAL_MODEL_PARAMETERS->basin[basinNum] = "NELSON_BASIN";
+        GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum] = 2;
+        GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[basinNum] = 1;
+        GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[basinNum][0] = "Data/SI_BASINS/Nelson_Polygon_WGS84.txt";
         
-        GLOBAL_MODEL_PARAMETERS->nBasins = 7;
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][0] = "DEM";
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][0] = "Data/DEM/NZ_DEM_HD.in";
+        GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][0] = 0;
+        GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][0] = "Cant1D_v2";
+        
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][1] = "NelsonBasement";
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][1] = "Data/SI_BASINS/Nelson_Basement_WGS84_v0p0.in";
+        GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][1] = 0;
+        
+        // Wellington Basin
+        basinNum = 8;
+        GLOBAL_MODEL_PARAMETERS->basin[basinNum] = "WELLINGTON_BASIN";
+        GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum] = 2;
+        GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[basinNum] = 1;
+        GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[basinNum][0] = "Data/NI_BASINS/Wellington_Polygon_WGS84.txt";
+        
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][0] = "DEM";
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][0] = "Data/DEM/NZ_DEM_HD.in";
+        GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][0] = 0;
+        GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][0] = "Cant1D_v2";
+        
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][1] = "WellingtonBasement";
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][1] = "Data/NI_BASINS/Wellington_Basement_WGS84_v0p0.in";
+        GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][1] = 0;
+        
+        
+        GLOBAL_MODEL_PARAMETERS->nBasins = 9;
         GLOBAL_MODEL_PARAMETERS->GTL = 1;
         GLOBAL_MODEL_PARAMETERS->BasinEdgeSmoothing = 1;
     }

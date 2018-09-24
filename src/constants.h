@@ -19,7 +19,7 @@
 //#define LAT_GRID_DIM_MAX 751 // Y
 //#define DEP_GRID_DIM_MAX 251 // Z
 #define SUB_MOD_DIM_MAX 50 // maximum number of entries in the 1d sub model arrays
-#define MAX_NUM_BASINS 7 // the maxinum number of basins
+#define MAX_NUM_BASINS 10 // the maxinum number of basins
 #define MAX_NUM_GLOBAL_SURFACES 4 // the maxinum number of global (Full domain) surfaces
 #define MAX_NUM_BASIN_SURFACES 12 // the maximum number of basin surfaces
 #define MAX_NUM_1D_VELOCITY_MODELS 1 // the maximum number of 1D velocity models

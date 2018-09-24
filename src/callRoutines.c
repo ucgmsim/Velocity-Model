@@ -704,6 +704,8 @@ void runThresholdVelocityModel(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extrac
         exit(EXIT_FAILURE);
     }
 
+    // set the topo type
+    GEN_EXTRACT_VELO_MOD_CALL.TOPO_TYPE = "SQUASHED";
     
     // generate the model grid
     global_mesh *GLOBAL_MESH;

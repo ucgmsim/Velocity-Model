@@ -1917,6 +1917,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->nBasins = 9;
         GLOBAL_MODEL_PARAMETERS->GTL = 1;
         GLOBAL_MODEL_PARAMETERS->BasinEdgeSmoothing = 1;
+        
     }
     else
     {

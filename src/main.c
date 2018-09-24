@@ -125,6 +125,11 @@ int main(int argc, char *argv[])
             GEN_EXTRACT_MULTI_GRIDPOINT_VS_CALL = readExtractMultiInputTextFile(parametersTextFile);
             inputFName = "GENERATE_VELOCITIES_ON_GRID";
         }
+        else
+        {
+            printf("Call type '%s' not recognised.\n",CALL_TYPE);
+            exit(EXIT_FAILURE);
+        }
 
 
     }

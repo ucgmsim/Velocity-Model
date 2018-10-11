@@ -723,8 +723,8 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
     else if(strcmp(modelVersion,"1.01") == 0)
     {
         // define the number of surfaces and sub models
-        GLOBAL_MODEL_PARAMETERS->nSurf = 3;
-        GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 2;
+        GLOBAL_MODEL_PARAMETERS->nSurf = 4;
+        GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 3;
         
         // insert surface surface keywords and filenames
         GLOBAL_MODEL_PARAMETERS->surf[0] = "posInfSurf";
@@ -733,13 +733,17 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[1] = "Data/DEM/NZ_DEM.in";
         GLOBAL_MODEL_PARAMETERS->surf[2] = "negInfSurf";
         GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[2] = "Data/Global_Surfaces/negInf.in";
-        
+        GLOBAL_MODEL_PARAMETERS->surf[3] = "negInfSurf";
+        GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[3] = "Data/Global_Surfaces/negInf.in";
         
         // insert velocity submodel keywords and filenames (if necessary)
         GLOBAL_MODEL_PARAMETERS->veloSubMod[0] = "NaNsubMod";
         GLOBAL_MODEL_PARAMETERS->veloSubMod[1] = "v1DsubMod";
+        GLOBAL_MODEL_PARAMETERS->veloSubMod[2] = "EPtomo2010subMod";
+        GLOBAL_MODEL_PARAMETERS->tomographyName = "2010_NZ";
         GLOBAL_MODEL_PARAMETERS->veloMod1dFileName[0] = "Cant1D_v1.fd_modfile";
         
+
         
         GLOBAL_MODEL_PARAMETERS->nBasins = 0;
         GLOBAL_MODEL_PARAMETERS->GTL = 0;

@@ -35,7 +35,11 @@ adjacent_points *findGlobalAdjacentPoints(global_surf_read *GLOBAL_SURF_READ, do
     int latAssignedFlag = 0;
     int lonAssignedFlag = 0;
     ADJACENT_POINTS->inSurfaceBounds = 0;
-        
+    
+    ADJACENT_POINTS->inLatExtensionZone = 0;
+    ADJACENT_POINTS->inLonExtensionZone = 0;
+    ADJACENT_POINTS->inCornerZone = 0;
+    
     for( int i = 0; i < GLOBAL_SURF_READ->nLat; i++)
     {
         if(GLOBAL_SURF_READ->lati[i] >= lat)
@@ -103,22 +107,25 @@ adjacent_points *findGlobalAdjacentPoints(global_surf_read *GLOBAL_SURF_READ, do
     
     if((latAssignedFlag != 1)||(lonAssignedFlag !=1)) // if any indicies are unassigned
     {
-        ADJACENT_POINTS->inLatExtensionZone = 0;
-        ADJACENT_POINTS->inLonExtensionZone = 0;
-        ADJACENT_POINTS->inCornerZone = 0;
+        
         if((lonAssignedFlag == 1) && (latAssignedFlag == 0)) // longitude assigned
         {
             // check if point is within extended latitude limits
-            if((lat - GLOBAL_SURF_READ->maxLat) <= MAX_LAT_SURFACE_EXTENSION && (lat >= GLOBAL_SURF_READ->maxLat))
+            if((lat - GLOBAL_SURF_READ->maxLat) <= MAX_LAT_SURFACE_EXTENSION && (lat >= GLOBAL_SURF_READ->maxLat)) // east extension
             {
                 ADJACENT_POINTS->inLatExtensionZone = 1;
                 findEdgeInds(GLOBAL_SURF_READ, ADJACENT_POINTS,1);
             }
-            else if((GLOBAL_SURF_READ->minLat - lat) <= MAX_LAT_SURFACE_EXTENSION && (lat <= GLOBAL_SURF_READ->minLat))
+            else if((GLOBAL_SURF_READ->minLat - lat) <= MAX_LAT_SURFACE_EXTENSION && (lat <= GLOBAL_SURF_READ->minLat)) // west extension
             {
                 ADJACENT_POINTS->inLatExtensionZone = 1;
                 findEdgeInds(GLOBAL_SURF_READ, ADJACENT_POINTS,3);
             }
+        }
+        if( ADJACENT_POINTS->inLatExtensionZone == 0)
+        {
+//            printf("Point lies outside of lat extension zone.\n");
+//            exit(EXIT_FAILURE);
         }
         
         if((latAssignedFlag == 1) && (lonAssignedFlag == 0)) // latitude assigned
@@ -136,6 +143,12 @@ adjacent_points *findGlobalAdjacentPoints(global_surf_read *GLOBAL_SURF_READ, do
                 findEdgeInds(GLOBAL_SURF_READ, ADJACENT_POINTS,2);
 
             }
+        }
+        
+        if( ADJACENT_POINTS->inLonExtensionZone == 0)
+        {
+//            printf("Point lies outside of lon extension zone.\n");
+//            exit(EXIT_FAILURE);
         }
         
         // four cases for corner zones

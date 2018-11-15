@@ -37,7 +37,7 @@ void assignQualities(global_model_parameters *GLOBAL_MODEL_PARAMETERS, velo_mod_
     // calculate vs30 (used as a proxy to determine if point is on- or off-shore
     calculateVs30FromTomoVs30Surface(MESH_VECTOR,NZ_TOMOGRAPHY_DATA);
     
-    
+//    printf("lat %f, lon %f\n",*MESH_VECTOR->Lat,*MESH_VECTOR->Lon);
     inAnyBasin = determineIfWithinAnyBasinLatLon(BASIN_DATA, GLOBAL_MODEL_PARAMETERS, *MESH_VECTOR->Lat, *MESH_VECTOR->Lon);
 
     // point lies within smoothing zone , is offshore, and is not in any basin (i.e outside any boundaries)

@@ -42,7 +42,7 @@
 #define MAX_NUM_SLICES 20 // the maximum number of slices in the slice parameters files
 #define MAX_LAT_SURFACE_EXTENSION 1 // value in degrees the surface files may be extended by
 #define MAX_LON_SURFACE_EXTENSION 1 // value in degrees the surface files may be extended by
-#define MAX_NUM_POINTS_SMOOTH_VEC 1900 // number of points in the vector for smoothing boundary representation
+#define MAX_NUM_POINTS_SMOOTH_VEC 10500 // number of points in the vector for smoothing boundary representation
 #define MAX_DIST_SMOOTH 10 // distance in KM to smooth tomography over
 
 

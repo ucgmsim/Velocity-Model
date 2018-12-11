@@ -1760,7 +1760,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->basin[0] = "CANTERBURY_BASIN_1D";
         GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[0] = 5;
         GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[0] = 1;
-        GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[0][0] = "Data/Boundaries/CanterburyBasinBoundary.txt";
+        GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[0][0] = "Data/Boundaries/NewCanterburyBasinBoundary_WGS84_1m.txt";
         
         GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[0][0] = "DEM";
         GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[0][0] = "Data/DEM/CantDEM.in";

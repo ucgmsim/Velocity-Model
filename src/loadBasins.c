@@ -312,14 +312,14 @@ adjacent_points *findBasinAdjacentPoints(basin_surf_read *BASIN_SURF_READ, doubl
         {
             ADJACENT_POINTS->latInd[0]= 0;
             ADJACENT_POINTS->latInd[1] = 1;
-            printf("Point lies along edge of Basin surface (pt lat %f, lat edge %f).\n",lat,BASIN_SURF_READ->lati[0]);
+//            printf("Point lies along edge of Basin surface (pt lat %f, lat edge %f).\n",lat,BASIN_SURF_READ->lati[0]);
             latAssignedFlag = 1;
         }
         else if(BASIN_SURF_READ->lati[BASIN_SURF_READ->nLat] == lat)
         {
             ADJACENT_POINTS->latInd[0]= BASIN_SURF_READ->nLat-1;
             ADJACENT_POINTS->latInd[1] = BASIN_SURF_READ->nLat;
-            printf("Point lies along edge of Basin surface (pt lat %f, lat edge %f).\n",lat,BASIN_SURF_READ->lati[BASIN_SURF_READ->nLat]);
+//            printf("Point lies along edge of Basin surface (pt lat %f, lat edge %f).\n",lat,BASIN_SURF_READ->lati[BASIN_SURF_READ->nLat]);
 
             latAssignedFlag = 1;
         }
@@ -362,14 +362,14 @@ adjacent_points *findBasinAdjacentPoints(basin_surf_read *BASIN_SURF_READ, doubl
         {
             ADJACENT_POINTS->lonInd[0] = 0;
             ADJACENT_POINTS->lonInd[1] = 1;
-            printf("Point lies along edge of Basin surface (pt lon %f, lon edge %f).\n",lon,BASIN_SURF_READ->loni[0]);
+//            printf("Point lies along edge of Basin surface (pt lon %f, lon edge %f).\n",lon,BASIN_SURF_READ->loni[0]);
             lonAssignedFlag = 1;
         }
         else if(BASIN_SURF_READ->loni[BASIN_SURF_READ->nLon] == lon)
         {
             ADJACENT_POINTS->lonInd[0] = BASIN_SURF_READ->nLon-1;
             ADJACENT_POINTS->lonInd[1] = BASIN_SURF_READ->nLon;
-            printf("Point lies along edge of Basin surface (pt lon %f, lon edge %f).\n",lon,BASIN_SURF_READ->loni[BASIN_SURF_READ->nLon]);
+//            printf("Point lies along edge of Basin surface (pt lon %f, lon edge %f).\n",lon,BASIN_SURF_READ->loni[BASIN_SURF_READ->nLon]);
             lonAssignedFlag = 1;
         }
         

@@ -1921,6 +1921,195 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->nBasins = 9;
         GLOBAL_MODEL_PARAMETERS->GTL = 1;
         GLOBAL_MODEL_PARAMETERS->BasinEdgeSmoothing = 1;
+    }
+    else if(strcmp(modelVersion,"2.02") == 0)
+    {
+        // define the number of surfaces and sub models
+        GLOBAL_MODEL_PARAMETERS->nSurf = 3;
+        GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 2;
+        
+        // insert surface surface keywords and filenames
+        GLOBAL_MODEL_PARAMETERS->surf[0] = "posInfSurf";
+        GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[0] = "Data/Global_Surfaces/posInf.in";
+        GLOBAL_MODEL_PARAMETERS->surf[1] = "DEM";
+        GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[1] = "Data/DEM/NZ_DEM_HD.in";
+        GLOBAL_MODEL_PARAMETERS->surf[2] = "negInfSurf";
+        GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[2] = "Data/Global_Surfaces/negInf.in";
+        
+        // insert velocity submodel keywords and filenames (if necessary)
+        GLOBAL_MODEL_PARAMETERS->veloSubMod[0] = "NaNsubMod";
+        GLOBAL_MODEL_PARAMETERS->veloSubMod[1] = "EPtomo2010subMod";
+        GLOBAL_MODEL_PARAMETERS->tomographyName = "2010_NZ_OFFSHORE";
+        //GLOBAL_MODEL_PARAMETERS->tomographyName = "2010_Full_South_Island";
+        //GLOBAL_MODEL_PARAMETERS->tomographyName = "2010_Update_Canterbury";
+        //GLOBAL_MODEL_PARAMETERS->tomographyName = "2010_Update_Hybrid";
+        
+        
+        // CANTERBURY Basin (1D above basement)
+        GLOBAL_MODEL_PARAMETERS->basin[0] = "CANTERBURY_BASIN_1D";
+        GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[0] = 5;
+        GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[0] = 1;
+        GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[0][0] = "Data/Boundaries/NewCanterburyBasinBoundary_WGS84_1m.txt";
+        
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[0][0] = "DEM";
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[0][0] = "Data/DEM/CantDEM.in";
+        GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[0][0] = 0;
+        GLOBAL_MODEL_PARAMETERS->basinSubModelNames[0][0] = "Cant1D_v2_Pliocene_Enforced";
+        
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[0][1] = "PlioceneTop";
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[0][1] = "Data/Canterbury_Basin/Pre_Quaternary/Pliocene_46_v8p9p18.in";
+        GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[0][1] = 0;
+        GLOBAL_MODEL_PARAMETERS->basinSubModelNames[0][1] = "PlioceneSubMod_v1";
+        
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[0][2] = "MioceneTop";
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[0][2] = "Data/Canterbury_Basin/Pre_Quaternary/MioceneTop.in";
+        GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[0][2] = 0;
+        GLOBAL_MODEL_PARAMETERS->basinSubModelNames[0][2] = "MioceneSubMod_v1";
+        
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[0][3] = "PaleogeneTop";
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[0][3] = "Data/Canterbury_Basin/Pre_Quaternary/PaleogeneTop.in";
+        GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[0][3] = 0;
+        GLOBAL_MODEL_PARAMETERS->basinSubModelNames[0][3] = "PaleogeneSubMod_v1";
+        
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[0][4] = "BasementTopSurf";
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[0][4] = "Data/Canterbury_Basin/Quaternary/BasementTop.in";
+        GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[0][4] = 0;
+        
+        
+        // BPV Basin
+        GLOBAL_MODEL_PARAMETERS->basin[1] = "BPV_BASIN";
+        GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[1] = 2;
+        GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[1] = 1;
+        GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[1][0] = "Data/Boundaries/BPVBoundary.txt";
+        
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[1][0] = "BPVTop";
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[1][0] = "Data/Canterbury_Basin/BPV/BPVTop.in";
+        GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[1][0] = 0;
+        GLOBAL_MODEL_PARAMETERS->basinSubModelNames[1][0] = "BPVSubMod_v4";
+        
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[1][1] = "MioceneTop";
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[1][1] = "Data/Canterbury_Basin/Pre_Quaternary/MioceneTop.in";
+        GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[1][1] = 0;
+        
+        int basinNum;
+        
+        // Kaikoura Basin
+        basinNum = 2;
+        GLOBAL_MODEL_PARAMETERS->basin[basinNum] = "KAIKOURA_BASIN";
+        GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum] = 2;
+        GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[basinNum] = 1;
+        GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[basinNum][0] = "Data/SI_BASINS/Kaikoura_Polygon_WGS84.txt";
+        
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][0] = "DEM";
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][0] = "Data/DEM/NZ_DEM_HD.in";
+        GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][0] = 0;
+        GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][0] = "Cant1D_v2";
+        
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][1] = "KaikouraBasement";
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][1] = "Data/SI_BASINS/Kaikoura_Basement_WGS84_v0p0.in";
+        GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][1] = 0;
+        
+        // Cheviot Basin
+        basinNum = 3;
+        GLOBAL_MODEL_PARAMETERS->basin[basinNum] = "CHEVIOT_BASIN";
+        GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum] = 2;
+        GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[basinNum] = 1;
+        GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[basinNum][0] = "Data/SI_BASINS/Cheviot_Polygon_WGS84.txt";
+        
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][0] = "DEM";
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][0] = "Data/DEM/NZ_DEM_HD.in";
+        GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][0] = 0;
+        GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][0] = "Cant1D_v2";
+        
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][1] = "CheviotBasement";
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][1] = "Data/SI_BASINS/Cheviot_Basement_WGS84_v0p0.in";
+        GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][1] = 0;
+        
+        // Hanmer Basin
+        basinNum = 4;
+        GLOBAL_MODEL_PARAMETERS->basin[basinNum] = "HANMER_BASIN";
+        GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum] = 2;
+        GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[basinNum] = 1;
+        GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[basinNum][0] = "Data/SI_BASINS/Hanmer_Polygon_WGS84.txt";
+        
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][0] = "DEM";
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][0] = "Data/DEM/NZ_DEM_HD.in";
+        GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][0] = 0;
+        GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][0] = "Cant1D_v2";
+        
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][1] = "HanmerBasement";
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][1] = "Data/SI_BASINS/Hanmer_Basement_WGS84_v0p0.in";
+        GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][1] = 0;
+        
+        
+        // Marlborough Basin
+        basinNum = 5;
+        GLOBAL_MODEL_PARAMETERS->basin[basinNum] = "MARLBOROUGH_BASIN";
+        GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum] = 2;
+        GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[basinNum] = 1;
+        GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[basinNum][0] = "Data/SI_BASINS/Marlborough_Polygon_WGS84_v0p1.txt";
+        
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][0] = "DEM";
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][0] = "Data/DEM/NZ_DEM_HD.in";
+        GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][0] = 0;
+        GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][0] = "Cant1D_v2";
+        
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][1] = "MarlboroughBasement";
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][1] = "Data/SI_BASINS/Marlborough_Basement_WGS84_v0p1.in";
+        GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][1] = 0;
+        
+        // NorthCanterbury Basin
+        basinNum = 6;
+        GLOBAL_MODEL_PARAMETERS->basin[basinNum] = "NORTH_CANT_BASIN";
+        GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum] = 2;
+        GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[basinNum] = 1;
+        GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[basinNum][0] = "Data/SI_BASINS/NorthCanterbury_Polygon_WGS84.txt";
+        
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][0] = "DEM";
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][0] = "Data/DEM/NZ_DEM_HD.in";
+        GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][0] = 0;
+        GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][0] = "Cant1D_v2";
+        
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][1] = "NorthCanterburyBasement";
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][1] = "Data/SI_BASINS/NorthCanterbury_Basement_WGS84_v0p0.in";
+        GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][1] = 0;
+        
+        // Nelson Basin
+        basinNum = 7;
+        GLOBAL_MODEL_PARAMETERS->basin[basinNum] = "NELSON_BASIN";
+        GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum] = 2;
+        GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[basinNum] = 1;
+        GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[basinNum][0] = "Data/SI_BASINS/Nelson_Polygon_WGS84.txt";
+        
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][0] = "DEM";
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][0] = "Data/DEM/NZ_DEM_HD.in";
+        GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][0] = 0;
+        GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][0] = "Cant1D_v2";
+        
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][1] = "NelsonBasement";
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][1] = "Data/SI_BASINS/Nelson_Basement_WGS84_v0p0.in";
+        GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][1] = 0;
+        
+        // Wellington Basin
+        basinNum = 8;
+        GLOBAL_MODEL_PARAMETERS->basin[basinNum] = "WELLINGTON_BASIN";
+        GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum] = 2;
+        GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[basinNum] = 1;
+        GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[basinNum][0] = "Data/NI_BASINS/Wellington_Polygon_Wainuiomata_WGS84.txt";
+        
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][0] = "DEM";
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][0] = "Data/DEM/NZ_DEM_HD.in";
+        GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][0] = 0;
+        GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][0] = "Cant1D_v2";
+        
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][1] = "WellingtonBasement";
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][1] = "Data/NI_BASINS/Wellington_Grid_WGS84_v19p5p6_100_hybrid10.in";
+        GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][1] = 0;
+        
+        
+        GLOBAL_MODEL_PARAMETERS->nBasins = 9;
+        GLOBAL_MODEL_PARAMETERS->GTL = 1;
+        GLOBAL_MODEL_PARAMETERS->BasinEdgeSmoothing = 1;
         
     }
     else

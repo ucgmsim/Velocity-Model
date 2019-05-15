@@ -31,7 +31,7 @@
 
 
 
-#define MAX_DIM_BOUNDARY_FILE 9000 // maximum number of points to define a basin boundary
+#define MAX_DIM_BOUNDARY_FILE 10000 // maximum number of points to define a basin boundary
 //#define MAX_NUM_VELOSUBMOD 15 // max number of velo sub models in the basin
 #define MAX_NUM_SLICE_GRIDPTS 2000 // the maximum number of grid points for slice extraction
 //#define MAX_NUM_SLICE_PIVOTS 4
@@ -39,7 +39,7 @@
 #define SURF_IN_DIM_MAX_TOMO 1200 // maximum dimension of tomography surfaces
 #define MAX_NUM_GLOBAL_SURFACES 4 // the maximum number of full domain (global) surfaces
 #define EARTH_RADIUS_MEAN 6378.139 //6371.0071
-#define MAX_NUM_SLICES 20 // the maximum number of slices in the slice parameters files
+#define MAX_NUM_SLICES 40 // the maximum number of slices in the slice parameters files
 #define MAX_LAT_SURFACE_EXTENSION 1 // value in degrees the surface files may be extended by
 #define MAX_LON_SURFACE_EXTENSION 1 // value in degrees the surface files may be extended by
 #define MAX_NUM_POINTS_SMOOTH_VEC 10500 // number of points in the vector for smoothing boundary representation

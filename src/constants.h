@@ -9,7 +9,7 @@
 #ifndef constants_h
 #define constants_h
 
-#define GLOBAL_SURF_IN_DIM_MAX 3005 // maximum dimension of global surface input files
+#define GLOBAL_SURF_IN_DIM_MAX 5005 // maximum dimension of global surface input files
 #define BASIN_SURF_IN_DIM_MAX 3005 // maximum dimension of basin surface input files
 #define MAX_FILENAME_STRING_LEN 1024 // maximum dimension of basin surface input files
 #define LON_GRID_DIM_MAX 10260 // X
@@ -31,7 +31,7 @@
 
 
 
-#define MAX_DIM_BOUNDARY_FILE 9000 // maximum number of points to define a basin boundary
+#define MAX_DIM_BOUNDARY_FILE 12355 // maximum number of points to define a basin boundary
 //#define MAX_NUM_VELOSUBMOD 15 // max number of velo sub models in the basin
 #define MAX_NUM_SLICE_GRIDPTS 2000 // the maximum number of grid points for slice extraction
 //#define MAX_NUM_SLICE_PIVOTS 4

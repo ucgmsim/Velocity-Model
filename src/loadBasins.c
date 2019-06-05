@@ -613,7 +613,6 @@ void loadBasinBoundaries(int basinNum, basin_data *BASIN_DATA, global_model_para
             count += 1;
         }
         fclose(file);
-        
         BASIN_DATA->boundaryNumPoints[basinNum][i] = count;
         assert(count<=MAX_DIM_BOUNDARY_FILE);
         assert(BASIN_DATA->boundaryLon[basinNum][i][count-1] == BASIN_DATA->boundaryLon[basinNum][i][0]);

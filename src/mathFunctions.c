@@ -473,6 +473,10 @@ void gcproj(double xf,double yf,double *rlon,double *rlat,double ref_rad,double 
     {
         (*rlon) = (*rlon) + 360.0;
     }
+    if ((*rlon) < (double)(0)) // condition to allow VMs to cross 180 Lon
+    {
+        (*rlon) = (*rlon) + 360.0;
+    }
 }
 
 void calcAndSaveZThreshold(char *OUTPUT_DIR, partial_global_mesh *PARTIAL_GLOBAL_MESH, partial_global_qualities *PARTIAL_GLOBAL_QUALITIES, calculation_log *CALCULATION_LOG, char *Z_THRESHOLD, int latInd)

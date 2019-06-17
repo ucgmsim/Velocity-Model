@@ -44,7 +44,7 @@ void loadAllGlobalData(global_model_parameters *GLOBAL_MODEL_PARAMETERS,calculat
         }
         else if(strcmp(GLOBAL_MODEL_PARAMETERS->veloSubMod[i], "EPtomo2010subMod") == 0)
         {
-            loadEPtomoSurfaceData(GLOBAL_MODEL_PARAMETERS->tomographyName, NZ_TOMOGRAPHY_DATA );
+            loadEPtomoSurfaceData(GLOBAL_MODEL_PARAMETERS->tomographyName, NZ_TOMOGRAPHY_DATA, GLOBAL_MODEL_PARAMETERS);
             printf("Loaded tomography data.\n");
         }
         else if(strcmp(GLOBAL_MODEL_PARAMETERS->veloSubMod[i], "NaNsubMod") == 0)

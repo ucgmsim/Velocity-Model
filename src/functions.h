@@ -21,7 +21,7 @@ extern void writeMultipleProfileSurfaceDepths(global_model_parameters *GLOBAL_MO
  extern multi_gridpoint_parameters *readGridpointsTextFile(char *gridpointsTextFile);
  extern void runGenerateMultipleVSonGrid(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extract_multi_gridpoint_vs_call GEN_EXTRACT_MULTI_GRIDPOINT_VS_CALL, calculation_log *CALCULATION_LOG);
  extern void writeGridpointVelocities(qualities_vector *QUALITIES_VECTOR, gen_extract_multi_gridpoint_vs_call GEN_EXTRACT_MULTI_GRIDPOINT_VS_CALL, mesh_vector *MESH_VECTOR, char *OUTPUT_DIR, calculation_log *CALCULATION_LOG, int groupingNum);
-
+extern void loadBasinResources(global_model_parameters *GLOBAL_MODEL_PARAMETERS);
 
 
 extern void writeAllBasinSurfaceDepths(global_model_parameters *GLOBAL_MODEL_PARAMETERS, partial_global_mesh *PARTIAL_GLOBAL_MESH, int basinNum, char *OUTPUT_DIR,slice_surface_depths *SLICE_SURFACE_DEPTHS);
@@ -55,7 +55,7 @@ extern void loadGlobalSurfaceData(global_surfaces *GLOBAL_SURFACES, global_model
 extern global_surf_read *loadGlobalSurface(char *fileName);
 extern basin_surf_read *loadBasinSurface(char *fileName);
 extern void loadBasinBoundaries(int basinNum, basin_data *BASIN_DATA, global_model_parameters *GLOBAL_MODEL_PARAMETERS);
-extern void loadSmoothBoundaries(nz_tomography_data *NZ_TOMOGRAPHY_DATA,char *fileName);
+extern void loadSmoothBoundaries(nz_tomography_data *NZ_TOMOGRAPHY_DATA,global_model_parameters *GLOBAL_MODEL_PARAMETERS);
 extern void interpolateGlobalSurfaceDepths(global_surfaces *GLOBAL_SURFACES, mesh_vector *MESH_VECTOR ,partial_global_surface_depths *PARTIAL_GLOBAL_SURFACE_DEPTHS, calculation_log *CALCULATION_LOG);
 extern int determineIfWithinAnyBasinLatLon(basin_data *BASIN_DATA, global_model_parameters *GLOBAL_MODEL_PARAMETERS, double Lat, double Lon);
 extern void determineIfWithinBasinLatLon(basin_data *BASIN_DATA, global_model_parameters *GLOBAL_MODEL_PARAMETERS, in_basin *IN_BASIN, double Lat, double Lon);
@@ -196,7 +196,7 @@ extern void load1dVeloSubModel(char *fileName, velo_mod_1d_data *VELO_MOD_1D_DAT
 extern void EPtomo2010subMod(int zInd, double dep, mesh_vector *MESH_VECTOR, qualities_vector *QUALITIES_VECTOR, nz_tomography_data *NZ_TOMOGRAPHY_DATA,global_model_parameters *GLOBAL_MODEL_PARAMETERS, partial_global_surface_depths *PARTIAL_GLOBAL_SURFACE_DEPTHS, int inAnyBasinLatLon, int onBoundary);
 extern void calculateVs30FromTomoVs30Surface(mesh_vector *MESH_VECTOR, nz_tomography_data *NZ_TOMOGRAPHY_DATA);
 extern void freeEPtomoSurfaceData(nz_tomography_data *NZ_TOMOGRAPHY_DATA);
-extern void loadEPtomoSurfaceData(char *tomoType, nz_tomography_data *NZ_TOMOGRAPHY_DATA);
+extern void loadEPtomoSurfaceData(char *tomoType, nz_tomography_data *NZ_TOMOGRAPHY_DATA, global_model_parameters *GLOBAL_MODEL_PARAMETERS);
 extern void NaNsubMod(int zInd, qualities_vector *QUALITIES_VECTOR);
 extern void GenericSubModA(int zInd, qualities_vector *QUALITIES_VECTOR);
 extern void GenericSubModB(int zInd, qualities_vector *QUALITIES_VECTOR);
@@ -253,6 +253,18 @@ extern int determineIfLatLonWithinSmoothingRegion(smoothing_boundary *SMOOTHING_
 extern int pointOnVertex(basin_data *BASIN_DATA, int basinNum, int boundaryNum, double xLoc, double yLoc);
 extern double rhoFromVpBrocher(double vp);
 extern double vpFromVsBrocher(double vs);
+
+
+
+void load_Canterbury_Pre_Quaternary_v1p0(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_Cantebury_North_v1p0(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_Banks_Peninsula_Volcanics_v1p0(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_Kaikoura_v1p0(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_Cheviot_v1p0(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_Hanmer_v1p0(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_Marlborough_v1p0(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_Wellington_v1p0(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_Nelson_v1p0(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
 
 
 

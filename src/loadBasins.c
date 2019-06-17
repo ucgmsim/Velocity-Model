@@ -620,9 +620,9 @@ void loadBasinBoundaries(int basinNum, basin_data *BASIN_DATA, global_model_para
     }
 }
 
-void loadSmoothBoundaries(nz_tomography_data *NZ_TOMOGRAPHY_DATA,char *fileName)
+void loadSmoothBoundaries(nz_tomography_data *NZ_TOMOGRAPHY_DATA,global_model_parameters *GLOBAL_MODEL_PARAMETERS)
 /*
- Purpose: load all smoothing boundary vector
+ Purpose: load all individual smooth points files and concatenate into one data structure
  
  Input variables:
  
@@ -632,25 +632,63 @@ void loadSmoothBoundaries(nz_tomography_data *NZ_TOMOGRAPHY_DATA,char *fileName)
 {
     smoothing_boundary *SMOOTH_BOUND;
     SMOOTH_BOUND = NZ_TOMOGRAPHY_DATA->smooth_boundary;
-    
-    FILE *file;
-    file = fopen(fileName, "r");
-    if (file == NULL)
-    {
-        printf("Error smoothing boundary vector file %s not found.\n",fileName);
-        exit(EXIT_FAILURE);
-    }
-    
     int count = 0;
-
-    while(!feof(file))
+    
+    char boundaryVecFilename[MAX_FILENAME_STRING_LEN];
+    
+    
+    for (int i = 0; i < GLOBAL_MODEL_PARAMETERS->nBasins; i++)
     {
-        fscanf(file, "%lf %lf", &SMOOTH_BOUND->xPts[count],&SMOOTH_BOUND->yPts[count]);
         
-        count += 1;
+        if (strcmp(GLOBAL_MODEL_PARAMETERS->basin[i],"Canterbury_Pre_Quaternary_v1p0") == 0)
+        {
+            sprintf(boundaryVecFilename,"Data/Boundaries/Smoothing/Canterbury_Pre_Quaternary_v1p0.txt");
+        }
+        else if (strcmp(GLOBAL_MODEL_PARAMETERS->basin[i],"Cantebury_North_v1p0") == 0)
+        {
+            sprintf(boundaryVecFilename,"Data/Boundaries/Smoothing/Cantebury_North_v1p0.txt");
+        }
+        else if (strcmp(GLOBAL_MODEL_PARAMETERS->basin[i],"Kaikoura_v1p0") == 0)
+        {
+            sprintf(boundaryVecFilename,"Data/Boundaries/Smoothing/Kaikoura_v1p0.txt");
+        }
+        else if (strcmp(GLOBAL_MODEL_PARAMETERS->basin[i],"Marlborough_v1p0") == 0)
+        {
+            sprintf(boundaryVecFilename,"Data/Boundaries/Smoothing/Marlborough_v1p0.txt");
+        }
+        else if (strcmp(GLOBAL_MODEL_PARAMETERS->basin[i],"Nelson_v1p0") == 0)
+        {
+            sprintf(boundaryVecFilename,"Data/Boundaries/Smoothing/Nelson_v1p0.txt");
+        }
+        else if (strcmp(GLOBAL_MODEL_PARAMETERS->basin[i],"Wellington_v1p0") == 0)
+        {
+            sprintf(boundaryVecFilename,"Data/Boundaries/Smoothing/Wellington_v1p0.txt");
+        }
+        sprintf(boundaryVecFilename,"Data/Boundaries/Smoothing/%s.txt",GLOBAL_MODEL_PARAMETERS->basin[i]);
+        
+        printf("%s\n",boundaryVecFilename);
+        FILE *file;
+        file = fopen(boundaryVecFilename, "r");
+        if (file == NULL)
+        {
+//            printf("Error smoothing boundary vector file %s not found.\n",boundaryVecFilename);
+//            exit(EXIT_FAILURE);
+        }
+        else
+        {
+            while(!feof(file))
+            {
+                fscanf(file, "%lf %lf", &SMOOTH_BOUND->xPts[count],&SMOOTH_BOUND->yPts[count]);
+                
+                count += 1;
+            }
+            fclose(file);
+        }
+    
+
+
     }
-    fclose(file);
-//    printf("%i\n",count);
+    printf("%i\n",count);
     assert(count<=MAX_NUM_POINTS_SMOOTH_VEC);
     SMOOTH_BOUND->n = count;
 }

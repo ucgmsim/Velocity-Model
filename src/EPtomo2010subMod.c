@@ -173,7 +173,7 @@ void EPtomo2010subMod(int zInd, double dep, mesh_vector *MESH_VECTOR, qualities_
     free(ADJACENT_POINTS);
 }
 
-void loadEPtomoSurfaceData(char *tomoType, nz_tomography_data *NZ_TOMOGRAPHY_DATA)
+void loadEPtomoSurfaceData(char *tomoType, nz_tomography_data *NZ_TOMOGRAPHY_DATA, global_model_parameters *GLOBAL_MODEL_PARAMETERS)
 /*
  Purpose:   read in the Eberhart-Phillips 2010 tomography dataset
  
@@ -369,12 +369,8 @@ void loadEPtomoSurfaceData(char *tomoType, nz_tomography_data *NZ_TOMOGRAPHY_DAT
 
     
     // load in vector containing basin 'wall-type' boundaries to apply smoothing near
-    char boundaryVecFilename[MAX_FILENAME_STRING_LEN];
-    sprintf(boundaryVecFilename,"Data/Boundaries/SmoothBoundaryVec.txt");
-    
     NZ_TOMOGRAPHY_DATA->smooth_boundary = malloc(sizeof(smoothing_boundary));
-    
-    loadSmoothBoundaries(NZ_TOMOGRAPHY_DATA,boundaryVecFilename);
+    loadSmoothBoundaries(NZ_TOMOGRAPHY_DATA,GLOBAL_MODEL_PARAMETERS);
 
 }
 

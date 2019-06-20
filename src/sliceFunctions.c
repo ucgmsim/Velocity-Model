@@ -121,6 +121,17 @@ slice_parameters *readExtractedSliceParametersFile(char *sliceParametersTextFile
     {
         fscanf(file, "%lf %lf %lf %lf %lf", &SLICE_PARAMETERS->latA[i], &SLICE_PARAMETERS->latB[i], &SLICE_PARAMETERS->lonA[i], &SLICE_PARAMETERS->lonB[i], &SLICE_PARAMETERS->LatLonRes[i]);
     }
+    for(int i = 0; i < SLICE_PARAMETERS->nSlices; i++) // if lon is negative, change to positive.
+    {
+        if (SLICE_PARAMETERS->lonA[i] < 0)
+        {
+            SLICE_PARAMETERS->lonA[i] = SLICE_PARAMETERS->lonA[i] + 360.0;
+        }
+        if (SLICE_PARAMETERS->lonB[i] < 0)
+        {
+            SLICE_PARAMETERS->lonB[i] = SLICE_PARAMETERS->lonB[i] + 360.0;
+        }
+    }
     
     printf("Extracted slice parameters file read complete.\n");
     fclose(file);
@@ -154,6 +165,17 @@ slice_parameters *readGeneratedSliceParametersFile(char *sliceParametersTextFile
     for(int i = 0; i < SLICE_PARAMETERS->nSlices; i++)
     {
         fscanf(file, "%lf %lf %lf %lf %lf %lf %lf %lf", &SLICE_PARAMETERS->latA[i], &SLICE_PARAMETERS->latB[i], &SLICE_PARAMETERS->lonA[i], &SLICE_PARAMETERS->lonB[i], &SLICE_PARAMETERS->depMin[i], &SLICE_PARAMETERS->depMax[i], &SLICE_PARAMETERS->LatLonRes[i], &SLICE_PARAMETERS->DepRes[i]);
+    }
+    for(int i = 0; i < SLICE_PARAMETERS->nSlices; i++) // if lon is negative, change to positive.
+    {
+        if (SLICE_PARAMETERS->lonA[i] < 0)
+        {
+            SLICE_PARAMETERS->lonA[i] = SLICE_PARAMETERS->lonA[i] + 360.0;
+        }
+        if (SLICE_PARAMETERS->lonB[i] < 0)
+        {
+            SLICE_PARAMETERS->lonB[i] = SLICE_PARAMETERS->lonB[i] + 360.0;
+        }
     }
     
     printf("Extracted slice parameters file read complete.\n");

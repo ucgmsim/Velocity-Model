@@ -335,10 +335,6 @@ multi_profile_parameters *readProfilesTextFile(char *coordsTextFile)
         exit(EXIT_FAILURE);
     }
 
-
-    slice_parameters *SLICE_PARAMETERS;
-    SLICE_PARAMETERS = malloc(sizeof(slice_parameters));
-
     FILE *file;
 
     file = fopen(coordsTextFile, "r");

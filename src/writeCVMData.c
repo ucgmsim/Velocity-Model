@@ -358,14 +358,25 @@ void writeAllBasinSurfaceDepths(global_model_parameters *GLOBAL_MODEL_PARAMETERS
     char sliceDir[MAX_FILENAME_STRING_LEN];
     sprintf(sliceDir,"%s/Generated_Slices",OUTPUT_DIR);
     
-    static int sliceCount = 0;
-    sliceCount += 1;
-    sliceCount -= basinNum;
+    static int sliceCount = 1;
     
+    static int sCountBasin = 0;
+    sCountBasin += 1;
+    
+    
+    if (sCountBasin == GLOBAL_MODEL_PARAMETERS->nBasins-1)
+    {
+        sliceCount += 1;
+        sCountBasin = sCountBasin - (GLOBAL_MODEL_PARAMETERS->nBasins);
+        
+    }
+    
+    
+    //printf("%i %i %i %i\n",sliceCount,basinNum,sCountBasin,GLOBAL_MODEL_PARAMETERS->nBasins);
     
     FILE *fp;
     char fName[MAX_FILENAME_STRING_LEN];
-    sprintf(fName,"%s/SliceSurfaceDepthsBasin#%iSlice#%i.txt",sliceDir,basinNum,sliceCount);
+    sprintf(fName,"%s/SliceSurfaceDepthsSlice%iBasin%i.txt",sliceDir,sliceCount,basinNum);
     fp = fopen(fName, "w");
     fprintf(fp, "Lat\tLon\t");
     for(int k = 0; k < GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum]; k++)

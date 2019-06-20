@@ -21,7 +21,7 @@ void loadBasinResources(global_model_parameters *GLOBAL_MODEL_PARAMETERS)
 
     for (int i = 0; i < GLOBAL_MODEL_PARAMETERS->nBasins; i++)
     {
-        printf("%s %i\n",GLOBAL_MODEL_PARAMETERS->basin[i],i);
+//        printf("%s %i\n",GLOBAL_MODEL_PARAMETERS->basin[i],i);
 
          if (strcmp(GLOBAL_MODEL_PARAMETERS->basin[i],"Canterbury_Pre_Quaternary_v1p0") == 0)
          {

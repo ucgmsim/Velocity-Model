@@ -40,7 +40,7 @@ void writeSliceParametersLogFile(char *OUTPUT_DIR, slice_parameters *SLICE_PARAM
 {
 
     // generate file for writing
-    FILE *fp2;
+    FILE *fp2 = NULL;
     char fName[MAX_FILENAME_STRING_LEN];
 
 
@@ -65,6 +65,7 @@ void writeSliceParametersLogFile(char *OUTPUT_DIR, slice_parameters *SLICE_PARAM
         fprintf(fp2,"CornerLon2\t%lf\n",GLOBAL_MESH->Lon[0][GLOBAL_MESH->nY-1]);
         fprintf(fp2,"CornerLon3\t%lf\n",GLOBAL_MESH->Lon[GLOBAL_MESH->nX-1][GLOBAL_MESH->nY-1]);
         fprintf(fp2,"CornerLon4\t%lf\n",GLOBAL_MESH->Lon[GLOBAL_MESH->nX-1][0]);
+        fclose(fp2);
     }
     else if (strcmp(type,"GENERATED") == 0)
     {
@@ -78,8 +79,9 @@ void writeSliceParametersLogFile(char *OUTPUT_DIR, slice_parameters *SLICE_PARAM
         fprintf(fp2,"Slice Parameters Log File.\n");
         fprintf(fp2,"Number_of_slices\t%i\n",SLICE_PARAMETRES->nSlices);
         fprintf(fp2,"Model_version\t%s\n",MODEL_EXTENT->version);
+        fclose(fp2);
     }
-    fclose(fp2);
+    
 
 
 }

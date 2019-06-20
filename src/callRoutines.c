@@ -31,7 +31,7 @@ void runGenerateVelocitySlices(char *MODEL_VERSION, char *OUTPUT_DIR, gen_velo_s
         exit(EXIT_FAILURE);
     }
     MODEL_EXTENT->version = MODEL_VERSION;
-    global_mesh *GLOBAL_MESH;
+    global_mesh *GLOBAL_MESH = NULL;
     
     
     
@@ -364,7 +364,7 @@ void runGenerateMultipleVSonGrid(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extr
     // Read in text file with parameters
     multi_gridpoint_parameters *MULTI_GRIDPOINT_PARAMETERS;
     MULTI_GRIDPOINT_PARAMETERS = readGridpointsTextFile(GEN_EXTRACT_MULTI_GRIDPOINT_VS_CALL.COORDINATES_TEXT_FILE);
-    variable_depth_points *VARIABLE_DEPTH_POINTS;
+    //variable_depth_points *VARIABLE_DEPTH_POINTS;
 
     // obtain surface filenames based off version number
     global_model_parameters *GLOBAL_MODEL_PARAMETERS;

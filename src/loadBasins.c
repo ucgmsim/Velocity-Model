@@ -666,7 +666,7 @@ void loadSmoothBoundaries(nz_tomography_data *NZ_TOMOGRAPHY_DATA,global_model_pa
         }
         sprintf(boundaryVecFilename,"Data/Boundaries/Smoothing/%s.txt",GLOBAL_MODEL_PARAMETERS->basin[i]);
         
-        printf("%s\n",boundaryVecFilename);
+//        printf("%s\n",boundaryVecFilename);
         FILE *file;
         file = fopen(boundaryVecFilename, "r");
         if (file == NULL)
@@ -688,7 +688,7 @@ void loadSmoothBoundaries(nz_tomography_data *NZ_TOMOGRAPHY_DATA,global_model_pa
 
 
     }
-    printf("%i\n",count);
+//    printf("%i\n",count);
     assert(count<=MAX_NUM_POINTS_SMOOTH_VEC);
     SMOOTH_BOUND->n = count;
 }

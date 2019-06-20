@@ -255,7 +255,6 @@ void prescribeVelocities(global_model_parameters *GLOBAL_MODEL_PARAMETERS, velo_
 
     int basinFlag = 0;
     double Z = 0;
-    double relativeDepth;
 
     for (int k = 0; k < MESH_VECTOR->nZ; k++)
     {

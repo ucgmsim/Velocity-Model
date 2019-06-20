@@ -188,7 +188,7 @@ void loadEPtomoSurfaceData(char *tomoType, nz_tomography_data *NZ_TOMOGRAPHY_DAT
     const char *varNames[3];
     varNames[0] = "vp", varNames[1] = "vs", varNames[2] = "rho";
     int elev[30];
-    int nElev;
+    int nElev = 0;
     char vs30fileName[MAX_FILENAME_STRING_LEN];
     char tomoDirectory[MAX_FILENAME_STRING_LEN];
 

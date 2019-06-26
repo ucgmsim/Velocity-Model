@@ -1,3 +1,0 @@
-* linguist-vendored
-*.c linguist-vendored=false
-*.in filter=lfs diff=lfs merge=lfs -text

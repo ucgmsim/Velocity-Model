@@ -234,10 +234,11 @@ void prescribeVelocities(global_model_parameters *GLOBAL_MODEL_PARAMETERS, velo_
                 TAPER_VAL = 1.0 - (depthChange/(PARTIAL_GLOBAL_SURFACE_DEPTHS->dep[1]*TAPER_DIST));
                 if(TAPER_VAL < 0 )
                 {
-                    TAPER_VAL = 0;
+                    TAPER_VAL = 0.0;
                 }
             }
             SHIFTED_MESH_VECTOR->Z[k] = PARTIAL_GLOBAL_SURFACE_DEPTHS->dep[1]*TAPER_VAL - depthChange;
+//            printf("%lf %lf %lf %lf\n",SHIFTED_MESH_VECTOR->Z[k],depthChange,PARTIAL_GLOBAL_SURFACE_DEPTHS->dep[1],TAPER_VAL);
         }
         interpolateBasinSurfaceDepths(BASIN_DATA, GLOBAL_MODEL_PARAMETERS, IN_BASIN, PARTIAL_BASIN_SURFACE_DEPTHS, SHIFTED_MESH_VECTOR);
     }
@@ -289,6 +290,7 @@ void prescribeVelocities(global_model_parameters *GLOBAL_MODEL_PARAMETERS, velo_
         if (basinFlag == 0)
         {
             // determine which sub velocity model the point lies within
+//            printf("%lf.\n",Z);
             nVeloModInd = findGlobalSubVeloModelInd(Z, PARTIAL_GLOBAL_SURFACE_DEPTHS);
 
             // call the respective sub velocity model

@@ -639,47 +639,22 @@ void loadSmoothBoundaries(nz_tomography_data *NZ_TOMOGRAPHY_DATA,global_model_pa
     
     for (int i = 0; i < GLOBAL_MODEL_PARAMETERS->nBasins; i++)
     {
-        
-        if (strcmp(GLOBAL_MODEL_PARAMETERS->basin[i],"Canterbury_Pre_Quaternary_v1p0") == 0)
-        {
-            sprintf(boundaryVecFilename,"Data/Boundaries/Smoothing/Canterbury_Pre_Quaternary_v1p0.txt");
-        }
-        else if (strcmp(GLOBAL_MODEL_PARAMETERS->basin[i],"Cantebury_North_v1p0") == 0)
-        {
-            sprintf(boundaryVecFilename,"Data/Boundaries/Smoothing/Cantebury_North_v1p0.txt");
-        }
-        else if (strcmp(GLOBAL_MODEL_PARAMETERS->basin[i],"Kaikoura_v1p0") == 0)
-        {
-            sprintf(boundaryVecFilename,"Data/Boundaries/Smoothing/Kaikoura_v1p0.txt");
-        }
-        else if (strcmp(GLOBAL_MODEL_PARAMETERS->basin[i],"Marlborough_v1p0") == 0)
-        {
-            sprintf(boundaryVecFilename,"Data/Boundaries/Smoothing/Marlborough_v1p0.txt");
-        }
-        else if (strcmp(GLOBAL_MODEL_PARAMETERS->basin[i],"Nelson_v1p0") == 0)
-        {
-            sprintf(boundaryVecFilename,"Data/Boundaries/Smoothing/Nelson_v1p0.txt");
-        }
-        else if (strcmp(GLOBAL_MODEL_PARAMETERS->basin[i],"Wellington_v1p0") == 0)
-        {
-            sprintf(boundaryVecFilename,"Data/Boundaries/Smoothing/Wellington_v1p0.txt");
-        }
         sprintf(boundaryVecFilename,"Data/Boundaries/Smoothing/%s.txt",GLOBAL_MODEL_PARAMETERS->basin[i]);
         
-//        printf("%s\n",boundaryVecFilename);
         FILE *file;
         file = fopen(boundaryVecFilename, "r");
         if (file == NULL)
         {
 //            printf("Error smoothing boundary vector file %s not found.\n",boundaryVecFilename);
-//            exit(EXIT_FAILURE);
+//            exit(EXIT_FAILURE); 
         }
         else
         {
+            printf("Loading offshore smoothing file: %s.\n",boundaryVecFilename);
             while(!feof(file))
             {
-                fscanf(file, "%lf %lf", &SMOOTH_BOUND->xPts[count],&SMOOTH_BOUND->yPts[count]);
-                
+                fscanf(file, "%lf %lf\n", &SMOOTH_BOUND->xPts[count],&SMOOTH_BOUND->yPts[count]);
+//                printf("%lf\n",SMOOTH_BOUND->xPts[count]);
                 count += 1;
             }
             fclose(file);

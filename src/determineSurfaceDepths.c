@@ -33,59 +33,14 @@ void interpolateGlobalSurfaceDepths(global_surfaces *GLOBAL_SURFACES, mesh_vecto
     adjacent_points *ADJACENT_POINTS;
     global_surf_read *GLOBAL_SURF_READ;
     
-    double p1, p2, p3, v1, v2;
-    double X1, X2, Y1, Y2, Q11, Q12, Q21, Q22, X, Y;
+
     // loop over the number of global surfaces
     for(int i = 0; i < GLOBAL_SURFACES->nSurf; i++)
     {
         GLOBAL_SURF_READ = GLOBAL_SURFACES->surf[i];
-        ADJACENT_POINTS = findGlobalAdjacentPoints(GLOBAL_SURF_READ, *MESH_VECTOR->Lat, *MESH_VECTOR->Lon);
-        
-        // if point lies within the surface bounds, interpolate as normal
-        if (ADJACENT_POINTS->inSurfaceBounds == 1)
-        {
-            // interpolate
-            X1 = GLOBAL_SURF_READ->loni[ADJACENT_POINTS->lonInd[0]];
-            X2 = GLOBAL_SURF_READ->loni[ADJACENT_POINTS->lonInd[1]];
-            Y1 = GLOBAL_SURF_READ->lati[ADJACENT_POINTS->latInd[0]];
-            Y2 = GLOBAL_SURF_READ->lati[ADJACENT_POINTS->latInd[1]];
-            Q11 = GLOBAL_SURF_READ->raster[ADJACENT_POINTS->lonInd[0]][ADJACENT_POINTS->latInd[0]];
-            Q12 = GLOBAL_SURF_READ->raster[ADJACENT_POINTS->lonInd[0]][ADJACENT_POINTS->latInd[1]];
-            Q21 = GLOBAL_SURF_READ->raster[ADJACENT_POINTS->lonInd[1]][ADJACENT_POINTS->latInd[0]];
-            Q22 = GLOBAL_SURF_READ->raster[ADJACENT_POINTS->lonInd[1]][ADJACENT_POINTS->latInd[1]];
-            X = *MESH_VECTOR->Lon;
-            Y = *MESH_VECTOR->Lat;
-            PARTIAL_GLOBAL_SURFACE_DEPTHS->dep[i] =  biLinearInterpolation(X1, X2, Y1, Y2, Q11, Q12, Q21, Q22, X, Y);
-            
-        }
-        
-        // if point lies within the extension zone, take on the value of the closest point
-        else if (ADJACENT_POINTS->inLatExtensionZone == 1)
-        {
-            p1 = GLOBAL_SURF_READ->loni[ADJACENT_POINTS->lonInd[0]];
-            p2 = GLOBAL_SURF_READ->loni[ADJACENT_POINTS->lonInd[1]];
-            v1 = GLOBAL_SURF_READ->raster[ADJACENT_POINTS->lonInd[0]][ADJACENT_POINTS->latEdgeInd];
-            v2 = GLOBAL_SURF_READ->raster[ADJACENT_POINTS->lonInd[1]][ADJACENT_POINTS->latEdgeInd];
-            p3 = *MESH_VECTOR->Lon;
-            PARTIAL_GLOBAL_SURFACE_DEPTHS->dep[i] = linearInterpolation(p1, p2, v1, v2, p3);
-            CALCULATION_LOG->nPointsInGlobalLatSurfaceExtensionZone += 1;
-        }
-        else if (ADJACENT_POINTS->inLonExtensionZone == 1)
-        {
-            p1 = GLOBAL_SURF_READ->lati[ADJACENT_POINTS->latInd[0]];
-            p2 = GLOBAL_SURF_READ->lati[ADJACENT_POINTS->latInd[1]];
-            v1 = GLOBAL_SURF_READ->raster[ADJACENT_POINTS->lonEdgeInd][ADJACENT_POINTS->latInd[0]];
-            v2 = GLOBAL_SURF_READ->raster[ADJACENT_POINTS->lonEdgeInd][ADJACENT_POINTS->latInd[1]];
-            p3 = *MESH_VECTOR->Lat;
-            PARTIAL_GLOBAL_SURFACE_DEPTHS->dep[i] = linearInterpolation(p1, p2, v1, v2, p3);
-            CALCULATION_LOG->nPointsInGlobalLonSurfaceExtensionZone += 1;
-        }
-        else if (ADJACENT_POINTS->inCornerZone == 1)
-        {
-            PARTIAL_GLOBAL_SURFACE_DEPTHS->dep[i] = GLOBAL_SURF_READ->raster[ADJACENT_POINTS->cornerLonInd][ADJACENT_POINTS->cornerLatInd];
-            CALCULATION_LOG->nPointsInGlobalCornerSurfaceExtensionZone += 1;
-        }
-
+        ADJACENT_POINTS = malloc(sizeof(adjacent_points));
+        findGlobalAdjacentPoints(GLOBAL_SURF_READ, *MESH_VECTOR->Lat, *MESH_VECTOR->Lon,ADJACENT_POINTS);
+        PARTIAL_GLOBAL_SURFACE_DEPTHS->dep[i] = interpolateGlobalSurface(GLOBAL_SURF_READ,*MESH_VECTOR->Lat, *MESH_VECTOR->Lon, ADJACENT_POINTS);
         free(ADJACENT_POINTS);
     }
     double topVal, botVal;

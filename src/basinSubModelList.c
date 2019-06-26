@@ -22,42 +22,51 @@ void loadBasinResources(global_model_parameters *GLOBAL_MODEL_PARAMETERS)
     for (int i = 0; i < GLOBAL_MODEL_PARAMETERS->nBasins; i++)
     {
 //        printf("%s %i\n",GLOBAL_MODEL_PARAMETERS->basin[i],i);
-
-         if (strcmp(GLOBAL_MODEL_PARAMETERS->basin[i],"Canterbury_Pre_Quaternary_v1p0") == 0)
+         // ============
+         // v19p1 models
+         // ============
+         if (strcmp(GLOBAL_MODEL_PARAMETERS->basin[i],"Canterbury_Pre_Quaternary_v19p1") == 0)
          {
-             load_Canterbury_Pre_Quaternary_v1p0(GLOBAL_MODEL_PARAMETERS,i);
+             load_Canterbury_Pre_Quaternary_v19p1(GLOBAL_MODEL_PARAMETERS,i);
          }
-         else if (strcmp(GLOBAL_MODEL_PARAMETERS->basin[i],"Cantebury_North_v1p0") == 0)
+         else if (strcmp(GLOBAL_MODEL_PARAMETERS->basin[i],"Cantebury_North_v19p1") == 0)
          {
-             load_Cantebury_North_v1p0(GLOBAL_MODEL_PARAMETERS,i);
+             load_Cantebury_North_v19p1(GLOBAL_MODEL_PARAMETERS,i);
          }
-         else if (strcmp(GLOBAL_MODEL_PARAMETERS->basin[i],"Banks_Peninsula_Volcanics_v1p0") == 0)
+         else if (strcmp(GLOBAL_MODEL_PARAMETERS->basin[i],"Banks_Peninsula_Volcanics_v19p1") == 0)
          {
-             load_Banks_Peninsula_Volcanics_v1p0(GLOBAL_MODEL_PARAMETERS,i);
+             load_Banks_Peninsula_Volcanics_v19p1(GLOBAL_MODEL_PARAMETERS,i);
          }
-         else if (strcmp(GLOBAL_MODEL_PARAMETERS->basin[i],"Kaikoura_v1p0") == 0)
+         else if (strcmp(GLOBAL_MODEL_PARAMETERS->basin[i],"Kaikoura_v19p1") == 0)
          {
-             load_Kaikoura_v1p0(GLOBAL_MODEL_PARAMETERS,i);
+             load_Kaikoura_v19p1(GLOBAL_MODEL_PARAMETERS,i);
          }
-         else if (strcmp(GLOBAL_MODEL_PARAMETERS->basin[i],"Cheviot_v1p0") == 0)
+         else if (strcmp(GLOBAL_MODEL_PARAMETERS->basin[i],"Cheviot_v19p1") == 0)
          {
-             load_Cheviot_v1p0(GLOBAL_MODEL_PARAMETERS,i);
+             load_Cheviot_v19p1(GLOBAL_MODEL_PARAMETERS,i);
          }
-         else if (strcmp(GLOBAL_MODEL_PARAMETERS->basin[i],"Hanmer_v1p0") == 0)
+         else if (strcmp(GLOBAL_MODEL_PARAMETERS->basin[i],"Hanmer_v19p1") == 0)
          {
-             load_Hanmer_v1p0(GLOBAL_MODEL_PARAMETERS,i);
+             load_Hanmer_v19p1(GLOBAL_MODEL_PARAMETERS,i);
          }
-         else if (strcmp(GLOBAL_MODEL_PARAMETERS->basin[i],"Marlborough_v1p0") == 0)
+         else if (strcmp(GLOBAL_MODEL_PARAMETERS->basin[i],"Marlborough_v19p1") == 0)
          {
-             load_Marlborough_v1p0(GLOBAL_MODEL_PARAMETERS,i);
+             load_Marlborough_v19p1(GLOBAL_MODEL_PARAMETERS,i);
          }
-         else if (strcmp(GLOBAL_MODEL_PARAMETERS->basin[i],"Nelson_v1p0") == 0)
+         else if (strcmp(GLOBAL_MODEL_PARAMETERS->basin[i],"Nelson_v19p1") == 0)
          {
-             load_Nelson_v1p0(GLOBAL_MODEL_PARAMETERS,i);
+             load_Nelson_v19p1(GLOBAL_MODEL_PARAMETERS,i);
          }
-         else if (strcmp(GLOBAL_MODEL_PARAMETERS->basin[i],"Wellington_v1p0") == 0)
+         else if (strcmp(GLOBAL_MODEL_PARAMETERS->basin[i],"Wellington_v19p1") == 0)
          {
-             load_Wellington_v1p0(GLOBAL_MODEL_PARAMETERS,i);
+             load_Wellington_v19p1(GLOBAL_MODEL_PARAMETERS,i);
+         }
+        // ============
+        // v19p1 models
+        // ============
+         else if (strcmp(GLOBAL_MODEL_PARAMETERS->basin[i],"Wellington_v19p6") == 0)
+         {
+             load_Wellington_v19p6(GLOBAL_MODEL_PARAMETERS,i);
          }
          else
          {
@@ -69,7 +78,7 @@ void loadBasinResources(global_model_parameters *GLOBAL_MODEL_PARAMETERS)
     }
 }
 
-void load_Wellington_v1p0(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum)
+void load_Wellington_v19p1(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum)
 {
     GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum] = 2;
     GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[basinNum] = 1;
@@ -85,7 +94,23 @@ void load_Wellington_v1p0(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int 
     GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][1] = 0;
 }
 
-void load_Nelson_v1p0(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum)
+void load_Wellington_v19p6(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum)
+{
+    GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum] = 2;
+    GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[basinNum] = 1;
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[basinNum][0] = "Data/NI_BASINS/Wellington_Polygon_19p6.txt";
+    
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][0] = "DEM";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][0] = "Data/DEM/NZ_DEM_HD.in";
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][0] = 0;
+    GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][0] = "Cant1D_v2";
+    
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][1] = "WellingtonBasement";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][1] = "Data/NI_BASINS/Wellington_Grid_WGS84_v19p5p6_100_hybrid10.in";
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][1] = 0;
+}
+
+void load_Nelson_v19p1(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum)
 {
     GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum] = 2;
     GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[basinNum] = 1;
@@ -102,7 +127,7 @@ void load_Nelson_v1p0(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basi
 }
 
 
-void load_Marlborough_v1p0(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum)
+void load_Marlborough_v19p1(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum)
 {
     GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum] = 2;
     GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[basinNum] = 1;
@@ -118,7 +143,7 @@ void load_Marlborough_v1p0(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int
     GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][1] = 0;
 }
 
-void load_Hanmer_v1p0(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum)
+void load_Hanmer_v19p1(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum)
 {
     GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum] = 2;
     GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[basinNum] = 1;
@@ -136,7 +161,7 @@ void load_Hanmer_v1p0(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basi
 
 
 
-void load_Cheviot_v1p0(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum)
+void load_Cheviot_v19p1(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum)
 {
     GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum] = 2;
     GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[basinNum] = 1;
@@ -152,7 +177,7 @@ void load_Cheviot_v1p0(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int bas
     GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][1] = 0;
 }
 
-void load_Kaikoura_v1p0(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum)
+void load_Kaikoura_v19p1(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum)
 {
     GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum] = 2;
     GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[basinNum] = 1;
@@ -168,7 +193,7 @@ void load_Kaikoura_v1p0(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int ba
     GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][1] = 0;
 }
 
-void load_Banks_Peninsula_Volcanics_v1p0(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum)
+void load_Banks_Peninsula_Volcanics_v19p1(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum)
 {
     GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum] = 2;
     GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[basinNum] = 1;
@@ -185,7 +210,7 @@ void load_Banks_Peninsula_Volcanics_v1p0(global_model_parameters *GLOBAL_MODEL_P
     
 }
 
-void load_Cantebury_North_v1p0(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum)
+void load_Cantebury_North_v19p1(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum)
 {
     GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum] = 2;
     GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[basinNum] = 1;
@@ -202,7 +227,7 @@ void load_Cantebury_North_v1p0(global_model_parameters *GLOBAL_MODEL_PARAMETERS,
 }
 
 
-void load_Canterbury_Pre_Quaternary_v1p0(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum)
+void load_Canterbury_Pre_Quaternary_v19p1(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum)
 {
     // CANTERBURY Basin (1D above basement)
     GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum] = 5;

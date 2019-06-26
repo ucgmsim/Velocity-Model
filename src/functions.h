@@ -57,6 +57,7 @@ extern basin_surf_read *loadBasinSurface(char *fileName);
 extern void loadBasinBoundaries(int basinNum, basin_data *BASIN_DATA, global_model_parameters *GLOBAL_MODEL_PARAMETERS);
 extern void loadSmoothBoundaries(nz_tomography_data *NZ_TOMOGRAPHY_DATA,global_model_parameters *GLOBAL_MODEL_PARAMETERS);
 extern void interpolateGlobalSurfaceDepths(global_surfaces *GLOBAL_SURFACES, mesh_vector *MESH_VECTOR ,partial_global_surface_depths *PARTIAL_GLOBAL_SURFACE_DEPTHS, calculation_log *CALCULATION_LOG);
+extern double interpolateGlobalSurface(global_surf_read *GLOBAL_SURF_READ, double latPt, double lonPt, adjacent_points *ADJACENT_POINTS);
 extern int determineIfWithinAnyBasinLatLon(basin_data *BASIN_DATA, global_model_parameters *GLOBAL_MODEL_PARAMETERS, double Lat, double Lon);
 extern void determineIfWithinBasinLatLon(basin_data *BASIN_DATA, global_model_parameters *GLOBAL_MODEL_PARAMETERS, in_basin *IN_BASIN, double Lat, double Lon);
 extern void interpolateBasinSurfaceDepths(basin_data *BASIN_DATA, global_model_parameters *GLOBAL_MODEL_PARAMETERS, in_basin *IN_BASIN, partial_basin_surface_depths *PARTIAL_BASIN_SURFACE_DEPTHS, mesh_vector *MESH_VECTOR);
@@ -117,9 +118,9 @@ extern int pointInPoly(basin_data *BASIN_DATA, int basinNum, int boundaryNum, do
 extern int pnpoly(int nvert, double *vertx, double *verty, double testx, double testy);
 
 extern void plotExtracts(void);
-extern adjacent_points *findGlobalAdjacentPoints(global_surf_read *GLOBAL_SURF_READ, double lat, double lon);
 extern void findCornerInds(global_surf_read *GLOBAL_SURF_READ, double latPt, double lonPt, adjacent_points *ADJACENT_POINTS);
 extern void findEdgeInds(global_surf_read *GLOBAL_SURF_READ, adjacent_points *ADJACENT_POINTS, int edgeType);
+extern void findGlobalAdjacentPoints(global_surf_read *GLOBAL_SURF_READ, double lat, double lon,adjacent_points *ADJACENT_POINTS);
 //extern void writeAllSurfaceDepths(gridStruct *location, surfDepValues *surfDep, char *outputDirectory);
 //extern void writeGlobalSurfaceDepths(surfaceDepthsGlobal *surfDepGlob, gridStruct *location, surfNames *surfSubModNames, char *outputDirectory);
 //extern void writeAllGlobalSurfaceDepths(surfaceDepthsGlobal *surfDepGlob, gridStruct *location, surfNames *surfSubModNames, char *outputDirectory);
@@ -255,18 +256,19 @@ extern double rhoFromVpBrocher(double vp);
 extern double vpFromVsBrocher(double vs);
 
 
+// v19p1 Models
+void load_Canterbury_Pre_Quaternary_v19p1(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_Cantebury_North_v19p1(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_Banks_Peninsula_Volcanics_v19p1(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_Kaikoura_v19p1(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_Cheviot_v19p1(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_Hanmer_v19p1(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_Marlborough_v19p1(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_Wellington_v19p1(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_Nelson_v19p1(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
 
-void load_Canterbury_Pre_Quaternary_v1p0(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
-void load_Cantebury_North_v1p0(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
-void load_Banks_Peninsula_Volcanics_v1p0(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
-void load_Kaikoura_v1p0(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
-void load_Cheviot_v1p0(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
-void load_Hanmer_v1p0(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
-void load_Marlborough_v1p0(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
-void load_Wellington_v1p0(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
-void load_Nelson_v1p0(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
-
-
+// v19p6 Models
+void load_Wellington_v19p6(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
 
 
 

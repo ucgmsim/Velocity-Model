@@ -198,7 +198,7 @@ void runGenerateMultipleProfiles(char *MODEL_VERSION, char *OUTPUT_DIR, gen_mult
     // Read in text file with profile parameters
     multi_profile_parameters *MULTI_PROFILE_PARAMETERS;
     MULTI_PROFILE_PARAMETERS = readProfilesTextFile(GEN_MULTI_PROFILES_CALL.COORDINATES_TEXTFILE);
-    variable_depth_points *VARIABLE_DEPTH_POINTS;
+    variable_depth_points *VARIABLE_DEPTH_POINTS = NULL;
 
     if (strcmp(GEN_MULTI_PROFILES_CALL.SPACING_TYPE,"VARIABLE") == 0)
     {
@@ -420,6 +420,10 @@ void runGenerateMultipleVSonGrid(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extr
             MESH_VECTOR->Z[MESH_VECTOR->nZ] = MULTI_GRIDPOINT_PARAMETERS->dep[grdPtsCount];
             MESH_VECTOR->nZ += 1;
             grdPtsCount += 1;
+            if (MULTI_GRIDPOINT_PARAMETERS->nPts == 1)
+            {
+                break;
+            }
         }
         MESH_VECTOR->Lat = &MULTI_GRIDPOINT_PARAMETERS->groupingLat[i];
         MESH_VECTOR->Lon = &MULTI_GRIDPOINT_PARAMETERS->groupingLon[i];

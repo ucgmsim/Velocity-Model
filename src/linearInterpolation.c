@@ -70,3 +70,67 @@ double biLinearInterpolation(double X1, double X2, double Y1, double Y2, double 
     Q = (A+B+C+D)*E;
     return Q;
 }
+
+
+double interpolateGlobalSurface(global_surf_read *GLOBAL_SURF_READ, double latPt, double lonPt, adjacent_points *ADJACENT_POINTS)
+/*
+ Purpose: to interpolate / extrapolate a gobal surface
+ 
+ Input variables:
+ *GLOBAL_SURF_READ - structure containing a global surface
+ latPt - latitude of point to for eventual interpolation
+ lonPt - longitude of point to for eventual interpolation
+ *ADJACENT_POINTS - structure containing indicies of points adjacent to the lat - lon for interpolation / extrapolation
+ 
+ Output variables:
+ value interpolated at the lat-lon point
+ */
+{
+    double p1, p2, p3, v1, v2;
+    double X1, X2, Y1, Y2, Q11, Q12, Q21, Q22, X, Y;
+    
+    // if point lies within the surface bounds, interpolate as normal
+    if (ADJACENT_POINTS->inSurfaceBounds == 1)
+    {
+        // interpolate
+        X1 = GLOBAL_SURF_READ->loni[ADJACENT_POINTS->lonInd[0]];
+        X2 = GLOBAL_SURF_READ->loni[ADJACENT_POINTS->lonInd[1]];
+        Y1 = GLOBAL_SURF_READ->lati[ADJACENT_POINTS->latInd[0]];
+        Y2 = GLOBAL_SURF_READ->lati[ADJACENT_POINTS->latInd[1]];
+        Q11 = GLOBAL_SURF_READ->raster[ADJACENT_POINTS->lonInd[0]][ADJACENT_POINTS->latInd[0]];
+        Q12 = GLOBAL_SURF_READ->raster[ADJACENT_POINTS->lonInd[0]][ADJACENT_POINTS->latInd[1]];
+        Q21 = GLOBAL_SURF_READ->raster[ADJACENT_POINTS->lonInd[1]][ADJACENT_POINTS->latInd[0]];
+        Q22 = GLOBAL_SURF_READ->raster[ADJACENT_POINTS->lonInd[1]][ADJACENT_POINTS->latInd[1]];
+        X = lonPt;
+        Y = latPt;
+        return biLinearInterpolation(X1, X2, Y1, Y2, Q11, Q12, Q21, Q22, X, Y);
+        
+    }
+    
+    // if point lies within the extension zone, take on the value of the closest point
+    else if (ADJACENT_POINTS->inLatExtensionZone == 1)
+    {
+        p1 = GLOBAL_SURF_READ->loni[ADJACENT_POINTS->lonInd[0]];
+        p2 = GLOBAL_SURF_READ->loni[ADJACENT_POINTS->lonInd[1]];
+        v1 = GLOBAL_SURF_READ->raster[ADJACENT_POINTS->lonInd[0]][ADJACENT_POINTS->latEdgeInd];
+        v2 = GLOBAL_SURF_READ->raster[ADJACENT_POINTS->lonInd[1]][ADJACENT_POINTS->latEdgeInd];
+        p3 = lonPt;
+        return linearInterpolation(p1, p2, v1, v2, p3);
+    }
+    else if (ADJACENT_POINTS->inLonExtensionZone == 1)
+    {
+        p1 = GLOBAL_SURF_READ->lati[ADJACENT_POINTS->latInd[0]];
+        p2 = GLOBAL_SURF_READ->lati[ADJACENT_POINTS->latInd[1]];
+        v1 = GLOBAL_SURF_READ->raster[ADJACENT_POINTS->lonEdgeInd][ADJACENT_POINTS->latInd[0]];
+        v2 = GLOBAL_SURF_READ->raster[ADJACENT_POINTS->lonEdgeInd][ADJACENT_POINTS->latInd[1]];
+        p3 = latPt;
+
+        return linearInterpolation(p1, p2, v1, v2, p3);
+    }
+    else if (ADJACENT_POINTS->inCornerZone == 1)
+    {
+        return GLOBAL_SURF_READ->raster[ADJACENT_POINTS->cornerLonInd][ADJACENT_POINTS->cornerLatInd];
+    }
+    printf("Calcualtion of Global surface value failed.\n");
+    exit(EXIT_FAILURE);
+}

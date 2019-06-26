@@ -15,7 +15,7 @@
 #include "structs.h"
 #include "functions.h"
 
-adjacent_points *findGlobalAdjacentPoints(global_surf_read *GLOBAL_SURF_READ, double lat, double lon)
+void findGlobalAdjacentPoints(global_surf_read *GLOBAL_SURF_READ, double lat, double lon,adjacent_points *ADJACENT_POINTS)
 /*
  Purpose: to find the adjacent points for interpolation for a given lat lon value within the global surfaces
  
@@ -23,19 +23,14 @@ adjacent_points *findGlobalAdjacentPoints(global_surf_read *GLOBAL_SURF_READ, do
     *GLOBAL_SURF_READ - structure containing a global surface
     lat - latitude of point to for eventual interpolation
     lon - longitude of point to for eventual interpolation
- 
- Output variables:
     *ADJACENT_POINTS - structure containing indicies of points adjacent to the lat - lon for interpolation
  
  */
 {
-    adjacent_points *ADJACENT_POINTS;
-    ADJACENT_POINTS = malloc(sizeof(adjacent_points));
-    
     int latAssignedFlag = 0;
     int lonAssignedFlag = 0;
+
     ADJACENT_POINTS->inSurfaceBounds = 0;
-    
     ADJACENT_POINTS->inLatExtensionZone = 0;
     ADJACENT_POINTS->inLonExtensionZone = 0;
     ADJACENT_POINTS->inCornerZone = 0;
@@ -122,11 +117,6 @@ adjacent_points *findGlobalAdjacentPoints(global_surf_read *GLOBAL_SURF_READ, do
                 findEdgeInds(GLOBAL_SURF_READ, ADJACENT_POINTS,3);
             }
         }
-        if( ADJACENT_POINTS->inLatExtensionZone == 0)
-        {
-//            printf("Point lies outside of lat extension zone.\n");
-//            exit(EXIT_FAILURE);
-        }
         
         if((latAssignedFlag == 1) && (lonAssignedFlag == 0)) // latitude assigned
         {
@@ -141,16 +131,15 @@ adjacent_points *findGlobalAdjacentPoints(global_surf_read *GLOBAL_SURF_READ, do
             {
                 ADJACENT_POINTS->inLonExtensionZone = 1;
                 findEdgeInds(GLOBAL_SURF_READ, ADJACENT_POINTS,2);
+//                printf("%lf %lf\n",lat,lon);
+//                printf("lon edge inds %lf %lf\n",GLOBAL_SURF_READ->loni[ADJACENT_POINTS->lonEdgeInd],lon);
+//                printf("%lf %lf %lf\n",GLOBAL_SURF_READ->lati[ADJACENT_POINTS->latInd[0]],lat,GLOBAL_SURF_READ->lati[ADJACENT_POINTS->latInd[1]]);
 
             }
         }
         
-        if( ADJACENT_POINTS->inLonExtensionZone == 0)
-        {
-//            printf("Point lies outside of lon extension zone.\n");
-//            exit(EXIT_FAILURE);
-        }
-        
+//        printf("%lf %lf\n",lat,lon);
+//        printf("%lf %i | %lf %i, | %lf %lf, | %lf %lf\n",lat - GLOBAL_SURF_READ->maxLat, MAX_LAT_SURFACE_EXTENSION, GLOBAL_SURF_READ->minLon - lon, MAX_LON_SURFACE_EXTENSION, lon , GLOBAL_SURF_READ->minLon, lat, GLOBAL_SURF_READ->maxLat);
         // four cases for corner zones
         if(((lat - GLOBAL_SURF_READ->maxLat) <= MAX_LAT_SURFACE_EXTENSION) && ((GLOBAL_SURF_READ->minLon - lon) <= MAX_LON_SURFACE_EXTENSION) && (lon <= GLOBAL_SURF_READ->minLon) && (lat >= GLOBAL_SURF_READ->maxLat))
         {
@@ -171,14 +160,21 @@ adjacent_points *findGlobalAdjacentPoints(global_surf_read *GLOBAL_SURF_READ, do
         {
             // bottom right
             findCornerInds(GLOBAL_SURF_READ, GLOBAL_SURF_READ->minLat, GLOBAL_SURF_READ->maxLon, ADJACENT_POINTS);
+//            printf("%i\n",ADJACENT_POINTS->inCornerZone);
+//            printf("\n%lf %lf\n",lat,lon);
+        }
+        
+        if ((ADJACENT_POINTS->inLatExtensionZone == 0) && (ADJACENT_POINTS->inLonExtensionZone == 0) && (ADJACENT_POINTS->inCornerZone == 0))
+        {
+            printf("Point does not lie in any global surface extension.\n");
+            exit(EXIT_FAILURE);
         }
     }
     else
     {
         ADJACENT_POINTS->inSurfaceBounds = 1;
     }
-    
-    return ADJACENT_POINTS;
+
 }
 
 
@@ -312,7 +308,6 @@ void findCornerInds(global_surf_read *GLOBAL_SURF_READ, double latPt, double lon
     }
     
     ADJACENT_POINTS->inCornerZone = 1;
-    
 }
 
 

@@ -51,91 +51,45 @@ void EPtomo2010subMod(int zInd, double dep, mesh_vector *MESH_VECTOR, qualities_
     
 //    char *quality = NULL;
     
-    double X1b, X2b, Y1b, Y2b, Q11b, Q12b, Q21b, Q22b, X, Y;
-    double X1a, X2a, Y1a, Y2a, Q11a, Q12a, Q21a, Q22a;
     double valAbove, valBelow;
     double depAbove, depBelow;
     double val;
     
     // find the adjscent points for interpolatin from the first surface (assume all surfaces utilise the same grid)
-    ADJACENT_POINTS = findGlobalAdjacentPoints(NZ_TOMOGRAPHY_DATA->surf[0][0], *MESH_VECTOR->Lat, *MESH_VECTOR->Lon);
+    ADJACENT_POINTS = malloc(sizeof(adjacent_points));
+    findGlobalAdjacentPoints(NZ_TOMOGRAPHY_DATA->surf[0][0], *MESH_VECTOR->Lat, *MESH_VECTOR->Lon,ADJACENT_POINTS);
     
 //    printf("Grid point (%lf %lf %lf) \n",*MESH_VECTOR->Lon,*MESH_VECTOR->Lat, dep);
 
 
     for( int i = 0; i < 3; i++)
     {
-//        if (i == 0)
-//        {
-//            quality = "Vp";
-//
-//        }
-//        else if ( i == 1)
-//        {
-//            quality = "Vs";
-//
-//        }
-//        else if (i == 2)
-//        {
-//            quality = "Rho";
-//
-//        };
         SURFACE_POINTER_ABOVE = NZ_TOMOGRAPHY_DATA->surf[i][indAbove];
         
         SURFACE_POINTER_BELOW = NZ_TOMOGRAPHY_DATA->surf[i][indBelow];
         
-        if ( ADJACENT_POINTS->inSurfaceBounds == 0)
+        valAbove = interpolateGlobalSurface(SURFACE_POINTER_ABOVE,*MESH_VECTOR->Lat, *MESH_VECTOR->Lon, ADJACENT_POINTS);
+        valBelow = interpolateGlobalSurface(SURFACE_POINTER_BELOW,*MESH_VECTOR->Lat, *MESH_VECTOR->Lon, ADJACENT_POINTS);
+        depAbove = NZ_TOMOGRAPHY_DATA->surfDeps[indAbove]*1000;
+        depBelow = NZ_TOMOGRAPHY_DATA->surfDeps[indBelow]*1000;
+        val = linearInterpolation(depAbove, depBelow, valAbove, valBelow, dep);
+        if (i == 0)
         {
-            printf("Grid point (%lf %lf) lies outside of Tomography surface bounds.\n",*MESH_VECTOR->Lon,*MESH_VECTOR->Lat);
-            exit(EXIT_FAILURE);
+            QUALITIES_VECTOR->Vp[zInd] = val;
+                
         }
-        else
+        else if ( i == 1)
         {
-            X1b = SURFACE_POINTER_BELOW->loni[ADJACENT_POINTS->lonInd[0]];
-            X2b = SURFACE_POINTER_BELOW->loni[ADJACENT_POINTS->lonInd[1]];
-            Y1b = SURFACE_POINTER_BELOW->lati[ADJACENT_POINTS->latInd[0]];
-            Y2b = SURFACE_POINTER_BELOW->lati[ADJACENT_POINTS->latInd[1]];
-            Q11b = SURFACE_POINTER_BELOW->raster[ADJACENT_POINTS->lonInd[0]][ADJACENT_POINTS->latInd[0]];
-            Q12b = SURFACE_POINTER_BELOW->raster[ADJACENT_POINTS->lonInd[0]][ADJACENT_POINTS->latInd[1]];
-            Q21b = SURFACE_POINTER_BELOW->raster[ADJACENT_POINTS->lonInd[1]][ADJACENT_POINTS->latInd[0]];
-            Q22b = SURFACE_POINTER_BELOW->raster[ADJACENT_POINTS->lonInd[1]][ADJACENT_POINTS->latInd[1]];
-            X = *MESH_VECTOR->Lon;
-            Y = *MESH_VECTOR->Lat;
-            
-            
-            X1a = SURFACE_POINTER_ABOVE->loni[ADJACENT_POINTS->lonInd[0]];
-            X2a = SURFACE_POINTER_ABOVE->loni[ADJACENT_POINTS->lonInd[1]];
-            Y1a = SURFACE_POINTER_ABOVE->lati[ADJACENT_POINTS->latInd[0]];
-            Y2a = SURFACE_POINTER_ABOVE->lati[ADJACENT_POINTS->latInd[1]];
-            Q11a = SURFACE_POINTER_ABOVE->raster[ADJACENT_POINTS->lonInd[0]][ADJACENT_POINTS->latInd[0]];
-            Q12a = SURFACE_POINTER_ABOVE->raster[ADJACENT_POINTS->lonInd[0]][ADJACENT_POINTS->latInd[1]];
-            Q21a = SURFACE_POINTER_ABOVE->raster[ADJACENT_POINTS->lonInd[1]][ADJACENT_POINTS->latInd[0]];
-            Q22a = SURFACE_POINTER_ABOVE->raster[ADJACENT_POINTS->lonInd[1]][ADJACENT_POINTS->latInd[1]];
-            
-            valAbove = biLinearInterpolation(X1a, X2a, Y1a, Y2a, Q11a, Q12a, Q21a, Q22a, X, Y);
-            valBelow = biLinearInterpolation(X1b, X2b, Y1b, Y2b, Q11b, Q12b, Q21b, Q22b, X, Y);
-            
-            
-            depAbove = NZ_TOMOGRAPHY_DATA->surfDeps[indAbove]*1000;
-            depBelow = NZ_TOMOGRAPHY_DATA->surfDeps[indBelow]*1000;
-            val = linearInterpolation(depAbove, depBelow, valAbove, valBelow, dep);
-            if (i == 0)
-            {
-                QUALITIES_VECTOR->Vp[zInd] = val;
+            QUALITIES_VECTOR->Vs[zInd] = val;
                 
-            }
-            else if ( i == 1)
-            {
-                QUALITIES_VECTOR->Vs[zInd] = val;
+        }
+        else if (i == 2)
+        {
+            QUALITIES_VECTOR->Rho[zInd] = val;
                 
-            }
-            else if (i == 2)
-            {
-                QUALITIES_VECTOR->Rho[zInd] = val;
-                
-            }
         }
     }
+    free(ADJACENT_POINTS);
     double elyTaperDepth;
     relativeDepth = PARTIAL_GLOBAL_SURFACE_DEPTHS->dep[1] - dep;
     // if GTL and no special offshore smoothing
@@ -163,14 +117,8 @@ void EPtomo2010subMod(int zInd, double dep, mesh_vector *MESH_VECTOR, qualities_
             v30gtl(MESH_VECTOR->Vs30, QUALITIES_VECTOR->Vs[zInd], relativeDepth, elyTaperDepth, QUALITIES_VECTOR, zInd);
             
         }
-//        else
-//        {
-//            printf("Point within seismic tomography offshore tapering failed. Exiting.\n");
-//            exit(EXIT_FAILURE);
-//        }
     }
 
-    free(ADJACENT_POINTS);
 }
 
 void loadEPtomoSurfaceData(char *tomoType, nz_tomography_data *NZ_TOMOGRAPHY_DATA, global_model_parameters *GLOBAL_MODEL_PARAMETERS)
@@ -186,7 +134,9 @@ void loadEPtomoSurfaceData(char *tomoType, nz_tomography_data *NZ_TOMOGRAPHY_DAT
  */
 {
     const char *varNames[3];
-    varNames[0] = "vp", varNames[1] = "vs", varNames[2] = "rho";
+    varNames[0] = "vp";
+    varNames[1] = "vs";
+    varNames[2] = "rho";
     int elev[30];
     int nElev = 0;
     char vs30fileName[MAX_FILENAME_STRING_LEN];
@@ -401,29 +351,15 @@ void freeEPtomoSurfaceData(nz_tomography_data *NZ_TOMOGRAPHY_DATA)
 
 void calculateVs30FromTomoVs30Surface(mesh_vector *MESH_VECTOR, nz_tomography_data *NZ_TOMOGRAPHY_DATA)
 {
-    double X1, X2, Y1, Y2, Q11, Q12, Q21, Q22, X, Y;
     adjacent_points *ADJACENT_POINTS;
     global_surf_read *GLOBAL_SURF_READ;
     GLOBAL_SURF_READ = NZ_TOMOGRAPHY_DATA->Vs30;
     
     // Vs30 calculation
-    ADJACENT_POINTS = findGlobalAdjacentPoints(GLOBAL_SURF_READ, *MESH_VECTOR->Lat, *MESH_VECTOR->Lon);
-    if(ADJACENT_POINTS->inSurfaceBounds == 0)
-    {
-        printf("Grid point (%lf %lf) lies outside of global Vs30 surface bounds.\n",*MESH_VECTOR->Lon,*MESH_VECTOR->Lat);
-        exit(EXIT_FAILURE);
-    }
-    X1 = GLOBAL_SURF_READ->loni[ADJACENT_POINTS->lonInd[0]];
-    X2 = GLOBAL_SURF_READ->loni[ADJACENT_POINTS->lonInd[1]];
-    Y1 = GLOBAL_SURF_READ->lati[ADJACENT_POINTS->latInd[0]];
-    Y2 = GLOBAL_SURF_READ->lati[ADJACENT_POINTS->latInd[1]];
-    Q11 = GLOBAL_SURF_READ->raster[ADJACENT_POINTS->lonInd[0]][ADJACENT_POINTS->latInd[0]];
-    Q12 = GLOBAL_SURF_READ->raster[ADJACENT_POINTS->lonInd[0]][ADJACENT_POINTS->latInd[1]];
-    Q21 = GLOBAL_SURF_READ->raster[ADJACENT_POINTS->lonInd[1]][ADJACENT_POINTS->latInd[0]];
-    Q22 = GLOBAL_SURF_READ->raster[ADJACENT_POINTS->lonInd[1]][ADJACENT_POINTS->latInd[1]];
-    X = *MESH_VECTOR->Lon;
-    Y = *MESH_VECTOR->Lat;
-    MESH_VECTOR->Vs30 =  biLinearInterpolation(X1, X2, Y1, Y2, Q11, Q12, Q21, Q22, X, Y);
+    ADJACENT_POINTS = malloc(sizeof(adjacent_points));
+    findGlobalAdjacentPoints(GLOBAL_SURF_READ, *MESH_VECTOR->Lat, *MESH_VECTOR->Lon, ADJACENT_POINTS);
+    
+    MESH_VECTOR->Vs30 = interpolateGlobalSurface(GLOBAL_SURF_READ,*MESH_VECTOR->Lat, *MESH_VECTOR->Lon, ADJACENT_POINTS);
     free(ADJACENT_POINTS);
 }
 

@@ -227,7 +227,6 @@ Summary of velocity model version numbers
 - v1.67 Same as v1.66 with ELY (2010) taper implemented in non-basin regions. New NZ-Wide HD DEM. Updated weathering in BPV region. 
 - Weathering in BPV modified from ELY (2010), using Vs_BPV(top)=700m/s @ z=0, Vs_BPV(top)=1500m/s @ z=1000m (linearly varying between)
 
-- v1.671 Same as v1.67 without ELY (2010) Taper
-
 - v2.01 Added 5 new South Island Basins (Kaikoura, Cheviot, Hanmer, Marlborough, NorthCanterbury) and offshore tapering
 
+- v2.02 Updated Wellington basin model 

@@ -116,7 +116,7 @@ void load_Wellington_v19p6(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int
 {
     GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum] = 2;
     GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[basinNum] = 1;
-    GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[basinNum][0] = "Data/NI_BASINS/Wellington_Polygon_19p6.txt";
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[basinNum][0] = "Data/NI_BASINS/Wellington_Polygon_Wainuiomata_WGS84.txt";
     
     GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][0] = "DEM";
     GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][0] = "Data/DEM/NZ_DEM_HD.in";

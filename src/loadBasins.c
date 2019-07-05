@@ -615,6 +615,7 @@ void loadBasinBoundaries(int basinNum, basin_data *BASIN_DATA, global_model_para
         fclose(file);
         BASIN_DATA->boundaryNumPoints[basinNum][i] = count;
         assert(count<=MAX_DIM_BOUNDARY_FILE);
+        // Boundary must a closed polygon i.e. last point in the boundary must be the same as the first
         assert(BASIN_DATA->boundaryLon[basinNum][i][count-1] == BASIN_DATA->boundaryLon[basinNum][i][0]);
         assert(BASIN_DATA->boundaryLat[basinNum][i][count-1] == BASIN_DATA->boundaryLat[basinNum][i][0]);
     }

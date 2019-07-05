@@ -188,7 +188,7 @@ int main(int argc, char *argv[])
         printf("==========================================\n");
         runGenerateVelocitySlices(MODEL_VERSION, OUTPUT_DIR, GEN_VELO_SLICES_CALL, CALCULATION_LOG);
         printf("==========================================\n");
-        printf("Completed running EXTRACT_VELOCITY_SLICES.\n");
+        printf("Completed running GENERATE_VELOCITY_SLICES.\n");
         printf("==========================================\n");
     }
     else if (GENERATE_PROFILE == 1)

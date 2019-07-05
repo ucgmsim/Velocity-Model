@@ -86,6 +86,13 @@ void loadBasinResources(global_model_parameters *GLOBAL_MODEL_PARAMETERS)
          {
              load_Wellington_v19p6(GLOBAL_MODEL_PARAMETERS,i);
          }
+        // ============
+        // v19p7 models
+        // ============
+         else if (strcmp(GLOBAL_MODEL_PARAMETERS->basin[i],"WaikatoHauraki_v19p7") == 0)
+         {
+             load_WaikatoHauraki_v19p7(GLOBAL_MODEL_PARAMETERS,i);
+         }
          else
          {
              printf("Basin %s not found.\n",GLOBAL_MODEL_PARAMETERS->basin[i]);
@@ -406,4 +413,20 @@ void load_Canterbury_Pre_Quaternary_v18p4(global_model_parameters *GLOBAL_MODEL_
     GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][4] = "BasementTopSurf";
     GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][4] = "Data/Canterbury_Basin/Quaternary/BasementTop.in";
     GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][4] = 0;
+}
+
+void load_WaikatoHauraki_v19p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum)
+{
+    GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum] = 2;
+    GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[basinNum] = 1;
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[basinNum][0] = "Data/NI_BASINS/WaikatoHaurakiBasinEdge_WGS84.txt";
+    
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][0] = "DEM";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][0] = "Data/DEM/NZ_DEM_HD.in";
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][0] = 0;
+    GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][0] = "Cant1D_v2";
+    
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][1] = "WaikatoHaurakiBasement";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][1] = "Data/NI_BASINS/WaikatoHaurakiBasin_WGS84_500m_v2019v07v05.in";
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][1] = 0;
 }

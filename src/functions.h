@@ -279,8 +279,8 @@ void load_Nelson_v19p1(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int bas
 // v19p6 Models
 void load_Wellington_v19p6(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
 
-
-
+// v19p7 Models
+void load_WaikatoHauraki_v19p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
 
 
 

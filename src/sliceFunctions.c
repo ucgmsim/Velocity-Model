@@ -164,6 +164,7 @@ slice_parameters *readGeneratedSliceParametersFile(char *sliceParametersTextFile
     
     for(int i = 0; i < SLICE_PARAMETERS->nSlices; i++)
     {
+        
         fscanf(file, "%lf %lf %lf %lf %lf %lf %lf %lf", &SLICE_PARAMETERS->latA[i], &SLICE_PARAMETERS->latB[i], &SLICE_PARAMETERS->lonA[i], &SLICE_PARAMETERS->lonB[i], &SLICE_PARAMETERS->depMin[i], &SLICE_PARAMETERS->depMax[i], &SLICE_PARAMETERS->LatLonRes[i], &SLICE_PARAMETERS->DepRes[i]);
     }
     for(int i = 0; i < SLICE_PARAMETERS->nSlices; i++) // if lon is negative, change to positive.

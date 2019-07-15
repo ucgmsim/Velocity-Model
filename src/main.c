@@ -25,7 +25,12 @@
 #include "functions.h"
 
 int main(int argc, char *argv[])
+//int main(void)
 {
+//    int argc = 2;
+//    char *argv[2];
+//    argv[1] = "Auto_VM_Parameters.txt";
+    
     // set call type flags to zero (0)
     int EXTRACT_VELOCITY_SLICES = 0;
     int GENERATE_VELOCITY_MOD = 0;

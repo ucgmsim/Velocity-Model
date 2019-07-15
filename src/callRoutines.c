@@ -92,7 +92,6 @@ void runGenerateVelocitySlices(char *MODEL_VERSION, char *OUTPUT_DIR, gen_velo_s
         INDIVIDUAL_SLICE_PARAMETERS.latPtsSlice[1] = SLICE_PARAMETERS->latB[j];
         INDIVIDUAL_SLICE_PARAMETERS.lonPtsSlice[0] = SLICE_PARAMETERS->lonA[j];
         INDIVIDUAL_SLICE_PARAMETERS.lonPtsSlice[1] = SLICE_PARAMETERS->lonB[j];
-        
         INDIVIDUAL_SLICE_PARAMETERS.resZ = SLICE_PARAMETERS->DepRes[j];
         INDIVIDUAL_SLICE_PARAMETERS.resXY = SLICE_PARAMETERS->LatLonRes[j];
         INDIVIDUAL_SLICE_PARAMETERS.zMin = SLICE_PARAMETERS->depMin[j];
@@ -142,7 +141,7 @@ void runGenerateVelocitySlices(char *MODEL_VERSION, char *OUTPUT_DIR, gen_velo_s
             
             
             MESH_VECTOR = extractMeshVector(PARTIAL_GLOBAL_MESH, k);
-            
+
             assignQualities(GLOBAL_MODEL_PARAMETERS, VELO_MOD_1D_DATA, NZ_TOMOGRAPHY_DATA, GLOBAL_SURFACES, BASIN_DATA, MESH_VECTOR, PARTIAL_GLOBAL_SURFACE_DEPTHS, PARTIAL_BASIN_SURFACE_DEPTHS, IN_BASIN, QUALITIES_VECTOR, CALCULATION_LOG, GEN_VELO_SLICES_CALL.TOPO_TYPE);
             for(int i = 0; i < PARTIAL_GLOBAL_MESH->nZ; i++)
             {

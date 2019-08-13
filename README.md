@@ -142,8 +142,9 @@ Call type 7) GENERATE_VELOCITIES_ON_GRID
 - 5 MIN_VS (minimium shear wave velocity to enforce, in km/s - typically 0.5)
 - 6 COORDINATES_TEXT_FILE (text file name containing gridpoints to presribe velocities at)
 
-
 Execute one of these six call types and open the output directory to view saved outputs.
+
+To add a new basin model to the NZVM follow the instructions in src/Addition_of_new_basins_readme.md
 
 List of TOPO_TYPES
 
@@ -230,3 +231,5 @@ Summary of velocity model version numbers
 - v2.01 Added 5 new South Island Basins (Kaikoura, Cheviot, Hanmer, Marlborough, NorthCanterbury) and offshore tapering
 
 - v2.02 Updated Wellington basin model 
+
+- v2.03 added WaikatoHauraki_v19p7  basin model, offshore generic basin model added

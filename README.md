@@ -59,12 +59,12 @@ The output directory must not exist
 Call type 2) EXTRACT_VELOCITY_SLICES - All parameters must be set and the output directory must have been generated previously using GENERATE_VELOCITY_MOD call
 
 - 1 CALL_TYPE=EXTRACT_VELOCITY_SLICES
-- 2 MODEL_VERSION (model version - select from list of model versions at bottom of readme)
-- 3 OUTPUT_DIR (directory to save outputs to)
-- 4 ORIGIN_LAT (origin latitude - in decimal format)
-- 5 ORIGIN_LON (origin longitude - in decimal format)
-- 6 ORIGIN_ROT (model rotation - clockwise is positive)
-- 7 EXTENT_X (model extent in the X direction in km)
+- 2   MODEL_VERSION (model version - select from list of model versions at bottom of readme)
+- 3   OUTPUT_DIR (directory to save outputs to)
+- 4   ORIGIN_LAT (origin latitude - in decimal format)
+- 5   ORIGIN_LON (origin longitude - in decimal format)
+- 6   ORIGIN_ROT (model rotation - clockwise is positive)
+- 7   EXTENT_X (model extent in the X direction in km)
 - 8	EXTENT_Y (model extent in the Y direction in km)
 - 9	EXTENT_ZMAX (maximum model extent in the Z direction - positive downwards in km)
 - 10 EXTENT_ZMIN (minimum model extent in the Z direction - positive downwards i.e -1 represents +1km above mean sea level)

@@ -144,7 +144,7 @@ Call type 7) GENERATE_VELOCITIES_ON_GRID
 
 Execute one of these six call types and open the output directory to view saved outputs.
 
-To add a new basin model to the NZVM follow the instructions in src/Addition_of_new_basins_readme.md
+**To add a new basin model to the NZVM follow the instructions in src/Addition_of_new_basins_readme.md**
 
 List of TOPO_TYPES
 
@@ -159,19 +159,19 @@ Shifted representations: Note that no gridpoint with a value above Mean Sea Leve
 Summary of velocity model version numbers
 
 - v1.01 1D velocity model 
-- 1D model version (Cant. 1D velocity model)
+-- 1D model version (Cant. 1D velocity model)
 - v1.02 1D velocity model 
-- 1D model version (Cant. 1D velocity model v2)
+-- 1D model version (Cant. 1D velocity model v2)
 
 - v1.11 Eberhart-Phillips Tomography 
-- (Unpublished updated Canterbury version)
+-- (Unpublished updated Canterbury version)
 
 - v1.21 Tomography below basement, 1D above
-- 1D model version (Cant. 1D velocity model)
-- Basement version (BasementPoints_35_v8p9_1000m.txt)
+-- 1D model version (Cant. 1D velocity model)
+-- Basement version (BasementPoints_35_v8p9_1000m.txt)
 - v1.22 Tomography below basement, 1D above
-- 1D model version (Cant. 1D velocity model v2)
-- Basement version (BasementPoints_35_v8p9_1000m.txt)
+-- 1D model version (Cant. 1D velocity model v2)
+-- Basement version (BasementPoints_35_v8p9_1000m.txt)
 
 - v1.31 Tomography below basement, constant velocity Paleogene layer, 1D Above
 - 1D model version (Cant. 1D velocity model)

@@ -609,6 +609,36 @@ void v30gtl(double vs30, double vt, double z, double zt, qualities_vector *QUALI
     //printf("%f %f %f %f %f %f.\n",vs30/1000,z,f,g,vt,QUALITIES_VECTOR->Vs[zInd]);
 }
 
+void offShoreBasinModel(double shorelineDist, double dep, qualities_vector *QUALITIES_VECTOR, int zInd, velo_mod_1d_data *VELO_MOD_1D_DATA)
+{
+    // offshore basin model
+    double offshoreDepth;
+    offshoreDepth = offshoreBasinDepth(shorelineDist);
+    if (offshoreDepth < dep) // if point lies in offshore basin, else nothing (velocity already previously assigned) -ve downwards
+    {
+        v1DsubMod(zInd, dep, QUALITIES_VECTOR, VELO_MOD_1D_DATA);
+    }
+    
+}
+
+double offshoreBasinDepth(double shorelineDist)
+{
+    double basinDepth;
+    if (shorelineDist > 50) // if distance above 20km set basin depth
+    {
+        basinDepth = -3000.0;
+    }
+    else if (shorelineDist > 20)
+    {
+         basinDepth =-2000.0-(((shorelineDist-20) / 30.0) * 1000.0);
+    }
+    else // if distance below 20km use linear interpolation
+    {
+        basinDepth = (shorelineDist / 20.0) * -2000.0;
+    }
+
+    return basinDepth;
+}
 
 
 // A utility function to find the distance between two Pts

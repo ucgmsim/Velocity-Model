@@ -89,9 +89,11 @@ void EPtomo2010subMod(int zInd, double dep, mesh_vector *MESH_VECTOR, qualities_
                 
         }
     }
-    free(ADJACENT_POINTS);
+    
     double elyTaperDepth;
-    relativeDepth = PARTIAL_GLOBAL_SURFACE_DEPTHS->dep[1] - dep;
+    relativeDepth = PARTIAL_GLOBAL_SURFACE_DEPTHS->dep[1] - dep; // DEM minus the depth of the point
+    //printf("%lf \n",MESH_VECTOR->distFromShoreline);
+
     // if GTL and no special offshore smoothing
     if(GLOBAL_MODEL_PARAMETERS->GTL == 1 &&  NZ_TOMOGRAPHY_DATA->specialOffshoreTapering == 0)
     {
@@ -103,21 +105,27 @@ void EPtomo2010subMod(int zInd, double dep, mesh_vector *MESH_VECTOR, qualities_
         }
     }
     // if GTL AND special offshore smoothing
-    else if(GLOBAL_MODEL_PARAMETERS->GTL == 1 &&  NZ_TOMOGRAPHY_DATA->specialOffshoreTapering == 1)
+    else if (GLOBAL_MODEL_PARAMETERS->GTL == 1 &&  NZ_TOMOGRAPHY_DATA->specialOffshoreTapering == 1)
     {
-        if (relativeDepth <= 1000 && MESH_VECTOR->Vs30 < 100 && inAnyBasinLatLon == 0 && onBoundary != 1) // if less than 1km and offshore (vs30 in offshore = 50m/s, allow some variability for interpolation)
+//        if (relativeDepth <= 1000 && MESH_VECTOR->Vs30 < 100 && inAnyBasinLatLon == 0 && onBoundary != 1 ) // if less than 1km and offshore (vs30 in offshore = 50m/s, allow some variability for interpolation)
+//        {
+//            elyTaperDepth = 1000; //offshore smoothing ely taper depth (1000m)
+//            v30gtl(MESH_VECTOR->Vs30, QUALITIES_VECTOR->Vs[zInd], relativeDepth, elyTaperDepth, QUALITIES_VECTOR, zInd);
+//
+//        }
+        if (MESH_VECTOR->Vs30 < 100 && inAnyBasinLatLon == 0 && onBoundary != 1 && 0 < MESH_VECTOR->distFromShoreline) // if less than 1km and offshore (vs30 in offshore = 50m/s, allow some variability for interpolation)
         {
-            elyTaperDepth = 1000;
-            v30gtl(MESH_VECTOR->Vs30, QUALITIES_VECTOR->Vs[zInd], relativeDepth, elyTaperDepth, QUALITIES_VECTOR, zInd);
+           offShoreBasinModel(MESH_VECTOR->distFromShoreline, dep, QUALITIES_VECTOR, zInd, NZ_TOMOGRAPHY_DATA->offshoreBasinModel1D);
             
         }
         else if (relativeDepth <= 350) // if not offshore, apply regular taper
         {
-            elyTaperDepth = 350;
+            elyTaperDepth = 350; // onshore smoothing ely taper depth (350m)
             v30gtl(MESH_VECTOR->Vs30, QUALITIES_VECTOR->Vs[zInd], relativeDepth, elyTaperDepth, QUALITIES_VECTOR, zInd);
             
         }
     }
+    free(ADJACENT_POINTS);
 
 }
 
@@ -140,6 +148,8 @@ void loadEPtomoSurfaceData(char *tomoType, nz_tomography_data *NZ_TOMOGRAPHY_DAT
     int elev[30];
     int nElev = 0;
     char vs30fileName[MAX_FILENAME_STRING_LEN];
+    char offshorefileName[MAX_FILENAME_STRING_LEN];
+    char offshore1DModel[MAX_FILENAME_STRING_LEN];
     char tomoDirectory[MAX_FILENAME_STRING_LEN];
 
     if(strcmp(tomoType, "2010_Full_South_Island") == 0)
@@ -321,7 +331,19 @@ void loadEPtomoSurfaceData(char *tomoType, nz_tomography_data *NZ_TOMOGRAPHY_DAT
     // load in vector containing basin 'wall-type' boundaries to apply smoothing near
     NZ_TOMOGRAPHY_DATA->smooth_boundary = malloc(sizeof(smoothing_boundary));
     loadSmoothBoundaries(NZ_TOMOGRAPHY_DATA,GLOBAL_MODEL_PARAMETERS);
-
+    
+    // load in offshore distance surface file
+    sprintf(offshorefileName,"Data/Global_Surfaces/shoreline_distance_2k.in");
+    NZ_TOMOGRAPHY_DATA->offshoreDistance = loadGlobalSurface(offshorefileName);
+    
+    NZ_TOMOGRAPHY_DATA->offshoreBasinModel1D = malloc(sizeof(velo_mod_1d_data));
+    if (NZ_TOMOGRAPHY_DATA->offshoreBasinModel1D == NULL)
+    {
+        printf("Memory allocation of VELO_MOD_1D_DATA for tomography offshore basin failed.\n");
+        exit(EXIT_FAILURE);
+    }
+    sprintf(offshore1DModel,"Cant1D_v2.fd_modfile");
+    load1dVeloSubModel(offshore1DModel, NZ_TOMOGRAPHY_DATA->offshoreBasinModel1D);
 }
 
 
@@ -346,6 +368,7 @@ void freeEPtomoSurfaceData(nz_tomography_data *NZ_TOMOGRAPHY_DATA)
         }
     }
     free(NZ_TOMOGRAPHY_DATA->Vs30);
+    free(NZ_TOMOGRAPHY_DATA->offshoreDistance);
     free(NZ_TOMOGRAPHY_DATA->smooth_boundary);
 }
 
@@ -362,5 +385,20 @@ void calculateVs30FromTomoVs30Surface(mesh_vector *MESH_VECTOR, nz_tomography_da
     MESH_VECTOR->Vs30 = interpolateGlobalSurface(GLOBAL_SURF_READ,*MESH_VECTOR->Lat, *MESH_VECTOR->Lon, ADJACENT_POINTS);
     free(ADJACENT_POINTS);
 }
+
+void calculateShorelineDist(mesh_vector *MESH_VECTOR, nz_tomography_data *NZ_TOMOGRAPHY_DATA)
+{
+    adjacent_points *ADJACENT_POINTS;
+    global_surf_read *GLOBAL_SURF_READ;
+    GLOBAL_SURF_READ = NZ_TOMOGRAPHY_DATA->offshoreDistance;
+    
+    // shoreline distance calculation
+    ADJACENT_POINTS = malloc(sizeof(adjacent_points));
+    findGlobalAdjacentPoints(GLOBAL_SURF_READ, *MESH_VECTOR->Lat, *MESH_VECTOR->Lon, ADJACENT_POINTS);
+    
+    MESH_VECTOR->distFromShoreline = interpolateGlobalSurface(GLOBAL_SURF_READ,*MESH_VECTOR->Lat, *MESH_VECTOR->Lon, ADJACENT_POINTS);
+    free(ADJACENT_POINTS);
+}
+
 
 

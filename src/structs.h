@@ -53,6 +53,7 @@ typedef struct{
     double Z[DEP_GRID_DIM_MAX];
     int nZ;
     double Vs30;
+    double distFromShoreline;
 //    double referenceDepth;
 }mesh_vector;
 
@@ -485,10 +486,12 @@ typedef struct{
     double surfDeps[MAX_NUM_TOMO_SURFACES];
     global_surf_read *surf[3][MAX_NUM_TOMO_SURFACES]; // 3 for Vp Vs and Rho
     global_surf_read *Vs30;
+    global_surf_read *offshoreDistance;
     // for smoothing
     int nPtsSmoothVec;
     smoothing_boundary *smooth_boundary;
     int specialOffshoreTapering;
+    velo_mod_1d_data *offshoreBasinModel1D;
 }nz_tomography_data;
 
 

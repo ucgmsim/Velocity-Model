@@ -196,6 +196,7 @@ extern void load1dVeloSubModel(char *fileName, velo_mod_1d_data *VELO_MOD_1D_DAT
 
 extern void EPtomo2010subMod(int zInd, double dep, mesh_vector *MESH_VECTOR, qualities_vector *QUALITIES_VECTOR, nz_tomography_data *NZ_TOMOGRAPHY_DATA,global_model_parameters *GLOBAL_MODEL_PARAMETERS, partial_global_surface_depths *PARTIAL_GLOBAL_SURFACE_DEPTHS, int inAnyBasinLatLon, int onBoundary);
 extern void calculateVs30FromTomoVs30Surface(mesh_vector *MESH_VECTOR, nz_tomography_data *NZ_TOMOGRAPHY_DATA);
+extern void calculateShorelineDist(mesh_vector *MESH_VECTOR, nz_tomography_data *NZ_TOMOGRAPHY_DATA);
 extern void freeEPtomoSurfaceData(nz_tomography_data *NZ_TOMOGRAPHY_DATA);
 extern void loadEPtomoSurfaceData(char *tomoType, nz_tomography_data *NZ_TOMOGRAPHY_DATA, global_model_parameters *GLOBAL_MODEL_PARAMETERS);
 extern void NaNsubMod(int zInd, qualities_vector *QUALITIES_VECTOR);
@@ -254,6 +255,9 @@ extern int determineIfLatLonWithinSmoothingRegion(smoothing_boundary *SMOOTHING_
 extern int pointOnVertex(basin_data *BASIN_DATA, int basinNum, int boundaryNum, double xLoc, double yLoc);
 extern double rhoFromVpBrocher(double vp);
 extern double vpFromVsBrocher(double vs);
+extern double offshoreBasinDepth(double shorelineDist);
+extern void offShoreBasinModel(double shorelineDist, double dep, qualities_vector *QUALITIES_VECTOR, int zInd, velo_mod_1d_data *VELO_MOD_1D_DATA);
+
 
 
 

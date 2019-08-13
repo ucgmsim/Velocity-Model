@@ -73,8 +73,7 @@ Call type 2) EXTRACT_VELOCITY_SLICES - All parameters must be set and the output
 - 13 MIN_VS (minimium shear wave velocity to enforce, in km/s - typically 0.5)
 - 14 TOPO_TYPE (SQUASHED, BULLDOZED etc)
 - 15 EXTRACTED_SLICE_PARAMETERS_TEXTFILE (textfile location withslice parameters)
-
-- See readme in ExtractedSliceParameters directory for additional information
+   - See readme in ExtractedSliceParameters directory for additional information
 
 
 Call type 3) GENERATE_VELOCITY_SLICES

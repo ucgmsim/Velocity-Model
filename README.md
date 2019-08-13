@@ -159,9 +159,9 @@ Shifted representations: Note that no gridpoint with a value above Mean Sea Leve
 Summary of velocity model version numbers
 
 - v1.01 1D velocity model 
--- 1D model version (Cant. 1D velocity model)
+   - 1D model version (Cant. 1D velocity model)
 - v1.02 1D velocity model 
--- 1D model version (Cant. 1D velocity model v2)
+   - 1D model version (Cant. 1D velocity model v2)
 
 - v1.11 Eberhart-Phillips Tomography 
 -- (Unpublished updated Canterbury version)

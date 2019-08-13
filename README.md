@@ -164,69 +164,69 @@ Summary of velocity model version numbers
    - 1D model version (Cant. 1D velocity model v2)
 
 - v1.11 Eberhart-Phillips Tomography 
--- (Unpublished updated Canterbury version)
+   - (Unpublished updated Canterbury version)
 
 - v1.21 Tomography below basement, 1D above
--- 1D model version (Cant. 1D velocity model)
--- Basement version (BasementPoints_35_v8p9_1000m.txt)
+   - 1D model version (Cant. 1D velocity model)
+   - Basement version (BasementPoints_35_v8p9_1000m.txt)
 - v1.22 Tomography below basement, 1D above
--- 1D model version (Cant. 1D velocity model v2)
--- Basement version (BasementPoints_35_v8p9_1000m.txt)
+   - 1D model version (Cant. 1D velocity model v2)
+   - Basement version (BasementPoints_35_v8p9_1000m.txt)
 
 - v1.31 Tomography below basement, constant velocity Paleogene layer, 1D Above
-- 1D model version (Cant. 1D velocity model)
-- Basement version (BasementPoints_35_v8p9_1000m.txt)
-- Paleogene version (PaleogenePoints_35_v8p9_1000m.txt)
-- Paleogene - Vp=2.7 , Vs=1.1511 , Rho=2.151
+   - 1D model version (Cant. 1D velocity model)
+   - Basement version (BasementPoints_35_v8p9_1000m.txt)
+   - Paleogene version (PaleogenePoints_35_v8p9_1000m.txt)
+   - Paleogene - Vp=2.7 , Vs=1.1511 , Rho=2.151
 
 - v1.41 Tomography below basement, constant velocity Paleogene & Miocene layers, 1D Above
-- 1D model version (Cant. 1D velocity model)
-- Basement version (BasementPoints_35_v8p9_1000m.txt)
-- Paleogene version (PaleogenePoints_35_v8p9_1000m.txt)
-- Miocene version (MiocenePoints_35_v8p9_1000m.txt)
-- Paleogene - Vp=2.7 , Vs=1.1511 , Rho=2.151
-- Miocene - Vp=2.5, Vs=0.98355, Rho=2.9031 
+   - 1D model version (Cant. 1D velocity model)
+   - Basement version (BasementPoints_35_v8p9_1000m.txt)
+   - Paleogene version (PaleogenePoints_35_v8p9_1000m.txt)
+   - Miocene version (MiocenePoints_35_v8p9_1000m.txt)
+   - Paleogene - Vp=2.7 , Vs=1.1511 , Rho=2.151
+   - Miocene - Vp=2.5, Vs=0.98355, Rho=2.9031 
 
 - v1.51 Tomography below basement, constant velocity Paleogene & Miocene layers, 1D Above, BPV Basin
-- 1D model version (Cant. 1D velocity model)
-- Basement version (BasementPoints_35_v8p9_1000m.txt)
-- Paleogene version (PaleogenePoints_35_v8p9_1000m.txt)
-- Miocene version (MiocenePoints_35_v8p9_1000m.txt)
-- BPV top version (BPPoints_41_v1p13_1000m.txt)
-- Paleogene - Vp=2.7 , Vs=1.1511 , Rho=2.151
-- Miocene - Vp=2.5, Vs=0.98355, Rho=2.9031 
-- BPV - Vp=4.0, Vs=2.2818, Rho= 2.393 
+   - 1D model version (Cant. 1D velocity model)
+   - Basement version (BasementPoints_35_v8p9_1000m.txt)
+   - Paleogene version (PaleogenePoints_35_v8p9_1000m.txt)
+   - Miocene version (MiocenePoints_35_v8p9_1000m.txt)
+   - BPV top version (BPPoints_41_v1p13_1000m.txt)
+   - Paleogene - Vp=2.7 , Vs=1.1511 , Rho=2.151
+   - Miocene - Vp=2.5, Vs=0.98355, Rho=2.9031 
+   - BPV - Vp=4.0, Vs=2.2818, Rho= 2.393 
 
 - v1.61 Tomography below basement, constant velocity Paleogene, Miocene & Pliocene layers, 1D Above, BPV Basin
-- 1D model version (Cant. 1D velocity model)
-- Basement version (BasementPoints_35_v8p9_1000m.txt)
-- Paleogene version (PaleogenePoints_35_v8p9_1000m.txt)
-- Miocene version (MiocenePoints_35_v8p9_1000m.txt)
-- Pliocene version (PliocenePoints_35_v8p9_1000m.txt)
-- BPV top version (BPPoints_41_v1p13_1000m.txt)
-- Paleogene - Vp=2.7 , Vs=1.1511 , Rho=2.151
-- Miocene - Vp=2.5, Vs=0.98355, Rho=2.9031 
-- Pliocene - Vp=2.0, Vs=0.6086, Rho = 1.905
-- BPV - Vp=4.0, Vs=2.2818, Rho= 2.393 
+   - 1D model version (Cant. 1D velocity model)
+   - Basement version (BasementPoints_35_v8p9_1000m.txt)
+   - Paleogene version (PaleogenePoints_35_v8p9_1000m.txt)
+   - Miocene version (MiocenePoints_35_v8p9_1000m.txt)
+   - Pliocene version (PliocenePoints_35_v8p9_1000m.txt)
+   - BPV top version (BPPoints_41_v1p13_1000m.txt)
+   - Paleogene - Vp=2.7 , Vs=1.1511 , Rho=2.151
+   - Miocene - Vp=2.5, Vs=0.98355, Rho=2.9031 
+   - Pliocene - Vp=2.0, Vs=0.6086, Rho = 1.905
+   - BPV - Vp=4.0, Vs=2.2818, Rho= 2.393 
 
 - v1.62 Same as v1.61 with different parameters for the BPV
-- BPV - Vp=3.6, Vs=1.9428, Rho= 2.334 
+   - BPV - Vp=3.6, Vs=1.9428, Rho= 2.334 
 
 - v1.63 Same as v1.61 with weathering function for the top 100m of the BPV
-- BPV at 0m - Vp=3.2, Vs=1.59, Rho= 2.265 
-- BPV below 100m - Vp=4.0, Vs=2.2818, Rho= 2.393 
-- Linear relationship between 0 and 100m depth
+   - BPV at 0m - Vp=3.2, Vs=1.59, Rho= 2.265 
+   - BPV below 100m - Vp=4.0, Vs=2.2818, Rho= 2.393 
+   - Linear relationship between 0 and 100m depth
 
 - v1.64 Same as v1.63 with updated 1D velocity model
-- 1D model version (Cant1D_v2.fd_modfile)
+   - 1D model version (Cant1D_v2.fd_modfile)
 
 - v1.65 Same as v1.64 with updated 1D velocity model to ensure Vs_1dmax < Vs_pliocene
-- 1D model version (Cant1D_v2_Pliocene_Enforced.fd_modfile)
+   - 1D model version (Cant1D_v2_Pliocene_Enforced.fd_modfile)
 
 - v1.66 Same as v1.65 with updated pliocene layer model
 
 - v1.67 Same as v1.66 with ELY (2010) taper implemented in non-basin regions. New NZ-Wide HD DEM. Updated weathering in BPV region. 
-- Weathering in BPV modified from ELY (2010), using Vs_BPV(top)=700m/s @ z=0, Vs_BPV(top)=1500m/s @ z=1000m (linearly varying between)
+   - Weathering in BPV modified from ELY (2010), using Vs_BPV(top)=700m/s @ z=0, Vs_BPV(top)=1500m/s @ z=1000m (linearly varying between)
 
 - v2.01 Added 5 new South Island Basins (Kaikoura, Cheviot, Hanmer, Marlborough, NorthCanterbury) and offshore tapering
 

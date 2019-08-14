@@ -35,6 +35,8 @@ Then modify the desired parameters and use the text file as an input to NZVM
 ./NZVM "MyParametersFile.txt"
 ```
 
+See the git repo ```https://github.com/ucgmsim/Velocity-Model-Viz``` for automated plotting tools.
+
 All five call types and required inputs are explained here.
 
 Call type 1) GENERATE_VELOCITY_MOD

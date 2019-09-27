@@ -1,6 +1,6 @@
 # Velocity Model
 
-This is the repository for the source code for the New Zealand Velocity Model (NZVM, https://doi.org/10.1080/00288306.2019.1636830) generation and interrogation. 
+This is the repository for the source code for the New Zealand Velocity Model (NZVM, Ref. https://doi.org/10.1080/00288306.2019.1636830). 
 
 
 There are seven general call types which are outlined in this readme.

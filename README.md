@@ -1,6 +1,9 @@
 # Velocity Model
 
-This is the repository for the source code for South Island Velocity Model (SIVM) generation and interrogation. The model generation is a serial process. There are seven general call types which are outlined in this readme.
+This is the repository for the source code for the New Zealand Velocity Model (NZVM, https://doi.org/10.1080/00288306.2019.1636830) generation and interrogation. 
+
+
+There are seven general call types which are outlined in this readme.
 
 To clone the code from the github repository:
 ```

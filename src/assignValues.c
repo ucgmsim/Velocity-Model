@@ -226,7 +226,7 @@ void prescribeVelocities(global_model_parameters *GLOBAL_MODEL_PARAMETERS, velo_
         for (int k = 0; k < MESH_VECTOR->nZ; k++)
         {
             depthChange = - MESH_VECTOR->Z[k];
-            if(depthChange == 0 || PARTIAL_GLOBAL_SURFACE_DEPTHS->dep[1] == 0)
+            if(depthChange == 0 || PARTIAL_GLOBAL_SURFACE_DEPTHS->dep[1] == 0 || PARTIAL_GLOBAL_SURFACE_DEPTHS->dep[1] < 0)
             {
                 TAPER_VAL = 1.0;
             }

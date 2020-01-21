@@ -30,7 +30,7 @@ def get_value(x, y, z):
 #data in order [x1y1, x1y2, x1y3, x2y1, x2y2, x2y3]
 def display_data_matplot(data, num_x, num_y, max_color):
     """
-    Displays a figure in matplotlib related to the NZVM
+    Prepares a figure in matplotlib related to the NZVM to be displayed
     """
     img = numpy.zeros((num_y, num_x)) #swap the axes which is needed for some reason
     for x in range(num_x):
@@ -57,8 +57,6 @@ def display_data_matplot(data, num_x, num_y, max_color):
     legend = pyplot.colorbar()
     legend.ax.get_yaxis().labelpad = 15
     legend.ax.set_ylabel("Wave velocity (m/sec)", rotation=270)
-    
-    pyplot.show()
 
 if __name__ == "__main__":    
     parser = argparse.ArgumentParser(description='Generate a cross section of the NZVM.')
@@ -71,6 +69,8 @@ if __name__ == "__main__":
     parser.add_argument("delta", help="how many samples along the specified axis the plot should go for", type=int)
     parser.add_argument("-max", "--maximum", type=int, default=-1, \
             help="The upper bound for the color scale (in metres/second). This and anything faster than this would appear red. Default: maximum velocity of specified data range")
+    parser.add_argument("-o", "--output", type=str, default="", \
+            help="If specified, the output file the plot would be saved to, otherwise opens the plot in a new window")
     
     args = parser.parse_args()
 
@@ -135,3 +135,8 @@ if __name__ == "__main__":
         overall_da = overall_dy
 
     display_data_matplot(data, int(len(data)/nz), nz, args.maximum)
+
+    if len(args.output) > 0:
+        pyplot.savefig(args.output)
+    else:
+        pyplot.show()

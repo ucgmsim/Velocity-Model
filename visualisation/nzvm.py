@@ -2,9 +2,10 @@
 #   MatPlotLib                      pip install matplotlib
 #   NumPy                           pip install numpy
 #   PyYAML                          pip install pyyaml
+#   argparser                       pip install argparser
 
 import math, numpy
-import sys
+import argparse
 from matplotlib import pyplot
 import matplotlib.ticker as ticker
 
@@ -20,13 +21,17 @@ def load_data(file):
     print("Loaded",len(array),"data points")
     
 def get_value(x, y, z):
+    """
+    Gets the value from the loaded data of the wave velocity at a given point in km/s
+    Does not check for array overflow to improve performance
+    """
     return array[y*nz*nx + z*nx + x]
 
-def distance_sq(x1, x2, y1, y2):
-    return (x1-x2)**2 + (y1-y2)**2
-
 #data in order [x1y1, x1y2, x1y3, x2y1, x2y2, x2y3]
-def display_data_matplot(data, num_x, num_y):
+def display_data_matplot(data, num_x, num_y, max_color):
+    """
+    Displays a figure in matplotlib related to the NZVM
+    """
     img = numpy.zeros((num_y, num_x)) #swap the axes which is needed for some reason
     for x in range(num_x):
         for y in range(num_y):
@@ -44,10 +49,10 @@ def display_data_matplot(data, num_x, num_y):
     ticks_y = ticker.FuncFormatter(lambda y, pos: '{:.0f}'.format(y/(num_y/overall_dz)))
     plot.axes.yaxis.set_major_formatter(ticks_y)
 
-    #ticks_x = ticker.FuncFormatter(lambda x, pos: '{:.0f}'.format(x/(num_x/overall_da)))
-    #plot.axes.xaxis.set_major_formatter(ticks_x)
-    
-    pyplot.clim(0, max(data))
+    if max_color != -1:
+        pyplot.clim(0, max_color)
+    else:
+        pyplot.clim(0, max(data))
     
     legend = pyplot.colorbar()
     legend.ax.get_yaxis().labelpad = 15
@@ -55,11 +60,25 @@ def display_data_matplot(data, num_x, num_y):
     
     pyplot.show()
 
-if __name__ == "__main__":
-    s_file = "vs3dfile.s" #sys.argv[1]
-    load_data(s_file)
+if __name__ == "__main__":    
+    parser = argparse.ArgumentParser(description='Generate a cross section of the NZVM.')
 
-    yaml_file = open("vm_params.yaml", mode='r')
+    parser.add_argument("vm", help="file path to the velocity model")
+    parser.add_argument("yml", help="file path to the YAML configuration file for the model")
+    parser.add_argument("origin_x", help="x axis offset from model where plot should begin (min 0)", type=int)
+    parser.add_argument("origin_y", help="y axis offset from model where plot should begin (min 0)", type=int)
+    parser.add_argument("axis", help="which axis to plot along (x (west to east) or y (north to south)) default: x")
+    parser.add_argument("delta", help="how many samples along the specified axis the plot should go for", type=int)
+    parser.add_argument("-max", "--maximum", type=int, default=-1, \
+            help="The upper bound for the color scale (in metres/second). This and anything faster than this would appear red. Default: maximum velocity of specified data range")
+    
+    args = parser.parse_args()
+
+    try:
+        yaml_file = open(args.yml, mode='r')
+    except FileNotFoundError:
+        print("Error: YAML file does not exist")
+        quit()
     yaml_data = load(yaml_file, Loader=Loader)
     yaml_file.close()
 
@@ -67,43 +86,43 @@ if __name__ == "__main__":
     ny = yaml_data["ny"]
     nz = yaml_data["nz"]
 
-    overall_dx = yaml_data["extent_x"] * 1000 #metres
-    overall_dy = yaml_data["extent_y"] * 1000 #metres
-    overall_dz = (yaml_data["extent_zmax"] - yaml_data["extent_zmin"]) * 1000 #metres
+    overall_dx = yaml_data["extent_x"] * 1000 # converted to metres
+    overall_dy = yaml_data["extent_y"] * 1000 # converted to metres
+    overall_dz = (yaml_data["extent_zmax"] - yaml_data["extent_zmin"]) * 1000 # converted to metres
 
     data = []
     
-    start_point = (0, 0)
+    start_point = (args.origin_x, args.origin_y)
 
-    axis = 'k'
+    axis = args.axis
 
-    while axis != 'x' and axis != 'y':
-        axis = input("Which axis do you want to plot on (x or y)?:  ").lower()
+    if axis != 'x' and axis != 'y':
+        axis = 'x'
 
-    while True:
-        line = input("What coordinates (nx, ny) do you want to plot from? Enter as 2 numbers separated by a comma. max "+str(nx-1)+","+str(ny-1)+":  ")
-        try:
-            start_x = int(line.split(",")[0])
-            start_y = int(line.split(",")[1])
-        except:
-            continue
-        if start_x >= (nx-1) or start_y >= (ny-1) or start_x < 0 or start_y < 0:
-            continue
-        start_point = (start_x, start_y)
-        break
+    if start_point[0] >= nx or start_point[0] < 0 or start_point[1] >= ny or start_point[1] < 0:
+        print("Error: Origin extends beyond boundaries of given data file")
+        quit()
 
     max_delta = ny - start_point[1] - 1
     if axis == 'x':
         max_delta = nx - start_point[0]
-        
-    delta = 0
+    
+    delta = args.delta
 
-    while delta <= 0 or delta > max_delta:
-        try:
-            delta = int(input("How many samples along the "+axis+" axis do you want to plot on? max "+str(max_delta)+":  "))
-        except:
-            pass
+    if delta <= 0 or delta > max_delta:
+        print("Error: delta extends beyond boundaries of given data file")
+        quit()
 
+    try:
+        load_data(args.vm)
+    except FileNotFoundError:
+        print("Error: VM file does not exist")
+        quit()
+
+    if len(array) != nx*ny*nz:
+        print("Error: Inconsistent VM with YAML file. Check model and yml and try again. Expected",nx*ny*nz,"values, got",len(array))
+        quit()
+            
     if axis == 'x':
         for point in range(start_point[0], start_point[0] + delta):
             for z in range(nz):
@@ -115,4 +134,4 @@ if __name__ == "__main__":
                 data.append(get_value(start_point[0], point, z) * 1000)
         overall_da = overall_dy
 
-    display_data_matplot(data, int(len(data)/nz), nz)
+    display_data_matplot(data, int(len(data)/nz), nz, args.maximum)

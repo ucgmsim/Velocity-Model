@@ -1,94 +1,104 @@
-#dependencies:
-#   MatPlotLib                      pip install matplotlib
-#   NumPy                           pip install numpy
-#   PyYAML                          pip install pyyaml
-#   argparser                       pip install argparser
+#!/usr/env/python3
+#   Author: Alex Hobson
+#   Date: 22/01/2020
+#
+#   Application to generate cross section diagrams of New Zealand Velocity Model (NZVM)
+#
 
-import math, numpy
 import argparse
-from matplotlib import pyplot
+import math
+import os
+
+import numpy as np
+from matplotlib import pyplot as plt
 import matplotlib.ticker as ticker
 
-from yaml import load, dump
-try:
-    from yaml import CLoader as Loader, CDumper as Dumper
-except ImportError:
-    from yaml import Loader, Dumper
-
-def load_data(file):
-    global array
-    array = numpy.fromfile(file, dtype=numpy.float32, count=-1, sep='', offset=0)
-    print("Loaded",len(array),"data points")
-    
-def get_value(x, y, z):
+def load_data(file, nx, ny, nz):
     """
-    Gets the value from the loaded data of the wave velocity at a given point in km/s
-    Does not check for array overflow to improve performance
+    Loads the velocity model into memory as a 3d numpy array
+    Params:
+        - file: file path to velocity model
+        - nx: number of samples in x axis
+        - ny: number of samples in y axis
+        - nz: number of samples in z axis
     """
-    return array[y*nz*nx + z*nx + x]
+    array = np.fromfile(file, dtype=np.float32, count=-1, sep='', offset=0)
+    length = len(array)
+    array = array.reshape((ny, nz, nx))
+    print("Loaded",length,"data points")
+    return (length, array)
 
-#data in order [x1y1, x1y2, x1y3, x2y1, x2y2, x2y3]
-def display_data_matplot(data, num_x, num_y, max_color):
+
+def display_data_matplot(data, num_x, num_y, max_color, hh):
     """
     Prepares a figure in matplotlib related to the NZVM to be displayed
+    Params:
+        - data: numpy 2d array of data to plot
+        - num_x: number of samples in x axis (of data, not of VM)
+        - num_y: number of samples in y axis (of data, not of VM)
+        - max_color: maximum velocity (m/s) the chart should go up to (-1 for auto)
+        - hh: cell size (resolution) of VM in m
     """
-    img = numpy.zeros((num_y, num_x)) #swap the axes which is needed for some reason
-    for x in range(num_x):
-        for y in range(num_y):
-            img[y, x]= data[num_y*x + y]
-
-    fig = pyplot.figure(1)
+    fig = plt.figure(1)
     
-    plot = pyplot.matshow(img, 1, interpolation='none')
+    plot = plt.matshow(data, 1, interpolation='none')
 
     plot.set_cmap("jet")
 
-    pyplot.ylabel("Depth (metres below surface)")
-    pyplot.xlabel("Horizontal distance (no. samples)")
+    if hh != 0:
+        plt.ylabel("Depth (metres below surface)")
+        ticks_y = ticker.FuncFormatter(lambda y, pos: '{:.0f}'.format(y*hh))
+        plot.axes.yaxis.set_major_formatter(ticks_y)
 
-    ticks_y = ticker.FuncFormatter(lambda y, pos: '{:.0f}'.format(y/(num_y/overall_dz)))
-    plot.axes.yaxis.set_major_formatter(ticks_y)
+        plt.xlabel("Horizontal distance (metres from origin)")
+        ticks_x = ticker.FuncFormatter(lambda x, pos: '{:.0f}'.format(x*hh))
+        plot.axes.xaxis.set_major_formatter(ticks_x)
+    else:
+        plt.ylabel("Depth (samples below surface)")
+        plt.xlabel("Horizontal distance (no. samples)")
+
+    
 
     if max_color != -1:
-        pyplot.clim(0, max_color)
+        plt.clim(0, max_color)
     else:
-        pyplot.clim(0, max(data))
+        plt.clim(0, int(math.ceil(np.amax(data)/1000.0)*1000.0))
     
-    legend = pyplot.colorbar()
+    legend = plt.colorbar()
     legend.ax.get_yaxis().labelpad = 15
     legend.ax.set_ylabel("Wave velocity (m/sec)", rotation=270)
 
-if __name__ == "__main__":    
+def main():
+    """
+    Main method of the program
+    """
     parser = argparse.ArgumentParser(description='Generate a cross section of the NZVM.')
 
     parser.add_argument("vm", help="file path to the velocity model")
-    parser.add_argument("yml", help="file path to the YAML configuration file for the model")
-    parser.add_argument("origin_x", help="x axis offset from model where plot should begin (min 0)", type=int)
-    parser.add_argument("origin_y", help="y axis offset from model where plot should begin (min 0)", type=int)
-    parser.add_argument("axis", help="which axis to plot along (x (west to east) or y (north to south)) default: x")
+    parser.add_argument("nx", help="data number of samples in x direction", type=int)
+    parser.add_argument("ny", help="data number of samples in x direction", type=int)
+    parser.add_argument("nz", help="data number of samples in x direction", type=int)
+    parser.add_argument("-hh", "--hh", type=int, default=0, \
+            help="The resolution of the data (in metres). e.g. 400 means each change in nx, ny, nz is 400m")
+    parser.add_argument("-x", "--origin_x", help="x axis offset from model where plot should begin (default 0)", type=int, default=0)
+    parser.add_argument("-y", "--origin_y", help="y axis offset from model where plot should begin (default 0)", type=int, default=0)
+    parser.add_argument("axis", help="which axis to plot along (x (west to east) or y (north to south)) (default x)")
     parser.add_argument("delta", help="how many samples along the specified axis the plot should go for", type=int)
-    parser.add_argument("-max", "--maximum", type=int, default=-1, \
-            help="The upper bound for the color scale (in metres/second). This and anything faster than this would appear red. Default: maximum velocity of specified data range")
+    parser.add_argument("-max", "--maximum", type=int, default=2500, \
+            help="The upper bound for the color scale (in metres/second). Anything faster than this would appear as maximum colour. Use -1 for automatic calculation of maximum (default 2500)")
     parser.add_argument("-o", "--output", type=str, default="", \
             help="If specified, the output file the plot would be saved to, otherwise opens the plot in a new window")
     
     args = parser.parse_args()
 
-    try:
-        yaml_file = open(args.yml, mode='r')
-    except FileNotFoundError:
-        print("Error: YAML file does not exist")
+    if not os.path.exists(args.vm):
+        print("Error: VM file does not exist")
         quit()
-    yaml_data = load(yaml_file, Loader=Loader)
-    yaml_file.close()
 
-    nx = yaml_data["nx"]
-    ny = yaml_data["ny"]
-    nz = yaml_data["nz"]
-
-    overall_dx = yaml_data["extent_x"] * 1000 # converted to metres
-    overall_dy = yaml_data["extent_y"] * 1000 # converted to metres
-    overall_dz = (yaml_data["extent_zmax"] - yaml_data["extent_zmin"]) * 1000 # converted to metres
+    nx = args.nx
+    ny = args.ny
+    nz = args.nz
+    hh = args.hh
 
     data = []
     
@@ -113,30 +123,25 @@ if __name__ == "__main__":
         print("Error: delta extends beyond boundaries of given data file")
         quit()
 
-    try:
-        load_data(args.vm)
-    except FileNotFoundError:
-        print("Error: VM file does not exist")
+    length, array = load_data(args.vm, nx, ny, nz)
+
+    if length != nx*ny*nz:
+        print("Error: Inconsistent VM size. Check model and nx, ny, nz parameters and try again. Expected",nx*ny*nz,"values, got",len(array))
         quit()
 
-    if len(array) != nx*ny*nz:
-        print("Error: Inconsistent VM with YAML file. Check model and yml and try again. Expected",nx*ny*nz,"values, got",len(array))
-        quit()
-            
+    #yzx
     if axis == 'x':
-        for point in range(start_point[0], start_point[0] + delta):
-            for z in range(nz):
-                data.append(get_value(point, start_point[1], z) * 1000)
-        overall_da = overall_dx
+        data = array[start_point[1],:,start_point[0]:(start_point[0]+delta+1)] * 1000
     else:
-        for point in range(start_point[1], start_point[1] + delta):
-            for z in range(nz):
-                data.append(get_value(start_point[0], point, z) * 1000)
-        overall_da = overall_dy
-
-    display_data_matplot(data, int(len(data)/nz), nz, args.maximum)
+        data = array[start_point[1]:(start_point[1]+delta+1),:,start_point[0]] * 1000
+        data = np.swapaxes(data,0,1)
+        
+    display_data_matplot(data, int(len(data)/nz), nz, args.maximum, hh)
 
     if len(args.output) > 0:
-        pyplot.savefig(args.output)
+        plt.savefig(args.output)
     else:
-        pyplot.show()
+        plt.show()
+
+if __name__ == "__main__":
+    main()

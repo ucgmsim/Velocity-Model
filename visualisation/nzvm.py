@@ -62,7 +62,7 @@ def display_data_matplot(data, num_x, num_y, max_color, hh):
     if max_color != -1:
         plt.clim(0, max_color)
     else:
-        plt.clim(0, int(math.ceil(np.amax(data)/1000.0)*1000.0))
+        plt.clim(0, int(math.ceil(np.amax(data)/1000.0)*1000.0)) #round up to nearest 1000
     
     legend = plt.colorbar()
     legend.ax.get_yaxis().labelpad = 15
@@ -129,11 +129,12 @@ def main():
         print("Error: Inconsistent VM size. Check model and nx, ny, nz parameters and try again. Expected",nx*ny*nz,"values, got",len(array))
         quit()
 
-    #yzx
+    km_to_m_multiplier = 1000
+    
     if axis == 'x':
-        data = array[start_point[1],:,start_point[0]:(start_point[0]+delta+1)] * 1000
+        data = array[start_point[1],:,start_point[0]:(start_point[0]+delta+1)] * km_to_m_multiplier
     else:
-        data = array[start_point[1]:(start_point[1]+delta+1),:,start_point[0]] * 1000
+        data = array[start_point[1]:(start_point[1]+delta+1),:,start_point[0]] * km_to_m_multiplier
         data = np.swapaxes(data,0,1)
         
     display_data_matplot(data, int(len(data)/nz), nz, args.maximum, hh)

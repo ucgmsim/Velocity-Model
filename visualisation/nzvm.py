@@ -13,6 +13,8 @@ import numpy as np
 from matplotlib import pyplot as plt
 import matplotlib.ticker as ticker
 
+KM_TO_M = 1000
+
 def load_data(file, nx, ny, nz):
     """
     Loads the velocity model into memory as a 3d numpy array
@@ -128,13 +130,11 @@ def main():
     if length != nx*ny*nz:
         print("Error: Inconsistent VM size. Check model and nx, ny, nz parameters and try again. Expected",nx*ny*nz,"values, got",len(array))
         quit()
-
-    km_to_m_multiplier = 1000
     
     if axis == 'x':
-        data = array[start_point[1],:,start_point[0]:(start_point[0]+delta+1)] * km_to_m_multiplier
+        data = array[start_point[1],:,start_point[0]:(start_point[0]+delta+1)] * KM_TO_M
     else:
-        data = array[start_point[1]:(start_point[1]+delta+1),:,start_point[0]] * km_to_m_multiplier
+        data = array[start_point[1]:(start_point[1]+delta+1),:,start_point[0]] * KM_TO_M
         data = np.swapaxes(data,0,1)
         
     display_data_matplot(data, int(len(data)/nz), nz, args.maximum, hh)

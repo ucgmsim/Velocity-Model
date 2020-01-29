@@ -30,7 +30,7 @@ def load_data(file, nx, ny, nz):
     return (length, array)
 
 
-def display_data_matplot(data, num_x, num_y, max_color, hh, subplot, title):
+def display_data_matplot(data, max_color, hh, subplot, title):
     """
     Prepares a figure in matplotlib related to the NZVM to be displayed
     Params:
@@ -41,7 +41,7 @@ def display_data_matplot(data, num_x, num_y, max_color, hh, subplot, title):
         - hh: cell size (resolution) of VM in m
     """
 
-    plot = subplot.matshow(data, interpolation='none')
+    plot = subplot.imshow(data, interpolation='none', extent=[0, data.shape[1] * hh, data.shape[0] * hh, 0])
 
     plot.set_cmap("jet")
 
@@ -49,12 +49,8 @@ def display_data_matplot(data, num_x, num_y, max_color, hh, subplot, title):
     
     if hh != 0:
         subplot.set_ylabel("Depth (metres below surface)")
-        ticks_y = ticker.FuncFormatter(lambda y, pos: '{:.0f}'.format(y*hh))
-        plot.axes.yaxis.set_major_formatter(ticks_y)
 
         subplot.set_xlabel("Horizontal distance (metres from origin)")
-        ticks_x = ticker.FuncFormatter(lambda x, pos: '{:.0f}'.format(x*hh))
-        plot.axes.xaxis.set_major_formatter(ticks_x)
     else:
         subplot.set_ylabel("Depth (samples below surface)")
         subplot.set_xlabel("Horizontal distance (no. samples)")
@@ -151,7 +147,7 @@ def main():
     
     if args.perturbation:
         fig, axs = plt.subplots(2, 1, constrained_layout=True)
-        display_data_matplot(data, int(len(data)/nz), nz, args.maximum, hh, axs[0], "Cross section (without perturbation)")
+        display_data_matplot(data, args.maximum, hh, axs[0], "Cross section (without perturbation)")
 
         pert_mixed_array = array * pert_array
         if axis == 'x':
@@ -160,10 +156,10 @@ def main():
             pert_data = pert_mixed_array[start_point[1]:(start_point[1]+delta+1),:,start_point[0]] * KM_TO_M
             pert_data = np.swapaxes(pert_data,0,1)
 
-        display_data_matplot(pert_data, int(len(data)/nz), nz, args.maximum, hh, axs[1], "Cross section (with perturbation)")
+        display_data_matplot(pert_data, args.maximum, hh, axs[1], "Cross section (with perturbation)")
     else:
         fig, axs = plt.subplots(1, 1, constrained_layout=True)
-        display_data_matplot(data, int(len(data)/nz), nz, args.maximum, hh, axs, "Cross section")
+        display_data_matplot(data, args.maximum, hh, axs, "Cross section")
 
     if len(args.output) > 0:
         plt.savefig(args.output)

@@ -120,7 +120,7 @@ def main():
         print("Error: Origin extends beyond boundaries of given data file")
         quit()
 
-    max_delta = ny - start_point[1] - 1
+    max_delta = ny - start_point[1]
     if axis == 'x':
         max_delta = nx - start_point[0]
     
@@ -139,30 +139,36 @@ def main():
     if args.perturbation:
         pert_length, pert_array = load_data(args.perturbation, nx, ny, nz)
         if pert_length != nx*ny*nz:
-            print("Error: Inconsistent perturbation file size. Check model and nx, ny, nz parameters and try again. Expected",nx*ny*nz,"values, got",len(pert_array))
+            print("Error: Perturbation file size does not match VM")
             quit()
     
     if axis == 'x':
-        data = array[start_point[1],:,start_point[0]:(start_point[0]+delta+1)] * KM_TO_M
+        slice_x = start_point[1]
+        slice_start = start_point[0]
+        slice_end = start_point[0] + delta + 1
+        data = array[slice_x,:,slice_start:slice_end] * KM_TO_M
     else:
-        data = array[start_point[1]:(start_point[1]+delta+1),:,start_point[0]] * KM_TO_M
+        slice_y = start_point[0]
+        slice_start = start_point[1]
+        slice_end = start_point[1] + delta + 1
+        data = array[slice_start:slice_end,:,slice_y] * KM_TO_M
         data = np.swapaxes(data,0,1)
     
     if args.perturbation:
-        fig, axs = plt.subplots(2, 1, constrained_layout=True)
-        display_data_matplot(data, args.maximum, hh, axs[0], "Cross section (without perturbation)")
+        fig, axs = plt.subplots(2, 1, constrained_layout=True, squeeze=False)
 
         pert_mixed_array = array * pert_array
         if axis == 'x':
-            pert_data = pert_mixed_array[start_point[1],:,start_point[0]:(start_point[0]+delta+1)] * KM_TO_M
+            pert_data = pert_mixed_array[slice_x,:,slice_start:slice_end] * KM_TO_M
         else:
-            pert_data = pert_mixed_array[start_point[1]:(start_point[1]+delta+1),:,start_point[0]] * KM_TO_M
+            pert_data = pert_mixed_array[slice_start:slice_end,:,slice_y] * KM_TO_M
             pert_data = np.swapaxes(pert_data,0,1)
 
-        display_data_matplot(pert_data, args.maximum, hh, axs[1], "Cross section (with perturbation)")
+        display_data_matplot(pert_data, args.maximum, hh, axs[1][0], "Cross section (with perturbation)")
     else:
-        fig, axs = plt.subplots(1, 1, constrained_layout=True)
-        display_data_matplot(data, args.maximum, hh, axs, "Cross section")
+        fig, axs = plt.subplots(1, 1, constrained_layout=True, squeeze=False)
+
+    display_data_matplot(data, args.maximum, hh, axs[0][0], "Cross section")
 
     if len(args.output) > 0:
         plt.savefig(args.output)

@@ -41,7 +41,10 @@ def display_data_matplot(data, max_color, hh, subplot, title):
         - hh: cell size (resolution) of VM in m
     """
 
-    plot = subplot.imshow(data, interpolation='none', extent=[0, data.shape[1] * hh, data.shape[0] * hh, 0])
+    if hh != 0:
+        plot = subplot.imshow(data, interpolation='none', extent=[0, data.shape[1] * hh, data.shape[0] * hh, 0])
+    else:
+        plot = subplot.imshow(data, interpolation='none')
 
     plot.set_cmap("jet")
 

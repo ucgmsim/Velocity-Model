@@ -9,20 +9,20 @@ import argparse
 import math
 import os
 
-import numpy as np
 from matplotlib import pyplot as plt
-import matplotlib.ticker as ticker
+from matplotlib import ticker
+import numpy as np
+from qcore import geo
 
 KM_TO_M = 1000
 
 def load_data(file, nx, ny, nz):
     """
-    Loads the velocity model into memory as a 3d numpy array
-    Params:
-        - file: file path to velocity model
-        - nx: number of samples in x axis
-        - ny: number of samples in y axis
-        - nz: number of samples in z axis
+    Loads the velocity model into memory, then return a 3d numpy array
+    file: file path to velocity model
+    nx: number of samples in x axis
+    ny: number of samples in y axis
+    nz: number of samples in z axis
     """
     array = np.fromfile(file, dtype=np.float32, count=-1, sep='', offset=0)
     length = len(array)
@@ -30,35 +30,45 @@ def load_data(file, nx, ny, nz):
     return (length, array)
 
 
-def display_data_matplot(data, max_color, hh, subplot, title):
+def display_data_matplot(data, max_color, hh, subplot, title, start_lat, start_lon, end_lat, end_lon, axis, rotation):
     """
     Prepares a figure in matplotlib related to the NZVM to be displayed
-    Params:
-        - data: numpy 2d array of data to plot
-        - num_x: number of samples in x axis (of data, not of VM)
-        - num_y: number of samples in y axis (of data, not of VM)
-        - max_color: maximum velocity (m/s) the chart should go up to (-1 for auto)
-        - hh: cell size (resolution) of VM in m
-    """
-
-    if hh != 0:
+    data: numpy 2d array of data to plot
+    max_color: maximum velocity (m/s) the chart should go up to (-1 for auto)
+    hh: cell size (resolution) of VM (metres) (or 0 for no size)
+    subplot: matplotlib subplot instance to plot on
+    title: title of the graph
+    start_lat: latitude of top left point of cross section (or 361 for no latitude)
+    start_lon: longitude of top left point of cross section (or 361 for no longitude)
+    end_lat: latitude of bottom right point of cross section (or 361 for no latitude)
+    end_lon: longitude of bottom right point of cross section (or 361 for no longitude)
+    axis: 'x' or 'y' for which axis the cross section is on
+    rotation: degrees of rotation the model is, where 0 means the x axis follows the same latitude
+    """  
+    
+    if hh == 0:
+        subplot.set_ylabel("Depth (samples below surface)")
+        subplot.set_xlabel("Horizontal distance (no. samples)")
+        plot = subplot.imshow(data, interpolation='none')
+    elif start_lat == 361 or start_lon == 361:
+        subplot.set_ylabel("Depth (metres below surface)")
+        subplot.set_xlabel("Horizontal distance (metres from origin)")
         plot = subplot.imshow(data, interpolation='none', extent=[0, data.shape[1] * hh, data.shape[0] * hh, 0])
     else:
-        plot = subplot.imshow(data, interpolation='none')
+        subplot.set_ylabel("Depth (metres below surface)")
+        subplot.get_xaxis().set_major_locator(ticker.MaxNLocator(nbins=6))
+        subplot.get_xaxis().get_major_formatter().set_useOffset(False)
+            
+        if (axis == 'x' and rotation <= 45) or (axis == 'y' and rotation > 45):
+            subplot.set_xlabel("Longitude")
+            plot = subplot.imshow(data, interpolation='none', extent=[start_lon, end_lon, data.shape[0] * hh, 0], aspect='auto')
+        else:
+            subplot.set_xlabel("Latitude")
+            plot = subplot.imshow(data, interpolation='none', extent=[start_lat, end_lat, data.shape[0] * hh, 0], aspect='auto')
 
     plot.set_cmap("jet")
 
-    subplot.set_title(title, pad=15)
-    
-    if hh != 0:
-        subplot.set_ylabel("Depth (metres below surface)")
-
-        subplot.set_xlabel("Horizontal distance (metres from origin)")
-    else:
-        subplot.set_ylabel("Depth (samples below surface)")
-        subplot.set_xlabel("Horizontal distance (no. samples)")
-
-    
+    subplot.set_title(title, pad=15)        
 
     if max_color != -1:
         plot.set_clim(0, max_color)
@@ -90,6 +100,9 @@ def main():
     parser.add_argument("-o", "--output", type=str, default="", \
             help="If specified, the output file the plot would be saved to, otherwise opens the plot in a new window")
     parser.add_argument("-p", "--perturbation", type=str, help="If specified, the perturbation file for the same area")
+    parser.add_argument("-lat", "--latitude", type=float, help="If specified, the latitude of the centre of the VM", default=361)
+    parser.add_argument("-lon", "--longitude", type=float, help="If specified, the longitude of the centre of the VM", default=361)
+    parser.add_argument("-rot", "--rotation", type=float, help="The rotation of the VM in degrees (default 0)", default=0)
 
     
     args = parser.parse_args()
@@ -111,7 +124,7 @@ def main():
     
     start_point = (args.origin_x, args.origin_y)
 
-    axis = args.axis
+    axis = args.axis.lower()
 
     if axis != 'x' and axis != 'y':
         axis = 'x'
@@ -141,6 +154,25 @@ def main():
         if pert_length != nx*ny*nz:
             print("Error: Perturbation file size does not match VM")
             quit()
+
+    if args.latitude != 361 and args.longitude != 361:
+        mat = geo.gen_mat(args.rotation, args.longitude, args.latitude)[0]
+        mid_x = math.floor(nx / 2)
+        mid_y = math.floor(ny / 2)
+
+        start_point_offset = [hh * (start_point[0]-mid_x) / KM_TO_M, hh * (start_point[1]-mid_y) / KM_TO_M]
+        start_coords = tuple(geo.xy2ll(np.array([start_point_offset]), mat)[0])
+
+        if axis == 'x':
+            end_point = (start_point[0] + delta, start_point[1])
+        else:
+            end_point = (start_point[0], start_point[1] + delta)
+
+        end_point_offset = [hh * (end_point[0]-mid_x) / KM_TO_M, hh * (end_point[1]-mid_y) / KM_TO_M]
+        end_coords = tuple(geo.xy2ll(np.array([end_point_offset]), mat)[0])
+    else:
+        start_coords = (361, 361)
+        end_coords = (361, 361)
     
     if axis == 'x':
         slice_x = start_point[1]
@@ -164,11 +196,11 @@ def main():
             pert_data = pert_mixed_array[slice_start:slice_end,:,slice_y] * KM_TO_M
             pert_data = np.swapaxes(pert_data,0,1)
 
-        display_data_matplot(pert_data, args.maximum, hh, axs[1][0], "Cross section (with perturbation)")
+        display_data_matplot(pert_data, args.maximum, hh, axs[1][0], "Cross section (with perturbation)", start_coords[1], start_coords[0], end_coords[1], end_coords[0], axis, args.rotation)
     else:
         fig, axs = plt.subplots(1, 1, constrained_layout=True, squeeze=False)
 
-    display_data_matplot(data, args.maximum, hh, axs[0][0], "Cross section")
+    display_data_matplot(data, args.maximum, hh, axs[0][0], "Cross section", start_coords[1], start_coords[0], end_coords[1], end_coords[0], axis, args.rotation)
 
     if len(args.output) > 0:
         plt.savefig(args.output)

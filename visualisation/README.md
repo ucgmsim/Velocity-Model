@@ -1,3 +1,5 @@
+There are a few to-do changes listed in this PR: https://github.com/ucgmsim/Velocity-Model/pull/7
+
 ## What is the NZVM Visualiser?
 A tool created for researchers working on the New Zealand Velocity Model, the NZVM Visualiser creates cross sections of the model to portray the wave velocity in different parts of NZ
 

@@ -14,7 +14,7 @@
 #define MAX_FILENAME_STRING_LEN 1024 // maximum dimension of basin surface input files
 #define LON_GRID_DIM_MAX 10260 // X
 #define LAT_GRID_DIM_MAX 19010 // Y
-#define DEP_GRID_DIM_MAX 1511 // Z
+#define DEP_GRID_DIM_MAX 4500 // Z
 //#define LON_GRID_DIM_MAX 2126 // X
 //#define LAT_GRID_DIM_MAX 751 // Y
 //#define DEP_GRID_DIM_MAX 251 // Z

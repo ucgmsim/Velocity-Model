@@ -14,13 +14,13 @@
 //extern void writeAllBasinSurfaceDepths(globalBasinData *basinData, gridStruct *location, char *outputDirectory);
 //extern void writeBasinSurfaceDepths(globalBasinData *basinData,  int basinNum, gridStruct *location, char *outputDirectory);
 //extern void writeIndividualProfile(globalDataValues *globalValues, gridStruct *location, char *outputDirectory);
- extern void writeMultipleProfiles(qualities_vector *QUALITIES_VECTOR, gen_multi_profiles_call GEN_MULTI_PROFILES_CALL, mesh_vector *MESH_VECTOR, char *OUTPUT_DIR, calculation_log *CALCULATION_LOG, multi_profile_parameters *MULTI_PROFILE_PARAMETERS, int profileNum);
- extern void writeIndividualProfile(qualities_vector *QUALITIES_VECTOR, gen_profile_call GEN_PROFILE_CALL, mesh_vector *MESH_VECTOR, char *OUTPUT_DIR, calculation_log *CALCULATION_LOG);
+extern void writeMultipleProfiles(qualities_vector *QUALITIES_VECTOR, gen_multi_profiles_call GEN_MULTI_PROFILES_CALL, mesh_vector *MESH_VECTOR, char *OUTPUT_DIR, calculation_log *CALCULATION_LOG, multi_profile_parameters *MULTI_PROFILE_PARAMETERS, int profileNum);
+extern void writeIndividualProfile(qualities_vector *QUALITIES_VECTOR, gen_profile_call GEN_PROFILE_CALL, mesh_vector *MESH_VECTOR, char *OUTPUT_DIR, calculation_log *CALCULATION_LOG);
 extern void writeProfileSurfaceDepths(global_model_parameters *GLOBAL_MODEL_PARAMETERS, basin_data *BASIN_DATA, partial_global_surface_depths *PARTIAL_GLOBAL_SURFACE_DEPTHS, partial_basin_surface_depths *PARTIAL_BASIN_SURFACE_DEPTHS, in_basin *IN_BASIN, mesh_vector *MESH_VECTOR, char *OUTPUT_DIR, calculation_log *CALCULATION_LOG);
 extern void writeMultipleProfileSurfaceDepths(global_model_parameters *GLOBAL_MODEL_PARAMETERS, basin_data *BASIN_DATA, partial_global_surface_depths *PARTIAL_GLOBAL_SURFACE_DEPTHS, partial_basin_surface_depths *PARTIAL_BASIN_SURFACE_DEPTHS, in_basin *IN_BASIN,mesh_vector *MESH_VECTOR, char *OUTPUT_DIR, calculation_log *CALCULATION_LOG, multi_profile_parameters *MULTI_PROFILE_PARAMETERS, int profileNum);
- extern multi_gridpoint_parameters *readGridpointsTextFile(char *gridpointsTextFile);
- extern void runGenerateMultipleVSonGrid(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extract_multi_gridpoint_vs_call GEN_EXTRACT_MULTI_GRIDPOINT_VS_CALL, calculation_log *CALCULATION_LOG);
- extern void writeGridpointVelocities(qualities_vector *QUALITIES_VECTOR, gen_extract_multi_gridpoint_vs_call GEN_EXTRACT_MULTI_GRIDPOINT_VS_CALL, mesh_vector *MESH_VECTOR, char *OUTPUT_DIR, calculation_log *CALCULATION_LOG, int groupingNum);
+extern multi_gridpoint_parameters *readGridpointsTextFile(char *gridpointsTextFile);
+extern void runGenerateMultipleVSonGrid(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extract_multi_gridpoint_vs_call GEN_EXTRACT_MULTI_GRIDPOINT_VS_CALL, calculation_log *CALCULATION_LOG);
+extern void writeGridpointVelocities(qualities_vector *QUALITIES_VECTOR, gen_extract_multi_gridpoint_vs_call GEN_EXTRACT_MULTI_GRIDPOINT_VS_CALL, mesh_vector *MESH_VECTOR, char *OUTPUT_DIR, calculation_log *CALCULATION_LOG, int groupingNum);
 extern void loadBasinResources(global_model_parameters *GLOBAL_MODEL_PARAMETERS);
 
 
@@ -129,10 +129,11 @@ extern void enforceSurfaceDepths(global_model_parameters *GLOBAL_MODEL_PARAMETER
 extern void enforceBasinSurfaceDepths(basin_data *BASIN_DATA, global_model_parameters *GLOBAL_MODEL_PARAMETERS, in_basin *IN_BASIN, partial_basin_surface_depths *PARTIAL_BASIN_SURFACE_DEPTHS, mesh_vector *MESH_VECTOR);
 extern int determineBasinSurfaceBelow(global_model_parameters *GLOBAL_MODEL_PARAMETERS, partial_basin_surface_depths *PARTIAL_BASIN_SURFACE_DEPTHS, double depth, int basinNum);
 extern int determineBasinSurfaceAbove(global_model_parameters *GLOBAL_MODEL_PARAMETERS, partial_basin_surface_depths *PARTIAL_BASIN_SURFACE_DEPTHS, double depth, int basinNum);
-extern void assignBasinQualities(global_model_parameters *GLOBAL_MODEL_PARAMETERS, basin_data *BASIN_DATA, partial_basin_surface_depths *PARTIAL_BASIN_SURFACE_DEPTHS, partial_global_surface_depths *PARTIAL_GLOBAL_SURFACE_DEPTHS, qualities_vector *QUALITIES_VECTOR, double depth, int basinNum, int zInd);
+extern void assignBasinQualities(global_model_parameters *GLOBAL_MODEL_PARAMETERS, basin_data *BASIN_DATA, partial_basin_surface_depths *PARTIAL_BASIN_SURFACE_DEPTHS, partial_global_surface_depths *PARTIAL_GLOBAL_SURFACE_DEPTHS, qualities_vector *QUALITIES_VECTOR, nz_tomography_data *NZ_TOMOGRAPHY_DATA, mesh_vector *MESH_VECTOR, int inAnyBasinLatLon, int onBoundary, double depth, int basinNum, int zInd);
 extern void loadBasinSubModelData(int basinNum, basin_data *BASIN_DATA, global_model_parameters *GLOBAL_MODEL_PARAMETERS);
-extern void callBasinSubVelocityModels(global_model_parameters *GLOBAL_MODEL_PARAMETERS, basin_data *BASIN_DATA, partial_basin_surface_depths *PARTIAL_BASIN_SURFACE_DEPTHS, partial_global_surface_depths *PARTIAL_GLOBAL_SURFACE_DEPTHS, qualities_vector *QUALITIES_VECTOR, double depth, int basinSubModelInd, int basinNum, int zInd);
- extern variable_depth_points *readDepthPointsTextFile(char *depthsTextFile);
+extern void callBasinSubVelocityModels(global_model_parameters *GLOBAL_MODEL_PARAMETERS, basin_data *BASIN_DATA, partial_basin_surface_depths *PARTIAL_BASIN_SURFACE_DEPTHS, partial_global_surface_depths *PARTIAL_GLOBAL_SURFACE_DEPTHS, qualities_vector *QUALITIES_VECTOR, nz_tomography_data *NZ_TOMOGRAPHY_DATA, mesh_vector *MESH_VECTOR, int inAnyBasinLatLon, int onBoundary, double depth, int basinSubModelInd, int basinNum, int zInd);
+
+extern variable_depth_points *readDepthPointsTextFile(char *depthsTextFile);
 
 // surface functions
 //extern void enforceSurfaceDepths(globalBasinData *basinData, int xInd, int yInd, int basinNum);
@@ -206,6 +207,11 @@ extern void GenericSubModC(int zInd, qualities_vector *QUALITIES_VECTOR);
 
 extern void freeGlobalSurfaceData(global_surfaces *GLOBAL_SURFACES, global_model_parameters *GLOBAL_MODEL_PARAMETERS);
 
+extern void perturbationSubMod(int zInd, double dep, mesh_vector *MESH_VECTOR, qualities_vector *QUALITIES_VECTOR, nz_tomography_data *NZ_TOMOGRAPHY_DATA, nz_tomography_data *PERTURBTION_DATA, global_model_parameters *GLOBAL_MODEL_PARAMETERS, partial_global_surface_depths *PARTIAL_GLOBAL_SURFACE_DEPTHS, int inAnyBasinLatLon, int onBoundary);
+
+
+extern nz_tomography_data *loadPerturbationSurfaceData(char *tomoType, global_model_parameters *GLOBAL_MODEL_PARAMETERS);
+extern void freePerturbationSurfaceData(nz_tomography_data *NZ_TOMOGRAPHY_DATA);
 
 
 // Basin data
@@ -285,6 +291,10 @@ void load_Wellington_v19p6(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int
 
 // v19p7 Models
 void load_WaikatoHauraki_v19p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+
+// v20p6 Models
+void load_Perturbation_v20p6(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+
 
 
 

@@ -86,6 +86,7 @@ void runGenerateVelocitySlices(char *MODEL_VERSION, char *OUTPUT_DIR, gen_velo_s
     // Loop over grid points and assign values
     for(int j = 0; j < SLICE_PARAMETERS->nSlices; j++)
     {
+        
         individual_slice_parameters INDIVIDUAL_SLICE_PARAMETERS;
         
         INDIVIDUAL_SLICE_PARAMETERS.latPtsSlice[0] = SLICE_PARAMETERS->latA[j];
@@ -111,7 +112,7 @@ void runGenerateVelocitySlices(char *MODEL_VERSION, char *OUTPUT_DIR, gen_velo_s
             printf("Memory allocation of SLICE_SURFACE_DEPTHS failed.\n");
             exit(EXIT_FAILURE);
         }
-
+        
         for(int k = 0; k < PARTIAL_GLOBAL_MESH->nX; k++)
         {
             IN_BASIN = malloc(sizeof(in_basin));
@@ -139,17 +140,16 @@ void runGenerateVelocitySlices(char *MODEL_VERSION, char *OUTPUT_DIR, gen_velo_s
                 exit(EXIT_FAILURE);
             }
             
-            
-            MESH_VECTOR = extractMeshVector(PARTIAL_GLOBAL_MESH, k);
 
+            MESH_VECTOR = extractMeshVector(PARTIAL_GLOBAL_MESH, k);
             assignQualities(GLOBAL_MODEL_PARAMETERS, VELO_MOD_1D_DATA, NZ_TOMOGRAPHY_DATA, GLOBAL_SURFACES, BASIN_DATA, MESH_VECTOR, PARTIAL_GLOBAL_SURFACE_DEPTHS, PARTIAL_BASIN_SURFACE_DEPTHS, IN_BASIN, QUALITIES_VECTOR, CALCULATION_LOG, GEN_VELO_SLICES_CALL.TOPO_TYPE);
             for(int i = 0; i < PARTIAL_GLOBAL_MESH->nZ; i++)
             {
                 PARTIAL_GLOBAL_QUALITIES->Rho[k][i] = QUALITIES_VECTOR->Rho[i];
                 PARTIAL_GLOBAL_QUALITIES->Vp[k][i] = QUALITIES_VECTOR->Vp[i];
                 PARTIAL_GLOBAL_QUALITIES->Vs[k][i] = QUALITIES_VECTOR->Vs[i];
-                //                printf("%lf %lf %lf.\n",PARTIAL_GLOBAL_QUALITIES->Vp[i], PARTIAL_GLOBAL_QUALITIES->Vs[i],PARTIAL_GLOBAL_QUALITIES->Rho[i]);
-                //                printf("%lf %lf %lf.\n\n",QUALITIES_VECTOR->Vp[i],QUALITIES_VECTOR->Vs[i],QUALITIES_VECTOR->Rho[i]);
+                // printf("%lf %lf %lf.\n",PARTIAL_GLOBAL_QUALITIES->Vp[i], PARTIAL_GLOBAL_QUALITIES->Vs[i],PARTIAL_GLOBAL_QUALITIES->Rho[i]);
+                // printf("%lf %lf %lf.\n\n",QUALITIES_VECTOR->Vp[i],QUALITIES_VECTOR->Vs[i],QUALITIES_VECTOR->Rho[i]);
                 
                 
             }
@@ -165,7 +165,6 @@ void runGenerateVelocitySlices(char *MODEL_VERSION, char *OUTPUT_DIR, gen_velo_s
             {
                 SLICE_SURFACE_DEPTHS->globSurfdep[i][k] = PARTIAL_GLOBAL_SURFACE_DEPTHS->dep[i];
             }
-
 
             free(MESH_VECTOR);
             free(QUALITIES_VECTOR);

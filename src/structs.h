@@ -9,6 +9,13 @@
 #ifndef structs_h
 #define structs_h
 
+
+typedef struct{
+    int n;
+    double xPts[MAX_NUM_POINTS_SMOOTH_VEC];
+    double yPts[MAX_NUM_POINTS_SMOOTH_VEC];
+}smoothing_boundary;
+
 // log struct
 typedef struct{
     int nPointsExceedingMinVelo;
@@ -223,6 +230,21 @@ typedef struct{
     double Y;
 }singleGridPoint;
 
+
+// tomoraphy surfaces struct 
+typedef struct{
+    int nSurf;
+    double surfDeps[MAX_NUM_TOMO_SURFACES];
+    global_surf_read *surf[3][MAX_NUM_TOMO_SURFACES]; // 3 for Vp Vs and Rho
+    global_surf_read *Vs30;
+    global_surf_read *offshoreDistance;
+    // for smoothing
+    int nPtsSmoothVec;
+    smoothing_boundary *smooth_boundary;
+    int specialOffshoreTapering;
+    velo_mod_1d_data *offshoreBasinModel1D;
+}nz_tomography_data;
+
 // surface filenames
 typedef struct{
     char *surf[MAX_NUM_GLOBAL_SURFACES];
@@ -235,6 +257,7 @@ typedef struct{
     
     // basin related parameters
     int nBasins;
+    int ignoreBasinForSmoothing[MAX_NUM_BASINS];
     char *basin[MAX_NUM_BASINS];
     char *basinSurfaceFilenames[MAX_NUM_BASINS][MAX_NUM_BASIN_SURFACES];
     char *basinSurfaceNames[MAX_NUM_BASINS][MAX_NUM_BASIN_SURFACES];
@@ -259,36 +282,7 @@ typedef struct{
 
 // basin data
 typedef struct{
-//    char *surf[MAX_NUM_BASINS][MAX_NUM_BASIN_SURF];
-//    int boundaryType[MAX_NUM_BASINS][MAX_NUM_BASIN_SURF];
-//    int nBoundaries[MAX_NUM_BASINS];
-//    char *boundaryFileName[MAX_NUM_BASINS][MAX_NUM_BOUNDARIES];
-//    double boundaryLat[MAX_NUM_BASINS][MAX_NUM_BOUNDARIES][MAX_DIM_BOUNDARY_FILE];
-//    double boundaryLon[MAX_NUM_BASINS][MAX_NUM_BOUNDARIES][MAX_DIM_BOUNDARY_FILE];
-//    double minLon[MAX_NUM_BASINS][MAX_NUM_BOUNDARIES];
-//    double maxLon[MAX_NUM_BASINS][MAX_NUM_BOUNDARIES];
-//    double minLat[MAX_NUM_BASINS][MAX_NUM_BOUNDARIES];
-//    double maxLat[MAX_NUM_BASINS][MAX_NUM_BOUNDARIES];
-//    int boundaryNumPoints[MAX_NUM_BASINS][MAX_NUM_BOUNDARIES];
-//    int nSurf[MAX_NUM_BASINS];
-//    char *basinSubMod[MAX_NUM_BASINS][NUM_SURF_DIM_MAX];
-//    int nBasinSubMod[MAX_NUM_BASINS];
-//    int inBasinLatLon[MAX_NUM_BASINS][MAX_NUM_BOUNDARIES][LON_GRID_DIM_MAX][LAT_GRID_DIM_MAX];
-//    int inBasinDep[MAX_NUM_BASINS][LON_GRID_DIM_MAX][LAT_GRID_DIM_MAX][DEP_GRID_DIM_MAX];
-//    double surfVals[MAX_NUM_BASINS][LON_GRID_DIM_MAX][LAT_GRID_DIM_MAX][NUM_SURF_DIM_MAX];
 
-//    int nSurf[MAX_NUM_BASINS];
-//    double surfDeps[MAX_NUM_BASINS][MAX_NUM_BASIN_SURFACES];
-//    int nLat[MAX_NUM_BASINS][MAX_NUM_BASIN_SURFACES];
-//    int nLon[MAX_NUM_BASINS][MAX_NUM_BASIN_SURFACES];
-//    double maxLat[MAX_NUM_BASINS][MAX_NUM_BASIN_SURFACES];
-//    double minLat[MAX_NUM_BASINS][MAX_NUM_BASIN_SURFACES];
-//    double maxLon[MAX_NUM_BASINS][MAX_NUM_BASIN_SURFACES];
-//    double minLon[MAX_NUM_BASINS][MAX_NUM_BASIN_SURFACES];
-//    double lati[MAX_NUM_BASINS][MAX_NUM_BASIN_SURFACES][BASIN_SURF_IN_DIM_MAX];
-//    double loni[MAX_NUM_BASINS][MAX_NUM_BASIN_SURFACES][BASIN_SURF_IN_DIM_MAX];
-//    double dep[MAX_NUM_BASINS][MAX_NUM_BASIN_SURFACES][BASIN_SURF_IN_DIM_MAX][BASIN_SURF_IN_DIM_MAX];
-    
     basin_surf_read *surf[MAX_NUM_BASINS][MAX_NUM_BASIN_SURFACES];
     
     // Boundaries
@@ -301,6 +295,8 @@ typedef struct{
     double maxLatBoundary[MAX_NUM_BASINS][MAX_NUM_BASIN_BOUNDARIES];
     
     basin_submodel_data BASIN_SUBMODEL_DATA[MAX_NUM_BASINS];
+
+    nz_tomography_data *PERTURBATION_DATA[MAX_NUM_BASINS];
     
 }basin_data;
 
@@ -474,25 +470,10 @@ typedef struct{
     int xyIndFlag[LON_GRID_DIM_MAX][LAT_GRID_DIM_MAX];
 }read_flags;
 
-typedef struct{
-    int n;
-    double xPts[MAX_NUM_POINTS_SMOOTH_VEC];
-    double yPts[MAX_NUM_POINTS_SMOOTH_VEC];
-}smoothing_boundary;
 
 
-typedef struct{
-    int nSurf;
-    double surfDeps[MAX_NUM_TOMO_SURFACES];
-    global_surf_read *surf[3][MAX_NUM_TOMO_SURFACES]; // 3 for Vp Vs and Rho
-    global_surf_read *Vs30;
-    global_surf_read *offshoreDistance;
-    // for smoothing
-    int nPtsSmoothVec;
-    smoothing_boundary *smooth_boundary;
-    int specialOffshoreTapering;
-    velo_mod_1d_data *offshoreBasinModel1D;
-}nz_tomography_data;
+
+
 
 
 

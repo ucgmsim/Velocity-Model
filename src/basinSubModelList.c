@@ -93,6 +93,13 @@ void loadBasinResources(global_model_parameters *GLOBAL_MODEL_PARAMETERS)
          {
              load_WaikatoHauraki_v19p7(GLOBAL_MODEL_PARAMETERS,i);
          }
+        // ============
+        // v20p6 models
+        // ============
+         else if (strcmp(GLOBAL_MODEL_PARAMETERS->basin[i],"Perturbation_v20p6") == 0)
+         {
+             load_Perturbation_v20p6(GLOBAL_MODEL_PARAMETERS,i);
+         }
          else
          {
              printf("Basin %s not found.\n",GLOBAL_MODEL_PARAMETERS->basin[i]);
@@ -105,6 +112,7 @@ void loadBasinResources(global_model_parameters *GLOBAL_MODEL_PARAMETERS)
 
 void load_Wellington_v19p1(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum)
 {
+    GLOBAL_MODEL_PARAMETERS->ignoreBasinForSmoothing[basinNum] = 0;
     GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum] = 2;
     GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[basinNum] = 1;
     GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[basinNum][0] = "Data/NI_BASINS/Wellington_Polygon_WGS84.txt";
@@ -121,6 +129,7 @@ void load_Wellington_v19p1(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int
 
 void load_Wellington_v19p6(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum)
 {
+    GLOBAL_MODEL_PARAMETERS->ignoreBasinForSmoothing[basinNum] = 0;
     GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum] = 2;
     GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[basinNum] = 1;
     GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[basinNum][0] = "Data/NI_BASINS/Wellington_Polygon_Wainuiomata_WGS84.txt";
@@ -137,6 +146,7 @@ void load_Wellington_v19p6(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int
 
 void load_Nelson_v19p1(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum)
 {
+    GLOBAL_MODEL_PARAMETERS->ignoreBasinForSmoothing[basinNum] = 0;
     GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum] = 2;
     GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[basinNum] = 1;
     GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[basinNum][0] = "Data/SI_BASINS/Nelson_Polygon_WGS84.txt";
@@ -154,6 +164,7 @@ void load_Nelson_v19p1(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int bas
 
 void load_Marlborough_v19p1(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum)
 {
+    GLOBAL_MODEL_PARAMETERS->ignoreBasinForSmoothing[basinNum] = 0;
     GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum] = 2;
     GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[basinNum] = 1;
     GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[basinNum][0] = "Data/SI_BASINS/Marlborough_Polygon_WGS84_v0p1.txt";
@@ -170,6 +181,7 @@ void load_Marlborough_v19p1(global_model_parameters *GLOBAL_MODEL_PARAMETERS, in
 
 void load_Hanmer_v19p1(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum)
 {
+    GLOBAL_MODEL_PARAMETERS->ignoreBasinForSmoothing[basinNum] = 0;
     GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum] = 2;
     GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[basinNum] = 1;
     GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[basinNum][0] = "Data/SI_BASINS/Hanmer_Polygon_WGS84.txt";
@@ -188,6 +200,7 @@ void load_Hanmer_v19p1(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int bas
 
 void load_Cheviot_v19p1(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum)
 {
+    GLOBAL_MODEL_PARAMETERS->ignoreBasinForSmoothing[basinNum] = 0;
     GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum] = 2;
     GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[basinNum] = 1;
     GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[basinNum][0] = "Data/SI_BASINS/Cheviot_Polygon_WGS84.txt";
@@ -204,6 +217,7 @@ void load_Cheviot_v19p1(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int ba
 
 void load_Kaikoura_v19p1(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum)
 {
+    GLOBAL_MODEL_PARAMETERS->ignoreBasinForSmoothing[basinNum] = 0;
     GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum] = 2;
     GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[basinNum] = 1;
     GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[basinNum][0] = "Data/SI_BASINS/Kaikoura_Polygon_WGS84.txt";
@@ -220,6 +234,7 @@ void load_Kaikoura_v19p1(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int b
 
 void load_Banks_Peninsula_Volcanics_v19p1(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum)
 {
+    GLOBAL_MODEL_PARAMETERS->ignoreBasinForSmoothing[basinNum] = 0;
     GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum] = 2;
     GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[basinNum] = 1;
     GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[basinNum][0] = "Data/Boundaries/BPVBoundary.txt";
@@ -237,6 +252,7 @@ void load_Banks_Peninsula_Volcanics_v19p1(global_model_parameters *GLOBAL_MODEL_
 
 void load_Cantebury_North_v19p1(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum)
 {
+    GLOBAL_MODEL_PARAMETERS->ignoreBasinForSmoothing[basinNum] = 0;
     GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum] = 2;
     GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[basinNum] = 1;
     GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[basinNum][0] = "Data/SI_BASINS/NorthCanterbury_Polygon_WGS84.txt";
@@ -254,6 +270,7 @@ void load_Cantebury_North_v19p1(global_model_parameters *GLOBAL_MODEL_PARAMETERS
 
 void load_Canterbury_Pre_Quaternary_v19p1(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum)
 {
+    GLOBAL_MODEL_PARAMETERS->ignoreBasinForSmoothing[basinNum] = 0;
     // CANTERBURY Basin (1D above basement)
     GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum] = 5;
     GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[basinNum] = 1;
@@ -287,6 +304,7 @@ void load_Canterbury_Pre_Quaternary_v19p1(global_model_parameters *GLOBAL_MODEL_
 
 void load_Canterbury_Pre_Quaternary_v18p1(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum)
 {
+    GLOBAL_MODEL_PARAMETERS->ignoreBasinForSmoothing[basinNum] = 0;
     // CANTERBURY Basin (1D above basement)
     GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum] = 5;
     GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[basinNum] = 1;
@@ -320,6 +338,7 @@ void load_Canterbury_Pre_Quaternary_v18p1(global_model_parameters *GLOBAL_MODEL_
 
 void load_Canterbury_Pre_Quaternary_v18p2(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum)
 {
+    GLOBAL_MODEL_PARAMETERS->ignoreBasinForSmoothing[basinNum] = 0;
     // CANTERBURY Basin (1D above basement)
     GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum] = 5;
     GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[basinNum] = 1;
@@ -353,6 +372,7 @@ void load_Canterbury_Pre_Quaternary_v18p2(global_model_parameters *GLOBAL_MODEL_
 
 void load_Canterbury_Pre_Quaternary_v18p3(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum)
 {
+    GLOBAL_MODEL_PARAMETERS->ignoreBasinForSmoothing[basinNum] = 0;
     // CANTERBURY Basin (1D above basement)
     GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum] = 5;
     GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[basinNum] = 1;
@@ -385,6 +405,7 @@ void load_Canterbury_Pre_Quaternary_v18p3(global_model_parameters *GLOBAL_MODEL_
 
 void load_Canterbury_Pre_Quaternary_v18p4(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum)
 {
+    GLOBAL_MODEL_PARAMETERS->ignoreBasinForSmoothing[basinNum] = 0;
     // CANTERBURY Basin (1D above basement)
     GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum] = 5;
     GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[basinNum] = 1;
@@ -417,6 +438,7 @@ void load_Canterbury_Pre_Quaternary_v18p4(global_model_parameters *GLOBAL_MODEL_
 
 void load_WaikatoHauraki_v19p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum)
 {
+    GLOBAL_MODEL_PARAMETERS->ignoreBasinForSmoothing[basinNum] = 0;
     GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum] = 2;
     GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[basinNum] = 1;
     GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[basinNum][0] = "Data/Boundaries/WaikatoHaurakiBasinEdge_WGS84.txt";
@@ -431,4 +453,23 @@ void load_WaikatoHauraki_v19p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS,
     GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][1] = 0;
 }
 
+
+
+void load_Perturbation_v20p6(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum)
+{
+    GLOBAL_MODEL_PARAMETERS->ignoreBasinForSmoothing[basinNum] = 1;
+    GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum] = 2;
+    GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[basinNum] = 1;
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[basinNum][0] = "Data/Perturbations/v20p6/volume_data/perturbation_boundary_v20p6.txt";
+    
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][0] = "Perturbation_top";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][0] = "Data/DEM/NZ_DEM_HD.in";
+    // GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][0] = "Data/Perturbations/v20p6/volume_data/surf_neg0.in";
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][0] = 0;
+    GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][0] = "perturbation_v20p6";
+    
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][1] = "Perturbation_bottom";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][1] = "Data/Perturbations/v20p6/volume_data/surf_neg1500.in";
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][1] = 0;
+}
 

@@ -21,26 +21,35 @@
 void assignQualities(global_model_parameters *GLOBAL_MODEL_PARAMETERS, velo_mod_1d_data *VELO_MOD_1D_DATA, nz_tomography_data *NZ_TOMOGRAPHY_DATA, global_surfaces *GLOBAL_SURFACES, basin_data *BASIN_DATA, mesh_vector *MESH_VECTOR,partial_global_surface_depths *PARTIAL_GLOBAL_SURFACE_DEPTHS, partial_basin_surface_depths *PARTIAL_BASIN_SURFACE_DEPTHS,in_basin *IN_BASIN, qualities_vector *QUALITIES_VECTOR, calculation_log *CALCULATION_LOG, char *TOPO_TYPE)
 {
     // determine if lat-lon point lies within the smoothing zone and prescribe velocities accordingly
+   
     smoothing_boundary *SMOOTH_BOUND;
     SMOOTH_BOUND = NZ_TOMOGRAPHY_DATA->smooth_boundary;
 
     int closestInd;
-    closestInd = determineIfLatLonWithinSmoothingRegion(SMOOTH_BOUND, MESH_VECTOR);
-    
+
     double locationLatLon[2], distance;
     int inAnyBasin;
     int onBoundary;
-    locationLatLon[0] = SMOOTH_BOUND->yPts[closestInd];
-    locationLatLon[1] = SMOOTH_BOUND->xPts[closestInd];
-    distance = LatLonToDistance(locationLatLon, *MESH_VECTOR->Lat, *MESH_VECTOR->Lon);
-    
+
+    if (SMOOTH_BOUND->n == 0)
+    {
+        distance = 1e6; // if there are not points in the smoothing boundary, then skip 
+    }
+    else 
+    {
+        closestInd = determineIfLatLonWithinSmoothingRegion(SMOOTH_BOUND, MESH_VECTOR);
+        locationLatLon[0] = SMOOTH_BOUND->yPts[closestInd];
+        locationLatLon[1] = SMOOTH_BOUND->xPts[closestInd];
+        distance = LatLonToDistance(locationLatLon, *MESH_VECTOR->Lat, *MESH_VECTOR->Lon);
+    }
+   
     // calculate vs30 (used as a proxy to determine if point is on- or off-shore
     calculateVs30FromTomoVs30Surface(MESH_VECTOR,NZ_TOMOGRAPHY_DATA);
     calculateShorelineDist(MESH_VECTOR,NZ_TOMOGRAPHY_DATA);
     
-//    printf("lat %f, lon %f\n",*MESH_VECTOR->Lat,*MESH_VECTOR->Lon);
-    inAnyBasin = determineIfWithinAnyBasinLatLon(BASIN_DATA, GLOBAL_MODEL_PARAMETERS, *MESH_VECTOR->Lat, *MESH_VECTOR->Lon);
 
+    inAnyBasin = determineIfWithinAnyBasinLatLon(BASIN_DATA, GLOBAL_MODEL_PARAMETERS, *MESH_VECTOR->Lat, *MESH_VECTOR->Lon);
+    
     // point lies within smoothing zone , is offshore, and is not in any basin (i.e outside any boundaries)
     if (distance <= MAX_DIST_SMOOTH && inAnyBasin == 0 && GLOBAL_MODEL_PARAMETERS->GTL == 1 && MESH_VECTOR->Vs30 < 100)
     {
@@ -102,7 +111,7 @@ void assignQualities(global_model_parameters *GLOBAL_MODEL_PARAMETERS, velo_mod_
         MESH_VECTOR->Lat = &originalLat;
         MESH_VECTOR->Lon = &originalLon;
         
-        // velocity vector at the point in question
+        // velocity vector at the point in questioprescribeVelocitiesn
         onBoundary = 0;
         prescribeVelocities(GLOBAL_MODEL_PARAMETERS, VELO_MOD_1D_DATA, NZ_TOMOGRAPHY_DATA, GLOBAL_SURFACES, BASIN_DATA, MESH_VECTOR, PARTIAL_GLOBAL_SURFACE_DEPTHS, PARTIAL_BASIN_SURFACE_DEPTHS, IN_BASIN, QUALITIES_VECTOR_A, CALCULATION_LOG, TOPO_TYPE, onBoundary);
 
@@ -120,13 +129,6 @@ void assignQualities(global_model_parameters *GLOBAL_MODEL_PARAMETERS, velo_mod_
                 QUALITIES_VECTOR->Vs[i] = smoothDistRatio*QUALITIES_VECTOR_A->Vs[i] + inverseRatio*QUALITIES_VECTOR_B->Vs[i];
                 QUALITIES_VECTOR->Rho[i] = smoothDistRatio*QUALITIES_VECTOR_A->Rho[i] + inverseRatio*QUALITIES_VECTOR_B->Rho[i];
                 
-//                QUALITIES_VECTOR->Vp[i] = inverseRatio*QUALITIES_VECTOR_B->Vp[i];
-//                QUALITIES_VECTOR->Vs[i] = inverseRatio*QUALITIES_VECTOR_B->Vs[i];
-//                QUALITIES_VECTOR->Rho[i] = inverseRatio*QUALITIES_VECTOR_B->Rho[i];
-////                
-//                QUALITIES_VECTOR->Vp[i] = inverseRatio*QUALITIES_VECTOR_A->Vp[i];
-//                QUALITIES_VECTOR->Vs[i] = inverseRatio*QUALITIES_VECTOR_A->Vs[i];
-//                QUALITIES_VECTOR->Rho[i] = inverseRatio*QUALITIES_VECTOR_A->Rho[i];
             }
             else
             {
@@ -253,11 +255,10 @@ void prescribeVelocities(global_model_parameters *GLOBAL_MODEL_PARAMETERS, velo_
         exit(EXIT_FAILURE);
     }
 
-
+  
 
     int basinFlag = 0;
     double Z = 0;
-
     for (int k = 0; k < MESH_VECTOR->nZ; k++)
     {
         if(strcmp(TOPO_TYPE, "BULLDOZED") == 0)
@@ -276,22 +277,18 @@ void prescribeVelocities(global_model_parameters *GLOBAL_MODEL_PARAMETERS, velo_
         {
             Z = SHIFTED_MESH_VECTOR->Z[k];
         }
-//        printf("%lf %lf %lf.\n", Z, *MESH_VECTOR->Lat, *MESH_VECTOR->Lon);
-        
         for(int i = 0; i < GLOBAL_MODEL_PARAMETERS->nBasins; i++)
         {
             if (IN_BASIN->inBasinDep[i][k] == 1)
             {
                 basinFlag = 1;
-                assignBasinQualities(GLOBAL_MODEL_PARAMETERS, BASIN_DATA, PARTIAL_BASIN_SURFACE_DEPTHS, PARTIAL_GLOBAL_SURFACE_DEPTHS, QUALITIES_VECTOR, Z, i, k);
+                assignBasinQualities(GLOBAL_MODEL_PARAMETERS, BASIN_DATA, PARTIAL_BASIN_SURFACE_DEPTHS, PARTIAL_GLOBAL_SURFACE_DEPTHS, QUALITIES_VECTOR, NZ_TOMOGRAPHY_DATA, MESH_VECTOR, inAnyBasinLatLon, onBoundary, Z, i, k);
 
             }
         }
-
         if (basinFlag == 0)
         {
             // determine which sub velocity model the point lies within
-//            printf("%lf.\n",Z);
             nVeloModInd = findGlobalSubVeloModelInd(Z, PARTIAL_GLOBAL_SURFACE_DEPTHS);
 
             // call the respective sub velocity model
@@ -326,7 +323,6 @@ void prescribeVelocities(global_model_parameters *GLOBAL_MODEL_PARAMETERS, velo_
             NaNsubMod(k, QUALITIES_VECTOR);
 
         }
-
         basinFlag = 0;
 
     }
@@ -342,6 +338,7 @@ void prescribeVelocities(global_model_parameters *GLOBAL_MODEL_PARAMETERS, velo_
     }
 
     free(SHIFTED_MESH_VECTOR);
+   
 }
 
 

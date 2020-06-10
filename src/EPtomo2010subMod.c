@@ -64,12 +64,15 @@ void EPtomo2010subMod(int zInd, double dep, mesh_vector *MESH_VECTOR, qualities_
 
     for( int i = 0; i < 3; i++)
     {
+
         SURFACE_POINTER_ABOVE = NZ_TOMOGRAPHY_DATA->surf[i][indAbove];
         
         SURFACE_POINTER_BELOW = NZ_TOMOGRAPHY_DATA->surf[i][indBelow];
         
         valAbove = interpolateGlobalSurface(SURFACE_POINTER_ABOVE,*MESH_VECTOR->Lat, *MESH_VECTOR->Lon, ADJACENT_POINTS);
         valBelow = interpolateGlobalSurface(SURFACE_POINTER_BELOW,*MESH_VECTOR->Lat, *MESH_VECTOR->Lon, ADJACENT_POINTS);
+        
+
         depAbove = NZ_TOMOGRAPHY_DATA->surfDeps[indAbove]*1000;
         depBelow = NZ_TOMOGRAPHY_DATA->surfDeps[indBelow]*1000;
         val = linearInterpolation(depAbove, depBelow, valAbove, valBelow, dep);
@@ -106,14 +109,8 @@ void EPtomo2010subMod(int zInd, double dep, mesh_vector *MESH_VECTOR, qualities_
     }
     // if GTL AND special offshore smoothing
     else if (GLOBAL_MODEL_PARAMETERS->GTL == 1 &&  NZ_TOMOGRAPHY_DATA->specialOffshoreTapering == 1)
-    {
-//        if (relativeDepth <= 1000 && MESH_VECTOR->Vs30 < 100 && inAnyBasinLatLon == 0 && onBoundary != 1 ) // if less than 1km and offshore (vs30 in offshore = 50m/s, allow some variability for interpolation)
-//        {
-//            elyTaperDepth = 1000; //offshore smoothing ely taper depth (1000m)
-//            v30gtl(MESH_VECTOR->Vs30, QUALITIES_VECTOR->Vs[zInd], relativeDepth, elyTaperDepth, QUALITIES_VECTOR, zInd);
-//
-//        }
-        if (MESH_VECTOR->Vs30 < 100 && inAnyBasinLatLon == 0 && onBoundary != 1 && 0 < MESH_VECTOR->distFromShoreline) // if less than 1km and offshore (vs30 in offshore = 50m/s, allow some variability for interpolation)
+    {   // if less than 1km and offshore (vs30 in offshore = 50m/s, allow some variability for interpolation)
+        if (MESH_VECTOR->Vs30 < 100 && inAnyBasinLatLon == 0 && onBoundary != 1 && 0 < MESH_VECTOR->distFromShoreline) 
         {
            offShoreBasinModel(MESH_VECTOR->distFromShoreline, dep, QUALITIES_VECTOR, zInd, NZ_TOMOGRAPHY_DATA->offshoreBasinModel1D);
             
@@ -331,7 +328,7 @@ void loadEPtomoSurfaceData(char *tomoType, nz_tomography_data *NZ_TOMOGRAPHY_DAT
     // load in vector containing basin 'wall-type' boundaries to apply smoothing near
     NZ_TOMOGRAPHY_DATA->smooth_boundary = malloc(sizeof(smoothing_boundary));
     loadSmoothBoundaries(NZ_TOMOGRAPHY_DATA,GLOBAL_MODEL_PARAMETERS);
-    
+
     // load in offshore distance surface file
     sprintf(offshorefileName,"Data/Global_Surfaces/shoreline_distance_2k.in");
     NZ_TOMOGRAPHY_DATA->offshoreDistance = loadGlobalSurface(offshorefileName);

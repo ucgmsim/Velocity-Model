@@ -53,7 +53,7 @@ void loadBasinSubModelData(int basinNum, basin_data *BASIN_DATA, global_model_pa
  
  Output variables:
  n.a.
- */
+ */ 
 {
     for( int i = 0; i < GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum]-1; i++)
     {
@@ -75,6 +75,12 @@ void loadBasinSubModelData(int basinNum, basin_data *BASIN_DATA, global_model_pa
             char fName[MAX_FILENAME_STRING_LEN] = "Cant1D_v2_Pliocene_Enforced.fd_modfile";
             load1dVeloSubModel(fName, &BASIN_DATA->BASIN_SUBMODEL_DATA[basinNum].VELO_MOD_1D_DATA);
             
+        }
+        if(strcmp (GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][i], "perturbation_v20p6") == 0)
+        {
+            char perturbation_type[MAX_FILENAME_STRING_LEN] = "v20p6";
+            BASIN_DATA->PERTURBATION_DATA[basinNum] = loadPerturbationSurfaceData(perturbation_type , GLOBAL_MODEL_PARAMETERS);
+
         }
     }
 }
@@ -406,48 +412,51 @@ int determineIfWithinAnyBasinLatLon(basin_data *BASIN_DATA, global_model_paramet
     int inPoly;
     for( int i = 0; i < GLOBAL_MODEL_PARAMETERS->nBasins; i++)
     {
-        for( int j = 0; j < GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[i]; j++)
+        if ( GLOBAL_MODEL_PARAMETERS->ignoreBasinForSmoothing[i] == 0)
         {
-            if(Lon > BASIN_DATA->maxLonBoundary[i][j])
+            for( int j = 0; j < GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[i]; j++)
             {
-                basinFlag = 0;
-            }
-            else if(Lon < BASIN_DATA->minLonBoundary[i][j])
-            {
-                basinFlag = 0;
-            }
-            else if(Lat > BASIN_DATA->maxLatBoundary[i][j])
-            {
-                basinFlag = 0;
-            }
-            else if(Lat < BASIN_DATA->minLatBoundary[i][j])
-            {
-                basinFlag = 0;
-            }
-            else
-            {
-                basinFlag = 1; // possibly in basin
-            }
-            
-            // assign flag to indicate if point is inside(1) or outside(0) basin
-            if(basinFlag == 0)
-            {
-//                return 0;
-            }
-            else if(basinFlag == 1)
-            {
-                inPoly = pointInPoly(BASIN_DATA, i, j, Lon, Lat); // check if in poly
-                if(inPoly == 1) // inside poly, check depth points at a later stage
+                if(Lon > BASIN_DATA->maxLonBoundary[i][j])
                 {
-                    return 1; // inside a basin (any)
+                    basinFlag = 0;
                 }
-                else if(inPoly == 0) // outside poly
+                else if(Lon < BASIN_DATA->minLonBoundary[i][j])
                 {
-//                    return 0;
+                    basinFlag = 0;
                 }
-                basinFlag = 0;
+                else if(Lat > BASIN_DATA->maxLatBoundary[i][j])
+                {
+                    basinFlag = 0;
+                }
+                else if(Lat < BASIN_DATA->minLatBoundary[i][j])
+                {
+                    basinFlag = 0;
+                }
+                else
+                {
+                    basinFlag = 1; // possibly in basin
+                }
+                
+                // assign flag to indicate if point is inside(1) or outside(0) basin
+                if(basinFlag == 0)
+                {
+    //                return 0;
+                }
+                else if(basinFlag == 1)
+                {
+                    inPoly = pointInPoly(BASIN_DATA, i, j, Lon, Lat); // check if in poly
+                    if(inPoly == 1) // inside poly, check depth points at a later stage
+                    {
+                        return 1; // inside a basin (any)
+                    }
+                    else if(inPoly == 0) // outside poly
+                    {
+    //                    return 0;
+                    }
+                    basinFlag = 0;
+                }
+                
             }
-            
         }
     }
     return 0; // inside no basins
@@ -616,6 +625,8 @@ void loadBasinBoundaries(int basinNum, basin_data *BASIN_DATA, global_model_para
         BASIN_DATA->boundaryNumPoints[basinNum][i] = count;
         assert(count<=MAX_DIM_BOUNDARY_FILE);
         // Boundary must a closed polygon i.e. last point in the boundary must be the same as the first
+        // printf("%lf %lf",BASIN_DATA->boundaryLon[basinNum][i][count-1],BASIN_DATA->boundaryLon[basinNum][i][0]);
+        // printf("%lf %lf",BASIN_DATA->boundaryLat[basinNum][i][count-1],BASIN_DATA->boundaryLat[basinNum][i][0]);
         assert(BASIN_DATA->boundaryLon[basinNum][i][count-1] == BASIN_DATA->boundaryLon[basinNum][i][0]);
         assert(BASIN_DATA->boundaryLat[basinNum][i][count-1] == BASIN_DATA->boundaryLat[basinNum][i][0]);
     }

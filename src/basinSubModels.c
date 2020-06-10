@@ -16,7 +16,7 @@
 #include "functions.h"
 
 
-void assignBasinQualities(global_model_parameters *GLOBAL_MODEL_PARAMETERS, basin_data *BASIN_DATA, partial_basin_surface_depths *PARTIAL_BASIN_SURFACE_DEPTHS, partial_global_surface_depths *PARTIAL_GLOBAL_SURFACE_DEPTHS, qualities_vector *QUALITIES_VECTOR, double depth, int basinNum, int zInd)
+void assignBasinQualities(global_model_parameters *GLOBAL_MODEL_PARAMETERS, basin_data *BASIN_DATA, partial_basin_surface_depths *PARTIAL_BASIN_SURFACE_DEPTHS, partial_global_surface_depths *PARTIAL_GLOBAL_SURFACE_DEPTHS, qualities_vector *QUALITIES_VECTOR, nz_tomography_data *NZ_TOMOGRAPHY_DATA, mesh_vector *MESH_VECTOR, int inAnyBasinLatLon, int onBoundary, double depth, int basinNum, int zInd)
 /*
  Purpose: assign Vp Vs and Rho to the individual grid point (determined by finding the surfaces adjacent to the grid point then using applicable sub-velocity model)
  
@@ -38,13 +38,13 @@ void assignBasinQualities(global_model_parameters *GLOBAL_MODEL_PARAMETERS, basi
     indAbove = determineBasinSurfaceAbove(GLOBAL_MODEL_PARAMETERS, PARTIAL_BASIN_SURFACE_DEPTHS, depth, basinNum);
     indBelow = determineBasinSurfaceBelow(GLOBAL_MODEL_PARAMETERS, PARTIAL_BASIN_SURFACE_DEPTHS, depth, basinNum);
     
-//    printf("%i %i %i %lf.\n",indAbove, basinNum, zInd, depth);
-    callBasinSubVelocityModels(GLOBAL_MODEL_PARAMETERS, BASIN_DATA, PARTIAL_BASIN_SURFACE_DEPTHS, PARTIAL_GLOBAL_SURFACE_DEPTHS, QUALITIES_VECTOR ,depth, indAbove, basinNum, zInd);
+    // printf("%i %i %i %lf.\n",indAbove, basinNum, zInd, depth);
+    callBasinSubVelocityModels(GLOBAL_MODEL_PARAMETERS, BASIN_DATA, PARTIAL_BASIN_SURFACE_DEPTHS, PARTIAL_GLOBAL_SURFACE_DEPTHS, QUALITIES_VECTOR, NZ_TOMOGRAPHY_DATA, MESH_VECTOR, inAnyBasinLatLon, onBoundary, depth, indAbove, basinNum, zInd);
     
 }
 
 
-void callBasinSubVelocityModels(global_model_parameters *GLOBAL_MODEL_PARAMETERS, basin_data *BASIN_DATA, partial_basin_surface_depths *PARTIAL_BASIN_SURFACE_DEPTHS, partial_global_surface_depths *PARTIAL_GLOBAL_SURFACE_DEPTHS, qualities_vector *QUALITIES_VECTOR, double depth, int basinSubModelInd, int basinNum, int zInd)
+void callBasinSubVelocityModels(global_model_parameters *GLOBAL_MODEL_PARAMETERS, basin_data *BASIN_DATA, partial_basin_surface_depths *PARTIAL_BASIN_SURFACE_DEPTHS, partial_global_surface_depths *PARTIAL_GLOBAL_SURFACE_DEPTHS, qualities_vector *QUALITIES_VECTOR, nz_tomography_data *NZ_TOMOGRAPHY_DATA, mesh_vector *MESH_VECTOR, int inAnyBasinLatLon, int onBoundary, double depth, int basinSubModelInd, int basinNum, int zInd)
 /*
  Purpose: assign Vp Vs and Rho to the individual grid point (by calling on the appropriate sub-velocity model)
  
@@ -62,6 +62,7 @@ void callBasinSubVelocityModels(global_model_parameters *GLOBAL_MODEL_PARAMETERS
     n.a.
  */
 {
+    // printf("%i %i %i %lf.\n",basinNum,basinSubModelInd, zInd, depth);
     // 1D sub models
     if(strcmp(GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][basinSubModelInd], "Cant1D_v1") == 0)
     {
@@ -142,7 +143,11 @@ void callBasinSubVelocityModels(global_model_parameters *GLOBAL_MODEL_PARAMETERS
     {
         gravelSubModel(zInd, QUALITIES_VECTOR,PARTIAL_BASIN_SURFACE_DEPTHS, depth, basinNum);
     }
-
+    // Perturbation models 
+    else if(strcmp(GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][basinSubModelInd], "perturbation_v20p6") == 0)
+    {
+        perturbationSubMod(zInd, depth, MESH_VECTOR, QUALITIES_VECTOR, NZ_TOMOGRAPHY_DATA, BASIN_DATA->PERTURBATION_DATA[basinNum], GLOBAL_MODEL_PARAMETERS,PARTIAL_GLOBAL_SURFACE_DEPTHS, inAnyBasinLatLon, onBoundary);
+    }
     
     
     
@@ -344,8 +349,8 @@ void BPVSubModelv2(int zInd, qualities_vector *QUALITIES_VECTOR)
 void BPVSubModelv3(int zInd, qualities_vector *QUALITIES_VECTOR, partial_basin_surface_depths *PARTIAL_BASIN_SURFACE_DEPTHS, int basinNum, double depth)
 {
 
-    double pointDepth, wheatherDepth, Vp0, VpFull, Rho0, RhoFull, Vs0, VsFull;
-    wheatherDepth = 100;
+    double pointDepth, weatherDepth, Vp0, VpFull, Rho0, RhoFull, Vs0, VsFull;
+    weatherDepth = 100;
     pointDepth = PARTIAL_BASIN_SURFACE_DEPTHS->dep[basinNum][0] - depth;
 
     Vp0 = 3.2; // velocity at the top of the BPV
@@ -357,12 +362,12 @@ void BPVSubModelv3(int zInd, qualities_vector *QUALITIES_VECTOR, partial_basin_s
     Vs0 = 1.59;
     VsFull = 2.2818;
 
-    if (pointDepth < wheatherDepth)
+    if (pointDepth < weatherDepth)
     {
         // wheathering function for top 100m
-        QUALITIES_VECTOR->Vp[zInd] = linearInterpolation(0, wheatherDepth, Vp0, VpFull, pointDepth);
-        QUALITIES_VECTOR->Rho[zInd] = linearInterpolation(0, wheatherDepth, Rho0, RhoFull, pointDepth);
-        QUALITIES_VECTOR->Vs[zInd]  = linearInterpolation(0, wheatherDepth, Vs0, VsFull, pointDepth);
+        QUALITIES_VECTOR->Vp[zInd] = linearInterpolation(0, weatherDepth, Vp0, VpFull, pointDepth);
+        QUALITIES_VECTOR->Rho[zInd] = linearInterpolation(0, weatherDepth, Rho0, RhoFull, pointDepth);
+        QUALITIES_VECTOR->Vs[zInd]  = linearInterpolation(0, weatherDepth, Vs0, VsFull, pointDepth);
     }
     else
     {

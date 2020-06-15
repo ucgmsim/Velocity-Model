@@ -59,6 +59,7 @@ void runGenerateVelocitySlices(char *MODEL_VERSION, char *OUTPUT_DIR, gen_velo_s
         printf("Memory allocation of NZ_TOMOGRAPHY_DATA failed.\n");
         exit(EXIT_FAILURE);
     }
+    NZ_TOMOGRAPHY_DATA->tomography_loaded = 0; 
     
     global_surfaces *GLOBAL_SURFACES;
     GLOBAL_SURFACES = malloc(sizeof(global_surfaces));
@@ -86,7 +87,6 @@ void runGenerateVelocitySlices(char *MODEL_VERSION, char *OUTPUT_DIR, gen_velo_s
     // Loop over grid points and assign values
     for(int j = 0; j < SLICE_PARAMETERS->nSlices; j++)
     {
-        
         individual_slice_parameters INDIVIDUAL_SLICE_PARAMETERS;
         
         INDIVIDUAL_SLICE_PARAMETERS.latPtsSlice[0] = SLICE_PARAMETERS->latA[j];
@@ -140,7 +140,6 @@ void runGenerateVelocitySlices(char *MODEL_VERSION, char *OUTPUT_DIR, gen_velo_s
                 exit(EXIT_FAILURE);
             }
             
-
             MESH_VECTOR = extractMeshVector(PARTIAL_GLOBAL_MESH, k);
             assignQualities(GLOBAL_MODEL_PARAMETERS, VELO_MOD_1D_DATA, NZ_TOMOGRAPHY_DATA, GLOBAL_SURFACES, BASIN_DATA, MESH_VECTOR, PARTIAL_GLOBAL_SURFACE_DEPTHS, PARTIAL_BASIN_SURFACE_DEPTHS, IN_BASIN, QUALITIES_VECTOR, CALCULATION_LOG, GEN_VELO_SLICES_CALL.TOPO_TYPE);
             for(int i = 0; i < PARTIAL_GLOBAL_MESH->nZ; i++)
@@ -223,6 +222,9 @@ void runGenerateMultipleProfiles(char *MODEL_VERSION, char *OUTPUT_DIR, gen_mult
         printf("Memory allocation of NZ_TOMOGRAPHY_DATA failed.\n");
         exit(EXIT_FAILURE);
     }
+    NZ_TOMOGRAPHY_DATA->tomography_loaded = 0; 
+   
+
     global_surfaces *GLOBAL_SURFACES;
     GLOBAL_SURFACES = malloc(sizeof(global_surfaces));
     if (GLOBAL_SURFACES == NULL)
@@ -383,6 +385,9 @@ void runGenerateMultipleVSonGrid(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extr
         printf("Memory allocation of NZ_TOMOGRAPHY_DATA failed.\n");
         exit(EXIT_FAILURE);
     }
+    NZ_TOMOGRAPHY_DATA->tomography_loaded = 0; 
+
+
     global_surfaces *GLOBAL_SURFACES;
     GLOBAL_SURFACES = malloc(sizeof(global_surfaces));
     if (GLOBAL_SURFACES == NULL)
@@ -539,6 +544,7 @@ void runGenerateProfile(char *MODEL_VERSION, char *OUTPUT_DIR, gen_profile_call 
         printf("Memory allocation of NZ_TOMOGRAPHY_DATA failed.\n");
         exit(EXIT_FAILURE);
     }
+    NZ_TOMOGRAPHY_DATA->tomography_loaded = 0; 
     
     global_surfaces *GLOBAL_SURFACES;
     GLOBAL_SURFACES = malloc(sizeof(global_surfaces));
@@ -746,6 +752,7 @@ void runThresholdVelocityModel(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extrac
         printf("Memory allocation of NZ_TOMOGRAPHY_DATA failed.\n");
         exit(EXIT_FAILURE);
     }
+    NZ_TOMOGRAPHY_DATA->tomography_loaded = 0; 
     
     global_surfaces *GLOBAL_SURFACES;
     GLOBAL_SURFACES = malloc(sizeof(global_surfaces));
@@ -924,7 +931,7 @@ void runGenerateVelocityModel(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extract
         printf("Memory allocation of NZ_TOMOGRAPHY_DATA failed.\n");
         exit(EXIT_FAILURE);
     }
-    
+    NZ_TOMOGRAPHY_DATA->tomography_loaded = 0; 
     global_surfaces *GLOBAL_SURFACES;
     GLOBAL_SURFACES = malloc(sizeof(global_surfaces));
     if (GLOBAL_SURFACES == NULL)

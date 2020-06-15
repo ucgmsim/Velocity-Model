@@ -52,6 +52,11 @@ void loadAllGlobalData(global_model_parameters *GLOBAL_MODEL_PARAMETERS,calculat
             // no data required for NaN velocity sub model, leave as placeholder
         }
     }
+
+    // load in vector containing basin 'wall-type' boundaries to apply smoothing near
+    NZ_TOMOGRAPHY_DATA->smooth_boundary = malloc(sizeof(smoothing_boundary));
+    loadSmoothBoundaries(NZ_TOMOGRAPHY_DATA,GLOBAL_MODEL_PARAMETERS);
+    
     printf("Completed loading of global velocity submodel data.\n");
 
     // read in global surfaces

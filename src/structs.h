@@ -233,6 +233,7 @@ typedef struct{
 
 // tomoraphy surfaces struct 
 typedef struct{
+    int tomography_loaded;
     int nSurf;
     double surfDeps[MAX_NUM_TOMO_SURFACES];
     global_surf_read *surf[3][MAX_NUM_TOMO_SURFACES]; // 3 for Vp Vs and Rho

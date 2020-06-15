@@ -43,10 +43,14 @@ void assignQualities(global_model_parameters *GLOBAL_MODEL_PARAMETERS, velo_mod_
         distance = LatLonToDistance(locationLatLon, *MESH_VECTOR->Lat, *MESH_VECTOR->Lon);
     }
    
-    // calculate vs30 (used as a proxy to determine if point is on- or off-shore
-    calculateVs30FromTomoVs30Surface(MESH_VECTOR,NZ_TOMOGRAPHY_DATA);
-    calculateShorelineDist(MESH_VECTOR,NZ_TOMOGRAPHY_DATA);
+    // calculate vs30 (used as a proxy to determine if point is on- or off-shore (only if using tomography)
+    if (NZ_TOMOGRAPHY_DATA->tomography_loaded == 1)
+    {
+        calculateVs30FromTomoVs30Surface(MESH_VECTOR,NZ_TOMOGRAPHY_DATA);
+        calculateShorelineDist(MESH_VECTOR,NZ_TOMOGRAPHY_DATA); 
+    }
     
+
 
     inAnyBasin = determineIfWithinAnyBasinLatLon(BASIN_DATA, GLOBAL_MODEL_PARAMETERS, *MESH_VECTOR->Lat, *MESH_VECTOR->Lon);
     

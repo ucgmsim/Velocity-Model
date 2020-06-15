@@ -324,10 +324,6 @@ void loadEPtomoSurfaceData(char *tomoType, nz_tomography_data *NZ_TOMOGRAPHY_DAT
         }
     }
 
-    
-    // load in vector containing basin 'wall-type' boundaries to apply smoothing near
-    NZ_TOMOGRAPHY_DATA->smooth_boundary = malloc(sizeof(smoothing_boundary));
-    loadSmoothBoundaries(NZ_TOMOGRAPHY_DATA,GLOBAL_MODEL_PARAMETERS);
 
     // load in offshore distance surface file
     sprintf(offshorefileName,"Data/Global_Surfaces/shoreline_distance_2k.in");
@@ -341,6 +337,7 @@ void loadEPtomoSurfaceData(char *tomoType, nz_tomography_data *NZ_TOMOGRAPHY_DAT
     }
     sprintf(offshore1DModel,"Cant1D_v2.fd_modfile");
     load1dVeloSubModel(offshore1DModel, NZ_TOMOGRAPHY_DATA->offshoreBasinModel1D);
+    NZ_TOMOGRAPHY_DATA->tomography_loaded = 1; 
 }
 
 

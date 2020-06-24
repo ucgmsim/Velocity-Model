@@ -96,6 +96,13 @@ void loadBasinResources(global_model_parameters *GLOBAL_MODEL_PARAMETERS)
         // ============
         // v20p6 models
         // ============
+         else if (strcmp(GLOBAL_MODEL_PARAMETERS->basin[i],"Wanaka_v20p6") == 0)
+         {
+             load_Wanaka_v20p6(GLOBAL_MODEL_PARAMETERS,i);
+         }
+        // ============
+        // v20p6 models
+        // ============
          else if (strcmp(GLOBAL_MODEL_PARAMETERS->basin[i],"Perturbation_v20p6") == 0)
          {
              load_Perturbation_v20p6(GLOBAL_MODEL_PARAMETERS,i);
@@ -143,6 +150,24 @@ void load_Wellington_v19p6(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int
     GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][1] = "Data/NI_BASINS/Wellington_Grid_WGS84_v19p5p6_100_hybrid10.in";
     GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][1] = 0;
 }
+
+void load_Wanaka_v20p6(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum)
+{
+    GLOBAL_MODEL_PARAMETERS->ignoreBasinForSmoothing[basinNum] = 0;
+    GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum] = 2;
+    GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[basinNum] = 1;
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[basinNum][0] = "Data/USER20_BASINS/wanaka_basin_outline_WGS84.txt";
+    
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][0] = "DEM";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][0] = "Data/DEM/NZ_DEM_HD.in";
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][0] = 0;
+    GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][0] = "Cant1D_v2";
+    
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][1] = "WanakaBasement";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][1] = "Data/USER20_BASINS/wanaka_basin_grid_WGS84_v2.in";
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][1] = 0;
+}
+
 
 void load_Nelson_v19p1(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum)
 {

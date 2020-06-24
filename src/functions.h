@@ -293,8 +293,8 @@ void load_Wellington_v19p6(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int
 void load_WaikatoHauraki_v19p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
 
 // v20p6 Models
+void load_Wanaka_v20p6(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
 void load_Perturbation_v20p6(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
-
 
 
 

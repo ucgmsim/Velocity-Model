@@ -611,7 +611,7 @@ void loadBasinBoundaries(int basinNum, basin_data *BASIN_DATA, global_model_para
         
         while(!feof(file))
         {
-            fscanf(file, "%lf %lf", &BASIN_DATA->boundaryLon[basinNum][i][count], &BASIN_DATA->boundaryLat[basinNum][i][count]);
+            fscanf(file, "%lf %lf\n", &BASIN_DATA->boundaryLon[basinNum][i][count], &BASIN_DATA->boundaryLat[basinNum][i][count]);
             
             BASIN_DATA->minLonBoundary[basinNum][i] = fmin(BASIN_DATA->minLonBoundary[basinNum][i],BASIN_DATA->boundaryLon[basinNum][i][count]);
             BASIN_DATA->minLatBoundary[basinNum][i] = fmin(BASIN_DATA->minLatBoundary[basinNum][i],BASIN_DATA->boundaryLat[basinNum][i][count]);
@@ -619,14 +619,17 @@ void loadBasinBoundaries(int basinNum, basin_data *BASIN_DATA, global_model_para
             BASIN_DATA->maxLonBoundary[basinNum][i] = fmax(BASIN_DATA->maxLonBoundary[basinNum][i],BASIN_DATA->boundaryLon[basinNum][i][count]);
             BASIN_DATA->maxLatBoundary[basinNum][i] = fmax(BASIN_DATA->maxLatBoundary[basinNum][i],BASIN_DATA->boundaryLat[basinNum][i][count]);
             
+            //printf("%lf %lf\n",BASIN_DATA->boundaryLat[basinNum][i][count],BASIN_DATA->boundaryLon[basinNum][i][count]);
+            
             count += 1;
+
         }
         fclose(file);
         BASIN_DATA->boundaryNumPoints[basinNum][i] = count;
         assert(count<=MAX_DIM_BOUNDARY_FILE);
         // Boundary must a closed polygon i.e. last point in the boundary must be the same as the first
-        // printf("%lf %lf",BASIN_DATA->boundaryLon[basinNum][i][count-1],BASIN_DATA->boundaryLon[basinNum][i][0]);
-        // printf("%lf %lf",BASIN_DATA->boundaryLat[basinNum][i][count-1],BASIN_DATA->boundaryLat[basinNum][i][0]);
+        //printf("%lf %lf\n",BASIN_DATA->boundaryLon[basinNum][i][count-1],BASIN_DATA->boundaryLon[basinNum][i][0]);
+        //printf("%lf %lf\n",BASIN_DATA->boundaryLat[basinNum][i][count-1],BASIN_DATA->boundaryLat[basinNum][i][0]);
         assert(BASIN_DATA->boundaryLon[basinNum][i][count-1] == BASIN_DATA->boundaryLon[basinNum][i][0]);
         assert(BASIN_DATA->boundaryLat[basinNum][i][count-1] == BASIN_DATA->boundaryLat[basinNum][i][0]);
     }

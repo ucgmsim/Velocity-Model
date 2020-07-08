@@ -194,7 +194,6 @@ void load_Wanaka_v20p6(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int bas
 
 void load_Wakatipu_v20p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum)
 {
-    printf("loading wakatipu basin\n");
     GLOBAL_MODEL_PARAMETERS->ignoreBasinForSmoothing[basinNum] = 0;
     GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum] = 2;
     GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[basinNum] = 1;

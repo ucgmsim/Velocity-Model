@@ -304,7 +304,9 @@ void load_NE_OTAGO_B_v20p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int
 void load_NE_OTAGO_C_v20p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
 void load_NE_OTAGO_D_v20p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
 void load_NE_OTAGO_E_v20p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
-
+void load_Mosgiel_v20p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_Dunedin_v20p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_Balclutha_v20p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
 
 
 extern calculation_log *initializeCalculationLog(int argc, char *argv[]);

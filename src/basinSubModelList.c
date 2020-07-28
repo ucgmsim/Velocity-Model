@@ -535,7 +535,7 @@ void load_Perturbation_v20p6(global_model_parameters *GLOBAL_MODEL_PARAMETERS, i
     GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][0] = "perturbation_v20p6";
     
     GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][1] = "Perturbation_bottom";
-    GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][1] = "Data/Perturbations/v20p6/volume_data/surf_neg1500.in";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][1] = "Data/Perturbations/v20p6/volume_data/surf_neg238km.in";
     GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][1] = 0;
 }
 

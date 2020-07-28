@@ -1637,12 +1637,12 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
     // load in basin surface fileames etc.
     loadBasinResources(GLOBAL_MODEL_PARAMETERS);
     
-    if (GLOBAL_MODEL_PARAMETERS->BasinEdgeSmoothing == 1 && strcmp(TOPO_TYPE,"TRUE") == 0)
-    {
-        printf("Invalid topographic representation type for basin edge smoothing to be applied.\n");
-        printf("TOPO_TYPE must not be set to TRUE for this model version.\n");
-        exit(EXIT_FAILURE);
-    }
+//    if (GLOBAL_MODEL_PARAMETERS->BasinEdgeSmoothing == 1 && strcmp(TOPO_TYPE,"TRUE") == 0)
+//    {
+//        printf("Invalid topographic representation type for basin edge smoothing to be applied.\n");
+//        printf("TOPO_TYPE must not be set to TRUE for this model version.\n");
+//        exit(EXIT_FAILURE);
+//    }
 
     // Assertions
     assert(GLOBAL_MODEL_PARAMETERS->nSurf==(GLOBAL_MODEL_PARAMETERS->nVeloSubMod+1));

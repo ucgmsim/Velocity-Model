@@ -127,7 +127,7 @@ void assignQualities(global_model_parameters *GLOBAL_MODEL_PARAMETERS, velo_mod_
         
         for (int i = 0; i < MESH_VECTOR->nZ; i++)
         {
-            if(isnan(QUALITIES_VECTOR_A->Vp[i]) ==0)
+            if(isnan(QUALITIES_VECTOR_A->Vp[i]) == 0 )
             {
                 QUALITIES_VECTOR->Vp[i] = smoothDistRatio*QUALITIES_VECTOR_A->Vp[i] + inverseRatio*QUALITIES_VECTOR_B->Vp[i];
                 QUALITIES_VECTOR->Vs[i] = smoothDistRatio*QUALITIES_VECTOR_A->Vs[i] + inverseRatio*QUALITIES_VECTOR_B->Vs[i];
@@ -286,12 +286,15 @@ void prescribeVelocities(global_model_parameters *GLOBAL_MODEL_PARAMETERS, velo_
             if (IN_BASIN->inBasinDep[i][k] == 1)
             {
                 basinFlag = 1;
+                QUALITIES_VECTOR->inbasin[k] = 1;
                 assignBasinQualities(GLOBAL_MODEL_PARAMETERS, BASIN_DATA, PARTIAL_BASIN_SURFACE_DEPTHS, PARTIAL_GLOBAL_SURFACE_DEPTHS, QUALITIES_VECTOR, NZ_TOMOGRAPHY_DATA, MESH_VECTOR, inAnyBasinLatLon, onBoundary, Z, i, k);
+                
 
             }
         }
         if (basinFlag == 0)
         {
+            QUALITIES_VECTOR->inbasin[k] = 0;
             // determine which sub velocity model the point lies within
             nVeloModInd = findGlobalSubVeloModelInd(Z, PARTIAL_GLOBAL_SURFACE_DEPTHS);
 

@@ -1066,6 +1066,7 @@ void runGenerateVelocityModel(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extract
                     PARTIAL_GLOBAL_QUALITIES->Rho[k][i] = QUALITIES_VECTOR->Rho[i];
                     PARTIAL_GLOBAL_QUALITIES->Vp[k][i] = QUALITIES_VECTOR->Vp[i];
                     PARTIAL_GLOBAL_QUALITIES->Vs[k][i] = QUALITIES_VECTOR->Vs[i];
+                    PARTIAL_GLOBAL_QUALITIES->inbasin[k][i] = QUALITIES_VECTOR->inbasin[i];
                     
                 }
                 free(MESH_VECTOR);

@@ -292,11 +292,22 @@ void load_Wellington_v19p6(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int
 // v19p7 Models
 void load_WaikatoHauraki_v19p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
 
-// v20p6 Models
+// v20p6 / v20p7 Models
 void load_Wanaka_v20p6(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
 void load_MacKenzie_v20p6(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
 void load_Perturbation_v20p6(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
 void load_Wakatipu_v20p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_Ranfurly_v20p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_Alexandra_v20p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_NE_OTAGO_A_v20p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_NE_OTAGO_B_v20p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_NE_OTAGO_C_v20p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_NE_OTAGO_D_v20p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_NE_OTAGO_E_v20p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_Mosgiel_v20p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_Dunedin_v20p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_Balclutha_v20p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_Murchison_v20p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
 
 
 extern calculation_log *initializeCalculationLog(int argc, char *argv[]);

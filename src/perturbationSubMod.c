@@ -86,7 +86,7 @@ void perturbationSubMod(int zInd, double dep, mesh_vector *MESH_VECTOR, qualitie
         }
         else if (i == 2)
         {
-            QUALITIES_VECTOR->Rho[zInd] = QUALITIES_VECTOR->Rho[zInd] * val * 1.1;
+            QUALITIES_VECTOR->Rho[zInd] = QUALITIES_VECTOR->Rho[zInd] * val;
                 
         }
     }

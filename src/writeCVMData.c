@@ -37,7 +37,7 @@ void writeGlobalQualities(char *OUTPUT_DIR, partial_global_mesh *PARTIAL_GLOBAL_
     int endianInt;
     endianInt = endian();
     
-    FILE *fvp, *fvs, *frho;
+    FILE *fvp, *fvs, *frho, *fmask;
     char vp3dfile[MAX_FILENAME_STRING_LEN];
     sprintf(vp3dfile,"%s/Velocity_Model/vp3dfile.p",OUTPUT_DIR);
     
@@ -47,9 +47,12 @@ void writeGlobalQualities(char *OUTPUT_DIR, partial_global_mesh *PARTIAL_GLOBAL_
     char rho3dfile[MAX_FILENAME_STRING_LEN];
     sprintf(rho3dfile,"%s/Velocity_Model/rho3dfile.d",OUTPUT_DIR);
     
-    float *vp, *vs, *rho;
-    float vpTemp, vsTemp, rhoTemp;
-    float vpWrite, vsWrite, rhoWrite;
+    char inBasinMaskFile[MAX_FILENAME_STRING_LEN];
+    sprintf(inBasinMaskFile,"%s/Velocity_Model/in_basin_mask.b",OUTPUT_DIR);
+    
+    float *vp, *vs, *rho, *inbasin;
+    float vpTemp, vsTemp, rhoTemp, inbasinTemp;
+    float vpWrite, vsWrite, rhoWrite, inbasinWrite;
     
     char fullMod[MAX_FILENAME_STRING_LEN];
     FILE *fullModTxt = NULL;
@@ -63,6 +66,7 @@ void writeGlobalQualities(char *OUTPUT_DIR, partial_global_mesh *PARTIAL_GLOBAL_
         fvp = fopen(vp3dfile,"w");
         fvs = fopen(vs3dfile,"w");
         frho = fopen(rho3dfile,"w");
+        fmask = fopen(inBasinMaskFile,"w");
         if (fvp == NULL)
         {
             printf("Unable to generate binary files for write.\n");
@@ -80,6 +84,7 @@ void writeGlobalQualities(char *OUTPUT_DIR, partial_global_mesh *PARTIAL_GLOBAL_
         fvp = fopen(vp3dfile,"a");
         fvs = fopen(vs3dfile,"a");
         frho = fopen(rho3dfile,"a");
+        fmask = fopen(inBasinMaskFile,"a");
         
         if (fvp == NULL)
         {
@@ -97,6 +102,7 @@ void writeGlobalQualities(char *OUTPUT_DIR, partial_global_mesh *PARTIAL_GLOBAL_
     vp = (float*) malloc(bsize);
     vs = (float*) malloc(bsize);
     rho = (float*) malloc(bsize);
+    inbasin = (float*) malloc(bsize);
     
     for(int iz = 0; iz < PARTIAL_GLOBAL_MESH->nZ; iz++)
     {
@@ -114,6 +120,7 @@ void writeGlobalQualities(char *OUTPUT_DIR, partial_global_mesh *PARTIAL_GLOBAL_
             }
             vpTemp = PARTIAL_GLOBAL_QUALITIES->Vp[ix][iz];
             rhoTemp = PARTIAL_GLOBAL_QUALITIES->Rho[ix][iz];
+            inbasinTemp = PARTIAL_GLOBAL_QUALITIES->inbasin[ix][iz];
             
             
             if (endianInt == 1) // big endian
@@ -121,17 +128,20 @@ void writeGlobalQualities(char *OUTPUT_DIR, partial_global_mesh *PARTIAL_GLOBAL_
                 vsWrite = float_swap(vsTemp);
                 vpWrite = float_swap(vpTemp);
                 rhoWrite = float_swap(rhoTemp);
+                inbasinWrite = float_swap(inbasinTemp);
             }
             else if (endianInt == 0) // little endian
             {
                 vsWrite = vsTemp;
                 vpWrite = vpTemp;
                 rhoWrite = rhoTemp;
+                inbasinWrite = inbasinTemp;
             }
             
             fwrite(&vpWrite,sizeof(float),1,fvp);
             fwrite(&vsWrite,sizeof(float),1,fvs);
             fwrite(&rhoWrite,sizeof(float),1,frho);
+            fwrite(&inbasinWrite,sizeof(float),1,fmask);
             
             if (writeModelTextFile == 1)
             {
@@ -147,6 +157,7 @@ void writeGlobalQualities(char *OUTPUT_DIR, partial_global_mesh *PARTIAL_GLOBAL_
     fclose(fvp);
     fclose(fvs);
     fclose(frho);
+    fclose(fmask);
     if (writeModelTextFile == 1)
     {
         fclose(fullModTxt);

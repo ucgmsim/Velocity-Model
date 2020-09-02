@@ -1572,7 +1572,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->BasinEdgeSmoothing = 1;
         
         // Basin names for this model version
-        GLOBAL_MODEL_PARAMETERS->nBasins = 24;
+        GLOBAL_MODEL_PARAMETERS->nBasins = 26;
         GLOBAL_MODEL_PARAMETERS->basin[0] = "Canterbury_Pre_Quaternary_v19p1";
         GLOBAL_MODEL_PARAMETERS->basin[1] = "Cantebury_North_v19p1";
         GLOBAL_MODEL_PARAMETERS->basin[2] = "Banks_Peninsula_Volcanics_v19p1";
@@ -1597,6 +1597,8 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->basin[21] = "Balclutha_v20p7";
         GLOBAL_MODEL_PARAMETERS->basin[22] = "Dunedin_v20p7";
         GLOBAL_MODEL_PARAMETERS->basin[23] = "Murchison_v20p7";
+        GLOBAL_MODEL_PARAMETERS->basin[24] = "Waitaki_v20p8";
+        GLOBAL_MODEL_PARAMETERS->basin[25] = "Hakataramea_v20p8";
         
     }
     else if(strcmp(modelVersion,"beta") == 0)

@@ -308,6 +308,9 @@ void load_Mosgiel_v20p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int ba
 void load_Dunedin_v20p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
 void load_Balclutha_v20p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
 void load_Murchison_v20p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_Waitaki_v20p8(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_Hakataramea_v20p8(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+
 
 
 extern calculation_log *initializeCalculationLog(int argc, char *argv[]);

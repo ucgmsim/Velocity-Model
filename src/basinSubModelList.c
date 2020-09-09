@@ -232,7 +232,7 @@ void load_Wanaka_v20p6(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int bas
     GLOBAL_MODEL_PARAMETERS->ignoreBasinForSmoothing[basinNum] = 0;
     GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum] = 2;
     GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[basinNum] = 1;
-    GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[basinNum][0] = "Data/USER20_BASINS/wanaka_basin_outline_WGS84.txt";
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[basinNum][0] = "Data/USER20_BASINS/WanakaOutlineWGS84.txt";
     
     GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][0] = "DEM";
     GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][0] = "Data/DEM/NZ_DEM_HD.in";

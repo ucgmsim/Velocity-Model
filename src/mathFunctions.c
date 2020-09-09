@@ -537,17 +537,14 @@ void calcAndSaveVs(char *OUTPUT_DIR, partial_global_mesh *PARTIAL_GLOBAL_MESH, p
     double VsTotal;
     double dZ = PARTIAL_GLOBAL_MESH->Z[0] - PARTIAL_GLOBAL_MESH->Z[1];
     
-    
     for( int i = 0; i < PARTIAL_GLOBAL_MESH->nX; i++)
     {
         Vs = 0;
-        //        printf("%i.\n",PARTIAL_GLOBAL_MESH->nZ-1);
         for (int j = 0; j < PARTIAL_GLOBAL_MESH->nZ; j++)
         {
             Vs += dZ/PARTIAL_GLOBAL_QUALITIES->Vs[i][j];
         }
         VsTotal = -PARTIAL_GLOBAL_MESH->Z[PARTIAL_GLOBAL_MESH->nZ-1]/Vs; // in km/s
-        //        printf("%lf %lf %lf.\n",VsDepth,PARTIAL_GLOBAL_MESH->Z[PARTIAL_GLOBAL_MESH->nZ-1],Vs );
         writeVsFile(OUTPUT_DIR, PARTIAL_GLOBAL_MESH->Lat[i], PARTIAL_GLOBAL_MESH->Lon[i], VsTotal, latInd, VS_DEPTH);
     }
     

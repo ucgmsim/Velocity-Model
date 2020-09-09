@@ -326,6 +326,7 @@ typedef struct{
     char *TOPO_TYPE;
     char *EXTRACTED_SLICE_PARAMETERS_TEXTFILE;
     char *VS_TYPE; // for vs_500 etc.
+    char *COORDINATES_TEXTFILE;
 }gen_extract_velo_mod_call;
 
 
@@ -363,7 +364,9 @@ typedef struct{
     double lats[MAX_NUM_GEN_MULTI_PROFILES];
     double lons[MAX_NUM_GEN_MULTI_PROFILES];
     char codes[MAX_NUM_GEN_MULTI_PROFILES][MAX_FILENAME_STRING_LEN];
+    char *VS_TYPE; // for vs_500 etc.
 }multi_profile_parameters;
+
 
 typedef struct{
     int nDep;

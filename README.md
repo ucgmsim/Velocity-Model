@@ -19,13 +19,14 @@ or alternatively
 ```
 make parallel
 ```
-2) Execute the code using one of the four call types:
+2) Execute the code using one of the call types:
 - GENERATE_VELOCITY_MOD - Generates a velocity model from input parameters
 - EXTRACT_VELOCITY_SLICES - Extracts velocity slices from a saved model (Model need to have been previously generated to use this call)
 - GENERATE_VELOCITY_SLICES - Generated velocity slices for plotting (slices generated from scratch)
 - GENERATE_PROFILE - Generates a velocity profile at a single lat-lon location
 - GENERATE_MULTIPLE_PROFILES - Generates profiles for a list of lat-lon locations
-- GENERATE_THRESHOLD - Generates a map of Vs30, Z1.0 or Z2.5 
+- GENERATE_THRESHOLD - Generates a map of Vs30 Vs500, Z1.0 or Z2.5 (on the same coords as the FD 3D model)
+- GENERATE_THRESHOLD_USER_INPUT  - Generates Vs30, Vs500, Z1.0 or Z2.5 for a user specified list of points
 
 First run
 ```
@@ -124,7 +125,7 @@ Call type 5) GENERATE_MULTIPLE_PROFILES - Two different types: constant spacing,
 
 Call type 6) GENERATE_THRESHOLD
 
-Extracts Vs30 Vs500 Z1.0 Z2.5
+Extracts Vs30 Vs500 Z1.0 Z2.5 for the same coords as the FD grid
 
 - 1	CALL_TYPE=GENERATE_THRESHOLD
 - 2 MODEL_VERSION (model version - select from list of model versions at bottom of readme)
@@ -135,9 +136,19 @@ Extracts Vs30 Vs500 Z1.0 Z2.5
 - 7 EXTENT_X (model extent in the X direction in km)
 - 8 EXTENT_Y (model extent in the Y direction in km)
 - 9 EXTENT_LATLON_SPACING (gridspacing in the Y and X direction in km)
-- 10 VS_TYPE (set as VS30 VS500 Z1.0 Z2.5)
+- 10 VS_TYPE (set as Vs30 Vs500 Z1.0 Z2.5)
 
-Call type 7) GENERATE_VELOCITIES_ON_GRID
+Call type 7) GENERATE_THRESHOLD_USER_INPUT
+
+Extracts Vs30 Vs500 Z1.0 Z2.5 for a user specified list of points 
+
+- 1    CALL_TYPE=GENERATE_THRESHOLD_USER_INPUT
+- 2 MODEL_VERSION (model version - select from list of model versions at bottom of readme)
+- 3 OUTPUT_DIR (directory to save outputs to)
+- 4 COORDINATES_TEXT_FILE (text file name containing gridpoints to presribe velocities at)
+- 5 VS_TYPE (set as Vs30 Vs500 Z1.0 Z2.5)
+
+Call type 8) GENERATE_VELOCITIES_ON_GRID
 
 - 1	CALL_TYPE=GENERATE_VELOCITIES_ON_GRID
 - 2 MODEL_VERSION (model version - select from list of model versions at bottom of readme)
@@ -146,7 +157,9 @@ Call type 7) GENERATE_VELOCITIES_ON_GRID
 - 5 MIN_VS (minimium shear wave velocity to enforce, in km/s - typically 0.5)
 - 6 COORDINATES_TEXT_FILE (text file name containing gridpoints to presribe velocities at)
 
-Execute one of these six call types and open the output directory to view saved outputs.
+
+
+Execute one of these call types and open the output directory to view saved outputs.
 
 **To add a new basin model to the NZVM follow the instructions in src/Addition_of_new_basins_readme.md**
 
@@ -237,3 +250,7 @@ Summary of velocity model version numbers
 - v2.02 Updated Wellington basin model 
 
 - v2.03 added WaikatoHauraki_v19p7  basin model, offshore generic basin model added
+
+- v2.04 added USER20 basins
+
+- v2.05 Updated 2020 tomography model 

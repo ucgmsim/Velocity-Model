@@ -41,11 +41,11 @@ int main(int argc, char *argv[])
     //    int EXTRACT_MULTIPLE_GRIDPOINT_VS = 0;
     int GENERATE_VELOCITIES_ON_GRID = 0;
     int GENERATE_MULTIPLE_PROFILES = 0;
+    int GENERATE_THRESHOLD_USER_INPUT = 0; 
     char *CALL_TYPE = NULL;
     char *MODEL_VERSION;
     char *OUTPUT_DIR;
     char *parametersTextFile = (char*) malloc(MAX_FILENAME_STRING_LEN*sizeof(char));
-    char *inputFName;
     
     // generate structs to house parameters for each call type
     gen_extract_velo_mod_call GEN_EXTRACT_VELO_MOD_CALL;
@@ -72,44 +72,41 @@ int main(int argc, char *argv[])
         {
             GENERATE_VELOCITY_MOD = 1;
             GEN_EXTRACT_VELO_MOD_CALL = readGenVMInputTextFile(parametersTextFile);
-            inputFName = "GENERATE_VELOCITY_MOD";
         }
         else if (strcmp(CALL_TYPE, "EXTRACT_VELOCITY_SLICES") == 0)
         {
             EXTRACT_VELOCITY_SLICES = 1;
             GEN_EXTRACT_VELO_MOD_CALL  = readExtractVMInputTextFile(parametersTextFile);
-            inputFName = "EXTRACT_VELOCITY_SLICES";
         }
         else if (strcmp(CALL_TYPE, "GENERATE_VELOCITY_SLICES") == 0)
         {
             GENERATE_VELOCITY_SLICES = 1;
             GEN_VELO_SLICES_CALL = readGenerateSliceInputTextFile(parametersTextFile);
-            inputFName = "GENERATE_VELOCITY_SLICES";
         }
         else if (strcmp(CALL_TYPE, "GENERATE_PROFILE") == 0)
         {
             GENERATE_PROFILE = 1;
-            GEN_PROFILE_CALL = readGenerateProfileInputTextFile(parametersTextFile);
-            inputFName = "GENERATE_PROFILE";
-            
+            GEN_PROFILE_CALL = readGenerateProfileInputTextFile(parametersTextFile);            
         }
         else if (strcmp(CALL_TYPE, "GENERATE_THRESHOLD") == 0)
         {
             GENERATE_THRESHOLD = 1;
             GEN_EXTRACT_VELO_MOD_CALL = readThresholdInputTextFile(parametersTextFile);
-            inputFName = "GENERATE_THRESHOLD";
         }
         else if (strcmp(CALL_TYPE, "GENERATE_MULTIPLE_PROFILES") == 0)
         {
             GENERATE_MULTIPLE_PROFILES = 1;
             GEN_MULTI_PROFILES_CALL = readGenMultiProfileInputTextFile(parametersTextFile);
-            inputFName = "GENERATE_MULTIPLE_PROFILES";
         }
         else if (strcmp(CALL_TYPE, "GENERATE_VELOCITIES_ON_GRID") == 0)
         {
             GENERATE_VELOCITIES_ON_GRID = 1;
             GEN_EXTRACT_MULTI_GRIDPOINT_VS_CALL = readExtractMultiInputTextFile(parametersTextFile);
-            inputFName = "GENERATE_VELOCITIES_ON_GRID";
+        }
+        else if (strcmp(CALL_TYPE, "GENERATE_THRESHOLD_USER_INPUT") == 0)
+        {
+            GENERATE_THRESHOLD_USER_INPUT = 1;
+            GEN_EXTRACT_VELO_MOD_CALL = readGenerateThresholdUserInputTextFile(parametersTextFile);
         }
         else
         {
@@ -129,7 +126,13 @@ int main(int argc, char *argv[])
     
     
     // check if the output directory exists, exit if necessary
-    if (GENERATE_VELOCITY_MOD == 1 || GENERATE_VELOCITY_SLICES == 1 || GENERATE_PROFILE == 1 || GENERATE_THRESHOLD == 1 || GENERATE_VELOCITIES_ON_GRID == 1 || GENERATE_MULTIPLE_PROFILES == 1)
+    if (GENERATE_VELOCITY_MOD == 1 
+        || GENERATE_VELOCITY_SLICES == 1 
+        || GENERATE_PROFILE == 1 
+        || GENERATE_THRESHOLD == 1 
+        || GENERATE_VELOCITIES_ON_GRID == 1 
+        || GENERATE_MULTIPLE_PROFILES == 1 
+        || GENERATE_THRESHOLD_USER_INPUT == 1)
     {
         struct stat st;
         
@@ -236,39 +239,20 @@ int main(int argc, char *argv[])
         printf("Completed running GENERATE_VELOCITIES_ON_GRID.\n");
         printf("==========================================\n");
     }
-    /*
-     /// Copy the original input file to output_directory/Log
-     FILE *fp1, *fp2;
-     //    char a;
-     fp1 = fopen(parametersTextFile, "r");
-     if (fp1 == NULL)
-     {
-     printf("Cannot open file %c.\n",parametersTextFile);
-     exit(EXIT_FAILURE);
-     }
-     char outFileCat[MAX_FILENAME_STRING_LEN];
-     char line[MAX_FILENAME_STRING_LEN];
-     char linec[MAX_FILENAME_STRING_LEN];
-     
-     int count = 0;
-     sprintf(outFileCat,"%s/Log/%s.txt",OUTPUT_DIR,inputFName);
-     fp2 = fopen(outFileCat, "w");
-     if (fp2 == NULL)
-     {
-     printf("Cannot open file %c.\n", outFileCat);
-     exit(EXIT_FAILURE);
-     }
-     printf("%s \n%s \n",outFileCat,parametersTextFile);
-     while ( fgets ( line, sizeof line, fp1 ) != NULL )
-     {
-     fputs(line, stdout);
-     strcpy(linec, line);
-     fprintf(fp2, linec);
-     }
-     fclose (fp1);
-     fclose (fp2);
-     
-     */
+    else if (GENERATE_THRESHOLD_USER_INPUT == 1)
+    {
+        printf("==========================================\n");
+        printf("Running GENERATE_THRESHOLD_USER_INPUT.\n");
+        printf("==========================================\n");
+        runThresholdInputLatLons(MODEL_VERSION, OUTPUT_DIR, GEN_EXTRACT_VELO_MOD_CALL, CALCULATION_LOG);
+        printf("==========================================\n");
+        printf("Completed running GENERATE_THRESHOLD_USER_INPUT.\n");
+        printf("==========================================\n");
+    }
+
+
+
+
 }
 
 

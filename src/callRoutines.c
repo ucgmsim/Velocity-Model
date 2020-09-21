@@ -873,6 +873,201 @@ void runThresholdVelocityModel(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extrac
 }
 
 
+void runThresholdInputLatLons(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extract_velo_mod_call GEN_EXTRACT_VELO_MOD_CALL, calculation_log *CALCULATION_LOG)
+{
+    // Read in text file with profile parameters
+    multi_profile_parameters *MULTI_PROFILE_PARAMETERS;
+    MULTI_PROFILE_PARAMETERS = readProfilesTextFile(GEN_EXTRACT_VELO_MOD_CALL.COORDINATES_TEXTFILE);
+
+    // obtain surface filenames based off version number
+    global_model_parameters *GLOBAL_MODEL_PARAMETERS;
+    GLOBAL_MODEL_PARAMETERS = getGlobalModelParameters(MODEL_VERSION,GEN_EXTRACT_VELO_MOD_CALL.TOPO_TYPE);
+
+    // read in velocity model data (surfaces, 1D models, tomography etc)
+    velo_mod_1d_data *VELO_MOD_1D_DATA;
+    VELO_MOD_1D_DATA = malloc(sizeof(velo_mod_1d_data));
+    if (VELO_MOD_1D_DATA == NULL)
+    {
+        printf("Memory allocation of VELO_MOD_1D_DATA failed.\n");
+        exit(EXIT_FAILURE);
+    }
+    nz_tomography_data *NZ_TOMOGRAPHY_DATA;
+    NZ_TOMOGRAPHY_DATA = malloc(sizeof(nz_tomography_data));
+    if (NZ_TOMOGRAPHY_DATA == NULL)
+    {
+        printf("Memory allocation of NZ_TOMOGRAPHY_DATA failed.\n");
+        exit(EXIT_FAILURE);
+    }
+    NZ_TOMOGRAPHY_DATA->tomography_loaded = 0; 
+   
+
+    global_surfaces *GLOBAL_SURFACES;
+    GLOBAL_SURFACES = malloc(sizeof(global_surfaces));
+    if (GLOBAL_SURFACES == NULL)
+    {
+        printf("Memory allocation of GLOBAL_SURFACES failed.\n");
+        exit(EXIT_FAILURE);
+    }
+    basin_data *BASIN_DATA;
+    BASIN_DATA = malloc(sizeof(basin_data));
+    if (BASIN_DATA == NULL)
+    {
+        printf("Memory allocation of BASIN_DATA failed.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    loadAllGlobalData(GLOBAL_MODEL_PARAMETERS, CALCULATION_LOG, VELO_MOD_1D_DATA, NZ_TOMOGRAPHY_DATA, GLOBAL_SURFACES, BASIN_DATA);
+
+    // place default values in the model extent struct, replace lat/lons with profile locations later 
+    model_extent *MODEL_EXTENT = malloc(sizeof(model_extent));
+    MODEL_EXTENT->version = MODEL_VERSION;
+    MODEL_EXTENT->originRot = 0;
+    MODEL_EXTENT->Xmax = 1;
+    MODEL_EXTENT->Ymax = 1;
+    MODEL_EXTENT->hLatLon = 1;
+
+    if (strcmp(GEN_EXTRACT_VELO_MOD_CALL.VS_TYPE, "VS500") == 0)
+    {
+        MODEL_EXTENT->Zmax = 0.505;
+        MODEL_EXTENT->Zmin = -0.005;
+        MODEL_EXTENT->hDep = 0.01;
+    }
+    else if (strcmp(GEN_EXTRACT_VELO_MOD_CALL.VS_TYPE, "VS30") == 0)
+    {
+        MODEL_EXTENT->Zmax = 0.0305;
+        MODEL_EXTENT->Zmin = -0.0005;
+        MODEL_EXTENT->hDep = 0.001;
+    }
+    else if (strcmp(GEN_EXTRACT_VELO_MOD_CALL.VS_TYPE, "Z1.0") == 0)
+    {
+        MODEL_EXTENT->Zmax = 2; // 2km downwards
+        MODEL_EXTENT->Zmin = 0;
+        MODEL_EXTENT->hDep = 0.01;
+    }
+    else if (strcmp(GEN_EXTRACT_VELO_MOD_CALL.VS_TYPE, "Z2.5") == 0)
+    {
+        MODEL_EXTENT->Zmax = 12; // 10km downwards
+        MODEL_EXTENT->Zmin = 0;
+        MODEL_EXTENT->hDep = 0.05;
+    }
+    else
+    {
+        printf("Vs type '%s' not recognised, see readme.\n",GEN_EXTRACT_VELO_MOD_CALL.VS_TYPE);
+        exit(EXIT_FAILURE);
+    }
+    // loop over nProfiles
+    for( int i = 0; i < MULTI_PROFILE_PARAMETERS->nProfiles; i++ )
+    {
+        MODEL_EXTENT->originLat = MULTI_PROFILE_PARAMETERS->lats[i];
+        MODEL_EXTENT->originLon = MULTI_PROFILE_PARAMETERS->lons[i];
+
+        // generate the model grid
+        global_mesh *GLOBAL_MESH;
+        GLOBAL_MESH = malloc(sizeof(global_mesh));
+        if (GLOBAL_MESH == NULL)
+        {
+            printf("Memory allocation of GLOBAL_MESH failed.\n");
+            exit(EXIT_FAILURE);
+        }
+        generateFullModelGridGreatCircle(MODEL_EXTENT, GLOBAL_MESH);
+        
+
+        partial_global_mesh *PARTIAL_GLOBAL_MESH;
+        mesh_vector *MESH_VECTOR;
+
+
+        in_basin *IN_BASIN;
+        IN_BASIN = malloc(sizeof(in_basin));
+        if (IN_BASIN == NULL)
+        {
+            printf("Memory allocation of IN_BASIN failed.\n");
+            exit(EXIT_FAILURE);
+        }
+
+
+
+        PARTIAL_GLOBAL_MESH = extractPartialMesh(GLOBAL_MESH, 0);
+        MESH_VECTOR = extractMeshVector(PARTIAL_GLOBAL_MESH, 0);
+
+        partial_global_qualities *PARTIAL_GLOBAL_QUALITIES;
+        PARTIAL_GLOBAL_QUALITIES = malloc(sizeof(partial_global_qualities));
+        if (PARTIAL_GLOBAL_QUALITIES == NULL)
+        {
+            printf("Memory allocation of PARTIAL_GLOBAL_QUALITIES failed.\n");
+            exit(EXIT_FAILURE);
+        }
+
+        partial_global_surface_depths *PARTIAL_GLOBAL_SURFACE_DEPTHS;
+        PARTIAL_GLOBAL_SURFACE_DEPTHS = malloc(sizeof(partial_global_surface_depths));
+        if (PARTIAL_GLOBAL_SURFACE_DEPTHS == NULL)
+        {
+            printf("Memory allocation of PARTIAL_GLOBAL_SURFACE_DEPTHS failed.\n");
+            exit(EXIT_FAILURE);
+        }
+
+        partial_basin_surface_depths *PARTIAL_BASIN_SURFACE_DEPTHS;
+        PARTIAL_BASIN_SURFACE_DEPTHS = malloc(sizeof(partial_basin_surface_depths));
+        if (PARTIAL_BASIN_SURFACE_DEPTHS == NULL)
+        {
+            printf("Memory allocation of PARTIAL_BASIN_SURFACE_DEPTHS failed.\n");
+            exit(EXIT_FAILURE);
+        }
+        
+        qualities_vector *QUALITIES_VECTOR;
+        QUALITIES_VECTOR = malloc(sizeof(qualities_vector));
+        if (QUALITIES_VECTOR == NULL)
+        {
+            printf("Memory allocation of QUALITIES_VECTOR failed.\n");
+            exit(EXIT_FAILURE);
+        }
+        assignQualities(GLOBAL_MODEL_PARAMETERS, VELO_MOD_1D_DATA, NZ_TOMOGRAPHY_DATA, GLOBAL_SURFACES, BASIN_DATA, MESH_VECTOR, PARTIAL_GLOBAL_SURFACE_DEPTHS, PARTIAL_BASIN_SURFACE_DEPTHS, IN_BASIN, QUALITIES_VECTOR, CALCULATION_LOG, GEN_EXTRACT_VELO_MOD_CALL.TOPO_TYPE);        
+        for(int j = 0; j < PARTIAL_GLOBAL_MESH->nZ; j++)
+        {
+            PARTIAL_GLOBAL_QUALITIES->Rho[0][j] = QUALITIES_VECTOR->Rho[j];
+            PARTIAL_GLOBAL_QUALITIES->Vp[0][j] = QUALITIES_VECTOR->Vp[j];
+            PARTIAL_GLOBAL_QUALITIES->Vs[0][j] = QUALITIES_VECTOR->Vs[j];            
+        }
+        
+        
+
+        if (strcmp(GEN_EXTRACT_VELO_MOD_CALL.VS_TYPE, "VS500") == 0)
+        {
+            calcAndSaveVs(OUTPUT_DIR, PARTIAL_GLOBAL_MESH, PARTIAL_GLOBAL_QUALITIES, CALCULATION_LOG,"500",i);
+        }
+        else if (strcmp(GEN_EXTRACT_VELO_MOD_CALL.VS_TYPE, "VS30") == 0)
+        {
+            calcAndSaveVs(OUTPUT_DIR, PARTIAL_GLOBAL_MESH, PARTIAL_GLOBAL_QUALITIES, CALCULATION_LOG,"30",i);
+        }
+        else if (strcmp(GEN_EXTRACT_VELO_MOD_CALL.VS_TYPE, "Z1.0") == 0)
+        {
+            calcAndSaveZThreshold(OUTPUT_DIR, PARTIAL_GLOBAL_MESH, PARTIAL_GLOBAL_QUALITIES, CALCULATION_LOG, "1.0", i);
+        }
+        else if (strcmp(GEN_EXTRACT_VELO_MOD_CALL.VS_TYPE, "Z2.5") == 0)
+        {
+            calcAndSaveZThreshold(OUTPUT_DIR, PARTIAL_GLOBAL_MESH, PARTIAL_GLOBAL_QUALITIES, CALCULATION_LOG, "2.5", i);
+        }
+
+
+        printf("Site %i of %i complete.\n",i+1, MULTI_PROFILE_PARAMETERS->nProfiles);
+        free(GLOBAL_MESH);
+        free(MESH_VECTOR);
+        free(QUALITIES_VECTOR);
+        free(PARTIAL_BASIN_SURFACE_DEPTHS);
+        free(PARTIAL_GLOBAL_SURFACE_DEPTHS);
+        free(IN_BASIN);
+    }
+    free(VELO_MOD_1D_DATA);
+    freeEPtomoSurfaceData(NZ_TOMOGRAPHY_DATA);
+    free(NZ_TOMOGRAPHY_DATA);
+    free(GLOBAL_SURFACES);
+    freeGlobalSurfaceData(GLOBAL_SURFACES, GLOBAL_MODEL_PARAMETERS);
+    freeAllBasinSurfaces(BASIN_DATA, GLOBAL_MODEL_PARAMETERS);
+    free(BASIN_DATA);
+    free(MULTI_PROFILE_PARAMETERS);
+}
+
+
+
 void runGenerateVelocityModel(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extract_velo_mod_call GEN_EXTRACT_VELO_MOD_CALL, calculation_log *CALCULATION_LOG)
 {
     int smoothingRequired = 0; // set as zero if no smoothing is required, set as 1 for smoothing

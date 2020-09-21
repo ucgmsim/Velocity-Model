@@ -68,5 +68,13 @@ void createAllOutputDirectories(char *OUTPUT_DIR, char *genCallType)
         sprintf(tempDir,"%s/Profiles",OUTPUT_DIR);
         mkdir(tempDir, 0700);
     }
+    else if (strcmp(genCallType,"GENERATE_THRESHOLD_USER_INPUT")== 0)
+    {
+        char tempDir[MAX_FILENAME_STRING_LEN];
+        sprintf(tempDir,"%s/Vs",OUTPUT_DIR);
+        mkdir(tempDir, 0700);
+        sprintf(tempDir,"%s/Z",OUTPUT_DIR);
+        mkdir(tempDir, 0700);
+    }
 
 }

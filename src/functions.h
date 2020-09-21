@@ -65,6 +65,8 @@ extern void runGenerateVelocityModel(char *MODEL_VERSION, char *OUTPUT_DIR, gen_
 extern void runExtractFromVelocityModel(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extract_velo_mod_call GEN_EXTRACT_VELO_MOD_CALL, calculation_log *CALCULATION_LOG);
 extern void runGenerateVelocitySlices(char *MODEL_VERSION, char *OUTPUT_DIR, gen_velo_slices_call GEN_VELO_SLICES_CALL, calculation_log *CALCULATION_LOG);
 extern void runThresholdVelocityModel(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extract_velo_mod_call GEN_EXTRACT_VELO_MOD_CALL, calculation_log *CALCULATION_LOG);
+extern void runThresholdInputLatLons(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extract_velo_mod_call GEN_EXTRACT_VELO_MOD_CALL, calculation_log *CALCULATION_LOG);
+
 
 extern void runGenerateProfile(char *MODEL_VERSION, char *OUTPUT_DIR, gen_profile_call GEN_PROFILE_CALL, calculation_log *CALCULATION_LOG);
 extern void runGenerateMultipleProfiles(char *MODEL_VERSION, char *OUTPUT_DIR, gen_multi_profiles_call GEN_MULTI_PROFILES_CALL, calculation_log *CALCULATION_LOG);
@@ -78,6 +80,8 @@ extern gen_velo_slices_call readGenerateSliceInputTextFile(char *fileName);
 extern gen_profile_call readGenerateProfileInputTextFile(char *fileName);
 extern gen_extract_velo_mod_call readThresholdInputTextFile(char *fileName);
 extern gen_multi_profiles_call readGenMultiProfileInputTextFile(char *fileName);
+extern gen_extract_velo_mod_call readGenerateThresholdUserInputTextFile(char *fileName);
+
 extern gen_extract_multi_gridpoint_vs_call readExtractMultiInputTextFile(char *fileName);
 extern multi_profile_parameters *readProfilesTextFile(char *fileName);
 extern char *readParameter(char *fileName, char *quality);

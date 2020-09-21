@@ -166,6 +166,19 @@ void writeSampleInputTextFiles(void)
     fprintf(fNameWrite,"MIN_VS=0.500\n");
     fprintf(fNameWrite,"COORDINATES_TEXT_FILE=SecondaryInputFiles/GridpointCoords.txt\n");
     fclose(fNameWrite);
+
+    //////////// GENERATE_THRESHOLD_USER_INPUT
+    fNameWrite = NULL;
+    type = "GENERATE_THRESHOLD_USER_INPUT";
+    sprintf(fName,"%s/%s.txt",sampleDir,type);
+    fNameWrite  = fopen(fName, "w");
+    fprintf(fNameWrite,"CALL_TYPE=GENERATE_THRESHOLD_USER_INPUT\n");
+    fprintf(fNameWrite,"MODEL_VERSION=2.01\n");
+    fprintf(fNameWrite,"OUTPUT_DIR=ExampleZ2p5\n");
+    fprintf(fNameWrite,"COORDINATES_TEXTFILE=SecondaryInputFiles/MultipleProfileParameters.txt\n");
+    fprintf(fNameWrite,"VS_TYPE=Z2.5\n");
+
+    fclose(fNameWrite);
 }
 
 char *readParameter(char *fileName, char *quality)
@@ -283,6 +296,15 @@ gen_extract_velo_mod_call readThresholdInputTextFile(char *fileName)
     return GEN_EXTRACT_VELO_MOD_CALL;
 }
 
+gen_extract_velo_mod_call readGenerateThresholdUserInputTextFile(char *fileName)
+{
+    gen_extract_velo_mod_call GEN_EXTRACT_VELO_MOD_CALL;
+    GEN_EXTRACT_VELO_MOD_CALL.COORDINATES_TEXTFILE = readParameter(fileName,"COORDINATES_TEXTFILE");
+    GEN_EXTRACT_VELO_MOD_CALL.VS_TYPE = readParameter(fileName,"VS_TYPE");
+    GEN_EXTRACT_VELO_MOD_CALL.TOPO_TYPE = "SQUASHED"; // set as constant
+    return GEN_EXTRACT_VELO_MOD_CALL;
+
+}
 
 
 gen_multi_profiles_call readGenMultiProfileInputTextFile(char *fileName)

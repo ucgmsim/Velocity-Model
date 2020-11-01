@@ -1655,7 +1655,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->basin[25] = "Hakataramea_v20p8";
         
     }
-    else if(strcmp(modelVersion,"beta") == 0)
+    else if(strcmp(modelVersion,"2.03_m10") == 0)
     {
         // define the number of surfaces and sub models
         GLOBAL_MODEL_PARAMETERS->nSurf = 3;
@@ -1681,6 +1681,46 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
 
         GLOBAL_MODEL_PARAMETERS->nBasins = 11; 
         GLOBAL_MODEL_PARAMETERS->basin[0] = "Perturbation_v20p6";
+
+        GLOBAL_MODEL_PARAMETERS->basin[1] = "Canterbury_Pre_Quaternary_v19p1";
+        GLOBAL_MODEL_PARAMETERS->basin[2] = "Cantebury_North_v19p1";
+        GLOBAL_MODEL_PARAMETERS->basin[3] = "Banks_Peninsula_Volcanics_v19p1";
+        GLOBAL_MODEL_PARAMETERS->basin[4] = "Kaikoura_v19p1";
+        GLOBAL_MODEL_PARAMETERS->basin[5] = "Cheviot_v19p1";
+        GLOBAL_MODEL_PARAMETERS->basin[6] = "Hanmer_v19p1";
+        GLOBAL_MODEL_PARAMETERS->basin[7] = "Marlborough_v19p1";
+        GLOBAL_MODEL_PARAMETERS->basin[8] = "Nelson_v19p1";
+        GLOBAL_MODEL_PARAMETERS->basin[9] = "Wellington_v19p6";
+        GLOBAL_MODEL_PARAMETERS->basin[10] = "WaikatoHauraki_v19p7";
+        
+        
+    }
+    else if(strcmp(modelVersion,"2.03_m15") == 0)
+    {
+        // define the number of surfaces and sub models
+        GLOBAL_MODEL_PARAMETERS->nSurf = 3;
+        GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 2;
+        
+        // insert surface surface keywords and filenames
+        GLOBAL_MODEL_PARAMETERS->surf[0] = "posInfSurf";
+        GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[0] = "Data/Global_Surfaces/posInf.in";
+        GLOBAL_MODEL_PARAMETERS->surf[1] = "DEM";
+        GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[1] = "Data/DEM/NZ_DEM_HD.in";
+        GLOBAL_MODEL_PARAMETERS->surf[2] = "negInfSurf";
+        GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[2] = "Data/Global_Surfaces/negInf.in";
+        
+        // insert velocity submodel keywords and filenames (if necessary)
+        GLOBAL_MODEL_PARAMETERS->veloSubMod[0] = "NaNsubMod";
+        GLOBAL_MODEL_PARAMETERS->veloSubMod[1] = "EPtomo2010subMod";
+        GLOBAL_MODEL_PARAMETERS->tomographyName = "2010_NZ_OFFSHORE";
+        
+        GLOBAL_MODEL_PARAMETERS->GTL = 1;
+        GLOBAL_MODEL_PARAMETERS->BasinEdgeSmoothing = 1;
+        
+        // Basin names for this model version and Perturbation regions
+
+        GLOBAL_MODEL_PARAMETERS->nBasins = 11; 
+        GLOBAL_MODEL_PARAMETERS->basin[0] = "Perturbation_v20p10";
 
         GLOBAL_MODEL_PARAMETERS->basin[1] = "Canterbury_Pre_Quaternary_v19p1";
         GLOBAL_MODEL_PARAMETERS->basin[2] = "Cantebury_North_v19p1";

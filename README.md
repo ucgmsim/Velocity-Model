@@ -251,6 +251,10 @@ Summary of velocity model version numbers
 
 - v2.03 added WaikatoHauraki_v19p7  basin model, offshore generic basin model added
 
+- v2.03_m10 with m10 perturbaton from F3DT
+
+- v2.03_m15 with m15 perturbaton from F3DT
+
 - v2.04 added USER20 basins
 
 - v2.05 Updated 2020 tomography model 

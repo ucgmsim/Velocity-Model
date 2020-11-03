@@ -258,3 +258,5 @@ Summary of velocity model version numbers
 - v2.04 added USER20 basins
 
 - v2.05 Updated 2020 tomography model 
+
+- v2.05_m12 with m12 perturbaton from F3DT (2020 tomography model)

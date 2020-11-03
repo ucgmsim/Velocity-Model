@@ -171,6 +171,10 @@ void loadBasinResources(global_model_parameters *GLOBAL_MODEL_PARAMETERS)
          {
              load_Perturbation_v20p10(GLOBAL_MODEL_PARAMETERS,i);
          }
+         else if (strcmp(GLOBAL_MODEL_PARAMETERS->basin[i],"Perturbation_v20p11") == 0)
+         {
+             load_Perturbation_v20p11(GLOBAL_MODEL_PARAMETERS,i);
+         }
          else
          {
              printf("Basin %s not found.\n",GLOBAL_MODEL_PARAMETERS->basin[i]);
@@ -832,6 +836,24 @@ void load_Perturbation_v20p10(global_model_parameters *GLOBAL_MODEL_PARAMETERS, 
     
     GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][1] = "Perturbation_bottom";
     GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][1] = "Data/Perturbations/v20p10/volume_data/surf_neg238km.in";
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][1] = 0;
+}
+
+void load_Perturbation_v20p11(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum)
+{
+    GLOBAL_MODEL_PARAMETERS->ignoreBasinForSmoothing[basinNum] = 1;
+    GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum] = 2;
+    GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[basinNum] = 1;
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[basinNum][0] = "Data/Perturbations/v20p11/volume_data/perturbation_boundary_v20p6.txt";
+    
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][0] = "Perturbation_top";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][0] = "Data/DEM/NZ_DEM_HD.in";
+    // GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][0] = "Data/Perturbations/v20p6/volume_data/surf_neg0.in";
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][0] = 0;
+    GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][0] = "perturbation_v20p11";
+    
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][1] = "Perturbation_bottom";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][1] = "Data/Perturbations/v20p11/volume_data/surf_neg238km.in";
     GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][1] = 0;
 }
 

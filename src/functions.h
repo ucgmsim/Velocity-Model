@@ -316,8 +316,10 @@ void load_Waitaki_v20p8(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int ba
 void load_Hakataramea_v20p8(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
 
 // Perturbation models
-void load_Perturbation_v20p6(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum); //2.3_m10
-void load_Perturbation_v20p10(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum); //2.3_m15
+void load_Perturbation_v20p6(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum); //2.03_m10
+void load_Perturbation_v20p10(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum); //2.03_m15
+void load_Perturbation_v20p11(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum); //2.05_m12
+
 
 extern calculation_log *initializeCalculationLog(int argc, char *argv[]);
 

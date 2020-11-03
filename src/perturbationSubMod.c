@@ -97,7 +97,7 @@ void perturbationSubMod(int zInd, double dep, mesh_vector *MESH_VECTOR, qualitie
 
 nz_tomography_data *loadPerturbationSurfaceData(char *tomoType, global_model_parameters *GLOBAL_MODEL_PARAMETERS)
 /*
- Purpose:   read in the Eberhart-Phillips 2010 tomography dataset
+ Purpose:   read in the perturbation dataset
  
  Input variables:
  *tomoType - strimg containing the type of tomography to load
@@ -126,6 +126,139 @@ nz_tomography_data *loadPerturbationSurfaceData(char *tomoType, global_model_par
     if (strcmp(tomoType, "v20p6") == 0)
     {
         
+        nElev = 61; // read in only the necessary surface
+        elev[0] = 15;
+        elev[1] = -2;
+        elev[2] = -6;
+        elev[3] = -10;
+        elev[4] = -14;
+        elev[5] = -18;
+        elev[6] = -22;
+        elev[7] = -26;
+        elev[8] = -30;
+        elev[9] = -34;
+        elev[10] = -38;
+        elev[11] = -42;
+        elev[12] = -46;
+        elev[13] = -50;
+        elev[14] = -54;
+        elev[15] = -58;
+        elev[16] = -62;
+        elev[17] = -66;
+        elev[18] = -70;
+        elev[19] = -74;
+        elev[20] = -78;
+        elev[21] = -82;
+        elev[22] = -86;
+        elev[23] = -90;
+        elev[24] = -94;
+        elev[25] = -98;
+        elev[26] = -102;
+        elev[27] = -106;
+        elev[28] = -110;
+        elev[29] = -114;
+        elev[30] = -118;
+        elev[31] = -122;
+        elev[32] = -126;
+        elev[33] = -130;
+        elev[34] = -134;
+        elev[35] = -138;
+        elev[36] = -142;
+        elev[37] = -146;
+        elev[38] = -150;
+        elev[39] = -154;
+        elev[40] = -158;
+        elev[41] = -162;
+        elev[42] = -166;
+        elev[43] = -170;
+        elev[44] = -174;
+        elev[45] = -178;
+        elev[46] = -182;
+        elev[47] = -186;
+        elev[48] = -190;
+        elev[49] = -194;
+        elev[50] = -198;
+        elev[51] = -202;
+        elev[52] = -206;
+        elev[53] = -210;
+        elev[54] = -214;
+        elev[55] = -218;
+        elev[56] = -222;
+        elev[57] = -226;
+        elev[58] = -230;
+        elev[59] = -234;
+        elev[60] = -238;
+
+    }
+    else if (strcmp(tomoType, "v20p10") == 0)
+    {
+        
+        nElev = 61; // read in only the necessary surface
+        elev[0] = 15;
+        elev[1] = -2;
+        elev[2] = -6;
+        elev[3] = -10;
+        elev[4] = -14;
+        elev[5] = -18;
+        elev[6] = -22;
+        elev[7] = -26;
+        elev[8] = -30;
+        elev[9] = -34;
+        elev[10] = -38;
+        elev[11] = -42;
+        elev[12] = -46;
+        elev[13] = -50;
+        elev[14] = -54;
+        elev[15] = -58;
+        elev[16] = -62;
+        elev[17] = -66;
+        elev[18] = -70;
+        elev[19] = -74;
+        elev[20] = -78;
+        elev[21] = -82;
+        elev[22] = -86;
+        elev[23] = -90;
+        elev[24] = -94;
+        elev[25] = -98;
+        elev[26] = -102;
+        elev[27] = -106;
+        elev[28] = -110;
+        elev[29] = -114;
+        elev[30] = -118;
+        elev[31] = -122;
+        elev[32] = -126;
+        elev[33] = -130;
+        elev[34] = -134;
+        elev[35] = -138;
+        elev[36] = -142;
+        elev[37] = -146;
+        elev[38] = -150;
+        elev[39] = -154;
+        elev[40] = -158;
+        elev[41] = -162;
+        elev[42] = -166;
+        elev[43] = -170;
+        elev[44] = -174;
+        elev[45] = -178;
+        elev[46] = -182;
+        elev[47] = -186;
+        elev[48] = -190;
+        elev[49] = -194;
+        elev[50] = -198;
+        elev[51] = -202;
+        elev[52] = -206;
+        elev[53] = -210;
+        elev[54] = -214;
+        elev[55] = -218;
+        elev[56] = -222;
+        elev[57] = -226;
+        elev[58] = -230;
+        elev[59] = -234;
+        elev[60] = -238;
+
+    }
+    else if (strcmp(tomoType, "v20p11") == 0)
+    {
         nElev = 61; // read in only the necessary surface
         elev[0] = 15;
         elev[1] = -2;

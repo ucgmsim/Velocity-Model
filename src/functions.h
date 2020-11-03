@@ -214,6 +214,7 @@ extern void freeGlobalSurfaceData(global_surfaces *GLOBAL_SURFACES, global_model
 extern void perturbationSubMod(int zInd, double dep, mesh_vector *MESH_VECTOR, qualities_vector *QUALITIES_VECTOR, nz_tomography_data *NZ_TOMOGRAPHY_DATA, nz_tomography_data *PERTURBTION_DATA, global_model_parameters *GLOBAL_MODEL_PARAMETERS, partial_global_surface_depths *PARTIAL_GLOBAL_SURFACE_DEPTHS, int inAnyBasinLatLon, int onBoundary);
 
 
+
 extern nz_tomography_data *loadPerturbationSurfaceData(char *tomoType, global_model_parameters *GLOBAL_MODEL_PARAMETERS);
 extern void freePerturbationSurfaceData(nz_tomography_data *NZ_TOMOGRAPHY_DATA);
 
@@ -299,7 +300,6 @@ void load_WaikatoHauraki_v19p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS,
 // v20p6 / v20p7 Models
 void load_Wanaka_v20p6(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
 void load_MacKenzie_v20p6(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
-void load_Perturbation_v20p6(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
 void load_Wakatipu_v20p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
 void load_Ranfurly_v20p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
 void load_Alexandra_v20p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
@@ -315,6 +315,10 @@ void load_Murchison_v20p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int 
 void load_Waitaki_v20p8(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
 void load_Hakataramea_v20p8(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
 
+// Perturbation models
+void load_Perturbation_v20p6(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum); //2.03_m10
+void load_Perturbation_v20p10(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum); //2.03_m15
+void load_Perturbation_v20p11(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum); //2.05_m12
 
 
 extern calculation_log *initializeCalculationLog(int argc, char *argv[]);

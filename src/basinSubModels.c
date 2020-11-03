@@ -150,6 +150,16 @@ void callBasinSubVelocityModels(global_model_parameters *GLOBAL_MODEL_PARAMETERS
         perturbationSubMod(zInd, depth, MESH_VECTOR, QUALITIES_VECTOR, NZ_TOMOGRAPHY_DATA, BASIN_DATA->PERTURBATION_DATA[basinNum], GLOBAL_MODEL_PARAMETERS,PARTIAL_GLOBAL_SURFACE_DEPTHS, inAnyBasinLatLon, onBoundary);
         QUALITIES_VECTOR->inbasin[zInd] = 0; //reassign as outside of a basin for the purpose of a in/out of basin mask binary used to incorporate graves stochastic velocity perturbations
     }
+    else if(strcmp(GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][basinSubModelInd], "perturbation_v20p10") == 0)
+    {
+        perturbationSubMod(zInd, depth, MESH_VECTOR, QUALITIES_VECTOR, NZ_TOMOGRAPHY_DATA, BASIN_DATA->PERTURBATION_DATA[basinNum], GLOBAL_MODEL_PARAMETERS,PARTIAL_GLOBAL_SURFACE_DEPTHS, inAnyBasinLatLon, onBoundary);
+        QUALITIES_VECTOR->inbasin[zInd] = 0; //reassign as outside of a basin for the purpose of a in/out of basin mask binary used to incorporate graves stochastic velocity perturbations
+    }
+    else if(strcmp(GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][basinSubModelInd], "perturbation_v20p11") == 0)
+    {
+        perturbationSubMod(zInd, depth, MESH_VECTOR, QUALITIES_VECTOR, NZ_TOMOGRAPHY_DATA, BASIN_DATA->PERTURBATION_DATA[basinNum], GLOBAL_MODEL_PARAMETERS,PARTIAL_GLOBAL_SURFACE_DEPTHS, inAnyBasinLatLon, onBoundary);
+        QUALITIES_VECTOR->inbasin[zInd] = 0; //reassign as outside of a basin for the purpose of a in/out of basin mask binary used to incorporate graves stochastic velocity perturbations
+    }
     
     
     

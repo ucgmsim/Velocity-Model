@@ -260,3 +260,9 @@ Summary of velocity model version numbers
 - v2.05 Updated 2020 tomography model 
 
 - v2.05_m12 with m12 perturbaton from F3DT (2020 tomography model)
+
+Summary of Korean velocity model (KVM) version numbers
+
+- KVM_20p6 - 1D VM
+
+- KVM_20p12 - 3D VM Based on "Crustal structure beneath the southern Korean Peninsula from local earthquakes" Kim et al (2017), Vs and Rho derived from Brocher (2005) relationships

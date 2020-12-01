@@ -372,7 +372,44 @@ void loadEPtomoSurfaceData(char *tomoType, nz_tomography_data *NZ_TOMOGRAPHY_DAT
         NZ_TOMOGRAPHY_DATA->specialOffshoreTapering = 1;
         
     }
-    
+    else if (strcmp(tomoType, "2020_Korea") == 0)
+    {
+        nElev = 19; // read in only the necessary surfaces
+        elev[0] = 5;
+        elev[1] = -4;
+        elev[2] = -8;
+        elev[3] = -12;
+        elev[4] = -16;
+        elev[5] = -20;
+        elev[6] = -24;
+        elev[7] = -28;
+        elev[8] = -32;
+        elev[9] = -36;
+        elev[10] = -40;
+        elev[11] = -44;
+        elev[12] = -48;
+        elev[13] = -52;
+        elev[14] = -56;
+        elev[15] = -60;
+        elev[16] = -64;
+        elev[17] = -68;
+        elev[18] = -680;
+        printf("Loading Korean Tomography.\n");
+        
+        // load in Vs30 NZ surface
+        sprintf(vs30fileName,"Data/Global_Surfaces/NZ_Vs30_HD_With_Offshore.in");
+        NZ_TOMOGRAPHY_DATA->Vs30 = loadGlobalSurface(vs30fileName);
+        
+        sprintf(tomoDirectory,"2020_Korea");
+        NZ_TOMOGRAPHY_DATA->specialOffshoreTapering = 0;
+
+    }
+    else 
+    {
+        printf("Tomography type: %s, not recognized.\n", tomoType);
+    }
+
+
     char baseFilename[MAX_FILENAME_STRING_LEN];
     
     NZ_TOMOGRAPHY_DATA->nSurf = nElev;

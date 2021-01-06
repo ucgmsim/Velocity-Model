@@ -531,7 +531,7 @@ void load_CollingwoodBasin1_v20p11(global_model_parameters *GLOBAL_MODEL_PARAMET
     GLOBAL_MODEL_PARAMETERS->ignoreBasinForSmoothing[basinNum] = 0;
     GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum] = 2;
     GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[basinNum] = 1;
-    GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[basinNum][0] = "Data/USER20_BASINS/CollingwoodBasinOutline_WGS84_v1.txt";
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[basinNum][0] = "Data/USER20_BASINS/CollingwoodBasinOutline_1_WGS84_v1.txt";
 
     GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][0] = "DEM";
     GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][0] = "Data/DEM/NZ_DEM_HD.in";

@@ -28,4 +28,5 @@ for outline_fp in args.outline:
 
     for stat in stat_file.iterrows():
         if path.contains_point((stat[1].lon, stat[1].lat)):
-            print(f"station: {stat[0], stat[1].lon, stat[1].lat} is contained in the basin {os.path.basename(outline_fp)}")
+            #print(f"station: {stat[0], stat[1].lon, stat[1].lat} is contained in the basin {os.path.basename(outline_fp)}")
+            print(stat[1].lon, stat[1].lat, stat[0])

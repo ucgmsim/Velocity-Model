@@ -1875,7 +1875,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->BasinEdgeSmoothing = 1;
         
         // Basin names for this model version
-        GLOBAL_MODEL_PARAMETERS->nBasins = 30;
+        GLOBAL_MODEL_PARAMETERS->nBasins = 31;
         GLOBAL_MODEL_PARAMETERS->basin[0] = "Canterbury_Pre_Quaternary_v19p1";
         GLOBAL_MODEL_PARAMETERS->basin[1] = "Cantebury_North_v19p1";
         GLOBAL_MODEL_PARAMETERS->basin[2] = "Banks_Peninsula_Volcanics_v19p1";
@@ -1906,7 +1906,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->basin[27] = "CollingwoodBasin1_v20p11";
         GLOBAL_MODEL_PARAMETERS->basin[28] = "CollingwoodBasin2_v20p11";
         GLOBAL_MODEL_PARAMETERS->basin[29] = "CollingwoodBasin3_v20p11";
-        
+        GLOBAL_MODEL_PARAMETERS->basin[30] = "SpringsJunction_v20p11";        
     }
     else
     {

@@ -179,6 +179,10 @@ void loadBasinResources(global_model_parameters *GLOBAL_MODEL_PARAMETERS)
          {
              load_CollingwoodBasin3_v20p11(GLOBAL_MODEL_PARAMETERS,i);
          }
+         else if (strcmp(GLOBAL_MODEL_PARAMETERS->basin[i],"SpringsJunction_v20p11") == 0)
+         {
+             load_SpringsJunction_v20p11(GLOBAL_MODEL_PARAMETERS,i);
+         }
         // ============
         // Perturbation models
         // ============
@@ -521,7 +525,7 @@ void load_Karamea_v20p11(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int b
     GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][0] = 0;
     GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][0] = "Cant1D_v2";
 
-    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][1] = "WaitakiBasement";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][1] = "KarameaBasement";
     GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][1] = "Data/USER20_BASINS/KarameaBasin_WGS84_500m_v12v11v2020.in";
     GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][1] = 0;
 }
@@ -538,7 +542,7 @@ void load_CollingwoodBasin1_v20p11(global_model_parameters *GLOBAL_MODEL_PARAMET
     GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][0] = 0;
     GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][0] = "Cant1D_v2";
 
-    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][1] = "WaitakiBasement";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][1] = "CollingwoodBasement";
     GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][1] = "Data/USER20_BASINS/CollTakBasin_WGS84_500m_v11v11v2020.in";
     GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][1] = 0;
 }
@@ -555,7 +559,7 @@ void load_CollingwoodBasin2_v20p11(global_model_parameters *GLOBAL_MODEL_PARAMET
     GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][0] = 0;
     GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][0] = "Cant1D_v2";
 
-    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][1] = "WaitakiBasement";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][1] = "CollingwoodBasement";
     GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][1] = "Data/USER20_BASINS/CollTakBasin_WGS84_500m_v11v11v2020.in";
     GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][1] = 0;
 }
@@ -572,8 +576,25 @@ void load_CollingwoodBasin3_v20p11(global_model_parameters *GLOBAL_MODEL_PARAMET
     GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][0] = 0;
     GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][0] = "Cant1D_v2";
 
-    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][1] = "WaitakiBasement";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][1] = "CollingwoodBasement";
     GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][1] = "Data/USER20_BASINS/CollTakBasin_WGS84_500m_v11v11v2020.in";
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][1] = 0;
+}
+
+void load_SpringsJunction_v20p11(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum)
+{
+    GLOBAL_MODEL_PARAMETERS->ignoreBasinForSmoothing[basinNum] = 0;
+    GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum] = 2;
+    GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[basinNum] = 1;
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[basinNum][0] = "Data/USER20_BASINS/SpringsJ_basin_outline_v1_WGS84.txt";
+
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][0] = "DEM";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][0] = "Data/DEM/NZ_DEM_HD.in";
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][0] = 0;
+    GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][0] = "Cant1D_v2";
+
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][1] = "SpringsJunctionBasement";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][1] = "Data/USER20_BASINS/SpringsJunctionBasin_WGS84_500m_v12v11v2020.in";
     GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][1] = 0;
 }
 

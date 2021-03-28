@@ -28,8 +28,6 @@ for outline_fp in args.outline:
 
     for stat in stat_file.iterrows():
         if path.contains_point((stat[1].lon, stat[1].lat)):
-            print(
-                stat[1].lon, stat[1].lat, stat[0], True, {os.path.basename(outline_fp)}
-            )
+            print(stat[1].lon, stat[1].lat, stat[0], True, os.path.basename(outline_fp))
         else:
             print(stat[1].lon, stat[1].lat, stat[0], False, None)

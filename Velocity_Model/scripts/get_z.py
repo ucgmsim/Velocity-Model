@@ -3,7 +3,7 @@ from pathlib import Path
 import os
 
 from qcore import formats
-from Velocity_Model.z import extract_z
+from Velocity_Model.z import extract_z, basin_outlines as vm_versions
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -19,7 +19,13 @@ if __name__ == "__main__":
         nargs="+",
         required=True,
     )
-    parser.add_argument("-v", "--version", help="VM version to use", default="2.06")
+    parser.add_argument(
+        "-v",
+        "--version",
+        help="VM version to use",
+        default="2.06",
+        choices=vm_versions.keys(),
+    )
     parser.add_argument("-o", "--output", help="path to output file", default=".")
     parser.add_argument("--nzvm-path", default="NZVM", type=Path)
     args = parser.parse_args()

@@ -12,6 +12,8 @@ import numpy as np
 import pandas as pd
 from matplotlib import path as mpltPath
 
+MAX_NUM_GEN_MULTI_PROFILES = 27000
+
 OUT_BASIN_SIGMA = 0.5
 
 IN_BASIN_SIGMA = 0.3
@@ -22,7 +24,7 @@ column_names = {"Z1.0": "Z_1.0(km)", "Z2.5": "Z_2.5(km)"}
 
 def get_basin_full_path(basin_list):
     vm_dir = os.path.abspath(
-        os.path.join(os.path.dirname(os.path.realpath(__file__)), "../")
+        os.path.join(os.path.dirname(os.path.realpath(__file__)), "..")
     )
     return [os.path.join(vm_dir, basin) for basin in basin_list]
 
@@ -93,6 +95,13 @@ def extract_z(
     :param version: NZVM version to extract values for
     :return: Dataframe containing all z_types, station names and sigma
     """
+    if len(stat_df) > MAX_NUM_GEN_MULTI_PROFILES:
+        print(
+            "Increase the MAX_NUM_GEN_MULTI_PROFILES constant in the VM code"
+            " (and the constant used in this check) and rerun"
+        )
+        exit(1)
+
     with tempfile.TemporaryDirectory() as temp_dir:
         config_ffp = os.path.join(temp_dir, "GENERATE_THRESHOLD_USER_INPUT.txt")
         coords_ffp = os.path.join(temp_dir, "MultipleProfileParameters.txt")
@@ -157,7 +166,7 @@ def calculate_z_sigma(stat_df, version):
 
     Loops over the respective basin files for each NZVM version
     """
-    sigma_df = stat_df.copy()
+    sigma_df = pd.DataFrame(index=stat_df.index)
     sigma_df["in_basin_flag"] = False
     sigma_df = sigma_df[
         ["in_basin_flag"]

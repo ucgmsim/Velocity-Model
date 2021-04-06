@@ -1,6 +1,5 @@
 import argparse
 from pathlib import Path
-import os
 
 from qcore import formats
 from Velocity_Model.z import extract_z, basin_outlines as vm_versions
@@ -26,12 +25,12 @@ if __name__ == "__main__":
         default="2.06",
         choices=vm_versions.keys(),
     )
-    parser.add_argument("-o", "--output", help="path to output file", default=".")
+    parser.add_argument("-o", "--output", help="path to output file", default=".", type=Path)
     parser.add_argument("--nzvm-path", default="NZVM", type=Path)
     args = parser.parse_args()
 
     stat_df = formats.load_station_file(args.ll)
 
-    output_file = os.path.join(args.output, "z.csv")
+    output_file = args.output / "z.csv"
     z_df = extract_z(args.z_type, stat_df, args.nzvm_path, args.version)
     z_df.to_csv(output_file)

@@ -23,10 +23,8 @@ column_names = {"Z1.0": "Z_1.0(km)", "Z2.5": "Z_2.5(km)"}
 
 
 def get_basin_full_path(basin_list):
-    vm_dir = os.path.abspath(
-        os.path.join(os.path.dirname(os.path.realpath(__file__)), "..")
-    )
-    return [os.path.join(vm_dir, basin) for basin in basin_list]
+    vm_dir = Path(__file__).parent.parent.resolve()
+    return [vm_dir / basin for basin in basin_list]
 
 
 v203_basin_list = get_basin_full_path(
@@ -98,14 +96,16 @@ def extract_z(
     if len(stat_df) > MAX_NUM_GEN_MULTI_PROFILES:
         print(
             "Increase the MAX_NUM_GEN_MULTI_PROFILES constant in the VM code"
-            " (and the constant used in this check) and rerun"
+            f"Current value: {MAX_NUM_GEN_MULTI_PROFILES}"
+            " (and the constant used in this check), recompile the NZVM binary and rerun"
         )
         exit(1)
 
     with tempfile.TemporaryDirectory() as temp_dir:
-        config_ffp = os.path.join(temp_dir, "GENERATE_THRESHOLD_USER_INPUT.txt")
-        coords_ffp = os.path.join(temp_dir, "MultipleProfileParameters.txt")
-        vm_working_dir = os.path.join(temp_dir, "z_output")
+        temp_dir = Path(temp_dir)
+        config_ffp = temp_dir / "GENERATE_THRESHOLD_USER_INPUT.txt"
+        coords_ffp = temp_dir / "MultipleProfileParameters.txt"
+        vm_working_dir = temp_dir / "z_output"
 
         with open(coords_ffp, "w") as coords_fp:
             coords_fp.write(f"{len(stat_df)}\n")
@@ -153,7 +153,7 @@ def calculate_z(config_ffp, coords_ffp, nzvm_path, version, vm_working_dir, z_ty
     shutil.rmtree(vm_working_dir, ignore_errors=True)
     subprocess.run([nzvm_path, config_ffp], cwd=nzvm_path.parent)
     z_values = pd.read_csv(
-        os.path.join(vm_working_dir, file_output_format[z_type]),
+        vm_working_dir / file_output_format[z_type],
         delim_whitespace=True,
     )
 

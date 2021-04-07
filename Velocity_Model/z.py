@@ -2,7 +2,6 @@
 Library functions for extracting Z values from the NZVM in a pythonic manner
 Supports NZVM versions 2.03, 2.04, 2.06
 """
-import os
 from pathlib import Path
 import shutil
 import subprocess

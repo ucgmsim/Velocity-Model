@@ -5,7 +5,7 @@ First argument is the station file and the subsequent arguments are N basin file
 """
 
 import argparse
-import os
+from pathlib import Path
 
 import matplotlib.path as mpltPath
 import numpy as np
@@ -14,7 +14,7 @@ from qcore import formats
 
 parser = argparse.ArgumentParser()
 parser.add_argument("station_file")
-parser.add_argument("outline", nargs="+")
+parser.add_argument("outline", nargs="+", type=Path)
 
 args = parser.parse_args()
 
@@ -28,5 +28,6 @@ for outline_fp in args.outline:
 
     for stat in stat_file.iterrows():
         if path.contains_point((stat[1].lon, stat[1].lat)):
-            #print(f"station: {stat[0], stat[1].lon, stat[1].lat} is contained in the basin {os.path.basename(outline_fp)}")
-            print(stat[1].lon, stat[1].lat, stat[0])
+            print(stat[1].lon, stat[1].lat, stat[0], True, outline_fp.name)
+        else:
+            print(stat[1].lon, stat[1].lat, stat[0], False, None)

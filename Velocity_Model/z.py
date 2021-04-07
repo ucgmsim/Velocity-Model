@@ -168,9 +168,6 @@ def calculate_z_sigma(stat_df, version):
     """
     sigma_df = pd.DataFrame(index=stat_df.index)
     sigma_df["in_basin_flag"] = False
-    sigma_df = sigma_df[
-        ["in_basin_flag"]
-    ]  # drops all columns other than the flag and the index
     for outline_fp in basin_outlines[version]:
         outline = np.loadtxt(outline_fp)
         path = mpltPath.Path(outline)

@@ -31,6 +31,6 @@ if __name__ == "__main__":
 
     stat_df = formats.load_station_file(args.ll)
 
-    output_file = args.output / "z.csv"
+    output_file = args.output
     z_df = extract_z(args.z_type, stat_df, args.nzvm_path, args.version)
     z_df.to_csv(output_file)

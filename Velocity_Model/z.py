@@ -11,7 +11,7 @@ import numpy as np
 import pandas as pd
 from matplotlib import path as mpltPath
 
-MAX_NUM_GEN_MULTI_PROFILES = 27000
+MAX_NUM_GEN_MULTI_PROFILES = 300000
 
 OUT_BASIN_SIGMA = 0.5
 
@@ -57,6 +57,7 @@ v204_basin_list = v203_basin_list + get_basin_full_path(
         "Data/USER20_BASINS/Murchison_Basin_Outline_v1_WGS84.txt",
         "Data/USER20_BASINS/hakataramea_outline_WGS84.txt",
         "Data/USER20_BASINS/waitaki_outline_WGS84.txt",
+        "Data/USER20_BASINS/mackenzie_basin_outline_nzmg.txt",
     ]
 )
 v205_basin_list = v204_basin_list

@@ -701,7 +701,7 @@ void runThresholdVelocityModel(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extrac
     }
     else if (strcmp(GEN_EXTRACT_VELO_MOD_CALL.VS_TYPE, "Z2.5") == 0)
     {
-        MODEL_EXTENT->Zmax = 12; // 10km downwards
+        MODEL_EXTENT->Zmax = 20; // 10km downwards
         MODEL_EXTENT->Zmin = 0;
         MODEL_EXTENT->hDep = 0.05;
         Z_THRESH = "2.5";
@@ -946,7 +946,7 @@ void runThresholdInputLatLons(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extract
     }
     else if (strcmp(GEN_EXTRACT_VELO_MOD_CALL.VS_TYPE, "Z2.5") == 0)
     {
-        MODEL_EXTENT->Zmax = 12; // 10km downwards
+        MODEL_EXTENT->Zmax = 20; // 10km downwards
         MODEL_EXTENT->Zmin = 0;
         MODEL_EXTENT->hDep = 0.05;
     }

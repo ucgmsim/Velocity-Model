@@ -70,11 +70,36 @@ v206_basin_list = v205_basin_list + get_basin_full_path(
         "Data/USER20_BASINS/CollingwoodBasinOutline_3_WGS84_v1.txt",
     ]
 )
+v207_basin_list = v206_basin_list + get_basin_full_path(
+    [
+        "Data/Basins/Greater_Wellington_and_Porirua/v21p7/GreaterWellington1_Outline_WGS84.dat",
+        "Data/Basins/Greater_Wellington_and_Porirua/v21p7/GreaterWellington2_Outline_WGS84.dat",
+        "Data/Basins/Greater_Wellington_and_Porirua/v21p7/GreaterWellington3_Outline_WGS84.dat",
+        "Data/Basins/Greater_Wellington_and_Porirua/v21p7/GreaterWellington4_Outline_WGS84.dat",
+        "Data/Basins/Greater_Wellington_and_Porirua/v21p7/GreaterWellington5_Outline_WGS84.dat",
+        "Data/Basins/Greater_Wellington_and_Porirua/v21p7/GreaterWellington6_Outline_WGS84.dat",
+        "Data/Basins/Greater_Wellington_and_Porirua/v21p7/Porirua1_Outline_WGS84.dat",
+        "Data/Basins/Greater_Wellington_and_Porirua/v21p7/Porirua2_Outline_WGS84.dat",
+        "Data/Basins/Napier_Hawkes_Bay/v21p7/HawkesBay1_Outline_WGS84_delim.dat",
+        "Data/Basins/Napier_Hawkes_Bay/v21p7/HawkesBay1_Smoothing_WGS84_delim.dat",
+        "Data/Basins/Napier_Hawkes_Bay/v21p7/HawkesBay2_Outline_WGS84_delim.dat",
+        "Data/Basins/Napier_Hawkes_Bay/v21p7/HawkesBay3_Outline_WGS84_delim.dat",
+        "Data/Basins/Napier_Hawkes_Bay/v21p7/HawkesBay4_Outline_WGS84_delim.dat",
+        "Data/Basins/Napier_Hawkes_Bay/v21p7/Napier1_Outline_WGS84_delim.dat",
+        "Data/Basins/Napier_Hawkes_Bay/v21p7/Napier1_Smoothing_WGS84_delim.dat",
+        "Data/Basins/Napier_Hawkes_Bay/v21p7/Napier2_Outline_WGS84_delim.dat",
+        "Data/Basins/Napier_Hawkes_Bay/v21p7/Napier3_Outline_WGS84_delim.dat",
+        "Data/Basins/Napier_Hawkes_Bay/v21p7/Napier4_Outline_WGS84_delim.dat",
+        "Data/Basins/Napier_Hawkes_Bay/v21p7/Napier5_Outline_WGS84_delim.dat",
+        "Data/Basins/Napier_Hawkes_Bay/v21p7/Napier6_Outline_WGS84_delim.dat",
+    ]
+)
 basin_outlines = {
     "2.03": v203_basin_list,
     "2.04": v204_basin_list,
     "2.05": v205_basin_list,
     "2.06": v206_basin_list,
+    "2.07": v207_basin_list,
 }
 
 

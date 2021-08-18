@@ -1974,7 +1974,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->basin[37] = "Napier3_v21p7";
         GLOBAL_MODEL_PARAMETERS->basin[38] = "Napier4_v21p7";
         GLOBAL_MODEL_PARAMETERS->basin[39] = "Napier5_v21p7";
-        GLOBAL_MODEL_PARAMETERS->basin[40] = "Napier5_v21p7";
+        GLOBAL_MODEL_PARAMETERS->basin[40] = "Napier6_v21p7";
         GLOBAL_MODEL_PARAMETERS->basin[41] = "GreaterWellington1_v21p7";
         GLOBAL_MODEL_PARAMETERS->basin[42] = "GreaterWellington2_v21p7";
         GLOBAL_MODEL_PARAMETERS->basin[43] = "GreaterWellington3_v21p7";

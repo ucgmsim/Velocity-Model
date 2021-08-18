@@ -250,11 +250,11 @@ void loadBasinResources(global_model_parameters *GLOBAL_MODEL_PARAMETERS)
          {
              load_GreaterWellington6_v21p7(GLOBAL_MODEL_PARAMETERS,i);
          }
-         else if (strcmp(GLOBAL_MODEL_PARAMETERS->basin[i],"Porirua1_21p7") == 0)
+         else if (strcmp(GLOBAL_MODEL_PARAMETERS->basin[i],"Porirua1_v21p7") == 0)
          {
              load_Porirua1_v21p7(GLOBAL_MODEL_PARAMETERS,i);
          }
-         else if (strcmp(GLOBAL_MODEL_PARAMETERS->basin[i],"Porirua1221p7") == 0)
+         else if (strcmp(GLOBAL_MODEL_PARAMETERS->basin[i],"Porirua2_v21p7") == 0)
          {
              load_Porirua2_v21p7(GLOBAL_MODEL_PARAMETERS,i);
          }

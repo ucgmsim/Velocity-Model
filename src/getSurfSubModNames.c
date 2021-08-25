@@ -1942,7 +1942,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->basin[5] = "Hanmer_v19p1";
         GLOBAL_MODEL_PARAMETERS->basin[6] = "Marlborough_v19p1";
         GLOBAL_MODEL_PARAMETERS->basin[7] = "Nelson_v19p1";
-        GLOBAL_MODEL_PARAMETERS->basin[8] = "Wellington_v19p6";
+        GLOBAL_MODEL_PARAMETERS->basin[8] = "Wellington_v20p8";
         GLOBAL_MODEL_PARAMETERS->basin[9] = "WaikatoHauraki_v19p7";
         GLOBAL_MODEL_PARAMETERS->basin[10] = "Wanaka_v20p6";
         GLOBAL_MODEL_PARAMETERS->basin[11] = "MacKenzie_v20p6";

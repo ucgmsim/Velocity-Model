@@ -337,7 +337,7 @@ void load_Napier3_v21p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int ba
 void load_Napier4_v21p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
 void load_Napier5_v21p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
 void load_Napier6_v21p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
-void load_Wellington_v20p8(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_Wellington_v21p8(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
 
 extern calculation_log *initializeCalculationLog(int argc, char *argv[]);
 

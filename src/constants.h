@@ -19,7 +19,7 @@
 //#define LAT_GRID_DIM_MAX 751 // Y
 //#define DEP_GRID_DIM_MAX 251 // Z
 #define SUB_MOD_DIM_MAX 50 // maximum number of entries in the 1d sub model arrays
-#define MAX_NUM_BASINS 40 // the maximum number of basins
+#define MAX_NUM_BASINS 50 // the maximum number of basins
 #define MAX_NUM_GLOBAL_SURFACES 4 // the maximum number of global (Full domain) surfaces
 #define MAX_NUM_BASIN_SURFACES 12 // the maximum number of basin surfaces
 #define MAX_NUM_1D_VELOCITY_MODELS 1 // the maximum number of 1D velocity models
@@ -42,7 +42,7 @@
 #define MAX_NUM_SLICES 40 // the maximum number of slices in the slice parameters files
 #define MAX_LAT_SURFACE_EXTENSION 10 // value in degrees the global (Vs30, DEM, tomography) surface files may be extended by
 #define MAX_LON_SURFACE_EXTENSION 10 // value in degrees the global (Vs30, DEM, tomography) surface files may be extended by
-#define MAX_NUM_POINTS_SMOOTH_VEC 10500 // number of points in the vector for smoothing boundary representation
+#define MAX_NUM_POINTS_SMOOTH_VEC 15000 // number of points in the vector for smoothing boundary representation
 #define MAX_DIST_SMOOTH 10 // distance in KM to smooth tomography over
 
 

@@ -296,7 +296,7 @@ void load_Wellington_v19p6(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int
 // v19p7 Models
 void load_WaikatoHauraki_v19p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
 
-// v20p6 / v20p7 Models
+// v20p6 / v20p7 / v20p11 Models
 void load_Wanaka_v20p6(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
 void load_MacKenzie_v20p6(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
 void load_Perturbation_v20p6(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
@@ -318,6 +318,25 @@ void load_CollingwoodBasin1_v20p11(global_model_parameters *GLOBAL_MODEL_PARAMET
 void load_CollingwoodBasin2_v20p11(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
 void load_CollingwoodBasin3_v20p11(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
 
+// v21 basins
+void load_GreaterWellington1_v21p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_GreaterWellington2_v21p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_GreaterWellington3_v21p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_GreaterWellington4_v21p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_GreaterWellington5_v21p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_GreaterWellington6_v21p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_Porirua1_v21p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_Porirua2_v21p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_HawkesBay1_v21p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_HawkesBay2_v21p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_HawkesBay3_v21p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_HawkesBay4_v21p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_Napier1_v21p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_Napier2_v21p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_Napier3_v21p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_Napier4_v21p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_Napier5_v21p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_Napier6_v21p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
 
 extern calculation_log *initializeCalculationLog(int argc, char *argv[]);
 

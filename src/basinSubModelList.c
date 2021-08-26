@@ -184,6 +184,81 @@ void loadBasinResources(global_model_parameters *GLOBAL_MODEL_PARAMETERS)
              load_SpringsJunction_v20p11(GLOBAL_MODEL_PARAMETERS,i);
          }
         // ============
+        // v21p7+ USER models
+        // ============
+         else if (strcmp(GLOBAL_MODEL_PARAMETERS->basin[i],"HawkesBay1_v21p7") == 0)
+         {
+             load_HawkesBay1_v21p7(GLOBAL_MODEL_PARAMETERS,i);
+         }
+         else if (strcmp(GLOBAL_MODEL_PARAMETERS->basin[i],"HawkesBay2_v21p7") == 0)
+         {
+             load_HawkesBay2_v21p7(GLOBAL_MODEL_PARAMETERS,i);
+         }
+         else if (strcmp(GLOBAL_MODEL_PARAMETERS->basin[i],"HawkesBay3_v21p7") == 0)
+         {
+             load_HawkesBay3_v21p7(GLOBAL_MODEL_PARAMETERS,i);
+         }
+         else if (strcmp(GLOBAL_MODEL_PARAMETERS->basin[i],"HawkesBay4_v21p7") == 0)
+         {
+             load_HawkesBay4_v21p7(GLOBAL_MODEL_PARAMETERS,i);
+         }
+         else if (strcmp(GLOBAL_MODEL_PARAMETERS->basin[i],"Napier1_v21p7") == 0)
+         {
+             load_Napier1_v21p7(GLOBAL_MODEL_PARAMETERS,i);
+         }
+         else if (strcmp(GLOBAL_MODEL_PARAMETERS->basin[i],"Napier2_v21p7") == 0)
+         {
+             load_Napier2_v21p7(GLOBAL_MODEL_PARAMETERS,i);
+         }
+         else if (strcmp(GLOBAL_MODEL_PARAMETERS->basin[i],"Napier3_v21p7") == 0)
+         {
+             load_Napier3_v21p7(GLOBAL_MODEL_PARAMETERS,i);
+         }
+         else if (strcmp(GLOBAL_MODEL_PARAMETERS->basin[i],"Napier4_v21p7") == 0)
+         {
+             load_Napier4_v21p7(GLOBAL_MODEL_PARAMETERS,i);
+         }
+         else if (strcmp(GLOBAL_MODEL_PARAMETERS->basin[i],"Napier5_v21p7") == 0)
+         {
+             load_Napier5_v21p7(GLOBAL_MODEL_PARAMETERS,i);
+         }
+         else if (strcmp(GLOBAL_MODEL_PARAMETERS->basin[i],"Napier6_v21p7") == 0)
+         {
+             load_Napier6_v21p7(GLOBAL_MODEL_PARAMETERS,i);
+         }
+         else if (strcmp(GLOBAL_MODEL_PARAMETERS->basin[i],"GreaterWellington1_v21p7") == 0)
+         {
+             load_GreaterWellington1_v21p7(GLOBAL_MODEL_PARAMETERS,i);
+         }
+         else if (strcmp(GLOBAL_MODEL_PARAMETERS->basin[i],"GreaterWellington2_v21p7") == 0)
+         {
+             load_GreaterWellington2_v21p7(GLOBAL_MODEL_PARAMETERS,i);
+         }
+         else if (strcmp(GLOBAL_MODEL_PARAMETERS->basin[i],"GreaterWellington3_v21p7") == 0)
+         {
+             load_GreaterWellington3_v21p7(GLOBAL_MODEL_PARAMETERS,i);
+         }
+         else if (strcmp(GLOBAL_MODEL_PARAMETERS->basin[i],"GreaterWellington4_v21p7") == 0)
+         {
+             load_GreaterWellington4_v21p7(GLOBAL_MODEL_PARAMETERS,i);
+         }
+         else if (strcmp(GLOBAL_MODEL_PARAMETERS->basin[i],"GreaterWellington5_v21p7") == 0)
+         {
+             load_GreaterWellington5_v21p7(GLOBAL_MODEL_PARAMETERS,i);
+         }
+         else if (strcmp(GLOBAL_MODEL_PARAMETERS->basin[i],"GreaterWellington6_v21p7") == 0)
+         {
+             load_GreaterWellington6_v21p7(GLOBAL_MODEL_PARAMETERS,i);
+         }
+         else if (strcmp(GLOBAL_MODEL_PARAMETERS->basin[i],"Porirua1_v21p7") == 0)
+         {
+             load_Porirua1_v21p7(GLOBAL_MODEL_PARAMETERS,i);
+         }
+         else if (strcmp(GLOBAL_MODEL_PARAMETERS->basin[i],"Porirua2_v21p7") == 0)
+         {
+             load_Porirua2_v21p7(GLOBAL_MODEL_PARAMETERS,i);
+         }
+        // ============
         // Perturbation models
         // ============
          else if (strcmp(GLOBAL_MODEL_PARAMETERS->basin[i],"Perturbation_v20p6") == 0)
@@ -595,6 +670,312 @@ void load_SpringsJunction_v20p11(global_model_parameters *GLOBAL_MODEL_PARAMETER
 
     GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][1] = "SpringsJunctionBasement";
     GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][1] = "Data/USER20_BASINS/SpringsJunctionBasin_WGS84_500m_v12v11v2020.in";
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][1] = 0;
+}
+
+void load_GreaterWellington1_v21p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum)
+{
+    GLOBAL_MODEL_PARAMETERS->ignoreBasinForSmoothing[basinNum] = 0;
+    GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum] = 2;
+    GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[basinNum] = 1;
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[basinNum][0] = "Data/Basins/Greater_Wellington_and_Porirua/v21p7/GreaterWellington1_Outline_WGS84.dat";
+
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][0] = "DEM";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][0] = "Data/DEM/NZ_DEM_HD.in";
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][0] = 0;
+    GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][0] = "Cant1D_v2";
+
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][1] = "GreaterWellingtonBasement";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][1] = "Data/Basins/Greater_Wellington_and_Porirua/v21p7/Greater_Wellington_Elevation_WGS84.in";
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][1] = 0;
+}
+
+void load_GreaterWellington2_v21p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum)
+{
+    GLOBAL_MODEL_PARAMETERS->ignoreBasinForSmoothing[basinNum] = 0;
+    GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum] = 2;
+    GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[basinNum] = 1;
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[basinNum][0] = "Data/Basins/Greater_Wellington_and_Porirua/v21p7/GreaterWellington2_Outline_WGS84.dat";
+
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][0] = "DEM";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][0] = "Data/DEM/NZ_DEM_HD.in";
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][0] = 0;
+    GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][0] = "Cant1D_v2";
+
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][1] = "GreaterWellingtonBasement";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][1] = "Data/Basins/Greater_Wellington_and_Porirua/v21p7/Greater_Wellington_Elevation_WGS84.in";
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][1] = 0;
+}
+
+void load_GreaterWellington3_v21p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum)
+{
+    GLOBAL_MODEL_PARAMETERS->ignoreBasinForSmoothing[basinNum] = 0;
+    GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum] = 2;
+    GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[basinNum] = 1;
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[basinNum][0] = "Data/Basins/Greater_Wellington_and_Porirua/v21p7/GreaterWellington3_Outline_WGS84.dat";
+
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][0] = "DEM";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][0] = "Data/DEM/NZ_DEM_HD.in";
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][0] = 0;
+    GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][0] = "Cant1D_v2";
+
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][1] = "GreaterWellingtonBasement";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][1] = "Data/Basins/Greater_Wellington_and_Porirua/v21p7/Greater_Wellington_Elevation_WGS84.in";
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][1] = 0;
+}
+
+void load_GreaterWellington4_v21p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum)
+{
+    GLOBAL_MODEL_PARAMETERS->ignoreBasinForSmoothing[basinNum] = 0;
+    GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum] = 2;
+    GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[basinNum] = 1;
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[basinNum][0] = "Data/Basins/Greater_Wellington_and_Porirua/v21p7/GreaterWellington4_Outline_WGS84.dat";
+
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][0] = "DEM";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][0] = "Data/DEM/NZ_DEM_HD.in";
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][0] = 0;
+    GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][0] = "Cant1D_v2";
+
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][1] = "GreaterWellingtonBasement";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][1] = "Data/Basins/Greater_Wellington_and_Porirua/v21p7/Greater_Wellington_Elevation_WGS84.in";
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][1] = 0;
+}
+
+void load_GreaterWellington5_v21p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum)
+{
+    GLOBAL_MODEL_PARAMETERS->ignoreBasinForSmoothing[basinNum] = 0;
+    GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum] = 2;
+    GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[basinNum] = 1;
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[basinNum][0] = "Data/Basins/Greater_Wellington_and_Porirua/v21p7/GreaterWellington5_Outline_WGS84.dat";
+
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][0] = "DEM";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][0] = "Data/DEM/NZ_DEM_HD.in";
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][0] = 0;
+    GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][0] = "Cant1D_v2";
+
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][1] = "GreaterWellingtonBasement";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][1] = "Data/Basins/Greater_Wellington_and_Porirua/v21p7/Greater_Wellington_Elevation_WGS84.in";
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][1] = 0;
+}
+
+void load_GreaterWellington6_v21p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum)
+{
+    GLOBAL_MODEL_PARAMETERS->ignoreBasinForSmoothing[basinNum] = 0;
+    GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum] = 2;
+    GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[basinNum] = 1;
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[basinNum][0] = "Data/Basins/Greater_Wellington_and_Porirua/v21p7/GreaterWellington6_Outline_WGS84.dat";
+
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][0] = "DEM";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][0] = "Data/DEM/NZ_DEM_HD.in";
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][0] = 0;
+    GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][0] = "Cant1D_v2";
+
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][1] = "GreaterWellingtonBasement";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][1] = "Data/Basins/Greater_Wellington_and_Porirua/v21p7/Greater_Wellington_Elevation_WGS84.in";
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][1] = 0;
+}
+
+void load_Porirua1_v21p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum)
+{
+    GLOBAL_MODEL_PARAMETERS->ignoreBasinForSmoothing[basinNum] = 0;
+    GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum] = 2;
+    GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[basinNum] = 1;
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[basinNum][0] = "Data/Basins/Greater_Wellington_and_Porirua/v21p7/Porirua1_Outline_WGS84.dat";
+
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][0] = "DEM";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][0] = "Data/DEM/NZ_DEM_HD.in";
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][0] = 0;
+    GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][0] = "Cant1D_v2";
+
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][1] = "PoriruaBasement";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][1] = "Data/Basins/Greater_Wellington_and_Porirua/v21p7/Porirua_Elevation_WGS84.in";
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][1] = 0;
+}
+
+void load_Porirua2_v21p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum)
+{
+    GLOBAL_MODEL_PARAMETERS->ignoreBasinForSmoothing[basinNum] = 0;
+    GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum] = 2;
+    GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[basinNum] = 1;
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[basinNum][0] = "Data/Basins/Greater_Wellington_and_Porirua/v21p7/Porirua2_Outline_WGS84.dat";
+
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][0] = "DEM";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][0] = "Data/DEM/NZ_DEM_HD.in";
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][0] = 0;
+    GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][0] = "Cant1D_v2";
+
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][1] = "PoriruaBasement";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][1] = "Data/Basins/Greater_Wellington_and_Porirua/v21p7/Porirua_Elevation_WGS84.in";
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][1] = 0;
+}
+
+void load_HawkesBay1_v21p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum)
+{
+    GLOBAL_MODEL_PARAMETERS->ignoreBasinForSmoothing[basinNum] = 0;
+    GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum] = 2;
+    GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[basinNum] = 1;
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[basinNum][0] = "Data/Basins/Napier_Hawkes_Bay/v21p7/HawkesBay1_Outline_WGS84_delim.dat";
+
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][0] = "DEM";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][0] = "Data/DEM/NZ_DEM_HD.in";
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][0] = 0;
+    GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][0] = "Cant1D_v2";
+
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][1] = "HawkesBay";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][1] = "Data/Basins/Napier_Hawkes_Bay/v21p7/HawkesBay_Grid_WGS84_Export.in";
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][1] = 0;
+}
+
+void load_HawkesBay2_v21p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum)
+{
+    GLOBAL_MODEL_PARAMETERS->ignoreBasinForSmoothing[basinNum] = 0;
+    GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum] = 2;
+    GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[basinNum] = 1;
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[basinNum][0] = "Data/Basins/Napier_Hawkes_Bay/v21p7/HawkesBay2_Outline_WGS84_delim.dat";
+
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][0] = "DEM";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][0] = "Data/DEM/NZ_DEM_HD.in";
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][0] = 0;
+    GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][0] = "Cant1D_v2";
+
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][1] = "HawkesBay";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][1] = "Data/Basins/Napier_Hawkes_Bay/v21p7/HawkesBay_Grid_WGS84_Export.in";
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][1] = 0;
+}
+
+void load_HawkesBay3_v21p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum)
+{
+    GLOBAL_MODEL_PARAMETERS->ignoreBasinForSmoothing[basinNum] = 0;
+    GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum] = 2;
+    GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[basinNum] = 1;
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[basinNum][0] = "Data/Basins/Napier_Hawkes_Bay/v21p7/HawkesBay3_Outline_WGS84_delim.dat";
+
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][0] = "DEM";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][0] = "Data/DEM/NZ_DEM_HD.in";
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][0] = 0;
+    GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][0] = "Cant1D_v2";
+
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][1] = "HawkesBay";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][1] = "Data/Basins/Napier_Hawkes_Bay/v21p7/HawkesBay_Grid_WGS84_Export.in";
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][1] = 0;
+}
+
+void load_HawkesBay4_v21p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum)
+{
+    GLOBAL_MODEL_PARAMETERS->ignoreBasinForSmoothing[basinNum] = 0;
+    GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum] = 2;
+    GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[basinNum] = 1;
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[basinNum][0] = "Data/Basins/Napier_Hawkes_Bay/v21p7/HawkesBay4_Outline_WGS84_delim.dat";
+
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][0] = "DEM";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][0] = "Data/DEM/NZ_DEM_HD.in";
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][0] = 0;
+    GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][0] = "Cant1D_v2";
+
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][1] = "HawkesBay";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][1] = "Data/Basins/Napier_Hawkes_Bay/v21p7/HawkesBay_Grid_WGS84_Export.in";
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][1] = 0;
+}
+
+void load_Napier1_v21p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum)
+{
+    GLOBAL_MODEL_PARAMETERS->ignoreBasinForSmoothing[basinNum] = 0;
+    GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum] = 2;
+    GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[basinNum] = 1;
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[basinNum][0] = "Data/Basins/Napier_Hawkes_Bay/v21p7/Napier1_Outline_WGS84_delim.dat";
+
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][0] = "DEM";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][0] = "Data/DEM/NZ_DEM_HD.in";
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][0] = 0;
+    GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][0] = "Cant1D_v2";
+
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][1] = "Napier";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][1] = "Data/Basins/Napier_Hawkes_Bay/v21p7/Napier_Grid_WGS84_Export.in";
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][1] = 0;
+}
+
+void load_Napier2_v21p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum)
+{
+    GLOBAL_MODEL_PARAMETERS->ignoreBasinForSmoothing[basinNum] = 0;
+    GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum] = 2;
+    GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[basinNum] = 1;
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[basinNum][0] = "Data/Basins/Napier_Hawkes_Bay/v21p7/Napier2_Outline_WGS84_delim.dat";
+
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][0] = "DEM";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][0] = "Data/DEM/NZ_DEM_HD.in";
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][0] = 0;
+    GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][0] = "Cant1D_v2";
+
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][1] = "Napier";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][1] = "Data/Basins/Napier_Hawkes_Bay/v21p7/Napier_Grid_WGS84_Export.in";
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][1] = 0;
+}
+
+void load_Napier3_v21p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum)
+{
+    GLOBAL_MODEL_PARAMETERS->ignoreBasinForSmoothing[basinNum] = 0;
+    GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum] = 2;
+    GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[basinNum] = 1;
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[basinNum][0] = "Data/Basins/Napier_Hawkes_Bay/v21p7/Napier3_Outline_WGS84_delim.dat";
+
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][0] = "DEM";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][0] = "Data/DEM/NZ_DEM_HD.in";
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][0] = 0;
+    GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][0] = "Cant1D_v2";
+
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][1] = "Napier";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][1] = "Data/Basins/Napier_Hawkes_Bay/v21p7/Napier_Grid_WGS84_Export.in";
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][1] = 0;
+}
+
+void load_Napier4_v21p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum)
+{
+    GLOBAL_MODEL_PARAMETERS->ignoreBasinForSmoothing[basinNum] = 0;
+    GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum] = 2;
+    GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[basinNum] = 1;
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[basinNum][0] = "Data/Basins/Napier_Hawkes_Bay/v21p7/Napier4_Outline_WGS84_delim.dat";
+
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][0] = "DEM";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][0] = "Data/DEM/NZ_DEM_HD.in";
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][0] = 0;
+    GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][0] = "Cant1D_v2";
+
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][1] = "Napier";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][1] = "Data/Basins/Napier_Hawkes_Bay/v21p7/Napier_Grid_WGS84_Export.in";
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][1] = 0;
+}
+
+void load_Napier5_v21p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum)
+{
+    GLOBAL_MODEL_PARAMETERS->ignoreBasinForSmoothing[basinNum] = 0;
+    GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum] = 2;
+    GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[basinNum] = 1;
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[basinNum][0] = "Data/Basins/Napier_Hawkes_Bay/v21p7/Napier5_Outline_WGS84_delim.dat";
+
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][0] = "DEM";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][0] = "Data/DEM/NZ_DEM_HD.in";
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][0] = 0;
+    GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][0] = "Cant1D_v2";
+
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][1] = "Napier";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][1] = "Data/Basins/Napier_Hawkes_Bay/v21p7/Napier_Grid_WGS84_Export.in";
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][1] = 0;
+}
+
+void load_Napier6_v21p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum)
+{
+    GLOBAL_MODEL_PARAMETERS->ignoreBasinForSmoothing[basinNum] = 0;
+    GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum] = 2;
+    GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[basinNum] = 1;
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[basinNum][0] = "Data/Basins/Napier_Hawkes_Bay/v21p7/Napier6_Outline_WGS84_delim.dat";
+
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][0] = "DEM";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][0] = "Data/DEM/NZ_DEM_HD.in";
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][0] = 0;
+    GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][0] = "Cant1D_v2";
+
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][1] = "Napier";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][1] = "Data/Basins/Napier_Hawkes_Bay/v21p7/Napier_Grid_WGS84_Export.in";
     GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][1] = 0;
 }
 

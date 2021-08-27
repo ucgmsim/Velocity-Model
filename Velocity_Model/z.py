@@ -120,13 +120,6 @@ def extract_z(
     :return: Dataframe containing all z_types, station names and sigma
     """
     n_stats = len(stat_df)
-    if n_stats > MAX_NUM_GEN_MULTI_PROFILES:
-        print(
-            "Increase the MAX_NUM_GEN_MULTI_PROFILES constant in the VM code"
-            f"Current value: {MAX_NUM_GEN_MULTI_PROFILES}"
-            " (and the constant used in this check), recompile the NZVM binary and rerun"
-        )
-        exit(1)
 
     merged_df = stat_df
     stat_df["stat_name"] = stat_df.index

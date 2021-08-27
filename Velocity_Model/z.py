@@ -12,6 +12,7 @@ import pandas as pd
 from matplotlib import path as mpltPath
 
 MAX_NUM_GEN_MULTI_PROFILES = 300000
+SLICE_SIZE = 50000
 
 OUT_BASIN_SIGMA = 0.5
 
@@ -28,7 +29,7 @@ def get_basin_full_path(basin_list):
 
 v203_basin_list = get_basin_full_path(
     [
-        "Data/NI_BASINS/Wellington_Polygon_Wainuiomata_WGS84.txt",
+        "Data/Basins/Wellington/v19p6/Wellington_Polygon_Wainuiomata_WGS84.txt",
         "Data/Boundaries/NewCanterburyBasinBoundary_WGS84_1m.txt",
         "Data/Boundaries/BPVBoundary.txt",
         "Data/SI_BASINS/Cheviot_Polygon_WGS84.txt",
@@ -70,6 +71,8 @@ v206_basin_list = v205_basin_list + get_basin_full_path(
         "Data/USER20_BASINS/CollingwoodBasinOutline_3_WGS84_v1.txt",
     ]
 )
+
+# Wellington Basin update has the same outline so have not updated it for this
 v207_basin_list = v206_basin_list + get_basin_full_path(
     [
         "Data/Basins/Greater_Wellington_and_Porirua/v21p7/GreaterWellington1_Outline_WGS84.dat",
@@ -81,12 +84,10 @@ v207_basin_list = v206_basin_list + get_basin_full_path(
         "Data/Basins/Greater_Wellington_and_Porirua/v21p7/Porirua1_Outline_WGS84.dat",
         "Data/Basins/Greater_Wellington_and_Porirua/v21p7/Porirua2_Outline_WGS84.dat",
         "Data/Basins/Napier_Hawkes_Bay/v21p7/HawkesBay1_Outline_WGS84_delim.dat",
-        "Data/Basins/Napier_Hawkes_Bay/v21p7/HawkesBay1_Smoothing_WGS84_delim.dat",
         "Data/Basins/Napier_Hawkes_Bay/v21p7/HawkesBay2_Outline_WGS84_delim.dat",
         "Data/Basins/Napier_Hawkes_Bay/v21p7/HawkesBay3_Outline_WGS84_delim.dat",
         "Data/Basins/Napier_Hawkes_Bay/v21p7/HawkesBay4_Outline_WGS84_delim.dat",
         "Data/Basins/Napier_Hawkes_Bay/v21p7/Napier1_Outline_WGS84_delim.dat",
-        "Data/Basins/Napier_Hawkes_Bay/v21p7/Napier1_Smoothing_WGS84_delim.dat",
         "Data/Basins/Napier_Hawkes_Bay/v21p7/Napier2_Outline_WGS84_delim.dat",
         "Data/Basins/Napier_Hawkes_Bay/v21p7/Napier3_Outline_WGS84_delim.dat",
         "Data/Basins/Napier_Hawkes_Bay/v21p7/Napier4_Outline_WGS84_delim.dat",
@@ -118,34 +119,43 @@ def extract_z(
     :param version: NZVM version to extract values for
     :return: Dataframe containing all z_types, station names and sigma
     """
-    if len(stat_df) > MAX_NUM_GEN_MULTI_PROFILES:
-        print(
-            "Increase the MAX_NUM_GEN_MULTI_PROFILES constant in the VM code"
-            f"Current value: {MAX_NUM_GEN_MULTI_PROFILES}"
-            " (and the constant used in this check), recompile the NZVM binary and rerun"
-        )
-        exit(1)
+    n_stats = len(stat_df)
 
-    with tempfile.TemporaryDirectory() as temp_dir:
-        temp_dir = Path(temp_dir)
-        config_ffp = temp_dir / "GENERATE_THRESHOLD_USER_INPUT.txt"
-        coords_ffp = temp_dir / "MultipleProfileParameters.txt"
-        vm_working_dir = temp_dir / "z_output"
+    merged_df = stat_df
+    stat_df["stat_name"] = stat_df.index
 
-        with open(coords_ffp, "w") as coords_fp:
-            coords_fp.write(f"{len(stat_df)}\n")
-        stat_df["stat_name"] = stat_df.index
-        stat_df[["lon", "lat", "stat_name"]].to_csv(
-            coords_ffp, sep=" ", header=None, mode="a", index=None
-        )
+    z_values = {}
 
-        merged_df = stat_df
-        for z_type in z_types:
-            z_values = calculate_z(
-                config_ffp, coords_ffp, nzvm_path, version, vm_working_dir, z_type
+    for i in range(0, n_stats, SLICE_SIZE):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            temp_dir = Path(temp_dir)
+            config_ffp = temp_dir / "GENERATE_THRESHOLD_USER_INPUT.txt"
+            coords_ffp = temp_dir / "MultipleProfileParameters.txt"
+            vm_working_dir = temp_dir / "z_output"
+
+            stat_df_slice = stat_df[i: i + SLICE_SIZE]
+
+            n_stats_slice = len(stat_df_slice)
+            with open(coords_ffp, "w") as coords_fp:
+                coords_fp.write(f"{n_stats_slice}\n")
+            stat_df_slice[["lon", "lat", "stat_name"]].to_csv(
+                coords_ffp, sep=" ", header=None, mode="a", index=None
             )
-            stat_df["z_index"] = z_values.index
-            merged_df = merged_df.merge(z_values, left_on="z_index", right_index=True)
+
+            for z_type in z_types:
+                z_val = calculate_z(
+                        config_ffp, coords_ffp, nzvm_path, version, vm_working_dir, z_type)
+                if z_type in z_values:
+                    z_val.index = range(z_values[z_type].index.max() + 1,
+                                        z_values[z_type].index.max() + n_stats_slice + 1)
+                    z_values[z_type] = z_values[z_type].append(z_val)
+                else:
+                    z_values[z_type] = z_val
+
+
+    for z_type in z_types:
+        stat_df["z_index"] = z_values[z_type].index
+        merged_df = merged_df.merge(z_values[z_type], left_on="z_index", right_index=True)
 
     merged_df["sigma"] = calculate_z_sigma(stat_df, version)
 

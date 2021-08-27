@@ -312,11 +312,13 @@ void load_Mosgiel_v20p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int ba
 void load_Dunedin_v20p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
 void load_Balclutha_v20p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
 void load_Murchison_v20p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_Hakataramea_v20p8(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum)
 void load_Waitaki_v20p8(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
 void load_Karamea_v20p11(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
 void load_CollingwoodBasin1_v20p11(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
 void load_CollingwoodBasin2_v20p11(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
 void load_CollingwoodBasin3_v20p11(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_SpringsJunction_v20p11(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
 
 // v21 basins
 void load_GreaterWellington1_v21p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
@@ -338,6 +340,10 @@ void load_Napier4_v21p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int ba
 void load_Napier5_v21p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
 void load_Napier6_v21p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
 void load_Wellington_v21p8(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+
+void load_Perturbation_v20p6(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_Perturbation_v20p10(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_Perturbation_v20p11(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
 
 extern calculation_log *initializeCalculationLog(int argc, char *argv[]);
 

@@ -261,6 +261,10 @@ Summary of velocity model version numbers
 
 - v2.05_m12 with m12 perturbaton from F3DT (2020 tomography model)
 
+- v2.06 Added Takaka / Collingwood Basins / Springs Junction & Karamea
+
+- v2.07 Added Hawkes Bay / Napier / Wellington Regional basins and Updated the Wellington Basin to Matt Hill's version
+
 Summary of Korean velocity model (KVM) version numbers
 
 - KVM_20p6 - 1D VM

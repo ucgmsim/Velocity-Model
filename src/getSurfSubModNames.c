@@ -1451,7 +1451,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->tomographyName = "2010_NZ";
         
         GLOBAL_MODEL_PARAMETERS->nBasins = 2;
-        GLOBAL_MODEL_PARAMETERS->basin[0] = "Canterbury_Pre_Quaternary_v18p4";
+        GLOBAL_MODEL_PARAMETERS->basin[0] = "Canterbury_Pre_Quaternary_v18p3";
         GLOBAL_MODEL_PARAMETERS->basin[1] = "Banks_Peninsula_Volcanics_v19p1";
         
         GLOBAL_MODEL_PARAMETERS->GTL = 1;

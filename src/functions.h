@@ -275,8 +275,6 @@ extern void offShoreBasinModel(double shorelineDist, double dep, qualities_vecto
 void load_Canterbury_Pre_Quaternary_v18p1(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
 void load_Canterbury_Pre_Quaternary_v18p2(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
 void load_Canterbury_Pre_Quaternary_v18p3(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
-void load_Canterbury_Pre_Quaternary_v18p4(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
-
 
 
 // v19p1 Models

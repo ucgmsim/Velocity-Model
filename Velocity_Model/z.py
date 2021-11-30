@@ -93,6 +93,7 @@ v207_basin_list = v206_basin_list + get_basin_full_path(
         "Data/Basins/Napier_Hawkes_Bay/v21p7/Napier4_Outline_WGS84_delim.dat",
         "Data/Basins/Napier_Hawkes_Bay/v21p7/Napier5_Outline_WGS84_delim.dat",
         "Data/Basins/Napier_Hawkes_Bay/v21p7/Napier6_Outline_WGS84_delim.dat",
+        "Data/Basins/Gisborne/v21p11/Gisborne_Outline_WGS84_delim.dat",
     ]
 )
 basin_outlines = {

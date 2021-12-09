@@ -339,6 +339,8 @@ void load_Napier5_v21p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int ba
 void load_Napier6_v21p7(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
 void load_Wellington_v21p8(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
 void load_Gisborne_v21p11(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_Wairarapa_v21p12(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_SouthernHawkesBay_v21p12(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
 
 void load_Perturbation_v20p6(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
 void load_Perturbation_v20p10(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);

@@ -263,6 +263,14 @@ void loadBasinResources(global_model_parameters *GLOBAL_MODEL_PARAMETERS)
          {
              load_Gisborne_v21p11(GLOBAL_MODEL_PARAMETERS,i);
          }
+         else if (strcmp(GLOBAL_MODEL_PARAMETERS->basin[i],"SouthernHawkesBay_v21p12") == 0)
+         {
+             load_SouthernHawkesBay_v21p12(GLOBAL_MODEL_PARAMETERS,i);
+         }
+         else if (strcmp(GLOBAL_MODEL_PARAMETERS->basin[i],"Wairarapa_v21p12") == 0)
+         {
+             load_Wairarapa_v21p12(GLOBAL_MODEL_PARAMETERS,i);
+         }
         // ============
         // Perturbation models
         // ============
@@ -1015,6 +1023,40 @@ void load_Gisborne_v21p11(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int 
 
     GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][1] = "Gisborne";
     GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][1] = "Data/Basins/Gisborne/v21p11/Gisborne_Surface_Export.in";
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][1] = 0;
+}
+
+void load_SouthernHawkesBay_v21p12(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum)
+{
+    GLOBAL_MODEL_PARAMETERS->ignoreBasinForSmoothing[basinNum] = 0;
+    GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum] = 2;
+    GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[basinNum] = 1;
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[basinNum][0] = "Data/Basins/Southern_Hawkes_Bay/v21p12/SHB_Outline_WGS84_delim.dat";
+
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][0] = "DEM";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][0] = "Data/DEM/NZ_DEM_HD.in";
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][0] = 0;
+    GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][0] = "Cant1D_v2";
+
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][1] = "SouthernHawkesBay";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][1] = "Data/Basins/Southern_Hawkes_Bay/v21p12/SHB_Surface_Export.in";
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][1] = 0;
+}
+
+void load_Wairarapa_v21p12(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum)
+{
+    GLOBAL_MODEL_PARAMETERS->ignoreBasinForSmoothing[basinNum] = 0;
+    GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum] = 2;
+    GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[basinNum] = 1;
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[basinNum][0] = "Data/Basins/Wairarapa/v21p12/Wairarapa_Outline_WGS84_delim.dat";
+
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][0] = "DEM";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][0] = "Data/DEM/NZ_DEM_HD.in";
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][0] = 0;
+    GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][0] = "Cant1D_v2";
+
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][1] = "Wairarapa";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][1] = "Data/Basins/Wairarapa/v21p12/Wairarapa_Surface_Export.in";
     GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][1] = 0;
 }
 

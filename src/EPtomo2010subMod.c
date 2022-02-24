@@ -142,7 +142,7 @@ void loadEPtomoSurfaceData(char *tomoType, nz_tomography_data *NZ_TOMOGRAPHY_DAT
     varNames[0] = "vp";
     varNames[1] = "vs";
     varNames[2] = "rho";
-    int elev[30];
+    int elev[MAX_NUM_TOMO_SURFACES];
     int nElev = 0;
     char vs30fileName[MAX_FILENAME_STRING_LEN];
     char offshorefileName[MAX_FILENAME_STRING_LEN];
@@ -521,7 +521,7 @@ void loadEPtomoSurfaceData(char *tomoType, nz_tomography_data *NZ_TOMOGRAPHY_DAT
         printf("Loading NZ Tomography.\n");
         
         // load in Vs30 NZ surface
-        sprintf(vs30fileName,"Data/Global_Surfaces/NZ_Vs30_HD_With_Offshore_extended.in");
+        sprintf(vs30fileName,"Data/Global_Surfaces/NZ_Vs30_HD_With_Offshore.in");
         NZ_TOMOGRAPHY_DATA->Vs30 = loadGlobalSurface(vs30fileName);
         
         sprintf(tomoDirectory,"2020_Chow_NI");

@@ -264,6 +264,8 @@ Summary of velocity model version numbers
 - v2.06 Added Takaka / Collingwood Basins / Springs Junction & Karamea
 
 - v2.07 Added Hawkes Bay / Napier / Wellington Regional basins and Updated the Wellington Basin to Matt Hill's version
+- v2.08 Added Chow's North Island tomography model with no basin
+- v2.09 Extended v2.07 with Chow's North Island tomography model
 
 Summary of Korean velocity model (KVM) version numbers
 

@@ -518,7 +518,7 @@ void loadEPtomoSurfaceData(char *tomoType, nz_tomography_data *NZ_TOMOGRAPHY_DAT
         elev[140] = -400;
         elev[141] = -620;
         elev[142] = -750;
-        printf("Loading NZ Tomography based on Chow NI.\n");
+        printf("Loading NZ Tomography based on EP2020 and Chow NI.\n");
         
         // load in Vs30 NZ surface
         sprintf(vs30fileName,"Data/Global_Surfaces/NZ_Vs30_HD_With_Offshore.in");

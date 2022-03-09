@@ -263,7 +263,7 @@ Summary of velocity model version numbers
 
 - v2.06 Added Takaka / Collingwood Basins / Springs Junction & Karamea
 
-- v2.07 Added Hawkes Bay / Napier / Wellington Regional basins and Updated the Wellington Basin to Matt Hill's version
+- v2.07 Added Hawkes Bay / Napier / Wellington Regional basins and Updated the Wellington Basin to Matt Hill's version / Wairarapa / S. Hawkes Bay / Gisborne / Motu
 
 Summary of Korean velocity model (KVM) version numbers
 

@@ -1,6 +1,6 @@
 from shared import NZ_tomo_dir
 
-in_files=NZ_tomo_dir.glob("*vp*.in")
+in_files = NZ_tomo_dir.glob("*vp*.in")
 n_lats = 0
 n_lons = 0
 lats = []
@@ -10,9 +10,9 @@ for in_file in in_files:
     print(in_file)
     elevs.append(int(in_file.stem.strip(".in").split("_elev")[1]))
     with open(in_file, "r") as f:
-        size_str=f.readline()
-        lats_str=f.readline()
-        lons_str=f.readline()
+        size_str = f.readline()
+        lats_str = f.readline()
+        lons_str = f.readline()
         new_n_lats, new_n_lons = [int(x) for x in size_str.split()]
         new_lats = [float(x) for x in lats_str.split()]
         new_lons = [float(x) for x in lons_str.split()]
@@ -21,18 +21,16 @@ for in_file in in_files:
         if n_lons == 0:
             n_lons = new_n_lons
         if len(lats) == 0:
-            lats= new_lats
+            lats = new_lats
         if len(lons) == 0:
-            lons= new_lons
+            lons = new_lons
         assert n_lats == new_n_lats
         assert n_lons == new_n_lons
         assert lats == new_lats
         assert lons == new_lons
 elevs.sort()
 
-#add these output to shared.py as elevs, lats and lons
+# add these output to shared.py as elevs, lats and lons
 print(elevs)
 print(lats)
 print(lons)
-
-

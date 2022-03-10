@@ -1,6 +1,7 @@
 import pandas as pd
 from pathlib import Path
-from shared import NI_tomo_dir, depth_categories
+import yaml
+from shared import NI_tomo_dir, depth_categories, chow_yaml
 
 """
 This code is just a one-off to read Chow NI data and find out the depth levels it uses
@@ -27,3 +28,6 @@ z_values.sort()
 
 # add this output to shared.py as chow_elevs
 print(z_values)
+chow_ni={"elevs": z_values}
+with open(chow_yaml,"w") as file:
+    yaml.dump(chow_ni,file)

@@ -3,13 +3,24 @@ import numpy as np
 import pandas as pd
 from pathlib import Path
 from scipy.interpolate import griddata
-from shared import lats, lons, depth_categories, NI_tomo_dir, step2_outdir, write_file
+import yaml
+
+from shared import depth_categories, ep2020_yaml, NI_tomo_dir, step2_outdir, write_file
 
 step2_outdir.mkdir(parents=True, exist_ok=True)
 
 V_types = ["Vp", "Vs", "rho"]
 
-# We are going to fit Chow NI onto the (lat lon) grid of 2020_NZ via interpolation
+"""
+This code fits Chow NI tomography onto the (lat lon) grid of EP2020 via interpolation
+"""
+
+with open(ep2020_yaml) as file:
+    ep2020_data=yaml.safe_load(file)
+
+lats = ep2020_data['lats']
+lons = ep2020_data['lons']
+
 
 for dc in depth_categories:
     print(f"{dc}")

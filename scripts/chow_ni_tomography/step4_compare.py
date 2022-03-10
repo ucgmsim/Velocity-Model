@@ -1,9 +1,9 @@
 import numpy as np
 import pandas as pd
+import yaml
 
 from shared import (
-    lats,
-    lons,
+    ep2020_yaml,
     step1_outdir,
     step3_outdir,
     v_types,
@@ -11,23 +11,31 @@ from shared import (
     compare_dir,
 )
 
-compare_dir.mkdir(parents=True, exist_ok=True)
+"""
+This code is to produce plots similar to those from Chow's paper, showing difference between EP2020 and Chow NI. 
+"""
 
+compare_dir.mkdir(parents=True, exist_ok=True)
+with open(ep2020_yaml) as file:
+    ep2020_data=yaml.safe_load(file)
+
+lats = ep2020_data['lats']
+lons = ep2020_data['lons']
 
 def compare(v_type, elev):
-    final_array = pd.read_csv(
+    combined_array = pd.read_csv(
         step3_outdir / v_file_template.format(v_type, elev),
         delimiter=" ",
         header=2,
         na_filter=False,
     ).to_numpy()
-    nzvm_array = pd.read_csv(
+    ep2020_array = pd.read_csv(
         step1_outdir / v_file_template.format(v_type, elev),
         delimiter=" ",
         header=2,
         na_filter=False,
     ).to_numpy()
-    bias_array = np.log10(final_array / nzvm_array)  # 0 if equal
+    bias_array = np.log10(combined_array / ep2020_array)  # 0 if equal
     return bias_array
 
 

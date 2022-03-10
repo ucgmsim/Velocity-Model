@@ -1,11 +1,12 @@
 import numpy as np
 import pandas as pd
+import yaml
+
 from qcore import geo
 from shared import (
     write_file,
-    lats,
-    lons,
-    chow_elevs,
+    ep2020_yaml,
+    chow_yaml,
     v_file_template,
     step1_outdir,
     step2_outdir,
@@ -15,9 +16,27 @@ from shared import (
     v_types,
 )
 
+"""
+After Step 1 and Step 2, we have EP2020 tomography data and Chow NI tomography data on the same 3d grid. 
+This code combines two data sets based on a simple logic, such that for all elev levels, at a location (lat, lon),  
+1. if Chow NI is 0, (outside Chow NI domain), use EP2020 value
+2. else
+    if (lat, lon) is within MAX_DIST away from one of 4 boundaries of the domain, apply smoothing
+    else use Chow NI value
+"""
 
 step3_outdir.mkdir(parents=True, exist_ok=True)
 log_dir.mkdir(parents=True, exist_ok=True)
+
+with open(ep2020_yaml) as file:
+    ep2020_data=yaml.safe_load(file)
+
+with open(chow_yaml) as file:
+    chow_data=yaml.safe_load(file)
+
+lats = ep2020_data['lats']
+lons = ep2020_data['lons']
+chow_elevs= chow_data['elevs']
 
 new_chow_elevs = [-750, -620] + chow_elevs + [15]  # add missing elevs to chow_elevs
 
@@ -68,8 +87,8 @@ def distance_from_boundary(x_id, y_id, boundaries):
     return min(res)
 
 
-def combine_and_smoothe(
-    nz2020_tomo_elevs_ext_array,
+def combine_and_smooth(
+    ep2020_tomo_elevs_ext_array,
     chow_tomo_grid_mapped_array,
     nonzero_vert_ids,
     nonzero_hori_ids,
@@ -78,8 +97,8 @@ def combine_and_smoothe(
 ):
 
     final_v_array = (
-        nz2020_tomo_elevs_ext_array.copy()
-    )  # start with nz2020_tomo_elevs_ext_array
+        ep2020_tomo_elevs_ext_array.copy()
+    )  # start with ep2020_tomo_elevs_ext_array
 
     with open(logfile, "w") as f:
         for i in range(
@@ -90,16 +109,16 @@ def combine_and_smoothe(
 
             d = distance_from_boundary(lat_id, lon_id, boundaries)
 
-            # if beyond MAX_DIST, use values from Chow tomo, otherwise, smoothe.
+            # if beyond MAX_DIST, use values from Chow tomo, otherwise, smooth.
             smoothDistRatio = min(d / MAX_DIST, 1.0)
             inverseRatio = 1 - smoothDistRatio
 
-            # print(f"{lat_id} {lon_id} : {smoothDistRatio}*{chow_tomo_grid_mapped_array[lat_id][lon_id]}+{inverseRatio}*{nz2020_tomo_elevs_ext_array[lat_id][lon_id]}")
+            # print(f"{lat_id} {lon_id} : {smoothDistRatio}*{chow_tomo_grid_mapped_array[lat_id][lon_id]}+{inverseRatio}*{ep2020_tomo_elevs_ext_array[lat_id][lon_id]}")
             final_v_array[lat_id][lon_id] = (
                 smoothDistRatio * chow_tomo_grid_mapped_array[lat_id][lon_id]
-                + inverseRatio * nz2020_tomo_elevs_ext_array[lat_id][lon_id]
+                + inverseRatio * ep2020_tomo_elevs_ext_array[lat_id][lon_id]
             )
-            res = f"{lat_id},{lon_id},{smoothDistRatio:.3f},{chow_tomo_grid_mapped_array[lat_id][lon_id]:.6f},{inverseRatio:.3f},{nz2020_tomo_elevs_ext_array[lat_id][lon_id]:.6f},{final_v_array[lat_id][lon_id]:.6f}"
+            res = f"{lat_id},{lon_id},{smoothDistRatio:.3f},{chow_tomo_grid_mapped_array[lat_id][lon_id]:.6f},{inverseRatio:.3f},{ep2020_tomo_elevs_ext_array[lat_id][lon_id]:.6f},{final_v_array[lat_id][lon_id]:.6f}"
             f.write(res + "\n")
         # print(res)
     return final_v_array
@@ -122,16 +141,16 @@ if __name__ == "__main__":
 
     for v_type in v_types:
 
-        for elev in new_chow_elevs:  # for all nz2020_tomo with extended elevs, if the
+        for elev in new_chow_elevs:  # for all ep2020_tomo with extended elevs, if the
             v_file = v_file_template.format(v_type, int(elev))
-            nz2020_tomo_elevs_ext_df = pd.read_csv(
+            ep2020_tomo_elevs_ext_df = pd.read_csv(
                 step1_outdir / v_file, delimiter=" ", header=2, na_filter=False
             )
-            nz2020_tomo_elevs_ext_array = nz2020_tomo_elevs_ext_df.to_numpy()
+            ep2020_tomo_elevs_ext_array = ep2020_tomo_elevs_ext_df.to_numpy()
 
             if not (step2_outdir / v_file).exists():
                 # outside the chow domain. mixing not needed
-                final_v_array = nz2020_tomo_elevs_ext_array
+                final_v_array = ep2020_tomo_elevs_ext_array
             else:
                 # inside the chow domain. may need mixing
                 chow_tomo_grid_mapped_df = pd.read_csv(
@@ -141,8 +160,8 @@ if __name__ == "__main__":
                 logfile = log_dir / f"{v_file}.log"
 
                 # depending on the distance to the boundary, we may need to do smoothing
-                final_v_array = combine_and_smoothe(
-                    nz2020_tomo_elevs_ext_array,
+                final_v_array = combine_and_smooth(
+                    ep2020_tomo_elevs_ext_array,
                     chow_tomo_grid_mapped_array,
                     nonzero_vert_ids,
                     nonzero_hori_ids,

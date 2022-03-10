@@ -1,18 +1,30 @@
 import numpy as np
 import pandas as pd
 from scipy import interpolate
+import yaml
 from shared import (
-    chow_elevs,
-    lats,
-    lons,
-    elevs,
-    NZ_tomo_dir,
+    chow_yaml,
+    ep2020_yaml,
+    EP2020_tomo_dir,
     step1_outdir,
     v_file_template,
+    v_types,
 )
 
+"""
+This code expands EP2020 tomography such that it covers the elevation levels of Chow NI via interpolation.
+"""
+with open(ep2020_yaml) as file:
+    ep2020_data=yaml.safe_load(file)
+with open(chow_yaml) as file:
+    chow_data=yaml.safe_load(file)
 
-v_types = ["vp", "vs", "rho"]
+
+lats = ep2020_data['lats']
+lons = ep2020_data['lons']
+elevs = ep2020_data['elevs']
+
+chow_elevs= chow_data['elevs']
 
 tomo_index = pd.MultiIndex.from_product(
     [lats, lons, elevs], names=["lat", "lon", "elev"]
@@ -29,7 +41,7 @@ for elev in elevs:
     print(elev)
     ep2020_dic[elev] = {}
     for v_type in v_types:
-        v_file = NZ_tomo_dir / f"surf_tomography_{v_type}_elev{elev}.in"
+        v_file = EP2020_tomo_dir / f"surf_tomography_{v_type}_elev{elev}.in"
         v_df = pd.read_csv(
             v_file, delimiter=" ", header=2, na_filter=False
         )  # use lon as column name
@@ -45,7 +57,7 @@ for elev in elevs:
 new_chow_elevs = [-750, -620] + chow_elevs + [15]  # add missing elevs to chow_elevs
 
 
-# We are going to expand 2020_NZ such that it covers the elevation levels of Chow NI via interpolation
+
 for v_type in v_types:
 
     v_data = [

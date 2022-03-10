@@ -1,6 +1,11 @@
-from shared import NZ_tomo_dir
+import yaml
+from shared import EP2020_tomo_dir, ep2020_yaml
 
-in_files = NZ_tomo_dir.glob("*vp*.in")
+"""
+This code is just a one-off to read EP2020 tomography data and find out the lats, lons and elev values it uses
+"""
+
+in_files = EP2020_tomo_dir.glob("*vp*.in")
 n_lats = 0
 n_lons = 0
 lats = []
@@ -30,7 +35,7 @@ for in_file in in_files:
         assert lons == new_lons
 elevs.sort()
 
-# add these output to shared.py as elevs, lats and lons
-print(elevs)
-print(lats)
-print(lons)
+# Save the data
+ep2020={'lats': lats,'lons': lons, 'elevs': elevs}
+with open(ep2020_yaml,"w") as file:
+    yaml.dump(ep2020,file)

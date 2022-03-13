@@ -92,8 +92,16 @@ void loadBasinSubModelData(int basinNum, basin_data *BASIN_DATA, global_model_pa
         {
             char perturbation_type[MAX_FILENAME_STRING_LEN] = "v20p11";
             BASIN_DATA->PERTURBATION_DATA[basinNum] = loadPerturbationSurfaceData(perturbation_type , GLOBAL_MODEL_PARAMETERS);
+		}	
+		if(strcmp (GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][i], "Busan_Sub_KVM_21p6") == 0)
+        {
+            char perturbation_type[MAX_FILENAME_STRING_LEN] = "KVM_21p6";
+            BASIN_DATA->PERTURBATION_DATA[basinNum] = loadPerturbationSurfaceData(perturbation_type , GLOBAL_MODEL_PARAMETERS);
 
         }
+
+
+        
     }
 }
 

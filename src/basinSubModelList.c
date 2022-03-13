@@ -197,14 +197,21 @@ void loadBasinResources(global_model_parameters *GLOBAL_MODEL_PARAMETERS)
          else if (strcmp(GLOBAL_MODEL_PARAMETERS->basin[i],"Perturbation_v20p11") == 0)
          {
              load_Perturbation_v20p11(GLOBAL_MODEL_PARAMETERS,i);
+		 
          }
-         else
+        // ============
+        // v21p6
+        // ============
+         else if (strcmp(GLOBAL_MODEL_PARAMETERS->basin[i],"Busan_Sub_KVM_21p6") == 0)
+         {
+             load_Busan_Sub_KVM_21p6(GLOBAL_MODEL_PARAMETERS,i);
+         }
+		 else
          {
              printf("Basin %s not found.\n",GLOBAL_MODEL_PARAMETERS->basin[i]);
              exit(EXIT_FAILURE);
-         }
-
-        
+		
+		 }
     }
 }
 
@@ -962,4 +969,21 @@ void load_Perturbation_v20p11(global_model_parameters *GLOBAL_MODEL_PARAMETERS, 
     GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][1] = "Data/Perturbations/v20p11/volume_data/surf_neg238km.in";
     GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][1] = 0;
 }
+void load_Busan_Sub_KVM_21p6(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum)
+{
+    GLOBAL_MODEL_PARAMETERS->ignoreBasinForSmoothing[basinNum] = 0;
+    GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum] = 2;
+    GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[basinNum] = 1;
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[basinNum][0] = "Data/Boundaries/BusanBasinBoundary.txt";
+    
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][0] = "Busan_DEM";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][0] = "Data/DEM/Busan_DEM.in";
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][0] = 0;
+    GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][0] = "Busan_Sub_KVM_21p6";
+    
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][1] = "Busan_Basin";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][1] = "Data/Busan_Basin/Busan_Basin.in";
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][1] = 0;
+}
+
 

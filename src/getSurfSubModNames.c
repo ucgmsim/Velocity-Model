@@ -766,7 +766,46 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->BasinEdgeSmoothing = 0;
 
     }
-    
+	 else if(strcmp(modelVersion,"KVM_21p6") == 0)
+    {
+        // define the number of surfaces and sub models
+        GLOBAL_MODEL_PARAMETERS->nSurf = 3;
+        GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 2;
+
+        // insert surface surface keywords and filenames
+        GLOBAL_MODEL_PARAMETERS->surf[0] = "posInfSurf";
+        GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[0] = "Data/Global_Surfaces/posInf.in";
+        GLOBAL_MODEL_PARAMETERS->surf[1] = "zeroDemInfSurf";
+        GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[1] = "Data/Global_Surfaces/zeroDemInf.in";
+        GLOBAL_MODEL_PARAMETERS->surf[2] = "negInfSurf";
+        GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[2] = "Data/Global_Surfaces/negInf.in";
+
+        // insert velocity submodel keywords and filenames (if necessary)
+        GLOBAL_MODEL_PARAMETERS->veloSubMod[0] = "NaNsubMod";
+        GLOBAL_MODEL_PARAMETERS->veloSubMod[1] = "EPtomo2010subMod";
+        GLOBAL_MODEL_PARAMETERS->tomographyName = "2020_Korea";
+		// busan basin
+        GLOBAL_MODEL_PARAMETERS->basin[0] = "Busan_Sub_KVM_21p6";
+        GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[0] = 2;
+        GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[0] = 1;
+        GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[0][0] = "Data/Boundaries/BusanBasinBoundary.txt";
+        
+		GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[0][0] = "Busan_DEM";
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[0][0] = "Data/DEM/Busan_DEM.in";
+        GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[0][0] = 0;
+        GLOBAL_MODEL_PARAMETERS->basinSubModelNames[0][0] = "Busan_Sub_KVM_21p6";
+		
+		
+        
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[0][1] = "Busan_Surf";
+        GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[0][1] = "Data/Busan_Basin/Busan_Basin.in";
+        GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[0][1] = 0;
+        
+        GLOBAL_MODEL_PARAMETERS->nBasins = 1;
+        GLOBAL_MODEL_PARAMETERS->GTL = 0;
+        GLOBAL_MODEL_PARAMETERS->BasinEdgeSmoothing = 0;
+
+	}
     //==========================================================
     
     //          FINALIZED VERSIONS

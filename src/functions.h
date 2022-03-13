@@ -318,6 +318,10 @@ void load_CollingwoodBasin1_v20p11(global_model_parameters *GLOBAL_MODEL_PARAMET
 void load_CollingwoodBasin2_v20p11(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
 void load_CollingwoodBasin3_v20p11(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
 
+// v21p6 /
+
+
+void load_Busan_Sub_KVM_21p6(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
 
 extern calculation_log *initializeCalculationLog(int argc, char *argv[]);
 

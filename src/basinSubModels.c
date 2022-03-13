@@ -161,8 +161,11 @@ void callBasinSubVelocityModels(global_model_parameters *GLOBAL_MODEL_PARAMETERS
         QUALITIES_VECTOR->inbasin[zInd] = 0; //reassign as outside of a basin for the purpose of a in/out of basin mask binary used to incorporate graves stochastic velocity perturbations
     }
     
-    
-    
+     // KVM Models
+	     else if(strcmp(GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][basinSubModelInd], "Busan_Sub_KVM_21p6") == 0)
+    {
+        gravelSubModel(zInd, QUALITIES_VECTOR,PARTIAL_BASIN_SURFACE_DEPTHS, depth, basinNum);
+    }
     else
     {
         printf("%s.\n",GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][basinSubModelInd]);

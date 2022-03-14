@@ -271,6 +271,18 @@ void loadBasinResources(global_model_parameters *GLOBAL_MODEL_PARAMETERS)
          {
              load_Wairarapa_v21p12(GLOBAL_MODEL_PARAMETERS,i);
          }
+         else if (strcmp(GLOBAL_MODEL_PARAMETERS->basin[i],"Motu_Bay1_v22p3") == 0)
+         {
+             load_Motu_Bay1_v22p3(GLOBAL_MODEL_PARAMETERS,i);
+         }
+         else if (strcmp(GLOBAL_MODEL_PARAMETERS->basin[i],"Motu_Bay2_v22p3") == 0)
+         {
+             load_Motu_Bay2_v22p3(GLOBAL_MODEL_PARAMETERS,i);
+         }
+         else if (strcmp(GLOBAL_MODEL_PARAMETERS->basin[i],"Motu_Bay3_v22p3") == 0)
+         {
+             load_Motu_Bay3_v22p3(GLOBAL_MODEL_PARAMETERS,i);
+         }
         // ============
         // Perturbation models
         // ============
@@ -1057,6 +1069,57 @@ void load_Wairarapa_v21p12(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int
 
     GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][1] = "Wairarapa";
     GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][1] = "Data/Basins/Wairarapa/v21p12/Wairarapa_Surface_Export.in";
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][1] = 0;
+}
+
+void load_Motu_Bay1_v22p3(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum)
+{
+    GLOBAL_MODEL_PARAMETERS->ignoreBasinForSmoothing[basinNum] = 0;
+    GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum] = 2;
+    GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[basinNum] = 1;
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[basinNum][0] = "Data/Basins/East_Cape/v22p3/Motu_bay1_Outline_WGS84.txt";
+
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][0] = "DEM";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][0] = "Data/DEM/NZ_DEM_HD.in";
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][0] = 0;
+    GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][0] = "Cant1D_v2";
+
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][1] = "Motu_Bay1";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][1] = "Data/Basins/East_Cape/v22p3/Motu_river_Surface_Export.in";
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][1] = 0;
+}
+
+void load_Motu_Bay2_v22p3(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum)
+{
+    GLOBAL_MODEL_PARAMETERS->ignoreBasinForSmoothing[basinNum] = 0;
+    GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum] = 2;
+    GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[basinNum] = 1;
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[basinNum][0] = "Data/Basins/East_Cape/v22p3/Motu_bay2_Outline_WGS84.txt";
+
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][0] = "DEM";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][0] = "Data/DEM/NZ_DEM_HD.in";
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][0] = 0;
+    GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][0] = "Cant1D_v2";
+
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][1] = "Motu_Bay2";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][1] = "Data/Basins/East_Cape/v22p3/Motu_river_Surface_Export.in";
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][1] = 0;
+}
+
+void load_Motu_Bay3_v22p3(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum)
+{
+    GLOBAL_MODEL_PARAMETERS->ignoreBasinForSmoothing[basinNum] = 0;
+    GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum] = 2;
+    GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[basinNum] = 1;
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[basinNum][0] = "Data/Basins/East_Cape/v22p3/Motu_bay3_Outline_WGS84.txt";
+
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][0] = "DEM";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][0] = "Data/DEM/NZ_DEM_HD.in";
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][0] = 0;
+    GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][0] = "Cant1D_v2";
+
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][1] = "Motu_Bay3";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][1] = "Data/Basins/East_Cape/v22p3/Motu_river_Surface_Export.in";
     GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][1] = 0;
 }
 

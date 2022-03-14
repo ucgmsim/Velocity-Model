@@ -269,7 +269,6 @@ Summary of velocity model version numbers
 
 - v2.09 Extended v2.07 with Chow's North Island tomography model
 
-
 Summary of Korean velocity model (KVM) version numbers
 
 - KVM_20p6 - 1D VM

@@ -93,6 +93,9 @@ v207_basin_list = v206_basin_list + get_basin_full_path(
         "Data/Basins/Napier_Hawkes_Bay/v21p7/Napier4_Outline_WGS84_delim.dat",
         "Data/Basins/Napier_Hawkes_Bay/v21p7/Napier5_Outline_WGS84_delim.dat",
         "Data/Basins/Napier_Hawkes_Bay/v21p7/Napier6_Outline_WGS84_delim.dat",
+        "Data/Basins/Gisborne/v21p11/Gisborne_Outline_WGS84_delim.dat",
+        "Data/Basins/Southern_Hawkes_Bay/v21p12/SHB_Outline_WGS84_delim.dat",
+        "Data/Basins/Wairarapa/v21p12/Wairarapa_Outline_WGS84_delim.dat",
     ]
 )
 basin_outlines = {
@@ -151,7 +154,6 @@ def extract_z(
                     z_values[z_type] = z_values[z_type].append(z_val)
                 else:
                     z_values[z_type] = z_val
-
 
     for z_type in z_types:
         stat_df["z_index"] = z_values[z_type].index

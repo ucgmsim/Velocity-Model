@@ -265,9 +265,7 @@ Summary of velocity model version numbers
 
 - v2.07 Added Hawkes Bay / Napier / Wellington Regional basins and Updated the Wellington Basin to Matt Hill's version / Wairarapa / S. Hawkes Bay / Gisborne / Motu
 
-- v2.08 Added Chow's North Island tomography model with no basin
-
-- v2.09 Extended v2.07 with Chow's North Island tomography model
+- v2.08 Replaced tomography model with the combination of Chow's North Island tomography model and EP2020  with/without basins (basins from v2.07)
 
 Summary of Korean velocity model (KVM) version numbers
 

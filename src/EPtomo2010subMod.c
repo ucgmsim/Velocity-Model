@@ -808,7 +808,8 @@ void loadEPtomoSurfaceData(char *tomoType, nz_tomography_data *NZ_TOMOGRAPHY_DAT
         for(int j = 0; j < 3; j++)
         {
             
-            ftoa(elev[i],smartElev,2); // int->int; float-> DDDpFF format 
+            ftoa(elev[i],smartElev,2); // int->int; float-> DDDpFF format
+            printf("elev[%d]=%f converted to smartElev=%s\n",i,elev[i],smartElev);
             sprintf(baseFilename,"Data/Tomography/%s/surf_tomography_%s_elev%s.in",tomoDirectory,varNames[j],smartElev);
             // read the surface
             NZ_TOMOGRAPHY_DATA->surf[j][i] = loadGlobalSurface(baseFilename);

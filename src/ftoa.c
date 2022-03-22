@@ -20,9 +20,15 @@ void reverse(char *str, int len)
 int intToStr(int x, char str[], int d) 
 { 
     int i = 0;
+    int negate = 0;
     if (x==0) //if x=0, make sure 0 is added to str
     {
         str[i++]='0';
+    }
+    else if (x<0)
+    {
+        negate = 1;
+        x *= -1;
     }
     while (x) 
     { 
@@ -35,6 +41,8 @@ int intToStr(int x, char str[], int d)
     while (i < d) 
         str[i++] = '0'; 
   
+    if (negate)
+        str[i++] = '-';
     reverse(str, i); 
     str[i] = '\0'; 
     return i; 
@@ -46,7 +54,7 @@ void ftoa(float n, char *res, int afterpoint)
     int ipart = (int)n; 
   
     // Extract floating part 
-    float fpart = n - (float)ipart; 
+    float fpart =fabsf(n) - fabsf((float)ipart); // fabsf present in case n is negative 
   
     // convert integer part to string 
     int i = intToStr(ipart, res, 0); 
@@ -77,5 +85,9 @@ void ftoa(float n, char *res, int afterpoint)
 //     printf("str=%s\n",str); //prints 13
 //     ftoa(3.001,str,2);
 //     printf("str=%s\n",str); //prints 3p00
+//     ftoa(-1.000,str,2);
+//     printf("str=%s\n",str); //prints -1
+//     ftoa(-7.123,str,2);
+//     printf("str=%s\n",str); //prints -7p12
 //     return 0;
 // }

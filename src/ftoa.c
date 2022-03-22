@@ -19,7 +19,11 @@ void reverse(char *str, int len)
  // of digits in x, then 0s are added at the beginning. 
 int intToStr(int x, char str[], int d) 
 { 
-    int i = 0; 
+    int i = 0;
+    if (x==0) //if x=0, make sure 0 is added to str
+    {
+        str[i++]='0';
+    }
     while (x) 
     { 
         str[i++] = (x%10) + '0'; 
@@ -62,12 +66,16 @@ void ftoa(float n, char *res, int afterpoint)
 } 
 
 // int main(void) {
-//     float f=3.145;
 //     char str[10];
-//     ftoa(f,str,2);    
-//     printf("str=%s\n",str);
-//     ftoa(3.00,str,2);    
-//     printf("str=%s\n",str);
-    
+//     ftoa(3.145,str,2); 
+//     printf("str=%s\n",str); //prints 3p14
+//     ftoa(0.752,str,2);    
+//     printf("str=%s\n",str); //prints 0p75
+//     ftoa(3.0000,str,2);    
+//     printf("str=%s\n",str); //prints 3
+//     ftoa(13,str,2);
+//     printf("str=%s\n",str); //prints 13
+//     ftoa(3.001,str,2);
+//     printf("str=%s\n",str); //prints 3p00
 //     return 0;
 // }

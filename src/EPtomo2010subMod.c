@@ -797,7 +797,7 @@ void loadEPtomoSurfaceData(char *tomoType, nz_tomography_data *NZ_TOMOGRAPHY_DAT
 
 
     char baseFilename[MAX_FILENAME_STRING_LEN];
-    char smartElev[7]; 
+    char smartElev[10]; 
 
     NZ_TOMOGRAPHY_DATA->nSurf = nElev;
     assert(NZ_TOMOGRAPHY_DATA->nSurf<=MAX_NUM_TOMO_SURFACES);

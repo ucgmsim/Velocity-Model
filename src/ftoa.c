@@ -89,5 +89,7 @@ void ftoa(float n, char *res, int afterpoint)
 //     printf("str=%s\n",str); //prints -1
 //     ftoa(-7.123,str,2);
 //     printf("str=%s\n",str); //prints -7p12
+//     ftoa(-10.5,str,2);
+//     printf("str=%s\n",str); //prints -10p50
 //     return 0;
 // }

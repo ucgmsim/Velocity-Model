@@ -352,7 +352,7 @@ void load_Perturbation_v20p11(global_model_parameters *GLOBAL_MODEL_PARAMETERS, 
 extern calculation_log *initializeCalculationLog(int argc, char *argv[]);
 
 
-
+extern void ftoa(float n, char *res, int afterpoint);
 
 
 #endif

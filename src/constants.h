@@ -35,7 +35,7 @@
 //#define MAX_NUM_VELOSUBMOD 15 // max number of velo sub models in the basin
 #define MAX_NUM_SLICE_GRIDPTS 2000 // the maximum number of grid points for slice extraction
 //#define MAX_NUM_SLICE_PIVOTS 4
-#define MAX_NUM_TOMO_SURFACES 150 // the maximun number of Tomography surfaces able to be loaded
+#define MAX_NUM_TOMO_SURFACES 220 // the maximun number of Tomography surfaces able to be loaded
 #define SURF_IN_DIM_MAX_TOMO 1200 // maximum dimension of tomography surfaces
 #define MAX_NUM_GLOBAL_SURFACES 4 // the maximum number of full domain (global) surfaces
 #define EARTH_RADIUS_MEAN 6378.139 //6371.0071

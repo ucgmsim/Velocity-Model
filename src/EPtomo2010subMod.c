@@ -142,7 +142,7 @@ void loadEPtomoSurfaceData(char *tomoType, nz_tomography_data *NZ_TOMOGRAPHY_DAT
     varNames[0] = "vp";
     varNames[1] = "vs";
     varNames[2] = "rho";
-    int elev[MAX_NUM_TOMO_SURFACES];
+    float elev[MAX_NUM_TOMO_SURFACES];
     int nElev = 0;
     char vs30fileName[MAX_FILENAME_STRING_LEN];
     char offshorefileName[MAX_FILENAME_STRING_LEN];
@@ -372,7 +372,7 @@ void loadEPtomoSurfaceData(char *tomoType, nz_tomography_data *NZ_TOMOGRAPHY_DAT
         NZ_TOMOGRAPHY_DATA->specialOffshoreTapering = 1;
         
     }
-    else if (strcmp(tomoType, "2020_Chow_NI") == 0)
+    else if (strcmp(tomoType, "2020_Chow_NI_1km") == 0)
     {
         nElev = 143; // read in only the necessary surfaces
         elev[0] = 15;
@@ -524,11 +524,240 @@ void loadEPtomoSurfaceData(char *tomoType, nz_tomography_data *NZ_TOMOGRAPHY_DAT
         sprintf(vs30fileName,"Data/Global_Surfaces/NZ_Vs30_HD_With_Offshore.in");
         NZ_TOMOGRAPHY_DATA->Vs30 = loadGlobalSurface(vs30fileName);
         
-        sprintf(tomoDirectory,"2020_Chow_NI");
+        sprintf(tomoDirectory,"2020_Chow_NI_1km");
         NZ_TOMOGRAPHY_DATA->specialOffshoreTapering = 1;
         
     }
-       
+    else if (strcmp(tomoType, "2020_Chow_NI") == 0)
+    {
+        nElev = 217; // read in only the necessary surfaces
+        elev[0] = 15;
+        elev[1] = 3.0;
+        elev[2] = 2.75;
+        elev[3] = 2.5;
+        elev[4] = 2.25;
+        elev[5] = 2.0;
+        elev[6] = 1.75;
+        elev[7] = 1.5;
+        elev[8] = 1.25;
+        elev[9] = 1.0;
+        elev[10] = 0.75;
+        elev[11] = 0.5;
+        elev[12] = 0.25;
+        elev[13] = 0.0;
+        elev[14] = -0.25;
+        elev[15] = -0.5;
+        elev[16] = -0.75;
+        elev[17] = -1.0;
+        elev[18] = -1.25;
+        elev[19] = -1.5;
+        elev[20] = -1.75;
+        elev[21] = -2.0;
+        elev[22] = -2.25;
+        elev[23] = -2.5;
+        elev[24] = -2.75;
+        elev[25] = -3.0;
+        elev[26] = -3.25;
+        elev[27] = -3.5;
+        elev[28] = -3.75;
+        elev[29] = -4.0;
+        elev[30] = -4.25;
+        elev[31] = -4.5;
+        elev[32] = -4.75;
+        elev[33] = -5.0;
+        elev[34] = -5.25;
+        elev[35] = -5.5;
+        elev[36] = -5.75;
+        elev[37] = -6.0;
+        elev[38] = -6.25;
+        elev[39] = -6.5;
+        elev[40] = -6.75;
+        elev[41] = -7.0;
+        elev[42] = -7.25;
+        elev[43] = -7.5;
+        elev[44] = -7.75;
+        elev[45] = -8.0;
+        elev[46] = -8.25;
+        elev[47] = -8.5;
+        elev[48] = -8.75;
+        elev[49] = -9.0;
+        elev[50] = -9.5;
+        elev[51] = -10.0;
+        elev[52] = -10.5;
+        elev[53] = -11.0;
+        elev[54] = -11.5;
+        elev[55] = -12.0;
+        elev[56] = -12.5;
+        elev[57] = -13.0;
+        elev[58] = -13.5;
+        elev[59] = -14.0;
+        elev[60] = -14.5;
+        elev[61] = -15.0;
+        elev[62] = -15.5;
+        elev[63] = -16.0;
+        elev[64] = -16.5;
+        elev[65] = -17.0;
+        elev[66] = -17.5;
+        elev[67] = -18.0;
+        elev[68] = -18.5;
+        elev[69] = -19.0;
+        elev[70] = -19.5;
+        elev[71] = -20.0;
+        elev[72] = -20.5;
+        elev[73] = -21.0;
+        elev[74] = -21.5;
+        elev[75] = -22.0;
+        elev[76] = -22.5;
+        elev[77] = -23.0;
+        elev[78] = -23.5;
+        elev[79] = -24.0;
+        elev[80] = -24.5;
+        elev[81] = -25.0;
+        elev[82] = -25.5;
+        elev[83] = -26.0;
+        elev[84] = -26.5;
+        elev[85] = -27.0;
+        elev[86] = -27.5;
+        elev[87] = -28.0;
+        elev[88] = -28.5;
+        elev[89] = -29.0;
+        elev[90] = -29.5;
+        elev[91] = -30.0;
+        elev[92] = -30.5;
+        elev[93] = -31.0;
+        elev[94] = -31.5;
+        elev[95] = -32.0;
+        elev[96] = -32.5;
+        elev[97] = -33.0;
+        elev[98] = -33.5;
+        elev[99] = -34.0;
+        elev[100] = -34.5;
+        elev[101] = -35.0;
+        elev[102] = -35.5;
+        elev[103] = -36.0;
+        elev[104] = -36.5;
+        elev[105] = -37.0;
+        elev[106] = -37.5;
+        elev[107] = -38.0;
+        elev[108] = -38.5;
+        elev[109] = -39.0;
+        elev[110] = -39.5;
+        elev[111] = -40.0;
+        elev[112] = -40.5;
+        elev[113] = -41.0;
+        elev[114] = -41.5;
+        elev[115] = -42.0;
+        elev[116] = -42.5;
+        elev[117] = -43.0;
+        elev[118] = -43.5;
+        elev[119] = -44.0;
+        elev[120] = -44.5;
+        elev[121] = -45.0;
+        elev[122] = -45.5;
+        elev[123] = -46.0;
+        elev[124] = -46.5;
+        elev[125] = -47.0;
+        elev[126] = -48.0;
+        elev[127] = -52.0;
+        elev[128] = -56.0;
+        elev[129] = -60.0;
+        elev[130] = -64.0;
+        elev[131] = -68.0;
+        elev[132] = -72.0;
+        elev[133] = -76.0;
+        elev[134] = -80.0;
+        elev[135] = -84.0;
+        elev[136] = -88.0;
+        elev[137] = -92.0;
+        elev[138] = -96.0;
+        elev[139] = -100.0;
+        elev[140] = -104.0;
+        elev[141] = -108.0;
+        elev[142] = -112.0;
+        elev[143] = -116.0;
+        elev[144] = -120.0;
+        elev[145] = -124.0;
+        elev[146] = -128.0;
+        elev[147] = -132.0;
+        elev[148] = -136.0;
+        elev[149] = -140.0;
+        elev[150] = -144.0;
+        elev[151] = -148.0;
+        elev[152] = -152.0;
+        elev[153] = -156.0;
+        elev[154] = -160.0;
+        elev[155] = -164.0;
+        elev[156] = -168.0;
+        elev[157] = -172.0;
+        elev[158] = -176.0;
+        elev[159] = -180.0;
+        elev[160] = -184.0;
+        elev[161] = -188.0;
+        elev[162] = -192.0;
+        elev[163] = -196.0;
+        elev[164] = -200.0;
+        elev[165] = -204.0;
+        elev[166] = -208.0;
+        elev[167] = -212.0;
+        elev[168] = -216.0;
+        elev[169] = -220.0;
+        elev[170] = -224.0;
+        elev[171] = -228.0;
+        elev[172] = -232.0;
+        elev[173] = -236.0;
+        elev[174] = -240.0;
+        elev[175] = -244.0;
+        elev[176] = -248.0;
+        elev[177] = -252.0;
+        elev[178] = -256.0;
+        elev[179] = -260.0;
+        elev[180] = -264.0;
+        elev[181] = -268.0;
+        elev[182] = -272.0;
+        elev[183] = -276.0;
+        elev[184] = -280.0;
+        elev[185] = -284.0;
+        elev[186] = -288.0;
+        elev[187] = -292.0;
+        elev[188] = -296.0;
+        elev[189] = -300.0;
+        elev[190] = -304.0;
+        elev[191] = -308.0;
+        elev[192] = -312.0;
+        elev[193] = -316.0;
+        elev[194] = -320.0;
+        elev[195] = -324.0;
+        elev[196] = -328.0;
+        elev[197] = -332.0;
+        elev[198] = -336.0;
+        elev[199] = -340.0;
+        elev[200] = -344.0;
+        elev[201] = -348.0;
+        elev[202] = -352.0;
+        elev[203] = -356.0;
+        elev[204] = -360.0;
+        elev[205] = -364.0;
+        elev[206] = -368.0;
+        elev[207] = -372.0;
+        elev[208] = -376.0;
+        elev[209] = -380.0;
+        elev[210] = -384.0;
+        elev[211] = -388.0;
+        elev[212] = -392.0;
+        elev[213] = -396.0;
+        elev[214] = -400.0;
+        elev[215] = -620;
+        elev[216] = -750;
+        printf("Loading NZ Tomography based on EP2020 and Chow NI.\n");
+        
+        // load in Vs30 NZ surface
+        sprintf(vs30fileName,"Data/Global_Surfaces/NZ_Vs30_HD_With_Offshore.in");
+        NZ_TOMOGRAPHY_DATA->Vs30 = loadGlobalSurface(vs30fileName);
+        
+        sprintf(tomoDirectory,"2020_Chow_NI");
+        NZ_TOMOGRAPHY_DATA->specialOffshoreTapering = 1;
+        
+    }       
     else if (strcmp(tomoType, "2020_Korea") == 0)
     {
         nElev = 19; // read in only the necessary surfaces
@@ -568,7 +797,8 @@ void loadEPtomoSurfaceData(char *tomoType, nz_tomography_data *NZ_TOMOGRAPHY_DAT
 
 
     char baseFilename[MAX_FILENAME_STRING_LEN];
-    
+    char smartElev[7]; 
+
     NZ_TOMOGRAPHY_DATA->nSurf = nElev;
     assert(NZ_TOMOGRAPHY_DATA->nSurf<=MAX_NUM_TOMO_SURFACES);
     
@@ -577,7 +807,9 @@ void loadEPtomoSurfaceData(char *tomoType, nz_tomography_data *NZ_TOMOGRAPHY_DAT
         NZ_TOMOGRAPHY_DATA->surfDeps[i] = elev[i]; // depth in km
         for(int j = 0; j < 3; j++)
         {
-            sprintf(baseFilename,"Data/Tomography/%s/surf_tomography_%s_elev%i.in",tomoDirectory,varNames[j],elev[i]);
+            
+            ftoa(elev[i],smartElev,2); // int->int; float-> DDDpFF format 
+            sprintf(baseFilename,"Data/Tomography/%s/surf_tomography_%s_elev%s.in",tomoDirectory,varNames[j],smartElev);
             // read the surface
             NZ_TOMOGRAPHY_DATA->surf[j][i] = loadGlobalSurface(baseFilename);
             

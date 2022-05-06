@@ -372,162 +372,7 @@ void loadEPtomoSurfaceData(char *tomoType, nz_tomography_data *NZ_TOMOGRAPHY_DAT
         NZ_TOMOGRAPHY_DATA->specialOffshoreTapering = 1;
         
     }
-    else if (strcmp(tomoType, "2020_Chow_NI_1km") == 0)
-    {
-        nElev = 143; // read in only the necessary surfaces
-        elev[0] = 15;
-        elev[1] = 3;
-        elev[2] = 2;
-        elev[3] = 1;
-        elev[4] = 0;
-        elev[5] = -1;
-        elev[6] = -2;
-        elev[7] = -3;
-        elev[8] = -4;
-        elev[9] = -5;
-        elev[10] = -6;
-        elev[11] = -7;
-        elev[12] = -8;
-        elev[13] = -9;
-        elev[14] = -10;
-        elev[15] = -11;
-        elev[16] = -12;
-        elev[17] = -13;
-        elev[18] = -14;
-        elev[19] = -15;
-        elev[20] = -16;
-        elev[21] = -17;
-        elev[22] = -18;
-        elev[23] = -19;
-        elev[24] = -20;
-        elev[25] = -21;
-        elev[26] = -22;
-        elev[27] = -23;
-        elev[28] = -24;
-        elev[29] = -25;
-        elev[30] = -26;
-        elev[31] = -27;
-        elev[32] = -28;
-        elev[33] = -29;
-        elev[34] = -30;
-        elev[35] = -31;
-        elev[36] = -32;
-        elev[37] = -33;
-        elev[38] = -34;
-        elev[39] = -35;
-        elev[40] = -36;
-        elev[41] = -37;
-        elev[42] = -38;
-        elev[43] = -39;
-        elev[44] = -40;
-        elev[45] = -41;
-        elev[46] = -42;
-        elev[47] = -43;
-        elev[48] = -44;
-        elev[49] = -45;
-        elev[50] = -46;
-        elev[51] = -47;
-        elev[52] = -48;
-        elev[53] = -52;
-        elev[54] = -56;
-        elev[55] = -60;
-        elev[56] = -64;
-        elev[57] = -68;
-        elev[58] = -72;
-        elev[59] = -76;
-        elev[60] = -80;
-        elev[61] = -84;
-        elev[62] = -88;
-        elev[63] = -92;
-        elev[64] = -96;
-        elev[65] = -100;
-        elev[66] = -104;
-        elev[67] = -108;
-        elev[68] = -112;
-        elev[69] = -116;
-        elev[70] = -120;
-        elev[71] = -124;
-        elev[72] = -128;
-        elev[73] = -132;
-        elev[74] = -136;
-        elev[75] = -140;
-        elev[76] = -144;
-        elev[77] = -148;
-        elev[78] = -152;
-        elev[79] = -156;
-        elev[80] = -160;
-        elev[81] = -164;
-        elev[82] = -168;
-        elev[83] = -172;
-        elev[84] = -176;
-        elev[85] = -180;
-        elev[86] = -184;
-        elev[87] = -188;
-        elev[88] = -192;
-        elev[89] = -196;
-        elev[90] = -200;
-        elev[91] = -204;
-        elev[92] = -208;
-        elev[93] = -212;
-        elev[94] = -216;
-        elev[95] = -220;
-        elev[96] = -224;
-        elev[97] = -228;
-        elev[98] = -232;
-        elev[99] = -236;
-        elev[100] = -240;
-        elev[101] = -244;
-        elev[102] = -248;
-        elev[103] = -252;
-        elev[104] = -256;
-        elev[105] = -260;
-        elev[106] = -264;
-        elev[107] = -268;
-        elev[108] = -272;
-        elev[109] = -276;
-        elev[110] = -280;
-        elev[111] = -284;
-        elev[112] = -288;
-        elev[113] = -292;
-        elev[114] = -296;
-        elev[115] = -300;
-        elev[116] = -304;
-        elev[117] = -308;
-        elev[118] = -312;
-        elev[119] = -316;
-        elev[120] = -320;
-        elev[121] = -324;
-        elev[122] = -328;
-        elev[123] = -332;
-        elev[124] = -336;
-        elev[125] = -340;
-        elev[126] = -344;
-        elev[127] = -348;
-        elev[128] = -352;
-        elev[129] = -356;
-        elev[130] = -360;
-        elev[131] = -364;
-        elev[132] = -368;
-        elev[133] = -372;
-        elev[134] = -376;
-        elev[135] = -380;
-        elev[136] = -384;
-        elev[137] = -388;
-        elev[138] = -392;
-        elev[139] = -396;
-        elev[140] = -400;
-        elev[141] = -620;
-        elev[142] = -750;
-        printf("Loading NZ Tomography based on EP2020 and Chow NI.\n");
-        
-        // load in Vs30 NZ surface
-        sprintf(vs30fileName,"Data/Global_Surfaces/NZ_Vs30_HD_With_Offshore.in");
-        NZ_TOMOGRAPHY_DATA->Vs30 = loadGlobalSurface(vs30fileName);
-        
-        sprintf(tomoDirectory,"2020_Chow_NI_1km");
-        NZ_TOMOGRAPHY_DATA->specialOffshoreTapering = 1;
-        
-    }
+    
     else if (strcmp(tomoType, "2020_Chow_NI") == 0)
     {
         nElev = 217; // read in only the necessary surfaces
@@ -797,7 +642,7 @@ void loadEPtomoSurfaceData(char *tomoType, nz_tomography_data *NZ_TOMOGRAPHY_DAT
 
 
     char baseFilename[MAX_FILENAME_STRING_LEN];
-    char smartElev[10]; 
+    char floatElev[10]; 
 
     NZ_TOMOGRAPHY_DATA->nSurf = nElev;
     assert(NZ_TOMOGRAPHY_DATA->nSurf<=MAX_NUM_TOMO_SURFACES);
@@ -807,10 +652,9 @@ void loadEPtomoSurfaceData(char *tomoType, nz_tomography_data *NZ_TOMOGRAPHY_DAT
         NZ_TOMOGRAPHY_DATA->surfDeps[i] = elev[i]; // depth in km
         for(int j = 0; j < 3; j++)
         {
-            
-            ftoa(elev[i],smartElev,2); // int->int; float-> DDDpFF format
-            printf("elev[%d]=%f converted to smartElev=%s\n",i,elev[i],smartElev);
-            sprintf(baseFilename,"Data/Tomography/%s/surf_tomography_%s_elev%s.in",tomoDirectory,varNames[j],smartElev);
+            ftoa(elev[i],floatElev,2); // int->int; float-> DDDpFF format
+            printf("elev[%d]=%f converted to floatElev=%s\n",i,elev[i],floatElev);
+            sprintf(baseFilename,"Data/Tomography/%s/surf_tomography_%s_elev%s.in",tomoDirectory,varNames[j],floatElev);
             // read the surface
             NZ_TOMOGRAPHY_DATA->surf[j][i] = loadGlobalSurface(baseFilename);
             

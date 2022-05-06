@@ -115,7 +115,11 @@ def combine_and_smooth(
             d = distance_from_boundary(lat_id, lon_id, boundaries)
 
             # if beyond MAX_DIST, use values from Chow tomo, otherwise, smooth.
-            smoothDistRatio = min(d / MAX_DIST, 1.0)
+            if MAX_DIST > 0:
+                smoothDistRatio = min(d / MAX_DIST, 1.0)
+            else:
+                smoothDistRatio = 1
+
             inverseRatio = 1 - smoothDistRatio
 
             # print(f"{lat_id} {lon_id} : {smoothDistRatio}*{chow_tomo_grid_mapped_array[lat_id][lon_id]}+{inverseRatio}*{ep2020_tomo_elevs_ext_array[lat_id][lon_id]}")

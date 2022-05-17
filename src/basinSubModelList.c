@@ -1195,7 +1195,7 @@ void load_Omaio_Bay1_v22p5(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int
     GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][0] = 0;
     GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][0] = "Cant1D_v2";
 
-    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][1] = "Motu_Bay1";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][1] = "OmaioBay1";
     GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][1] = "Data/Basins/East_Cape/v22p5/Omaio_Motu_Bay_Surface_WGS84_projected.in";
     GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][1] = 0;
 }
@@ -1212,7 +1212,7 @@ void load_Omaio_Bay2_v22p5(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int
     GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][0] = 0;
     GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][0] = "Cant1D_v2";
 
-    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][1] = "Motu_Bay1";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][1] = "OmaioBay2";
     GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][1] = "Data/Basins/East_Cape/v22p5/Omaio_Motu_Bay_Surface_WGS84_projected.in";
     GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][1] = 0;
 }
@@ -1229,7 +1229,7 @@ void load_Omaio_Bay3_v22p5(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int
     GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][0] = 0;
     GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][0] = "Cant1D_v2";
 
-    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][1] = "Motu_Bay1";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][1] = "OmaioBay3";
     GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][1] = "Data/Basins/East_Cape/v22p5/Omaio_Motu_Bay_Surface_WGS84_projected.in";
     GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][1] = 0;
 }

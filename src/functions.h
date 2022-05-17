@@ -344,6 +344,12 @@ void load_SouthernHawkesBay_v21p12(global_model_parameters *GLOBAL_MODEL_PARAMET
 void load_Motu_Bay1_v22p3(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
 void load_Motu_Bay2_v22p3(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
 void load_Motu_Bay3_v22p3(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_Omaio_Bay1_v22p5(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_Omaio_Bay2_v22p5(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_Omaio_Bay3_v22p5(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_Motu_Bay2_v22p5(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_Motu_Bay3_v22p5(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_TolagaBay_v22p5(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
 
 void load_Perturbation_v20p6(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
 void load_Perturbation_v20p10(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);

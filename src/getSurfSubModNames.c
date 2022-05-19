@@ -1972,9 +1972,12 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->basin[49] = "Gisborne_v21p11";
         GLOBAL_MODEL_PARAMETERS->basin[50] = "SouthernHawkesBay_v21p12";
         GLOBAL_MODEL_PARAMETERS->basin[51] = "Wairarapa_v21p12";
-        GLOBAL_MODEL_PARAMETERS->basin[52] = "Motu_Bay1_v22p3";
-        GLOBAL_MODEL_PARAMETERS->basin[53] = "Motu_Bay2_v22p3";
-        GLOBAL_MODEL_PARAMETERS->basin[54] = "Motu_Bay3_v22p3";
+        GLOBAL_MODEL_PARAMETERS->basin[52] = "Omaio_Bay1_v22p5";
+        GLOBAL_MODEL_PARAMETERS->basin[53] = "Omaio_Bay2_v22p5";
+        GLOBAL_MODEL_PARAMETERS->basin[54] = "Omaio_Bay3_v22p5";
+        GLOBAL_MODEL_PARAMETERS->basin[55] = "Motu_Bay2_v22p5";
+        GLOBAL_MODEL_PARAMETERS->basin[56] = "Motu_Bay3_v22p5";
+        GLOBAL_MODEL_PARAMETERS->basin[57] = "Tolaga_Bay_v22p5";
     }
     else if(strcmp(modelVersion,"2.08_no_basins") == 0)
     {
@@ -2087,7 +2090,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->basin[54] = "Omaio_Bay3_v22p5";
         GLOBAL_MODEL_PARAMETERS->basin[55] = "Motu_Bay2_v22p5";
         GLOBAL_MODEL_PARAMETERS->basin[56] = "Motu_Bay3_v22p5";
-        GLOBAL_MODEL_PARAMETERS->basin[57] = "TolagaBay_v22p5";
+        GLOBAL_MODEL_PARAMETERS->basin[57] = "Tolaga_Bay_v22p5";
     }
 
 

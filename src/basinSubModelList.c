@@ -303,9 +303,9 @@ void loadBasinResources(global_model_parameters *GLOBAL_MODEL_PARAMETERS)
          {
              load_Omaio_Bay3_v22p5(GLOBAL_MODEL_PARAMETERS,i);
          }
-         else if (strcmp(GLOBAL_MODEL_PARAMETERS->basin[i],"TolagaBay_v22p5") == 0)
+         else if (strcmp(GLOBAL_MODEL_PARAMETERS->basin[i],"Tolaga_Bay_v22p5") == 0)
          {
-             load_TolagaBay_v22p5(GLOBAL_MODEL_PARAMETERS,i);
+             load_Tolaga_Bay_v22p5(GLOBAL_MODEL_PARAMETERS,i);
          }
          
          
@@ -1234,7 +1234,7 @@ void load_Omaio_Bay3_v22p5(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int
     GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][1] = 0;
 }
 
-void load_TolagaBay_v22p5(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum)
+void load_Tolaga_Bay_v22p5(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum)
 {
     GLOBAL_MODEL_PARAMETERS->ignoreBasinForSmoothing[basinNum] = 0;
     GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum] = 2;

@@ -1919,7 +1919,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->BasinEdgeSmoothing = 1;
         
         // Basin names for this model version
-        GLOBAL_MODEL_PARAMETERS->nBasins = 58;
+        GLOBAL_MODEL_PARAMETERS->nBasins = 59;
         GLOBAL_MODEL_PARAMETERS->basin[0] = "Canterbury_Pre_Quaternary_v19p1";
         GLOBAL_MODEL_PARAMETERS->basin[1] = "Cantebury_North_v19p1";
         GLOBAL_MODEL_PARAMETERS->basin[2] = "Banks_Peninsula_Volcanics_v19p1";
@@ -1972,12 +1972,13 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->basin[49] = "Gisborne_v21p11";
         GLOBAL_MODEL_PARAMETERS->basin[50] = "SouthernHawkesBay_v21p12";
         GLOBAL_MODEL_PARAMETERS->basin[51] = "Wairarapa_v21p12";
-        GLOBAL_MODEL_PARAMETERS->basin[52] = "Omaio_Bay1_v22p5";
-        GLOBAL_MODEL_PARAMETERS->basin[53] = "Omaio_Bay2_v22p5";
-        GLOBAL_MODEL_PARAMETERS->basin[54] = "Omaio_Bay3_v22p5";
-        GLOBAL_MODEL_PARAMETERS->basin[55] = "Motu_Bay2_v22p5";
-        GLOBAL_MODEL_PARAMETERS->basin[56] = "Motu_Bay3_v22p5";
-        GLOBAL_MODEL_PARAMETERS->basin[57] = "Tolaga_Bay_v22p5";
+        GLOBAL_MODEL_PARAMETERS->basin[52] = "Omaio_Bay1_v22p7";
+        GLOBAL_MODEL_PARAMETERS->basin[53] = "Omaio_Bay2_v22p7";
+        GLOBAL_MODEL_PARAMETERS->basin[54] = "Omaio_Bay3_v22p7";
+        GLOBAL_MODEL_PARAMETERS->basin[55] = "Motu_Bay2_v22p7";
+        GLOBAL_MODEL_PARAMETERS->basin[56] = "Motu_Bay3_v22p7";
+        GLOBAL_MODEL_PARAMETERS->basin[57] = "Tolaga_Bay_v22p7";
+        GLOBAL_MODEL_PARAMETERS->basin[58] = "Waiapu_v22p7";
     }
     else if(strcmp(modelVersion,"2.08_no_basins") == 0)
     {
@@ -2032,7 +2033,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->BasinEdgeSmoothing = 1;
         
         // Basin names for this model version
-        GLOBAL_MODEL_PARAMETERS->nBasins = 58;
+        GLOBAL_MODEL_PARAMETERS->nBasins = 59;
         GLOBAL_MODEL_PARAMETERS->basin[0] = "Canterbury_Pre_Quaternary_v19p1";
         GLOBAL_MODEL_PARAMETERS->basin[1] = "Cantebury_North_v19p1";
         GLOBAL_MODEL_PARAMETERS->basin[2] = "Banks_Peninsula_Volcanics_v19p1";
@@ -2085,12 +2086,13 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->basin[49] = "Gisborne_v21p11";
         GLOBAL_MODEL_PARAMETERS->basin[50] = "SouthernHawkesBay_v21p12";
         GLOBAL_MODEL_PARAMETERS->basin[51] = "Wairarapa_v21p12";
-        GLOBAL_MODEL_PARAMETERS->basin[52] = "Omaio_Bay1_v22p5";
-        GLOBAL_MODEL_PARAMETERS->basin[53] = "Omaio_Bay2_v22p5";
-        GLOBAL_MODEL_PARAMETERS->basin[54] = "Omaio_Bay3_v22p5";
-        GLOBAL_MODEL_PARAMETERS->basin[55] = "Motu_Bay2_v22p5";
-        GLOBAL_MODEL_PARAMETERS->basin[56] = "Motu_Bay3_v22p5";
-        GLOBAL_MODEL_PARAMETERS->basin[57] = "Tolaga_Bay_v22p5";
+        GLOBAL_MODEL_PARAMETERS->basin[52] = "Omaio_Bay1_v22p7";
+        GLOBAL_MODEL_PARAMETERS->basin[53] = "Omaio_Bay2_v22p7";
+        GLOBAL_MODEL_PARAMETERS->basin[54] = "Omaio_Bay3_v22p7";
+        GLOBAL_MODEL_PARAMETERS->basin[55] = "Motu_Bay2_v22p7";
+        GLOBAL_MODEL_PARAMETERS->basin[56] = "Motu_Bay3_v22p7";
+        GLOBAL_MODEL_PARAMETERS->basin[57] = "Tolaga_Bay_v22p7";
+        GLOBAL_MODEL_PARAMETERS->basin[58] = "Waiapu_v22p7";
     }
 
 

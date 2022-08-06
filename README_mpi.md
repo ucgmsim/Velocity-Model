@@ -16,6 +16,17 @@ Because the parallelization runs along the vertical (`Z`) axis, the number of of
 The selection `MODEL_FORMAT` has been added to the input text file.  It can take the value `GENERIC`, in which case 
 the code just outputs one slice per rank, spawning `NZ / ncpus` depth levels.  For `MODEL_FORMAT=AWP`, the output file is stored in AWP format.
 
+The directory MPI_Examples contains example SLURM submission scripts and model configuration files to create velocity meshes with the following resolutions:
+
+Grid spacing | NX | NY |NZ
+--|--|--|--
+100 m |  6000 | 4000 | 30
+50 m |  12000 | 8000 | 60
+20 m |  24000 | 16000 | 120
+
+They only extend down to 3 km depth and represent the uppermost, finest mesh in the discontinuous mesh code.  Deeper meshes can be created by adjusting the spacing and beginning / ending depth.
+
+
 ## Notes:
 
 - `GLOBAL_MESH->nZ` calculation was modified to include the depth level indicated by `zMax` (line 60 in [`generateModelGrid.c`](src/generateModelGrid.c).

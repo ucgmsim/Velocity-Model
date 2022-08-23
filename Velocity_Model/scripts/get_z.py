@@ -22,7 +22,7 @@ if __name__ == "__main__":
         "-v",
         "--version",
         help="VM version to use",
-        default="2.06",
+        default="2.07",
         choices=vm_versions.keys(),
     )
     parser.add_argument("-o", "--output", help="path to output file", default=".", type=Path)

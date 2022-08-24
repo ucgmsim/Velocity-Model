@@ -2,7 +2,7 @@ import argparse
 from pathlib import Path
 
 from qcore import formats
-from Velocity_Model.z import extract_z, basin_outlines as vm_versions
+from Velocity_Model.z import extract_z, basin_dict as vm_versions
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()

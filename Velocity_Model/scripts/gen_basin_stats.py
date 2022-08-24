@@ -88,6 +88,9 @@ class Buffer:
             self.checkpoint(idx)
 
 
+    #NOTE: If this job is killed due to wallclock limit while checkpointing, there may be a case where writing to csv and/or ll files are complete, but checkpoint file is not
+    # When restarted, the process will restart from the last successfully checkpointed idx. From the perspective of csv or ll, this can be a jump backward.
+    # As a result, some points can be written more than once to the csv or ll files. Duplicates shouldn't cause a problem in the subsequent process
     def checkpoint(self, idx):
         now = datetime.datetime.now()
         print(f"rank:{self.rank} ---{idx} / {self.max_idx} -- {(now - self.start).seconds / 60:.2f} minutes elapsed -- est_completion_time:     {(now - self.start) / (idx-self.checkpoint_idx+1) * (self.max_idx-self.checkpoint_idx+1) + self.start}")
@@ -96,7 +99,6 @@ class Buffer:
            f.write(self.contents_csv)
         with open(self.olf, "a") as f:
            f.write(self.contents_ll)
-        
         self.reset()
 
         with open(self.cpf,"w") as f:

@@ -12,14 +12,6 @@
 #SBATCH --cpus-per-task=1       # number of cores per task (e.g. OpenMP)
 #SBATCH --hint=nomultithread    # don't use hyperthreading
 
-PYTHONPATH=/home/baes/qcore:/home/baes/Velocity-Model:/home/baes/mapping
-#for x in rerun/stations_????
-#do
-#    y=${x/stations_/tmp_out_}
-#    cmd="python station_containment.py $x $y"
-#    echo $cmd
-#    `$cmd` &
-#done
-#wait
-srun python gen_stats_and_basin_outlines.py
+export PYTHONPATH=`pwd`/../../
+srun python gen_basin_stats.py
 

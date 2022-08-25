@@ -62,7 +62,7 @@ cd ../
 
 This creates 80 splits named `basin_stats.ll_0001` etc.
 
-# Coputing Z values for given locations
+## Coputing Z values for given locations
 
 We will be computing Z values using NZVM. This requires quite a large memory (96Gb peak), and recommended to run on Maui using the supplied SLURM script.
 From above, we have 80 split files to process - the number will need to be updated in the SLURM script that we use below.

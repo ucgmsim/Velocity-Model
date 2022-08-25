@@ -1,4 +1,4 @@
-update basins.py
+If there are more basins added, update basins.py
 
 ```
 sbatch --export=ALL gen_basin_stats.sl

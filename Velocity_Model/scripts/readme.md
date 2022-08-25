@@ -21,13 +21,13 @@ cat basin_stats_????.csv > ../basin_stats.csv
 cd ..
 mkdir -p splits
 cd splits
-split -l40000 -d -a4 ../basin_stats.ll basin_stats.ll_
-#160 splits created
+split -l80000 -d -a4 ../basin_stats.ll basin_stats.ll_
+#80 splits created
 
 cd ../
 mkdir -p z_values
 
-sbatch --export=ALL get_z_values.sl #may need to update -v 2.07
+sbatch --export=ALL get_z_values.sl # update the command therein to use the correct version eg. -v 2.07
 
 
 

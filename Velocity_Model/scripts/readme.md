@@ -6,9 +6,27 @@ If there are more basins added, update basins.py
 ```
 sbatch --export=ALL gen_basin_stats.sl
 ```
+This will take 2 days using 1340 cores on Maui. As Maui has 24 hours wall clock limit, you will need to resubmit after the first 24 hours of run.
+Simply enter the same command, and it will resume from the checkpoint.
 
-Go into `outdir` and merge the result.
+To confirm if everything is completed, go into `outdir` directory and enter this command
 
+```
+$ cat checkpoint* |sort -n -r |tail
+121591 121591
+121591 121591
+121591 121591
+121591 121591
+121591 121591
+121591 121591
+121591 121591
+121591 121591
+118999 121591
+117999 121591
+```
+The first number is the last checkpoint index and the second is the last index that each core has to process. So the output above means the last 2 processes are still running.
+
+When everything is completed, go into `outdir` and merge the result.
 ```
 cd outdir
 cat basin_stats_????.ll > ../basin_stats.ll

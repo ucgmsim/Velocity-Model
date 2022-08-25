@@ -1,4 +1,4 @@
-# Vs30map update
+# Preparation for Vs30map update
 
 ## Generation of grid points within basins
 If there are more basins added, update basins.py

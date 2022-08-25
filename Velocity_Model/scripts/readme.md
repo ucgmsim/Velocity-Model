@@ -1,3 +1,6 @@
+# Vs30map update
+
+## Generation of grid points within basins
 If there are more basins added, update basins.py
 
 ```
@@ -41,6 +44,8 @@ cd ../
 
 This creates 80 splits named `basin_stats.ll_0001` etc.
 
+# Coputing Z values for given locations
+
 We will be computing Z values using NZVM. This requires quite a large memory (96Gb peak), and recommended to run on Maui using the supplied SLURM script.
 From above, we have 80 split files to process - the number will need to be updated in the SLURM script that we use below.
 
@@ -49,7 +54,7 @@ mkdir -p z_values
 sbatch --export=ALL get_z_values.sl # update the command therein to use the correct version eg. -v 2.07
 ```
 
-When everything is completed, merge all the result.
+When everything is completed, merge all the output files into a single file
 ```
 cd z_values
 cat basin_stats.z_???? > ../basin_stats.z
@@ -62,4 +67,13 @@ Finally, run the command below.
 python combine_basin_stats_z.py basin_stats.csv basin_stats.z
 ```
 
-This will craete `basin_stats_z.csv` file.
+This will create `basin_stats_z.csv` file.
+
+```
+NZGD_lon,NZGD_lat,in_basin,Z1.0,Z2.5,basin_name
+1224800,5038100,True,0.045,0.275,WakatipuBasinOutlineWGS84.txt
+1224800,5038200,True,0.045,0.275,WakatipuBasinOutlineWGS84.txt
+1224800,5038300,True,0.045,0.275,WakatipuBasinOutlineWGS84.txt
+...
+```
+Then follow the instructions given in https://github.com/ucgmsim/mapping/tree/master/mapbox/vs30 and run `basin2tif.py`

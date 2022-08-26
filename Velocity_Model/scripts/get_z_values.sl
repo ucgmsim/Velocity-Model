@@ -11,8 +11,8 @@
 ##SBATCH --ntasks=4              # seems unnecessarsy due to the line above
 #SBATCH --nodes=2  # Each job takes 96Gb maximum
 #SBATCH --cpus-per-task=1       # number of cores per task (e.g. OpenMP)
-#SBATCH -o %x.%j.out
-#SBATCH -e %x.%j.err
+#SBATCH -o %x.%A.%a.out
+#SBATCH -e %x.%A.%a.err
 
 #SBATCH --hint=nomultithread    # don't use hyperthreading
 

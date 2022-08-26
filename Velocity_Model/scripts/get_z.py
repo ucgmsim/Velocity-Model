@@ -25,6 +25,13 @@ if __name__ == "__main__":
         default="2.07",
         choices=vm_versions.keys(),
     )
+    parser.add_argument(
+        "--no_header",
+        dest="with_header",
+        help="Save output with no header",
+        default=True,
+        action="store_false",
+    )
     parser.add_argument("-o", "--output", help="path to output file", default=".", type=Path)
     parser.add_argument("--nzvm-path", default="NZVM", type=Path)
     args = parser.parse_args()
@@ -33,4 +40,4 @@ if __name__ == "__main__":
 
     output_file = args.output
     z_df = extract_z(args.z_type, stat_df, args.nzvm_path, args.version)
-    z_df.to_csv(output_file)
+    z_df.to_csv(output_file,header=args.with_header)

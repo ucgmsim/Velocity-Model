@@ -19,16 +19,13 @@ if __name__ == "__main__":
 
 
     csv_df=pd.read_csv(args.basin_stats_csv,header=None,names=['lon','lat','NZGD_lon','NZGD_lat','in_basin','basin_name'])
-    z_df=pd.read_csv(args.basin_stats_z,names=['name','Z1.0','Z2.5','sigma'],skiprows=1,index_col=0)
+    z_df=pd.read_csv(args.basin_stats_z,names=['name','Z1.0','Z2.5','sigma'],index_col=0)
 
 
     assert len(csv_df)==len(z_df)
 
-
-    names = []
-    for i in range(len(csv_df)):
-        names.append(f"{csv_df.loc[i].NZGD_lon}_{csv_df.loc[i].NZGD_lat}")
-    csv_df=csv_df.assign(name=names)
+    #make a new column "name" buy combining two existing columns
+    csv_df["name"]=(csv_df["NZGD_lon"].map(str)+"_"+csv_df["NZGD_lat"].map(str))
     csv_df=csv_df.set_index("name")
 
 

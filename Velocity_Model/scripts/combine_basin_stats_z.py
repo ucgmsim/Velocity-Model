@@ -30,7 +30,6 @@ if __name__ == "__main__":
 
 
     # We assume both df have the same set of names
-    csv_df["Z1.0"]=z_df["Z1.0"]
-    csv_df["Z2.5"]=z_df["Z2.5"]
-    csv_df.to_csv(out_file,columns=["NZGD_lon","NZGD_lat","in_basin","Z1.0","Z2.5","basin_name"],index=False)
+    combined_df = csv_df.merge(z_df,on="name")
+    combined_df.to_csv(out_file,columns=["NZGD_lon","NZGD_lat","in_basin","Z1.0","Z2.5","basin_name"],index=False)
 

@@ -17,7 +17,7 @@ If there are more basins added, update basins.py
 ```
 sbatch --export=ALL gen_basin_stats.sl
 ```
-This will take 2 days and about 7 hours using 1340 cores on Maui. As Maui has 24 hours wall clock limit, you will need to resubmit twice after the first 24 hours of run.
+This will take 2 days and about 7 hours using 1340 cores on Maui. As Maui has 24 hours wall clock limit, you will need to resubmit twice after the 24 hours of run.
 Simply enter the same command, and it will resume from the checkpoint.
 
 To confirm if everything is completed, go into `outdir` directory and enter this command

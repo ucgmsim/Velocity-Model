@@ -27,7 +27,7 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "--no_header",
-        dest="with_header",
+        dest="keep_header",
         help="Save output with no header",
         default=True,
         action="store_false",
@@ -40,4 +40,4 @@ if __name__ == "__main__":
 
     output_file = args.output
     z_df = extract_z(args.z_type, stat_df, args.nzvm_path, args.version)
-    z_df.to_csv(output_file,header=args.with_header)
+    z_df.to_csv(output_file,header=args.keep_header)

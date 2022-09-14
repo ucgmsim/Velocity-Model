@@ -2,7 +2,7 @@ import argparse
 from pathlib import Path
 
 from qcore import formats
-from Velocity_Model.z import extract_z, basin_dict as vm_versions
+from Velocity_Model.z import extract_z, basin_outlines_dict 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -13,17 +13,18 @@ if __name__ == "__main__":
         choices=[
             "Z1.0",
             "Z2.5",
-        ],  # , "vs30", "vs500"], -- couldn't get vs30 or vs500 working despite documentation saying it should work
+        ],  # TO DO:["vs30", "vs500"] not working despite documentation saying otherwise
         help="Selects what Z type to extract: [%(choices)s]",
         nargs="+",
         required=True,
     )
+    vm_versions = basin_outlines_dict.keys()
     parser.add_argument(
         "-v",
         "--version",
         help="VM version to use",
         default="2.07",
-        choices=vm_versions.keys(),
+        choices=vm_versions,
     )
     parser.add_argument(
         "--no_header",

@@ -11,7 +11,7 @@ import numpy as np
 import pandas as pd
 from matplotlib import path as mpltPath
 
-from Velocity_Model.basins import basin_dict
+from Velocity_Model.basins import basin_outlines_dict
 
 MAX_NUM_GEN_MULTI_PROFILES = 300000
 SLICE_SIZE = 50000
@@ -122,7 +122,7 @@ def calculate_z_sigma(stat_df, version):
     """
     sigma_df = pd.DataFrame(index=stat_df.index)
     sigma_df["in_basin_flag"] = False
-    for outline_fp in basin_dict[version]:
+    for outline_fp in basin_outlines_dict[version]:
         outline = np.loadtxt(outline_fp)
         path = mpltPath.Path(outline)
 

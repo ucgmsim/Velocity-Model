@@ -1,11 +1,11 @@
 from pathlib import Path
 
-def get_basin_full_path(basin_list):
+def get_basin_full_path(basin_outlines):
     vm_dir = Path(__file__).parent.parent.resolve()
-    return [vm_dir / basin for basin in basin_list]
+    return [vm_dir / basin for basin in basin_outlines]
 
 
-v203_basin_list = get_basin_full_path(
+v203_basin_outlines = get_basin_full_path(
     [
         "Data/Basins/Wellington/v19p6/Wellington_Polygon_Wainuiomata_WGS84.txt",
         "Data/Boundaries/NewCanterburyBasinBoundary_WGS84_1m.txt",
@@ -19,7 +19,7 @@ v203_basin_list = get_basin_full_path(
         "Data/Boundaries/WaikatoHaurakiBasinEdge_WGS84.txt",
     ]
 )
-v204_basin_list = v203_basin_list + get_basin_full_path(
+v204_basin_outlines = v203_basin_outlines + get_basin_full_path(
     [
         "Data/USER20_BASINS/WanakaOutlineWGS84.txt",
         "Data/USER20_BASINS/WakatipuBasinOutlineWGS84.txt",
@@ -39,8 +39,8 @@ v204_basin_list = v203_basin_list + get_basin_full_path(
         "Data/USER20_BASINS/mackenzie_basin_outline_nzmg.txt",
     ]
 )
-v205_basin_list = v204_basin_list
-v206_basin_list = v205_basin_list + get_basin_full_path(
+v205_basin_outlines = v204_basin_outlines
+v206_basin_outlines = v205_basin_outlines + get_basin_full_path(
     [
         "Data/USER20_BASINS/SpringsJ_basin_outline_v1_WGS84.txt",
         "Data/USER20_BASINS/Karamea_basin_outline_v1_WGS84.txt",
@@ -51,7 +51,7 @@ v206_basin_list = v205_basin_list + get_basin_full_path(
 )
 
 # Wellington Basin update has the same outline so have not updated it for this
-v207_basin_list = v206_basin_list + get_basin_full_path(
+v207_basin_outlines = v206_basin_outlines + get_basin_full_path(
     [
         "Data/Basins/Greater_Wellington_and_Porirua/v21p7/GreaterWellington1_Outline_WGS84.dat",
         "Data/Basins/Greater_Wellington_and_Porirua/v21p7/GreaterWellington2_Outline_WGS84.dat",
@@ -79,12 +79,12 @@ v207_basin_list = v206_basin_list + get_basin_full_path(
         "Data/Basins/East_Cape/v22p3/Motu_bay3_Outline_WGS84.txt",
     ]
 )
-basin_dict = {
-    "2.03": v203_basin_list,
-    "2.04": v204_basin_list,
-    "2.05": v205_basin_list,
-    "2.06": v206_basin_list,
-    "2.07": v207_basin_list,
+basin_outlines_dict = {
+    "2.03": v203_basin_outlines,
+    "2.04": v204_basin_outlines,
+    "2.05": v205_basin_outlines,
+    "2.06": v206_basin_outlines,
+    "2.07": v207_basin_outlines,
 }
 
 

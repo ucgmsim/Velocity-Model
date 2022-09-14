@@ -2,7 +2,7 @@ import argparse
 from pathlib import Path
 
 from qcore import formats
-from Velocity_Model.z import extract_z, basin_outlines as vm_versions
+from Velocity_Model.z import extract_z, basin_outlines_dict 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -13,17 +13,25 @@ if __name__ == "__main__":
         choices=[
             "Z1.0",
             "Z2.5",
-        ],  # , "vs30", "vs500"], -- couldn't get vs30 or vs500 working despite documentation saying it should work
+        ],  # TO DO:["vs30", "vs500"] not working despite documentation saying otherwise
         help="Selects what Z type to extract: [%(choices)s]",
         nargs="+",
         required=True,
     )
+    vm_versions = basin_outlines_dict.keys()
     parser.add_argument(
         "-v",
         "--version",
         help="VM version to use",
-        default="2.06",
-        choices=vm_versions.keys(),
+        default="2.07",
+        choices=vm_versions,
+    )
+    parser.add_argument(
+        "--no_header",
+        dest="keep_header",
+        help="Save output with no header",
+        default=True,
+        action="store_false",
     )
     parser.add_argument("-o", "--output", help="path to output file", default=".", type=Path)
     parser.add_argument("--nzvm-path", default="NZVM", type=Path)
@@ -33,4 +41,4 @@ if __name__ == "__main__":
 
     output_file = args.output
     z_df = extract_z(args.z_type, stat_df, args.nzvm_path, args.version)
-    z_df.to_csv(output_file)
+    z_df.to_csv(output_file,header=args.keep_header)

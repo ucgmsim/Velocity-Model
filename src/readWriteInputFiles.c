@@ -243,13 +243,8 @@ gen_extract_velo_mod_call readGenVMInputTextFile(char *fileName, int rank)
        GEN_EXTRACT_VELO_MOD_CALL.TOPO_TYPE = readParameter(fileName,"TOPO_TYPE");
        topo_type_string_length = strnlen(GEN_EXTRACT_VELO_MOD_CALL.TOPO_TYPE, 200);
        char *model_format=readParameter(fileName,"MODEL_FORMAT");
-       if (strcmp(model_format, "GENERIC") == 0) GEN_EXTRACT_VELO_MOD_CALL.AWP_OUTPUT = 0;
-       else if (strcmp(model_format, "AWP") == 0) GEN_EXTRACT_VELO_MOD_CALL.AWP_OUTPUT = 1;
-       else {
-           fprintf(stderr, "MODEL_FORMAT must be 'GENERIC' or 'AWP', not %s.\nQutting", model_format);
-           MPI_Finalize();
-           return;
-       }
+       GEN_EXTRACT_VELO_MOD_CALL.AWP_OUTPUT = 0;
+       if (strcmp(model_format, "AWP") == 0) GEN_EXTRACT_VELO_MOD_CALL.AWP_OUTPUT = 1;
    }
 
    MPI_Bcast(&GEN_EXTRACT_VELO_MOD_CALL.ORIGIN_LAT, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);

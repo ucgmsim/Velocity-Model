@@ -49,7 +49,7 @@ extern void prescribeVelocities(global_model_parameters *GLOBAL_MODEL_PARAMETERS
 extern mesh_vector *extractMeshVector(partial_global_mesh *PARTIAL_GLOBAL_MESH, int lonInd);
 extern mesh_vector *extendMeshVector(partial_global_mesh *PARTIAL_GLOBAL_MESH, int nPts, double dZPt, int lonInd);
 
-extern void writeGlobalQualities(char *OUTPUT_DIR, partial_global_mesh *PARTIAL_GLOBAL_MESH, partial_global_qualities *PARTIAL_GLOBAL_QUALITIES, gen_extract_velo_mod_call GEN_EXTRACT_VELO_MOD_CALL, calculation_log *CALCULATION_LOG, int latInd, int rank);
+extern void writeGlobalQualities(char *OUTPUT_DIR, partial_global_mesh *PARTIAL_GLOBAL_MESH, partial_global_qualities *PARTIAL_GLOBAL_QUALITIES, gen_extract_velo_mod_call GEN_EXTRACT_VELO_MOD_CALL, calculation_log *CALCULATION_LOG, int latInd, int rank, int ncpus);
 //extern gridStruct *generateLatLonForPlotting(modOrigin modelOrigin, modExtent modelExtent, double latPts[], double lonPts[], int nPts);
 extern void loadGlobalSurfaceData(global_surfaces *GLOBAL_SURFACES, global_model_parameters *GLOBAL_MODEL_PARAMETERS);
 extern global_surf_read *loadGlobalSurface(char *fileName);
@@ -61,7 +61,7 @@ extern double interpolateGlobalSurface(global_surf_read *GLOBAL_SURF_READ, doubl
 extern int determineIfWithinAnyBasinLatLon(basin_data *BASIN_DATA, global_model_parameters *GLOBAL_MODEL_PARAMETERS, double Lat, double Lon);
 extern void determineIfWithinBasinLatLon(basin_data *BASIN_DATA, global_model_parameters *GLOBAL_MODEL_PARAMETERS, in_basin *IN_BASIN, double Lat, double Lon);
 extern void interpolateBasinSurfaceDepths(basin_data *BASIN_DATA, global_model_parameters *GLOBAL_MODEL_PARAMETERS, in_basin *IN_BASIN, partial_basin_surface_depths *PARTIAL_BASIN_SURFACE_DEPTHS, mesh_vector *MESH_VECTOR);
-extern void runGenerateVelocityModel(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extract_velo_mod_call GEN_EXTRACT_VELO_MOD_CALL, calculation_log *CALCULATION_LOG, int rank, int ncpus);
+void runGenerateVelocityModel(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extract_velo_mod_call GEN_EXTRACT_VELO_MOD_CALL, calculation_log *CALCULATION_LOG, int rank, int ncpus);
 extern void runExtractFromVelocityModel(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extract_velo_mod_call GEN_EXTRACT_VELO_MOD_CALL, calculation_log *CALCULATION_LOG);
 extern void runGenerateVelocitySlices(char *MODEL_VERSION, char *OUTPUT_DIR, gen_velo_slices_call GEN_VELO_SLICES_CALL, calculation_log *CALCULATION_LOG);
 extern void runThresholdVelocityModel(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extract_velo_mod_call GEN_EXTRACT_VELO_MOD_CALL, calculation_log *CALCULATION_LOG);
@@ -69,7 +69,7 @@ extern void runThresholdInputLatLons(char *MODEL_VERSION, char *OUTPUT_DIR, gen_
 
 
 extern void runGenerateProfile(char *MODEL_VERSION, char *OUTPUT_DIR, gen_profile_call GEN_PROFILE_CALL, calculation_log *CALCULATION_LOG);
-extern void runGenerateMultipleProfiles(char *MODEL_VERSION, char *OUTPUT_DIR, gen_multi_profiles_call GEN_MULTI_PROFILES_CALL, calculation_log *CALCULATION_LOG);
+extern void runGenerateMultipleProfiles(char *MODEL_VERSION, char *OUTPUT_DIR, gen_multi_profiles_call GEN_MULTI_PROFILES_CALL, calculation_log *CALCULATION_LOG, int rank);
 extern void gcprojRev(double *xf,double *yf,double rlon,double rlat,double ref_rad,double g0,double b0,double amat[8],double ainv[8]);
 extern void ll2xy(double originLat, double originLon, double originRot, double *xp, double *yp, double latA, double lonA);
 

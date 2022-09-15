@@ -19,7 +19,7 @@
 #include "functions.h"
 #include <mpi.h>
 
-void writeGlobalQualities(char *OUTPUT_DIR, partial_global_mesh *PARTIAL_GLOBAL_MESH, partial_global_qualities *PARTIAL_GLOBAL_QUALITIES, gen_extract_velo_mod_call GEN_EXTRACT_VELO_MOD_CALL, calculation_log *CALCULATION_LOG, int latInd, int rank)
+void writeGlobalQualities(char *OUTPUT_DIR, partial_global_mesh *PARTIAL_GLOBAL_MESH, partial_global_qualities *PARTIAL_GLOBAL_QUALITIES, gen_extract_velo_mod_call GEN_EXTRACT_VELO_MOD_CALL, calculation_log *CALCULATION_LOG, int latInd, int rank, int ncpus)
 
 /*
  Purpose:   write the full velocity model to file
@@ -41,17 +41,24 @@ void writeGlobalQualities(char *OUTPUT_DIR, partial_global_mesh *PARTIAL_GLOBAL_
     endianInt = endian();
     
     FILE *fvp, *fvs, *frho, *fmask;
+
+    char fname_suffix[5];
+    fname_suffix[0] = '\0';
+    if (ncpus > 1) {
+        sprintf(fname_suffix, "-%03d", rank);
+    }
+
     char vp3dfile[MAX_FILENAME_STRING_LEN];
-    sprintf(vp3dfile,"%s/Velocity_Model/vp3dfile-%03d.p",OUTPUT_DIR, rank);
+    sprintf(vp3dfile,"%s/Velocity_Model/vp3dfile%s.p",OUTPUT_DIR, fname_suffix);
     
     char vs3dfile[MAX_FILENAME_STRING_LEN];
-    sprintf(vs3dfile,"%s/Velocity_Model/vs3dfile-%03d.s",OUTPUT_DIR, rank);
+    sprintf(vs3dfile,"%s/Velocity_Model/vs3dfile%s.s",OUTPUT_DIR, fname_suffix);
     
     char rho3dfile[MAX_FILENAME_STRING_LEN];
-    sprintf(rho3dfile,"%s/Velocity_Model/rho3dfile-%03d.d",OUTPUT_DIR, rank);
+    sprintf(rho3dfile,"%s/Velocity_Model/rho3dfile%s.d",OUTPUT_DIR, fname_suffix);
     
     char inBasinMaskFile[MAX_FILENAME_STRING_LEN];
-    sprintf(inBasinMaskFile,"%s/Velocity_Model/in_basin_mask-%03d.b",OUTPUT_DIR, rank);
+    sprintf(inBasinMaskFile,"%s/Velocity_Model/in_basin_mask%s.b",OUTPUT_DIR, fname_suffix);
     
     float *vp, *vs, *rho, *inbasin;
     float vpTemp, vsTemp, rhoTemp, inbasinTemp;

@@ -81,11 +81,12 @@ int main(int argc, char *argv[])
     
     if ( argc==1 ) //if no inputs are given
     {
-	if (rank==0){
-	   printf("No input arguments given. Writing sample input text files.\n");
-	   writeSampleInputTextFiles();
-	   exit(EXIT_SUCCESS);
-	}
+        if (rank==0)
+        {
+            printf("No input arguments given. Writing sample input text files.\n");
+            writeSampleInputTextFiles();
+            exit(EXIT_SUCCESS);
+        }
     }
     else if ( argc==2 )
     {
@@ -268,7 +269,7 @@ int main(int argc, char *argv[])
         printf("==========================================\n");
         printf("Running GENERATE_MULTIPLE_PROFILES.\n");
         printf("==========================================\n");
-        runGenerateMultipleProfiles(MODEL_VERSION, OUTPUT_DIR, GEN_MULTI_PROFILES_CALL, CALCULATION_LOG);
+        runGenerateMultipleProfiles(MODEL_VERSION, OUTPUT_DIR, GEN_MULTI_PROFILES_CALL, CALCULATION_LOG, rank);
         printf("==========================================\n");
         printf("Completed running GENERATE_MULTIPLE_PROFILES.\n");
         printf("==========================================\n");
@@ -296,7 +297,7 @@ int main(int argc, char *argv[])
 
 
 
-
+    MPI_Finalize();
 }
 
 

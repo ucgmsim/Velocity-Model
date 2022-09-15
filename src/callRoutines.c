@@ -191,7 +191,7 @@ void runGenerateVelocitySlices(char *MODEL_VERSION, char *OUTPUT_DIR, gen_velo_s
     
 }
 
-void runGenerateMultipleProfiles(char *MODEL_VERSION, char *OUTPUT_DIR, gen_multi_profiles_call GEN_MULTI_PROFILES_CALL, calculation_log *CALCULATION_LOG)
+void runGenerateMultipleProfiles(char *MODEL_VERSION, char *OUTPUT_DIR, gen_multi_profiles_call GEN_MULTI_PROFILES_CALL, calculation_log *CALCULATION_LOG, int rank)
 {
     // Read in text file with profile parameters
     multi_profile_parameters *MULTI_PROFILE_PARAMETERS;
@@ -1069,7 +1069,7 @@ void runThresholdInputLatLons(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extract
 
 
 
-void runGenerateVelocityModel(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extract_velo_mod_call GEN_EXTRACT_VELO_MOD_CALL, calculation_log *CALCULATION_LOG)
+void runGenerateVelocityModel(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extract_velo_mod_call GEN_EXTRACT_VELO_MOD_CALL, calculation_log *CALCULATION_LOG, int rank, int ncpus)
 {
     int smoothingRequired = 0; // set as zero if no smoothing is required, set as 1 for smoothing
     int nPtsSmooth = 1; // number of points (eitherside of gridpoint) to incorporate for smoothing
@@ -1124,6 +1124,7 @@ void runGenerateVelocityModel(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extract
     
     // generate the model grid
     global_mesh *GLOBAL_MESH;
+    printf("%d", sizeof(global_mesh));
     GLOBAL_MESH = malloc(sizeof(global_mesh));
     if (GLOBAL_MESH == NULL)
     {
@@ -1305,7 +1306,7 @@ void runGenerateVelocityModel(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extract
         }
         #pragma omp ordered
         if (!GEN_EXTRACT_VELO_MOD_CALL.AWP_OUTPUT) 
-            writeGlobalQualities(OUTPUT_DIR, PARTIAL_GLOBAL_MESH, PARTIAL_GLOBAL_QUALITIES, GEN_EXTRACT_VELO_MOD_CALL,CALCULATION_LOG, j);
+            writeGlobalQualities(OUTPUT_DIR, PARTIAL_GLOBAL_MESH, PARTIAL_GLOBAL_QUALITIES, GEN_EXTRACT_VELO_MOD_CALL,CALCULATION_LOG, j, rank, ncpus);
 	else
             writeGlobalQualitiesAWP(OUTPUT_DIR, PARTIAL_GLOBAL_MESH, GLOBAL_MESH, PARTIAL_GLOBAL_QUALITIES, GEN_EXTRACT_VELO_MOD_CALL,CALCULATION_LOG, j, rank); 
         free(PARTIAL_GLOBAL_MESH);

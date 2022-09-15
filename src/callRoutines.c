@@ -1305,10 +1305,10 @@ void runGenerateVelocityModel(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extract
             free(IN_BASIN);
         }
         #pragma omp ordered
-        if (!GEN_EXTRACT_VELO_MOD_CALL.AWP_OUTPUT) 
-            writeGlobalQualities(OUTPUT_DIR, PARTIAL_GLOBAL_MESH, PARTIAL_GLOBAL_QUALITIES, GEN_EXTRACT_VELO_MOD_CALL,CALCULATION_LOG, j, rank, ncpus);
-	else
+        if (GEN_EXTRACT_VELO_MOD_CALL.AWP_OUTPUT) 
             writeGlobalQualitiesAWP(OUTPUT_DIR, PARTIAL_GLOBAL_MESH, GLOBAL_MESH, PARTIAL_GLOBAL_QUALITIES, GEN_EXTRACT_VELO_MOD_CALL,CALCULATION_LOG, j, rank); 
+	else
+            writeGlobalQualities(OUTPUT_DIR, PARTIAL_GLOBAL_MESH, PARTIAL_GLOBAL_QUALITIES, GEN_EXTRACT_VELO_MOD_CALL,CALCULATION_LOG, j, rank, ncpus);
         free(PARTIAL_GLOBAL_MESH);
         free(PARTIAL_GLOBAL_QUALITIES);
 

@@ -2,6 +2,8 @@
 
 This is the repository for the source code for the New Zealand Velocity Model (NZVM, Ref. https://doi.org/10.1080/00288306.2019.1636830). 
 
+This branch contains the MPI-AWP version.  It supports creation of a velocity model in the format of the AWP-ODC wave propagation code and MPI.
+See `README_mpi.md` for more information.
 
 There are seven general call types which are outlined in this readme.
 

@@ -3,8 +3,9 @@ import numpy as np
 import csv
 
 # edit these two lines depending on your environment
-NI_tomo_dir = Path(__file__).parents[0].resolve()/ "Chow_Data"
-# place data from https://core.geo.vuw.ac.nz/d/feae69f61ea54f81bee1/
+NI_tomo_dir = Path(
+    "/home/seb56/Velocity-Model/Chow_NI"
+)  # place data from https://core.geo.vuw.ac.nz/d/feae69f61ea54f81bee1/
 EP2020_tomo_dir = Path(__file__).parents[2].resolve() / "Data/Tomography/2020_NZ"
 
 
@@ -16,7 +17,7 @@ compare_dir = work_dir / "compare"
 log_dir = work_dir / "log"
 
 MAX_DIST = 20  # km
-depth_categories = ["crust", "shallow", "mantle"]
+depth_categories = ["shallow","crust","mantle"]
 v_file_template = "surf_tomography_{}_elev{}.in"  # .format(lower(v_type), int(elev))
 v_types = ["vp", "vs", "rho"]
 
@@ -28,7 +29,6 @@ def smart_float(n:float, afterpoint:int=2):
     else:
         return int_part+"p"+float_part[:afterpoint]
 
-
 def output_exists(outdir: Path, v_type:str, elev: float):
     output_file=outdir/v_file_template.format(v_type,smart_float(elev))
     if output_file.exists():
@@ -36,16 +36,16 @@ def output_exists(outdir: Path, v_type:str, elev: float):
         return True
     else:
         return False
-
+    
 def write_file(
     outdir: Path,
     v_type: str,
     V: np.ndarray,
-    elev: float,
+    elev: int,
     lats: np.ndarray,
     lons: np.ndarray,
 ):
-    filename = outdir / v_file_template.format(v_type, smart_float(elev))
+    filename = outdir /  v_file_template.format(v_type, smart_float(elev))
     print(filename)
     with open(filename, "w") as csvfile:
         writer = csv.writer(csvfile, delimiter=" ")

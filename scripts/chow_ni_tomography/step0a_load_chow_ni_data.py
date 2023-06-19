@@ -1,5 +1,7 @@
+import numpy as np
 import pandas as pd
 from pathlib import Path
+import xarray as xr
 import yaml
 from shared import NI_tomo_dir, depth_categories, chow_yaml
 
@@ -12,22 +14,20 @@ tomo_df_dict = {}
 z_values = []
 for dc in depth_categories:
     print(f"{dc}")
-    tomo_df = pd.read_csv(
-        Path(NI_tomo_dir) / "tomography_model_{}.xyz".format(dc),
-        sep="\s",
-        skiprows=4,
-        header=None,
-        names=["X", "Y", "Z", "Vp", "Vs", "rho", "Qp", "Qs"],
-    )
+    tomo_df = xr.open_dataset(Path(NI_tomo_dir/f"nz_atom_north_chow_etal_2021_vp+vs-{dc}.r0.1-n4.nc"))
 
     tomo_df_dict[dc] = tomo_df
+    print(tomo_df.depth.values)
 
-    z_values.extend(list(set(tomo_df.Z)))
-
-z_values.sort()
+    z_values.extend(list(tomo_df.depth.values.flatten()))
+z_values=sorted(list(set(z_values)))
 
 # add this output to shared.py as chow_elevs
-print(z_values)
-chow_ni={"elevs": [z/1000. for z in z_values]}
+print(f"{len(z_values)} {z_values}")
+set_z_values=list(set(z_values))
+print(f"{len(set_z_values)} {set_z_values}")
+
+z_values= sorted(np.array(z_values, dtype=float)*(-1))
+chow_ni={"elevs": [float(e) for e in z_values]}
 with open(chow_yaml,"w") as file:
     yaml.dump(chow_ni,file)

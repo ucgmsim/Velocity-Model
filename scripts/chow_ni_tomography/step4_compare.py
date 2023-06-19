@@ -67,4 +67,5 @@ for v_type in v_types:
         )
 
         # for plotting
-        # for x in *vp*.xyz; do x1="${x/surf_tomography_/}";x2="${x1/.in.xyz/}";echo $x2;python ~/visualization/sources/plot_items.py --xyz $x -t "NZVM\&Chow\ vs\ NZVM\ $x2" --xyz-transparency 30 --xyz-cpt polar --xyz-cpt-labels "log10(new/original)" --xyz-landmask --xyz-grid --xyz-grid-type surface --xyz-grid-search 12m --xyz-size 1k --xyz-cpt-min "-0.01" --xyz-cpt-max 0.01 -n 4 -f plots/$x2;done
+        # for x in *vs*.xyz; do x1="${x/surf_tomography_/}";x2="${x1/.in.xyz/}";echo $x2; python ~/visualization/sources/plot_items.py --xyz $x -t "NZVM\&Chow\ vs\ NZVM\ $x2" --xyz-transparency 30 --xyz-cpt polar --xyz-cpt-labels "log10(new/original)" --xyz-grid --xyz-grid-type surface --xyz-grid-search 12m --xyz-size 1k --xyz-cpt-invert --xyz-cpt-min "-0.04" --xyz-cpt-max 0.04 -n 4 --xyz-cpt-fg 80/0/0 --xyz-cpt-bg 0/0/80 -f plots/all_${x2}; done
+

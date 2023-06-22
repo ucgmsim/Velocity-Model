@@ -187,3 +187,4 @@ if __name__ == "__main__":
         res=pool.map_async(partial(myfunc, nonzero_vert_ids,nonzero_hori_ids,boundaries), new_chow_elevs)
         res=res.get()
 
+# This generates the final files in step3_outdir. Copy them to Velocity-Model/Data/Tomography/2023_Chow_NI, and edit EPtomo2010subMod.c and getSurfSubMod.c to use these files.

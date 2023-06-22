@@ -53,8 +53,8 @@ for elev in elevs:
 
         ep2020_dic[elev][v_type] = v_df
 
-# ep2020_dic is the whole 2020_NZ tomography. Its elevs are only 25 long -750 <=.. <=15 , while chow_elevs are 140 long. -400<=..<= 3
-
+# ep2020_dic is the whole 2020_NZ tomography. Its elevs are only 25 long -750 <=.. <=15 , while chow_elevs are 172 long. -400<=..<= 2.25
+# take elevs from ep2020 data that are not present in Chow. 
 new_chow_elevs = sorted([x for x in elevs if x < min(chow_elevs) or x>max(chow_elevs)] + chow_elevs)
 
 

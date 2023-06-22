@@ -5,7 +5,7 @@ import csv
 # edit these two lines depending on your environment
 NI_tomo_dir = Path(
     "/home/seb56/Velocity-Model/Chow_NI"
-)  # place data from https://core.geo.vuw.ac.nz/d/feae69f61ea54f81bee1/
+)  # Download nz_atom_north_chow_etal_2021_vp+vs-*.r0.1-n4.nc files from http://ds.iris.edu/ds/products/emc-nz_atom_north_chow_etal_2021_vpvs/
 EP2020_tomo_dir = Path(__file__).parents[2].resolve() / "Data/Tomography/2020_NZ"
 
 

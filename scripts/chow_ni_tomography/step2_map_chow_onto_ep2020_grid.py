@@ -69,6 +69,7 @@ for dc in depth_categories: # starting from shallow (higher res)
     with Pool(8) as pool:
         res=pool.map_async(partial(myfunc, tomo_df, mgrid_lon, mgrid_lat), z_values)
         res=res.get()
+    # For debugging, use below instead of the above with Pool
     # for z in z_values:
     #     myfunc(tomo_df, mgrid_lon, mgrid_lat, z)
 

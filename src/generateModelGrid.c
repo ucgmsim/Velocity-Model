@@ -55,11 +55,14 @@ void generateFullModelGridGreatCircle(model_extent *MODEL_EXTENT, global_mesh *G
     
     GLOBAL_MESH->nX = round(MODEL_EXTENT->Xmax/MODEL_EXTENT->hLatLon);
     GLOBAL_MESH->nY = round(MODEL_EXTENT->Ymax/MODEL_EXTENT->hLatLon);
-    GLOBAL_MESH->nZ = round((MODEL_EXTENT->Zmax-MODEL_EXTENT->Zmin) / MODEL_EXTENT->hDep);
+
+    //Modified to include the lowest depth levels.  If z_min=0 (surface), z_max=9*hDep, nZ is 10.
+    GLOBAL_MESH->nZ = round((MODEL_EXTENT->Zmax-MODEL_EXTENT->Zmin) / MODEL_EXTENT->hDep) + 1;
 
     if (GLOBAL_MESH->nZ != 1)
     {
         printf("Number of model points. nx: %i, ny: %i, nz: %i.\n", GLOBAL_MESH->nX, GLOBAL_MESH->nY, GLOBAL_MESH->nZ);
+	printf("Zmax=%f, Zmin=%f, hDep=%f\n", MODEL_EXTENT->Zmax, MODEL_EXTENT->Zmin, MODEL_EXTENT->hDep);
     }
     // enforce the grid is of allowable size
     if(GLOBAL_MESH->nX>=LON_GRID_DIM_MAX)

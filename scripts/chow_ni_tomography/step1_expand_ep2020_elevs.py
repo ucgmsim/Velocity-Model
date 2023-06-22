@@ -9,7 +9,7 @@ from shared import (
     step1_outdir,
     v_file_template,
     v_types,
-    smart_float,
+    p_float,
 )
 
 """
@@ -72,7 +72,7 @@ for v_type in v_types:
             new_v = f(new_chow_elevs)
             new_v_data[lat_id][lon_id] = new_v
     for elev_id, elev in enumerate(new_chow_elevs):
-        outfile = step1_outdir / v_file_template.format(v_type, smart_float(elev))
+        outfile = step1_outdir / v_file_template.format(v_type, p_float(elev))
         with open(outfile, "w") as f:
             f.write(f"{len(lats)} {len(lons)}\n")
             f.write(

@@ -8,6 +8,9 @@ NI_tomo_dir = Path(
 )  # Download nz_atom_north_chow_etal_2021_vp+vs-*.r0.1-n4.nc files from http://ds.iris.edu/ds/products/emc-nz_atom_north_chow_etal_2021_vpvs/
 EP2020_tomo_dir = Path(__file__).parents[2].resolve() / "Data/Tomography/2020_NZ"
 
+chow_yaml = Path(__file__).parent / "chow_ni.yaml"
+ep2020_yaml = Path(__file__).parent / "ep2020.yaml"
+
 
 work_dir = NI_tomo_dir / "workdir"
 step1_outdir = work_dir / "nz2020_tomo_elevs_ext"
@@ -21,7 +24,8 @@ depth_categories = ["shallow","crust","mantle"]
 v_file_template = "surf_tomography_{}_elev{}.in"  # .format(lower(v_type), int(elev))
 v_types = ["vp", "vs", "rho"]
 
-def smart_float(n:float, afterpoint:int=2):
+# Convert a floating point number to a string with "p" instead of "." and a given number of significant figures
+def p_float(n:float, afterpoint:int=2):
     s="{:f}".format(n)
     int_part, float_part=s.split(".")
     if int(float_part)==0:
@@ -30,7 +34,7 @@ def smart_float(n:float, afterpoint:int=2):
         return int_part+"p"+float_part[:afterpoint]
 
 def output_exists(outdir: Path, v_type:str, elev: float):
-    output_file=outdir/v_file_template.format(v_type,smart_float(elev))
+    output_file=outdir/v_file_template.format(v_type,p_float(elev))
     if output_file.exists():
         print(f"{output_file} exists")
         return True
@@ -45,7 +49,7 @@ def write_file(
     lats: np.ndarray,
     lons: np.ndarray,
 ):
-    filename = outdir /  v_file_template.format(v_type, smart_float(elev))
+    filename = outdir /  v_file_template.format(v_type, p_float(elev))
     print(filename)
     with open(filename, "w") as csvfile:
         writer = csv.writer(csvfile, delimiter=" ")
@@ -55,7 +59,5 @@ def write_file(
         for i in range(len(lats)):
             writer.writerow(["{:.6f}".format(x) for x in V[i]])
 
-chow_yaml = Path(__file__).parent / "chow_ni.yaml"
-ep2020_yaml = Path(__file__).parent / "ep2020.yaml"
 
 

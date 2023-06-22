@@ -9,7 +9,7 @@ from shared import (
     v_types,
     v_file_template,
     compare_dir,
-    smart_float,
+    p_float,
 )
 
 """
@@ -25,13 +25,13 @@ lons = ep2020_data['lons']
 
 def compare(v_type, elev):
     combined_array = pd.read_csv(
-        step3_outdir / v_file_template.format(v_type, smart_float(elev)),
+        step3_outdir / v_file_template.format(v_type, p_float(elev)),
         delimiter=" ",
         header=2,
         na_filter=False,
     ).to_numpy()
     ep2020_array = pd.read_csv(
-        step1_outdir / v_file_template.format(v_type, smart_float(elev)),
+        step1_outdir / v_file_template.format(v_type, p_float(elev)),
         delimiter=" ",
         header=2,
         na_filter=False,
@@ -54,7 +54,7 @@ for v_type in v_types:
 
         assert meshed_bias_array.size == meshed_lats.size
 
-        outfile = v_file_template.format(v_type, smart_float(elev)) + ".xyz"
+        outfile = v_file_template.format(v_type, p_float(elev)) + ".xyz"
         df = pd.DataFrame(
             {"lon": meshed_lons, "lat": meshed_lats, "bias": meshed_bias_array}
         )

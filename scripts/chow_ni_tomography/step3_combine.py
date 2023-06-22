@@ -17,7 +17,7 @@ from shared import (
     MAX_DIST,
     v_types,
     output_exists,
-    smart_float,
+    p_float,
 )
 
 """
@@ -135,7 +135,7 @@ def combine_and_smooth(
 def myfunc(nonzero_vert_ids,nonzero_hori_ids,boundaries,elev):
 
     for v_type in v_types:
-        v_file = v_file_template.format(v_type, smart_float(elev))
+        v_file = v_file_template.format(v_type, p_float(elev))
         if output_exists(step3_outdir,v_type,elev):
             continue
 
@@ -172,7 +172,7 @@ if __name__ == "__main__":
     elev = -25  # pick a random elev
     v_type = v_types[0]
 
-    v_file = v_file_template.format(v_type, smart_float(elev))
+    v_file = v_file_template.format(v_type, p_float(elev))
 
 
     chow_tomo_grid_mapped_df = pd.read_csv(

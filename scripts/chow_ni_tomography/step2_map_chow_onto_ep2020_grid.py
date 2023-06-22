@@ -1,4 +1,3 @@
-#import utm
 import numpy as np
 import pandas as pd
 from pathlib import Path
@@ -8,7 +7,7 @@ import yaml
 from  multiprocessing import Pool
 from functools import partial
 
-from shared import depth_categories, ep2020_yaml, NI_tomo_dir, step2_outdir, write_file, output_exists, smart_float
+from shared import depth_categories, ep2020_yaml, NI_tomo_dir, step2_outdir, write_file, output_exists, p_float
 
 step2_outdir.mkdir(parents=True, exist_ok=True)
 

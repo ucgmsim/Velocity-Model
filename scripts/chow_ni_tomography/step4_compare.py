@@ -18,10 +18,11 @@ This code is to produce plots similar to those from Chow's paper, showing differ
 
 compare_dir.mkdir(parents=True, exist_ok=True)
 with open(ep2020_yaml) as file:
-    ep2020_data=yaml.safe_load(file)
+    ep2020_data = yaml.safe_load(file)
 
-lats = ep2020_data['lats']
-lons = ep2020_data['lons']
+lats = ep2020_data["lats"]
+lons = ep2020_data["lons"]
+
 
 def compare(v_type, elev):
     combined_array = pd.read_csv(
@@ -68,4 +69,3 @@ for v_type in v_types:
 
         # for plotting
         # for x in *vs*.xyz; do x1="${x/surf_tomography_/}";x2="${x1/.in.xyz/}";echo $x2; python ~/visualization/sources/plot_items.py --xyz $x -t "NZVM\&Chow\ vs\ NZVM\ $x2" --xyz-transparency 30 --xyz-cpt polar --xyz-cpt-labels "log10(new/original)" --xyz-grid --xyz-grid-type surface --xyz-grid-search 12m --xyz-size 1k --xyz-cpt-invert --xyz-cpt-min "-0.04" --xyz-cpt-max 0.04 -n 4 --xyz-cpt-fg 80/0/0 --xyz-cpt-bg 0/0/80 -f plots/all_${x2}; done
-

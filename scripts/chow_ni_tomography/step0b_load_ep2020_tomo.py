@@ -36,6 +36,6 @@ for in_file in in_files:
 elevs.sort()
 
 # Save the data
-ep2020={'lats': lats,'lons': lons, 'elevs': elevs}
-with open(ep2020_yaml,"w") as file:
-    yaml.dump(ep2020,file)
+ep2020 = {"lats": lats, "lons": lons, "elevs": elevs}
+with open(ep2020_yaml, "w") as file:
+    yaml.dump(ep2020, file)

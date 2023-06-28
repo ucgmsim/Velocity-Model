@@ -33,17 +33,19 @@ step3_outdir.mkdir(parents=True, exist_ok=True)
 log_dir.mkdir(parents=True, exist_ok=True)
 
 with open(ep2020_yaml) as file:
-    ep2020_data=yaml.safe_load(file)
+    ep2020_data = yaml.safe_load(file)
 
 with open(chow_yaml) as file:
-    chow_data=yaml.safe_load(file)
+    chow_data = yaml.safe_load(file)
 
-lats = ep2020_data['lats']
-lons = ep2020_data['lons']
-elevs = ep2020_data['elevs']
-chow_elevs= chow_data['elevs']
+lats = ep2020_data["lats"]
+lons = ep2020_data["lons"]
+elevs = ep2020_data["elevs"]
+chow_elevs = chow_data["elevs"]
 
-new_chow_elevs = sorted([x for x in elevs if x < min(chow_elevs) or x>max(chow_elevs)] + chow_elevs)  # add missing elevs to chow_elevs
+new_chow_elevs = sorted(
+    [x for x in elevs if x < min(chow_elevs) or x > max(chow_elevs)] + chow_elevs
+)  # add missing elevs to chow_elevs
 
 
 def nonzero_grid(v_array):
@@ -132,11 +134,12 @@ def combine_and_smooth(
         # print(res)
     return final_v_array
 
-def process_per_elev(nonzero_vert_ids,nonzero_hori_ids,boundaries,elev):
+
+def process_per_elev(nonzero_vert_ids, nonzero_hori_ids, boundaries, elev):
 
     for v_type in v_types:
         v_file = v_file_template.format(v_type, p_float(elev))
-        if output_exists(step3_outdir,v_type,elev):
+        if output_exists(step3_outdir, v_type, elev):
             continue
 
         ep2020_tomo_elevs_ext_df = pd.read_csv(
@@ -167,13 +170,13 @@ def process_per_elev(nonzero_vert_ids,nonzero_hori_ids,boundaries,elev):
 
         write_file(step3_outdir, v_type, final_v_array, elev, lats, lons)
 
+
 if __name__ == "__main__":
     # we know that for any elev and v_type, the lats and lons are all the same
     elev = -25  # pick a random elev
     v_type = v_types[0]
 
     v_file = v_file_template.format(v_type, p_float(elev))
-
 
     chow_tomo_grid_mapped_df = pd.read_csv(
         step2_outdir / v_file, delimiter=" ", header=2, na_filter=False
@@ -182,9 +185,12 @@ if __name__ == "__main__":
 
     nonzero_vert_ids, nonzero_hori_ids = nonzero_grid(chow_tomo_grid_mapped_array)
     boundaries = find_boundaries(nonzero_vert_ids, nonzero_hori_ids)
-    
+
     with Pool(40) as pool:
-        res=pool.map_async(partial(process_per_elev, nonzero_vert_ids,nonzero_hori_ids,boundaries), new_chow_elevs)
-        res=res.get()
+        res = pool.map_async(
+            partial(process_per_elev, nonzero_vert_ids, nonzero_hori_ids, boundaries),
+            new_chow_elevs,
+        )
+        res = res.get()
 
 # This generates the final files in step3_outdir. Copy them to Velocity-Model/Data/Tomography/2023_Chow_NI, and edit EPtomo2010subMod.c and getSurfSubMod.c to use these files.

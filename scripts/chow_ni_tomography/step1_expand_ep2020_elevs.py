@@ -16,16 +16,16 @@ from shared import (
 This code expands EP2020 tomography such that it covers the elevation levels of Chow NI via interpolation.
 """
 with open(ep2020_yaml) as file:
-    ep2020_data=yaml.safe_load(file)
+    ep2020_data = yaml.safe_load(file)
 with open(chow_yaml) as file:
-    chow_data=yaml.safe_load(file)
+    chow_data = yaml.safe_load(file)
 
 
-lats = ep2020_data['lats']
-lons = ep2020_data['lons']
-elevs = ep2020_data['elevs']
+lats = ep2020_data["lats"]
+lons = ep2020_data["lons"]
+elevs = ep2020_data["elevs"]
 
-chow_elevs= chow_data['elevs']
+chow_elevs = chow_data["elevs"]
 
 tomo_index = pd.MultiIndex.from_product(
     [lats, lons, elevs], names=["lat", "lon", "elev"]
@@ -54,8 +54,10 @@ for elev in elevs:
         ep2020_dic[elev][v_type] = v_df
 
 # ep2020_dic is the whole 2020_NZ tomography. Its elevs are only 25 long -750 <=.. <=15 , while chow_elevs are 172 long. -400<=..<= 2.25
-# take elevs from ep2020 data that are not present in Chow. 
-new_chow_elevs = sorted([x for x in elevs if x < min(chow_elevs) or x>max(chow_elevs)] + chow_elevs)
+# take elevs from ep2020 data that are not present in Chow.
+new_chow_elevs = sorted(
+    [x for x in elevs if x < min(chow_elevs) or x > max(chow_elevs)] + chow_elevs
+)
 
 
 for v_type in v_types:

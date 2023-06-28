@@ -20,27 +20,29 @@ compare_dir = work_dir / "compare"
 log_dir = work_dir / "log"
 
 MAX_DIST = 20  # km
-depth_categories = ["shallow","crust","mantle"]
+depth_categories = ["shallow", "crust", "mantle"]
 v_file_template = "surf_tomography_{}_elev{}.in"  # .format(lower(v_type), int(elev))
 v_types = ["vp", "vs", "rho"]
 
 # Convert a floating point number to a string with "p" instead of "." and a given number of significant figures
-def p_float(n:float, afterpoint:int=2):
-    s="{:f}".format(n)
-    int_part, float_part=s.split(".")
-    if int(float_part)==0:
+def p_float(n: float, afterpoint: int = 2):
+    s = "{:f}".format(n)
+    int_part, float_part = s.split(".")
+    if int(float_part) == 0:
         return int_part
     else:
-        return int_part+"p"+float_part[:afterpoint]
+        return int_part + "p" + float_part[:afterpoint]
 
-def output_exists(outdir: Path, v_type:str, elev: float):
-    output_file=outdir/v_file_template.format(v_type,p_float(elev))
+
+def output_exists(outdir: Path, v_type: str, elev: float):
+    output_file = outdir / v_file_template.format(v_type, p_float(elev))
     if output_file.exists():
         print(f"{output_file} exists")
         return True
     else:
         return False
-    
+
+
 def write_file(
     outdir: Path,
     v_type: str,
@@ -49,7 +51,7 @@ def write_file(
     lats: np.ndarray,
     lons: np.ndarray,
 ):
-    filename = outdir /  v_file_template.format(v_type, p_float(elev))
+    filename = outdir / v_file_template.format(v_type, p_float(elev))
     print(filename)
     with open(filename, "w") as csvfile:
         writer = csv.writer(csvfile, delimiter=" ")
@@ -58,6 +60,3 @@ def write_file(
         writer.writerow(["{:.6f}".format(x) for x in lons])
         for i in range(len(lats)):
             writer.writerow(["{:.6f}".format(x) for x in V[i]])
-
-
-

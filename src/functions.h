@@ -352,6 +352,7 @@ void load_Perturbation_v20p11(global_model_parameters *GLOBAL_MODEL_PARAMETERS, 
 extern calculation_log *initializeCalculationLog(int argc, char *argv[]);
 
 
+extern void ftoa(float n, char *res, int afterpoint);
 // functions for AWP and MPI
 extern void mpi_error_check(int ierr, char *message);
 extern void writeGlobalQualitiesAWP(char *OUTPUT_DIR, partial_global_mesh *PARTIAL_GLOBAL_MESH, global_mesh *GLOBAL_MESH, partial_global_qualities *PARTIAL_GLOBAL_QUALITIES, gen_extract_velo_mod_call GEN_EXTRACT_VELO_MOD_CALL, calculation_log *CALCULATION_LOG, int latInd, int rank);

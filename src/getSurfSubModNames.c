@@ -1976,34 +1976,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->basin[53] = "Motu_Bay2_v22p3";
         GLOBAL_MODEL_PARAMETERS->basin[54] = "Motu_Bay3_v22p3";
     }
-    else if(strcmp(modelVersion,"2.08_no_basins") == 0)
-    {
-        // define the number of surfaces and sub models
-        GLOBAL_MODEL_PARAMETERS->nSurf = 3;
-        GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 2;
-        
-        // insert surface surface keywords and filenames
-        GLOBAL_MODEL_PARAMETERS->surf[0] = "posInfSurf";
-        GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[0] = "Data/Global_Surfaces/posInf.in";
-        GLOBAL_MODEL_PARAMETERS->surf[1] = "DEM";
-        GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[1] = "Data/DEM/NZ_DEM_HD.in";
-        GLOBAL_MODEL_PARAMETERS->surf[2] = "negInfSurf";
-        GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[2] = "Data/Global_Surfaces/negInf.in";
-        
-        // insert velocity submodel keywords and filenames (if necessary)
-        GLOBAL_MODEL_PARAMETERS->veloSubMod[0] = "NaNsubMod";
-        GLOBAL_MODEL_PARAMETERS->veloSubMod[1] = "EPtomo2010subMod";
-        GLOBAL_MODEL_PARAMETERS->tomographyName = "2020_Chow_NI";
 
-
-        
-        GLOBAL_MODEL_PARAMETERS->GTL = 1;
-        GLOBAL_MODEL_PARAMETERS->BasinEdgeSmoothing = 1;
-        
-        // Basin names for this model version
-        GLOBAL_MODEL_PARAMETERS->nBasins = 0;
-        
-    }
     else if(strcmp(modelVersion,"2.08") == 0)
     {
         // define the number of surfaces and sub models
@@ -2021,7 +1994,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         // insert velocity submodel keywords and filenames (if necessary)
         GLOBAL_MODEL_PARAMETERS->veloSubMod[0] = "NaNsubMod";
         GLOBAL_MODEL_PARAMETERS->veloSubMod[1] = "EPtomo2010subMod";
-        GLOBAL_MODEL_PARAMETERS->tomographyName = "2020_Chow_NI";
+        GLOBAL_MODEL_PARAMETERS->tomographyName = "2023_Chow_NI";
 
 
         

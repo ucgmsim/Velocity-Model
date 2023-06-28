@@ -16,7 +16,7 @@ V_types = ["vp", "vs", "rho"]
 """
 This code fits Chow NI tomography onto the (lat lon) grid of EP2020 via interpolation
 """
-def myfunc(tomo_df, mgrid_lon, mgrid_lat, elev):
+def process_per_elev(tomo_df, mgrid_lon, mgrid_lat, elev):
     #print(tomo_df)
     for V_type in V_types:
         print(f"    {elev}")
@@ -66,7 +66,7 @@ for dc in depth_categories: # starting from shallow (higher res)
     
     mgrid_lon, mgrid_lat = np.meshgrid(lons, lats)
     with Pool(8) as pool:
-        res=pool.map_async(partial(myfunc, tomo_df, mgrid_lon, mgrid_lat), z_values)
+        res=pool.map_async(partial(process_per_elev, tomo_df, mgrid_lon, mgrid_lat), z_values)
         res=res.get()
     # For debugging, use below instead of the above with Pool
     # for z in z_values:

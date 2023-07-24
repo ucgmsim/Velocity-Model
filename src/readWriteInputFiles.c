@@ -184,6 +184,7 @@ void writeSampleInputTextFiles(void)
 
 char *readParameter(char *fileName, char *quality)
 {
+    char *returnValue;
     returnValue = readParameterNoExit(fileName,quality);
 
     if (returnValue == NULL)
@@ -250,7 +251,8 @@ char *readParameterNoExit(char *fileName, char *quality) {
        topo_type_string_length = strnlen(GEN_EXTRACT_VELO_MOD_CALL.TOPO_TYPE, 200);
        GEN_EXTRACT_VELO_MOD_CALL.AWP_OUTPUT = 0;
        char *model_format=readParameterNoExit(fileName,"MODEL_FORMAT");
-       if (strcmp(model_format, "AWP") == 0) GEN_EXTRACT_VELO_MOD_CALL.AWP_OUTPUT = 1;
+       if (model_format !=NULL && strcmp(model_format, "AWP") == 0) GEN_EXTRACT_VELO_MOD_CALL.AWP_OUTPUT = 1;
+
    }
 
    MPI_Bcast(&GEN_EXTRACT_VELO_MOD_CALL.ORIGIN_LAT, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
@@ -306,7 +308,7 @@ gen_extract_velo_mod_call readExtractVMInputTextFile(char *fileName)
 gen_velo_slices_call readGenerateSliceInputTextFile(char *fileName)
 {
     gen_velo_slices_call GEN_VELO_SLICES_CALL;
-    GEN_VELO_SLICES_CALL.GENERATED_SLICE_PARAMETERS_TEXTFILE = readParameter(fileName,"GENERATED_SLICE_PARAMETERS_TEXTFILE";
+    GEN_VELO_SLICES_CALL.GENERATED_SLICE_PARAMETERS_TEXTFILE = readParameter(fileName,"GENERATED_SLICE_PARAMETERS_TEXTFILE");
     GEN_VELO_SLICES_CALL.TOPO_TYPE = readParameter(fileName,"TOPO_TYPE");
 
     return GEN_VELO_SLICES_CALL;

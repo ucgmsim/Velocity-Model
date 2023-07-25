@@ -224,6 +224,7 @@ char *readParameterNoExit(char *fileName, char *quality) {
 
     if (valAssigned == 0)
     {
+        free(returnValue);
         returnValue = NULL;
     }
     return returnValue;

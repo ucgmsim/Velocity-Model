@@ -252,7 +252,7 @@ char *readParameterNoExit(char *fileName, char *quality) {
        topo_type_string_length = strnlen(GEN_EXTRACT_VELO_MOD_CALL.TOPO_TYPE, 200);
        GEN_EXTRACT_VELO_MOD_CALL.AWP_OUTPUT = 0;
        char *model_format=readParameterNoExit(fileName,"MODEL_FORMAT");
-       if (model_format !=NULL && strcmp(model_format, "AWP") == 0) GEN_EXTRACT_VELO_MOD_CALL.AWP_OUTPUT = 1;
+       if (model_format != NULL && strcmp(model_format, "AWP") == 0) GEN_EXTRACT_VELO_MOD_CALL.AWP_OUTPUT = 1;
 
    }
 

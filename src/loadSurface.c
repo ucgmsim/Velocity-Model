@@ -139,6 +139,11 @@ basin_surf_read *loadBasinSurface(char *fileName)
 
     basin_surf_read *BASIN_SURF_READ;
     BASIN_SURF_READ = malloc(sizeof(basin_surf_read));
+    if (BASIN_SURF_READ == NULL)
+    {
+        printf("Error: malloc failed while loading %s\n", fileName);
+        exit(EXIT_FAILURE);
+    }
     
     int nLat, nLon;
     // read and assign the number of latitude and longitude values

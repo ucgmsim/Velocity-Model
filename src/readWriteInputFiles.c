@@ -184,45 +184,53 @@ void writeSampleInputTextFiles(void)
 
 char *readParameter(char *fileName, char *quality)
 {
+    char *returnValue;
+    returnValue = readParameterNoExit(fileName,quality);
+
+    if (returnValue == NULL)
+    {
+        printf("Quality %s not set in file %s. See readme.\n",quality,fileName);
+        exit(EXIT_FAILURE);
+    }
+    return returnValue;
+}
+
+char *readParameterNoExit(char *fileName, char *quality) {
     char line[MAX_FILENAME_STRING_LEN];
-    char *returnValue=(char*) malloc(MAX_FILENAME_STRING_LEN*sizeof(char));
+    char *returnValue = (char *) malloc(MAX_FILENAME_STRING_LEN * sizeof(char));
     char *type;
     char *val;
     int valAssigned = 0;
 
     FILE *fNameRead = NULL;
-    fNameRead  = fopen(fileName, "r");
-    if (fNameRead == NULL)
-    {
-        printf("File not found. (%s).\n",fileName);
+    fNameRead = fopen(fileName, "r");
+    if (fNameRead == NULL) {
+        printf("File not found. (%s).\n", fileName);
         exit(EXIT_FAILURE);
     }
 
-    while (fgets (line, sizeof(line), fNameRead))
-    {
-        type = strtok (line,"=");
-        val = strtok (NULL,"=");
-        if(strcmp(type, quality) == 0)
-        {
-            val[strlen(val)-1] = 0;
-            strcpy(returnValue,val);
+    while (fgets(line, sizeof(line), fNameRead)) {
+        type = strtok(line, "=");
+        val = strtok(NULL, "=");
+        if (strcmp(type, quality) == 0) {
+            val[strlen(val) - 1] = 0;
+            strcpy(returnValue, val);
 //            printf("%s %s\n",type, val);
             valAssigned = 1;
             break;
-
         }
     }
+    fclose(fNameRead);
+
     if (valAssigned == 0)
     {
-        printf("Quality %s not set in file %s. See readme.\n",quality,fileName);
-        exit(EXIT_FAILURE);
+        free(returnValue);
+        returnValue = NULL;
     }
-    fclose(fNameRead);
     return returnValue;
 }
 
-
-gen_extract_velo_mod_call readGenVMInputTextFile(char *fileName, int rank)
+        gen_extract_velo_mod_call readGenVMInputTextFile(char *fileName, int rank)
 {
 
    gen_extract_velo_mod_call GEN_EXTRACT_VELO_MOD_CALL;
@@ -242,9 +250,10 @@ gen_extract_velo_mod_call readGenVMInputTextFile(char *fileName, int rank)
        GEN_EXTRACT_VELO_MOD_CALL.MIN_VS = atof(readParameter(fileName,"MIN_VS"));
        GEN_EXTRACT_VELO_MOD_CALL.TOPO_TYPE = readParameter(fileName,"TOPO_TYPE");
        topo_type_string_length = strnlen(GEN_EXTRACT_VELO_MOD_CALL.TOPO_TYPE, 200);
-       char *model_format=readParameter(fileName,"MODEL_FORMAT");
        GEN_EXTRACT_VELO_MOD_CALL.AWP_OUTPUT = 0;
-       if (strcmp(model_format, "AWP") == 0) GEN_EXTRACT_VELO_MOD_CALL.AWP_OUTPUT = 1;
+       char *model_format=readParameterNoExit(fileName,"MODEL_FORMAT");
+       if (model_format != NULL && strcmp(model_format, "AWP") == 0) GEN_EXTRACT_VELO_MOD_CALL.AWP_OUTPUT = 1;
+
    }
 
    MPI_Bcast(&GEN_EXTRACT_VELO_MOD_CALL.ORIGIN_LAT, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);

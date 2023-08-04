@@ -17,9 +17,8 @@
 #include "constants.h"
 #include "structs.h"
 #include "functions.h"
-#include <mpi.h>
 
-void writeGlobalQualities(char *OUTPUT_DIR, partial_global_mesh *PARTIAL_GLOBAL_MESH, partial_global_qualities *PARTIAL_GLOBAL_QUALITIES, gen_extract_velo_mod_call GEN_EXTRACT_VELO_MOD_CALL, calculation_log *CALCULATION_LOG, int latInd, int rank, int ncpus)
+void writeGlobalQualities(char *OUTPUT_DIR, partial_global_mesh *PARTIAL_GLOBAL_MESH, partial_global_qualities *PARTIAL_GLOBAL_QUALITIES, gen_extract_velo_mod_call GEN_EXTRACT_VELO_MOD_CALL, calculation_log *CALCULATION_LOG, int latInd)
 
 /*
  Purpose:   write the full velocity model to file
@@ -32,33 +31,24 @@ void writeGlobalQualities(char *OUTPUT_DIR, partial_global_mesh *PARTIAL_GLOBAL_
  N/A.
  */
 {
-    
     int writeModelTextFile = 0; // set as (0) for no text file, and (1) to write the full model in text file format
-
     
     // perform endian check
     int endianInt;
     endianInt = endian();
     
     FILE *fvp, *fvs, *frho, *fmask;
-
-    char fname_suffix[5];
-    fname_suffix[0] = '\0';
-    if (ncpus > 1) {
-        sprintf(fname_suffix, "-%03d", rank);
-    }
-
     char vp3dfile[MAX_FILENAME_STRING_LEN];
-    sprintf(vp3dfile,"%s/Velocity_Model/vp3dfile%s.p",OUTPUT_DIR, fname_suffix);
+    sprintf(vp3dfile,"%s/Velocity_Model/vp3dfile.p",OUTPUT_DIR);
     
     char vs3dfile[MAX_FILENAME_STRING_LEN];
-    sprintf(vs3dfile,"%s/Velocity_Model/vs3dfile%s.s",OUTPUT_DIR, fname_suffix);
+    sprintf(vs3dfile,"%s/Velocity_Model/vs3dfile.s",OUTPUT_DIR);
     
     char rho3dfile[MAX_FILENAME_STRING_LEN];
-    sprintf(rho3dfile,"%s/Velocity_Model/rho3dfile%s.d",OUTPUT_DIR, fname_suffix);
+    sprintf(rho3dfile,"%s/Velocity_Model/rho3dfile.d",OUTPUT_DIR);
     
     char inBasinMaskFile[MAX_FILENAME_STRING_LEN];
-    sprintf(inBasinMaskFile,"%s/Velocity_Model/in_basin_mask%s.b",OUTPUT_DIR, fname_suffix);
+    sprintf(inBasinMaskFile,"%s/Velocity_Model/in_basin_mask.b",OUTPUT_DIR);
     
     float *vp, *vs, *rho, *inbasin;
     float vpTemp, vsTemp, rhoTemp, inbasinTemp;
@@ -66,10 +56,9 @@ void writeGlobalQualities(char *OUTPUT_DIR, partial_global_mesh *PARTIAL_GLOBAL_
     
     char fullMod[MAX_FILENAME_STRING_LEN];
     FILE *fullModTxt = NULL;
-    sprintf(fullMod,"%s/Velocity_Model/fullMod-%03d.txt",OUTPUT_DIR, rank);
+    sprintf(fullMod,"%s/Velocity_Model/fullMod.txt",OUTPUT_DIR);
     
     int bsize;
-    
     
     
     if( latInd == 0) // if first time, generate binary files
@@ -80,7 +69,7 @@ void writeGlobalQualities(char *OUTPUT_DIR, partial_global_mesh *PARTIAL_GLOBAL_
         fmask = fopen(inBasinMaskFile,"w");
         if (fvp == NULL)
         {
-            printf("Unable to generate binary files for write on rank %d.\n", rank);
+            printf("Unable to generate binary files for write.\n");
             exit(EXIT_FAILURE);
         }
         if (writeModelTextFile == 1)
@@ -99,7 +88,7 @@ void writeGlobalQualities(char *OUTPUT_DIR, partial_global_mesh *PARTIAL_GLOBAL_
         
         if (fvp == NULL)
         {
-            printf("Unable to reopen binary files for write on rank %d.\n", rank);
+            printf("Unable to reopen binary files for write.\n");
             exit(EXIT_FAILURE);
         }
         if (writeModelTextFile == 1)
@@ -174,135 +163,6 @@ void writeGlobalQualities(char *OUTPUT_DIR, partial_global_mesh *PARTIAL_GLOBAL_
         fclose(fullModTxt);
     }
     
-    
-}
-
-/* */
-void writeGlobalQualitiesAWP(char *OUTPUT_DIR, 
-                             partial_global_mesh *PARTIAL_GLOBAL_MESH, 
-                             global_mesh *GLOBAL_MESH, 
-                             partial_global_qualities *PARTIAL_GLOBAL_QUALITIES, 
-                             gen_extract_velo_mod_call GEN_EXTRACT_VELO_MOD_CALL, 
-                             calculation_log *CALCULATION_LOG, 
-                             int iy, 
-                             int rank)
-
-/*
- Purpose:   write the full velocity model to file in AWP format
-
- Input variables:
- PARTIAL_GLOBAL_MESH        - pointer to structure containing lat lon grid
- globalValues    - pointer to structure containing vp vs and rho for all gridpoints
- 
- Output variables:
- N/A.
-
- Note: Inbasin is not currently written to disk for AWP format.
- */
-{
-    /*fprintf(stdout, "inside writeGlobalQualitiesAWP\n");*/
-    
-    MPI_File fid;
-    
-    char awpvelmod [MAX_FILENAME_STRING_LEN];
-    sprintf(awpvelmod,"%s/Velocity_Model/VELMOD_AWP.bin", OUTPUT_DIR);
-    
-    // this buffer contains the data in AWP format that will be dumped to disk
-    float *buf;
-    float vpTemp, vsTemp, rhoTemp;
-
-    long int bsize, bpos;
-    int nvar = 3;
-    
-    int ierr;
-    float minvp;
-
-    MPI_Datatype ftype;
-    MPI_Offset foff;
-
-    int count, blocklength, stride;
-
-    ierr = MPI_File_open(MPI_COMM_WORLD, awpvelmod, MPI_MODE_WRONLY | MPI_MODE_CREATE, MPI_INFO_NULL, &fid);
-
-    mpi_error_check(ierr, "MPI_File_open");
-    
-    //buffer size
-    bsize = (long int) PARTIAL_GLOBAL_MESH->nX* (long int) PARTIAL_GLOBAL_MESH->nZ * nvar;
-    /*fprintf(stdout, "bsize=%ld\n", bsize);*/
-
-    buf = (float*) malloc(bsize * sizeof(float));
-
-    for(int iz = 0; iz < PARTIAL_GLOBAL_MESH->nZ; iz++)
-    {
-        for (int ix = 0; ix < PARTIAL_GLOBAL_MESH->nX; ix++)
-        {
-            vpTemp = PARTIAL_GLOBAL_QUALITIES->Vp[ix][iz];
-            if (PARTIAL_GLOBAL_QUALITIES->Vs[ix][iz] <= GEN_EXTRACT_VELO_MOD_CALL.MIN_VS) // enforce min Vs
-            {
-                vsTemp = GEN_EXTRACT_VELO_MOD_CALL.MIN_VS;
-                CALCULATION_LOG->nPointsExceedingMinVelo += 1;
-
-                //force P-wave velocity to be at least sqrt(2) * S-wave velocity
-                minvp = sqrtf(2.) * vsTemp;
-                if (vpTemp < minvp) vpTemp = minvp;
-            }
-            else
-            {
-                vsTemp = PARTIAL_GLOBAL_QUALITIES->Vs[ix][iz]; // else assign from global structure
-            }
-            rhoTemp = PARTIAL_GLOBAL_QUALITIES->Rho[ix][iz];
-            
-            // x increases fastest, then y, then z
-            //just a cross section parallel to Y.  nY = 1, iy = 0
-            bpos = (iz * PARTIAL_GLOBAL_MESH->nX + ix) * nvar;
-
-            buf[bpos] = vpTemp;
-            buf[bpos+1] = vsTemp;
-            buf[bpos+2] = rhoTemp;
-        }
-    }
-
-    /* defining file type for MPI collective output */
-
-    count = PARTIAL_GLOBAL_MESH->nZ;   // total number of blocks to write
-    blocklength = PARTIAL_GLOBAL_MESH->nX * nvar; // number of elements to write per block 
-    stride = PARTIAL_GLOBAL_MESH->nX * GLOBAL_MESH->nY * nvar; // number of elements to skip.
-
-    /* Offset for file view, accounting for vertical offset from model domain written by other ranks and 
-       horizontal offset from position along Y axis (current loop) */
-    foff = (MPI_Offset) PARTIAL_GLOBAL_MESH->nX * 
-           (MPI_Offset) GLOBAL_MESH->nY * 
-           (MPI_Offset) PARTIAL_GLOBAL_MESH ->nZ * 
-           (MPI_Offset) nvar * 
-           (MPI_Offset) sizeof(float) * 
-           (MPI_Offset) rank +
-           (MPI_Offset) iy * (MPI_Offset) PARTIAL_GLOBAL_MESH->nX * 
-           (MPI_Offset) nvar * 
-           (MPI_Offset) sizeof(float); 
-
-    if (foff < 0) {
-        fprintf(stderr, "Overflow in offset on rank %d.  Abort\n", rank);
-        MPI_Finalize();
-        return;
-    }
-    /*fprintf(stdout, "count=%d, blocklength=%d, stride=%d, foff=%ld\n", count, blocklength, stride, foff);*/
-    
-    ierr=MPI_Type_vector(count, blocklength, stride, MPI_FLOAT, &ftype);
-    mpi_error_check(ierr, "MPI_Type_vector");
-
-    ierr=MPI_Type_commit(&ftype);
-    mpi_error_check(ierr, "MPI_Type_commit");
-    
-    ierr=MPI_File_set_view(fid, foff, MPI_FLOAT, ftype, "native", MPI_INFO_NULL);
-    mpi_error_check(ierr, "MPI_File_set_view");
-    
-    ierr=MPI_File_write_all(fid, buf, bsize, MPI_FLOAT, MPI_STATUS_IGNORE);
-    mpi_error_check(ierr, "MPI_File_write_all");
-
-    free(buf);
-
-    ierr = MPI_File_close(&fid);
-    mpi_error_check(ierr, "MPI_File_close");
     
 }
 

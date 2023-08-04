@@ -14,7 +14,6 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <omp.h>
-#include <mpi.h>
 
 #include "constants.h"
 #include "structs.h"
@@ -191,7 +190,7 @@ void runGenerateVelocitySlices(char *MODEL_VERSION, char *OUTPUT_DIR, gen_velo_s
     
 }
 
-void runGenerateMultipleProfiles(char *MODEL_VERSION, char *OUTPUT_DIR, gen_multi_profiles_call GEN_MULTI_PROFILES_CALL, calculation_log *CALCULATION_LOG, int rank)
+void runGenerateMultipleProfiles(char *MODEL_VERSION, char *OUTPUT_DIR, gen_multi_profiles_call GEN_MULTI_PROFILES_CALL, calculation_log *CALCULATION_LOG)
 {
     // Read in text file with profile parameters
     multi_profile_parameters *MULTI_PROFILE_PARAMETERS;
@@ -283,7 +282,7 @@ void runGenerateMultipleProfiles(char *MODEL_VERSION, char *OUTPUT_DIR, gen_mult
         if (strcmp(GEN_MULTI_PROFILES_CALL.SPACING_TYPE,"VARIABLE") == 0)
         {
             GLOBAL_MESH->nZ = VARIABLE_DEPTH_POINTS->nDep;
-            if (rank==0) printf("Number of model points. nx: %i, ny: %i, nz: %i.\n", GLOBAL_MESH->nX, GLOBAL_MESH->nY, GLOBAL_MESH->nZ);
+            printf("Number of model points. nx: %i, ny: %i, nz: %i.\n", GLOBAL_MESH->nX, GLOBAL_MESH->nY, GLOBAL_MESH->nZ);
             for ( int j = 0; j < VARIABLE_DEPTH_POINTS->nDep; j++)
             {
                 GLOBAL_MESH->Z[j] = -1000*VARIABLE_DEPTH_POINTS->dep[j];
@@ -1069,7 +1068,7 @@ void runThresholdInputLatLons(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extract
 
 
 
-void runGenerateVelocityModel(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extract_velo_mod_call GEN_EXTRACT_VELO_MOD_CALL, calculation_log *CALCULATION_LOG, int rank, int ncpus)
+void runGenerateVelocityModel(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extract_velo_mod_call GEN_EXTRACT_VELO_MOD_CALL, calculation_log *CALCULATION_LOG)
 {
     int smoothingRequired = 0; // set as zero if no smoothing is required, set as 1 for smoothing
     int nPtsSmooth = 1; // number of points (eitherside of gridpoint) to incorporate for smoothing
@@ -1081,33 +1080,6 @@ void runGenerateVelocityModel(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extract
         exit(EXIT_FAILURE);
     }
     MODEL_EXTENT->version = MODEL_VERSION;
-
-    int n_depth_slices, n_depth_slices_per_rank; //number of depth levels per rank
-    n_depth_slices = (int) roundf((GEN_EXTRACT_VELO_MOD_CALL.EXTENT_ZMAX - GEN_EXTRACT_VELO_MOD_CALL.EXTENT_ZMIN) / 
-	    GEN_EXTRACT_VELO_MOD_CALL.EXTENT_Z_SPACING) + 1;
-
-    if ((n_depth_slices % ncpus) != 0){
-	    if (rank==0) {
-		    fprintf(stderr, "Number of depth slices %d is not divisible by number of MPI ranks % d\n", n_depth_slices, ncpus);
-		    fprintf(stderr, "(Zmax=%f, Zmin=%f, z_spacing=%f)", GEN_EXTRACT_VELO_MOD_CALL.EXTENT_ZMAX, GEN_EXTRACT_VELO_MOD_CALL.EXTENT_ZMIN,
-                             GEN_EXTRACT_VELO_MOD_CALL.EXTENT_Z_SPACING);
-		    fprintf(stderr, "Quitting");
-	    }
-	    MPI_Finalize();
-            exit(EXIT_FAILURE);
-	    return;
-
-    }
-    n_depth_slices_per_rank = n_depth_slices / ncpus;
-    
-    float local_depth_min, local_depth_max;  //depth range processed by given rank
-
-    local_depth_min = GEN_EXTRACT_VELO_MOD_CALL.EXTENT_ZMIN + (float) (rank*n_depth_slices_per_rank*GEN_EXTRACT_VELO_MOD_CALL.EXTENT_Z_SPACING);
-    local_depth_max = local_depth_min + (float) ((n_depth_slices_per_rank-1)*GEN_EXTRACT_VELO_MOD_CALL.EXTENT_Z_SPACING);
-
-#ifdef DEBUG_MPI
-    fprintf(stdout, "MPI dbg> rank %d, depth range %f to %f, nz=%d\n", rank, local_depth_min, local_depth_max, n_depth_slices_per_rank);
-#endif
     
     // Model origin paremeters
     MODEL_EXTENT->originLat = GEN_EXTRACT_VELO_MOD_CALL.ORIGIN_LAT;
@@ -1117,23 +1089,22 @@ void runGenerateVelocityModel(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extract
     // Model extent parameters
     MODEL_EXTENT->Xmax = GEN_EXTRACT_VELO_MOD_CALL.EXTENT_X;
     MODEL_EXTENT->Ymax = GEN_EXTRACT_VELO_MOD_CALL.EXTENT_Y;
-    MODEL_EXTENT->Zmax = local_depth_max; //GEN_EXTRACT_VELO_MOD_CALL.EXTENT_ZMAX; // max depth (positive downwards)
-    MODEL_EXTENT->Zmin = local_depth_min; //GEN_EXTRACT_VELO_MOD_CALL.EXTENT_ZMIN;
+    MODEL_EXTENT->Zmax = GEN_EXTRACT_VELO_MOD_CALL.EXTENT_ZMAX; // max depth (positive downwards)
+    MODEL_EXTENT->Zmin = GEN_EXTRACT_VELO_MOD_CALL.EXTENT_ZMIN;
     MODEL_EXTENT->hDep = GEN_EXTRACT_VELO_MOD_CALL.EXTENT_Z_SPACING;
     MODEL_EXTENT->hLatLon = GEN_EXTRACT_VELO_MOD_CALL.EXTENT_LATLON_SPACING;
     
     // generate the model grid
     global_mesh *GLOBAL_MESH;
-    printf("%d", sizeof(global_mesh));
     GLOBAL_MESH = malloc(sizeof(global_mesh));
     if (GLOBAL_MESH == NULL)
     {
-        printf("Memory allocation of GLOBAL_MESH failed on rank %d.\n", rank);
+        printf("Memory allocation of GLOBAL_MESH failed.\n");
         exit(EXIT_FAILURE);
     }
     generateFullModelGridGreatCircle(MODEL_EXTENT, GLOBAL_MESH);
     
-    writeVeloModCornersTextFile(GLOBAL_MESH, OUTPUT_DIR, rank);
+    writeVeloModCornersTextFile(GLOBAL_MESH, OUTPUT_DIR);
     
     // obtain surface filenames based off version number
     global_model_parameters *GLOBAL_MODEL_PARAMETERS;
@@ -1144,7 +1115,7 @@ void runGenerateVelocityModel(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extract
     VELO_MOD_1D_DATA = malloc(sizeof(velo_mod_1d_data));
     if (VELO_MOD_1D_DATA == NULL)
     {
-        printf("Memory allocation of VELO_MOD_1D_DATA failed on rank %d.\n", rank);
+        printf("Memory allocation of VELO_MOD_1D_DATA failed.\n");
         exit(EXIT_FAILURE);
     }
     
@@ -1152,7 +1123,7 @@ void runGenerateVelocityModel(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extract
     NZ_TOMOGRAPHY_DATA = malloc(sizeof(nz_tomography_data));
     if (NZ_TOMOGRAPHY_DATA == NULL)
     {
-        printf("Memory allocation of NZ_TOMOGRAPHY_DATA failed on rank %d.\n", rank);
+        printf("Memory allocation of NZ_TOMOGRAPHY_DATA failed.\n");
         exit(EXIT_FAILURE);
     }
     NZ_TOMOGRAPHY_DATA->tomography_loaded = 0; 
@@ -1160,7 +1131,7 @@ void runGenerateVelocityModel(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extract
     GLOBAL_SURFACES = malloc(sizeof(global_surfaces));
     if (GLOBAL_SURFACES == NULL)
     {
-        printf("Memory allocation of GLOBAL_SURFACES failed on rank %d.\n", rank);
+        printf("Memory allocation of GLOBAL_SURFACES failed.\n");
         exit(EXIT_FAILURE);
     }
     
@@ -1168,7 +1139,7 @@ void runGenerateVelocityModel(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extract
     BASIN_DATA = malloc(sizeof(basin_data));
     if (BASIN_DATA == NULL)
     {
-        printf("Memory allocation of BASIN_DATA failed on rank.\n", rank);
+        printf("Memory allocation of BASIN_DATA failed.\n");
         exit(EXIT_FAILURE);
     }
     
@@ -1195,15 +1166,13 @@ void runGenerateVelocityModel(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extract
         partial_global_mesh *PARTIAL_GLOBAL_MESH;
         partial_global_qualities *PARTIAL_GLOBAL_QUALITIES;
 
-	if (rank == 0){
-	   printf("\rGenerating velocity model %d%% complete.", j*100/GLOBAL_MESH->nY);
-	   fflush(stdout);
-        }
+        printf("\rGenerating velocity model %d%% complete.", j*100/GLOBAL_MESH->nY);
+        fflush(stdout);
         PARTIAL_GLOBAL_MESH = extractPartialMesh(GLOBAL_MESH, j);
         PARTIAL_GLOBAL_QUALITIES = malloc(sizeof(partial_global_qualities));
         if (PARTIAL_GLOBAL_QUALITIES == NULL)
         {
-            printf("Memory allocation of PARTIAL_GLOBAL_QUALITIES failed on rank %d.\n", rank);
+            printf("Memory allocation of PARTIAL_GLOBAL_QUALITIES failed.\n");
             exit(EXIT_FAILURE);
         }
         //#pragma omp parallel for
@@ -1220,31 +1189,31 @@ void runGenerateVelocityModel(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extract
             IN_BASIN = malloc(sizeof(in_basin));
             if (IN_BASIN == NULL)
             {
-                printf("Memory allocation of IN_BASIN failed on rank %d.\n", rank);
+                printf("Memory allocation of IN_BASIN failed.\n");
                 exit(EXIT_FAILURE);
             }
             PARTIAL_GLOBAL_SURFACE_DEPTHS = malloc(sizeof(partial_global_surface_depths));
             if (PARTIAL_GLOBAL_SURFACE_DEPTHS == NULL)
             {
-                printf("Memory allocation of PARTIAL_GLOBAL_SURFACE_DEPTHS failed on rank %d.\n", rank);
+                printf("Memory allocation of PARTIAL_GLOBAL_SURFACE_DEPTHS failed.\n");
                 exit(EXIT_FAILURE);
             }
             PARTIAL_BASIN_SURFACE_DEPTHS = malloc(sizeof(partial_basin_surface_depths));
             if (PARTIAL_BASIN_SURFACE_DEPTHS == NULL)
             {
-                printf("Memory allocation of PARTIAL_BASIN_SURFACE_DEPTHS failed on rank %d.\n", rank);
+                printf("Memory allocation of PARTIAL_BASIN_SURFACE_DEPTHS failed.\n");
                 exit(EXIT_FAILURE);
             }
             QUALITIES_VECTOR = malloc(sizeof(qualities_vector));
             if (QUALITIES_VECTOR == NULL)
             {
-                printf("Memory allocation of QUALITIES_VECTOR failed on rank %d.\n", rank);
+                printf("Memory allocation of QUALITIES_VECTOR failed.\n");
                 exit(EXIT_FAILURE);
             }
             EXTENDED_QUALITIES_VECTOR = malloc(sizeof(qualities_vector));
             if (QUALITIES_VECTOR == NULL)
             {
-                printf("Memory allocation of QUALITIES_VECTOR failed on rank %d.\n", rank);
+                printf("Memory allocation of QUALITIES_VECTOR failed.\n");
                 exit(EXIT_FAILURE);
             }
             
@@ -1305,22 +1274,14 @@ void runGenerateVelocityModel(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extract
             free(IN_BASIN);
         }
         #pragma omp ordered
-        if (GEN_EXTRACT_VELO_MOD_CALL.AWP_OUTPUT) 
-            writeGlobalQualitiesAWP(OUTPUT_DIR, PARTIAL_GLOBAL_MESH, GLOBAL_MESH, PARTIAL_GLOBAL_QUALITIES, GEN_EXTRACT_VELO_MOD_CALL,CALCULATION_LOG, j, rank); 
-	else
-            writeGlobalQualities(OUTPUT_DIR, PARTIAL_GLOBAL_MESH, PARTIAL_GLOBAL_QUALITIES, GEN_EXTRACT_VELO_MOD_CALL,CALCULATION_LOG, j, rank, ncpus);
+        writeGlobalQualities(OUTPUT_DIR, PARTIAL_GLOBAL_MESH, PARTIAL_GLOBAL_QUALITIES, GEN_EXTRACT_VELO_MOD_CALL,CALCULATION_LOG, j);
         free(PARTIAL_GLOBAL_MESH);
         free(PARTIAL_GLOBAL_QUALITIES);
-
-	MPI_Barrier(MPI_COMM_WORLD);
     }
-
-    if (rank == 0){
-       printf("\rGeneration of velocity model 100%% complete.");
-       fflush(stdout);
-       printf("\n");
-       printf("Model generation complete.\n");
-    }
+    printf("\rGeneration of velocity model 100%% complete.");
+    fflush(stdout);
+    printf("\n");
+    printf("Model generation complete.\n");
     
     
     free(VELO_MOD_1D_DATA);
@@ -1331,5 +1292,4 @@ void runGenerateVelocityModel(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extract
     free(GLOBAL_SURFACES);
     freeAllBasinSurfaces(BASIN_DATA, GLOBAL_MODEL_PARAMETERS);
     free(BASIN_DATA);
-    MPI_Barrier(MPI_COMM_WORLD);
 }

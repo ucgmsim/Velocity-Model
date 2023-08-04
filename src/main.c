@@ -16,8 +16,6 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
-
-#include <mpi.h>
 #ifndef _AIX
 #include <getopt.h>
 #endif
@@ -25,18 +23,6 @@
 #include "constants.h"
 #include "structs.h"
 #include "functions.h"
-
-void mpi_error_check(int ierr, char *message){
-   char *errmsg;
-   int errlen;
-
-   errmsg=calloc(500, sizeof(char));
-   if (ierr != MPI_SUCCESS) {
-      fprintf(stderr, "%d: Error in %s\n", ierr, message);
-      MPI_Error_string(ierr, errmsg, &errlen);
-      fprintf(stderr, errmsg);
-   }
-}
 
 int main(int argc, char *argv[])
 //int main(void)
@@ -59,18 +45,7 @@ int main(int argc, char *argv[])
     char *CALL_TYPE = NULL;
     char *MODEL_VERSION;
     char *OUTPUT_DIR;
-    char *MODEL_FORMAT;
     char *parametersTextFile = (char*) malloc(MAX_FILENAME_STRING_LEN*sizeof(char));
-
-    int rank, ncpus, ierr;
-
-    ierr=MPI_Init(&argc, &argv);
-    mpi_error_check(ierr, "MPI_Init");
-
-    ierr=MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-    mpi_error_check(ierr, "MPI_Comm_rank");
-
-    mpi_error_check(MPI_Comm_size(MPI_COMM_WORLD, &ncpus), "MPI_Comm_size");
     
     // generate structs to house parameters for each call type
     gen_extract_velo_mod_call GEN_EXTRACT_VELO_MOD_CALL;
@@ -81,12 +56,9 @@ int main(int argc, char *argv[])
     
     if ( argc==1 ) //if no inputs are given
     {
-        if (rank==0)
-        {
-            printf("No input arguments given. Writing sample input text files.\n");
-            writeSampleInputTextFiles();
-            exit(EXIT_SUCCESS);
-        }
+        printf("No input arguments given. Writing sample input text files.\n");
+        writeSampleInputTextFiles();
+        exit(EXIT_SUCCESS);
     }
     else if ( argc==2 )
     {
@@ -95,11 +67,11 @@ int main(int argc, char *argv[])
         MODEL_VERSION = readParameter(parametersTextFile,"MODEL_VERSION");
         OUTPUT_DIR = readParameter(parametersTextFile,"OUTPUT_DIR");
         
+        
         if(strcmp(CALL_TYPE, "GENERATE_VELOCITY_MOD") == 0)
         {
             GENERATE_VELOCITY_MOD = 1;
-            fprintf(stdout, "reading GenVMInputTextFile\n");
-            GEN_EXTRACT_VELO_MOD_CALL = readGenVMInputTextFile(parametersTextFile, rank);
+            GEN_EXTRACT_VELO_MOD_CALL = readGenVMInputTextFile(parametersTextFile);
         }
         else if (strcmp(CALL_TYPE, "EXTRACT_VELOCITY_SLICES") == 0)
         {
@@ -141,18 +113,6 @@ int main(int argc, char *argv[])
             printf("Call type '%s' not recognised.\n",CALL_TYPE);
             exit(EXIT_FAILURE);
         }
-
-	if ((GENERATE_VELOCITY_MOD!=1) && (ncpus > 1))
-	{
-	   if (rank==0) 
-	   {
-	   	fprintf(stderr, "MPI is currently only supported for call type GENERATE_VELOCITY_MOD\n");
-		fprintf(stderr, "Run using single MPI process or use the non-MPI branch of the Velocity Model generator");
-		fprintf(stderr, "Exiting.");
-	   }
-	   mpi_error_check(MPI_Finalize(), "MPI_Finalize");
-	   exit(EXIT_FAILURE);
-	}
         
         
     }
@@ -178,12 +138,12 @@ int main(int argc, char *argv[])
         
         if (stat(OUTPUT_DIR, &st) != -1)
         {
-	    if (rank==0) printf("Output directory must not exist for this call type. See readme.\n");
+            printf("Output directory must not exist for this call type. See readme.\n");
             exit(EXIT_FAILURE);
         }
         else
         {
-            if (rank==0) createAllOutputDirectories(OUTPUT_DIR, CALL_TYPE);
+            createAllOutputDirectories(OUTPUT_DIR, CALL_TYPE);
         }
         
     }
@@ -209,19 +169,14 @@ int main(int argc, char *argv[])
     // run the routines associated with each calltype
     if (GENERATE_VELOCITY_MOD == 1)
     {
-	if (rank==0){
-	   printf("==========================================\n");
-	   printf("Running GENERATE_VELOCITY_MOD.\n");
-	   printf("==========================================\n");
-	   printf("Generating model version %s.\n",MODEL_VERSION);
-	}
-        runGenerateVelocityModel(MODEL_VERSION, OUTPUT_DIR, GEN_EXTRACT_VELO_MOD_CALL, CALCULATION_LOG, 
-                                 rank, ncpus);
-	if (rank==0){
-	   printf("==========================================\n");
-	   printf("Completed running GENERATE_VELOCITY_MOD.\n");
-	   printf("==========================================\n");
-	}
+        printf("==========================================\n");
+        printf("Running GENERATE_VELOCITY_MOD.\n");
+        printf("==========================================\n");
+        printf("Generating model version %s.\n",MODEL_VERSION);
+        runGenerateVelocityModel(MODEL_VERSION, OUTPUT_DIR, GEN_EXTRACT_VELO_MOD_CALL, CALCULATION_LOG);
+        printf("==========================================\n");
+        printf("Completed running GENERATE_VELOCITY_MOD.\n");
+        printf("==========================================\n");
     }
     else if (EXTRACT_VELOCITY_SLICES == 1)
     {
@@ -269,7 +224,7 @@ int main(int argc, char *argv[])
         printf("==========================================\n");
         printf("Running GENERATE_MULTIPLE_PROFILES.\n");
         printf("==========================================\n");
-        runGenerateMultipleProfiles(MODEL_VERSION, OUTPUT_DIR, GEN_MULTI_PROFILES_CALL, CALCULATION_LOG, rank);
+        runGenerateMultipleProfiles(MODEL_VERSION, OUTPUT_DIR, GEN_MULTI_PROFILES_CALL, CALCULATION_LOG);
         printf("==========================================\n");
         printf("Completed running GENERATE_MULTIPLE_PROFILES.\n");
         printf("==========================================\n");
@@ -297,7 +252,9 @@ int main(int argc, char *argv[])
 
 
 
-    MPI_Finalize();
+
 }
+
+
 
 

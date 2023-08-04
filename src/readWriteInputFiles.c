@@ -15,7 +15,6 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
-#include <mpi.h>
 
 #include "constants.h"
 #include "structs.h"
@@ -222,58 +221,20 @@ char *readParameter(char *fileName, char *quality)
 }
 
 
-gen_extract_velo_mod_call readGenVMInputTextFile(char *fileName, int rank)
+gen_extract_velo_mod_call readGenVMInputTextFile(char *fileName)
 {
-
-   gen_extract_velo_mod_call GEN_EXTRACT_VELO_MOD_CALL;
-
-   int topo_type_string_length;
-
-   if (rank == 0){
-       GEN_EXTRACT_VELO_MOD_CALL.ORIGIN_LAT = atof(readParameter(fileName,"ORIGIN_LAT"));
-       GEN_EXTRACT_VELO_MOD_CALL.ORIGIN_LON = atof(readParameter(fileName,"ORIGIN_LON"));
-       GEN_EXTRACT_VELO_MOD_CALL.ORIGIN_ROT = atof(readParameter(fileName,"ORIGIN_ROT"));
-       GEN_EXTRACT_VELO_MOD_CALL.EXTENT_Y = atof(readParameter(fileName,"EXTENT_Y"));
-       GEN_EXTRACT_VELO_MOD_CALL.EXTENT_X = atof(readParameter(fileName,"EXTENT_X"));
-       GEN_EXTRACT_VELO_MOD_CALL.EXTENT_ZMAX = atof(readParameter(fileName,"EXTENT_ZMAX"));
-       GEN_EXTRACT_VELO_MOD_CALL.EXTENT_ZMIN = atof(readParameter(fileName,"EXTENT_ZMIN"));
-       GEN_EXTRACT_VELO_MOD_CALL.EXTENT_Z_SPACING = atof(readParameter(fileName,"EXTENT_Z_SPACING"));
-       GEN_EXTRACT_VELO_MOD_CALL.EXTENT_LATLON_SPACING = atof(readParameter(fileName,"EXTENT_LATLON_SPACING"));
-       GEN_EXTRACT_VELO_MOD_CALL.MIN_VS = atof(readParameter(fileName,"MIN_VS"));
-       GEN_EXTRACT_VELO_MOD_CALL.TOPO_TYPE = readParameter(fileName,"TOPO_TYPE");
-       topo_type_string_length = strnlen(GEN_EXTRACT_VELO_MOD_CALL.TOPO_TYPE, 200);
-       char *model_format=readParameter(fileName,"MODEL_FORMAT");
-       GEN_EXTRACT_VELO_MOD_CALL.AWP_OUTPUT = 0;
-       if (strcmp(model_format, "AWP") == 0) GEN_EXTRACT_VELO_MOD_CALL.AWP_OUTPUT = 1;
-   }
-
-   MPI_Bcast(&GEN_EXTRACT_VELO_MOD_CALL.ORIGIN_LAT, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
-   MPI_Bcast(&GEN_EXTRACT_VELO_MOD_CALL.ORIGIN_LON, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
-   MPI_Bcast(&GEN_EXTRACT_VELO_MOD_CALL.ORIGIN_ROT, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
-   MPI_Bcast(&GEN_EXTRACT_VELO_MOD_CALL.EXTENT_Y, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
-   MPI_Bcast(&GEN_EXTRACT_VELO_MOD_CALL.EXTENT_X, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
-   MPI_Bcast(&GEN_EXTRACT_VELO_MOD_CALL.EXTENT_ZMAX, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
-   MPI_Bcast(&GEN_EXTRACT_VELO_MOD_CALL.EXTENT_ZMIN, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
-   MPI_Bcast(&GEN_EXTRACT_VELO_MOD_CALL.EXTENT_Z_SPACING, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
-   MPI_Bcast(&GEN_EXTRACT_VELO_MOD_CALL.EXTENT_LATLON_SPACING, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
-   MPI_Bcast(&GEN_EXTRACT_VELO_MOD_CALL.MIN_VS, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
-
-   //length of char array TOPO_TYPE must be communicated first
-   MPI_Bcast(&topo_type_string_length, 1, MPI_INT, 0, MPI_COMM_WORLD);
-
-   if (rank > 0)
-   	GEN_EXTRACT_VELO_MOD_CALL.TOPO_TYPE = (char*) calloc(topo_type_string_length, sizeof(char));
-
-   MPI_Bcast(GEN_EXTRACT_VELO_MOD_CALL.TOPO_TYPE, topo_type_string_length, MPI_CHAR, 0, MPI_COMM_WORLD);
-   MPI_Bcast(&GEN_EXTRACT_VELO_MOD_CALL.AWP_OUTPUT, 1, MPI_C_BOOL, 0, MPI_COMM_WORLD);
-
-#ifdef DEBUG_MPI
-   fprintf(stdout, "MPI dbg> rank %d, zmin=%f, zmax=%f, topo_type=%s, awp_output=%d\n", rank, 
-		   GEN_EXTRACT_VELO_MOD_CALL.EXTENT_ZMIN, GEN_EXTRACT_VELO_MOD_CALL.EXTENT_ZMAX,
-		   GEN_EXTRACT_VELO_MOD_CALL.TOPO_TYPE, GEN_EXTRACT_VELO_MOD_CALL.AWP_OUTPUT);
-#endif 
-
-   MPI_Barrier(MPI_COMM_WORLD);
+    gen_extract_velo_mod_call GEN_EXTRACT_VELO_MOD_CALL;
+    GEN_EXTRACT_VELO_MOD_CALL.ORIGIN_LAT = atof(readParameter(fileName,"ORIGIN_LAT"));
+    GEN_EXTRACT_VELO_MOD_CALL.ORIGIN_LON = atof(readParameter(fileName,"ORIGIN_LON"));
+    GEN_EXTRACT_VELO_MOD_CALL.ORIGIN_ROT = atof(readParameter(fileName,"ORIGIN_ROT"));
+    GEN_EXTRACT_VELO_MOD_CALL.EXTENT_Y = atof(readParameter(fileName,"EXTENT_Y"));
+    GEN_EXTRACT_VELO_MOD_CALL.EXTENT_X = atof(readParameter(fileName,"EXTENT_X"));
+    GEN_EXTRACT_VELO_MOD_CALL.EXTENT_ZMAX = atof(readParameter(fileName,"EXTENT_ZMAX"));
+    GEN_EXTRACT_VELO_MOD_CALL.EXTENT_ZMIN = atof(readParameter(fileName,"EXTENT_ZMIN"));
+    GEN_EXTRACT_VELO_MOD_CALL.EXTENT_Z_SPACING = atof(readParameter(fileName,"EXTENT_Z_SPACING"));
+    GEN_EXTRACT_VELO_MOD_CALL.EXTENT_LATLON_SPACING = atof(readParameter(fileName,"EXTENT_LATLON_SPACING"));
+    GEN_EXTRACT_VELO_MOD_CALL.MIN_VS = atof(readParameter(fileName,"MIN_VS"));
+    GEN_EXTRACT_VELO_MOD_CALL.TOPO_TYPE = readParameter(fileName,"TOPO_TYPE");
 
     return GEN_EXTRACT_VELO_MOD_CALL;
 }

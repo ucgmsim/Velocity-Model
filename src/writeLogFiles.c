@@ -111,11 +111,11 @@ void writeSliceParametersLogFile(char *OUTPUT_DIR, slice_parameters *SLICE_PARAM
 //
 //}
 
-void writeVeloModCornersTextFile(global_mesh *GLOBAL_MESH, char *OUTPUT_DIR, int rank)
+void writeVeloModCornersTextFile(global_mesh *GLOBAL_MESH, char *OUTPUT_DIR)
 {
     FILE *fp;
     char logFileName[MAX_FILENAME_STRING_LEN];
-    sprintf(logFileName,"%s/Log/VeloModCorners-%d.txt",OUTPUT_DIR, rank);
+    sprintf(logFileName,"%s/Log/VeloModCorners.txt",OUTPUT_DIR);
     fp = fopen(logFileName,"w");
     
     
@@ -127,8 +127,7 @@ void writeVeloModCornersTextFile(global_mesh *GLOBAL_MESH, char *OUTPUT_DIR, int
     fprintf(fp,"%lf\t%lf\n",GLOBAL_MESH->Lon[GLOBAL_MESH->nX-1][GLOBAL_MESH->nY-1],GLOBAL_MESH->Lat[GLOBAL_MESH->nX-1][GLOBAL_MESH->nY-1]);
 
     fclose(fp);
-
-    if (rank==0) printf("Velocity model corners file write complete.\n");
+    printf("Velocity model corners file write complete.\n");
     
     
 }

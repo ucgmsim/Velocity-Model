@@ -12,9 +12,12 @@
 #define GLOBAL_SURF_IN_DIM_MAX 5005 // maximum dimension of global surface input files
 #define BASIN_SURF_IN_DIM_MAX 3005 // maximum dimension of basin surface input files
 #define MAX_FILENAME_STRING_LEN 1024 // maximum dimension of basin surface input files
-#define LON_GRID_DIM_MAX 30000 // X  - used to be 10260 in non-MPI version
-#define LAT_GRID_DIM_MAX 30000 // Y   - used to be 19010 in non-MPI version
+#define LON_GRID_DIM_MAX 10260 // X
+#define LAT_GRID_DIM_MAX 19010 // Y
 #define DEP_GRID_DIM_MAX 4500 // Z
+//#define LON_GRID_DIM_MAX 2126 // X
+//#define LAT_GRID_DIM_MAX 751 // Y
+//#define DEP_GRID_DIM_MAX 251 // Z
 #define SUB_MOD_DIM_MAX 50 // maximum number of entries in the 1d sub model arrays
 #define MAX_NUM_BASINS 75 // the maximum number of basins
 #define MAX_NUM_GLOBAL_SURFACES 4 // the maximum number of global (Full domain) surfaces

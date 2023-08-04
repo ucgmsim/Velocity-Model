@@ -327,7 +327,6 @@ typedef struct{
     char *EXTRACTED_SLICE_PARAMETERS_TEXTFILE;
     char *VS_TYPE; // for vs_500 etc.
     char *COORDINATES_TEXTFILE;
-    _Bool AWP_OUTPUT; // True for AWP output
 }gen_extract_velo_mod_call;
 
 

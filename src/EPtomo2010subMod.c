@@ -142,7 +142,7 @@ void loadEPtomoSurfaceData(char *tomoType, nz_tomography_data *NZ_TOMOGRAPHY_DAT
     varNames[0] = "vp";
     varNames[1] = "vs";
     varNames[2] = "rho";
-    int elev[MAX_NUM_TOMO_SURFACES];
+    float elev[MAX_NUM_TOMO_SURFACES];
     int nElev = 0;
     char vs30fileName[MAX_FILENAME_STRING_LEN];
     char offshorefileName[MAX_FILENAME_STRING_LEN];
@@ -601,7 +601,8 @@ void loadEPtomoSurfaceData(char *tomoType, nz_tomography_data *NZ_TOMOGRAPHY_DAT
 
 
     char baseFilename[MAX_FILENAME_STRING_LEN];
-    
+    char floatElev[10]; 
+
     NZ_TOMOGRAPHY_DATA->nSurf = nElev;
     assert(NZ_TOMOGRAPHY_DATA->nSurf<=MAX_NUM_TOMO_SURFACES);
     
@@ -610,7 +611,9 @@ void loadEPtomoSurfaceData(char *tomoType, nz_tomography_data *NZ_TOMOGRAPHY_DAT
         NZ_TOMOGRAPHY_DATA->surfDeps[i] = elev[i]; // depth in km
         for(int j = 0; j < 3; j++)
         {
-            sprintf(baseFilename,"Data/Tomography/%s/surf_tomography_%s_elev%i.in",tomoDirectory,varNames[j],elev[i]);
+            ftoa(elev[i],floatElev,2); // int->int; float-> DDDpFF format
+            printf("elev[%d]=%f converted to floatElev=%s\n",i,elev[i],floatElev);
+            sprintf(baseFilename,"Data/Tomography/%s/surf_tomography_%s_elev%s.in",tomoDirectory,varNames[j],floatElev);
             // read the surface
             NZ_TOMOGRAPHY_DATA->surf[j][i] = loadGlobalSurface(baseFilename);
             

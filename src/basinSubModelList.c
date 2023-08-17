@@ -1132,7 +1132,7 @@ void load_Whangaparoa_v23p4(global_model_parameters *GLOBAL_MODEL_PARAMETERS, in
     GLOBAL_MODEL_PARAMETERS->ignoreBasinForSmoothing[basinNum] = 0;
     GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum] = 2;
     GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[basinNum] = 1;
-    GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[basinNum][0] = "Data/USER20_BASINS/Whangaparoa_outline_WG84.txt";
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[basinNum][0] = "Data/USER20_BASINS/Whangaparoa_outline_WGS84.txt";
     
     GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][0] = "DEM";
     GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][0] = "Data/DEM/NZ_DEM_HD.in";
@@ -1140,7 +1140,7 @@ void load_Whangaparoa_v23p4(global_model_parameters *GLOBAL_MODEL_PARAMETERS, in
     GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][0] = "Cant1D_v2";
     
     GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][1] = "Whangaparoa";
-    GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][1] = "Data/USER20_BASINS/Whangaparoa_surface_WG84.txt";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][1] = "Data/USER20_BASINS/Whangaparoa_surface_WGS84.txt";
     GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][1] = 0;
 }
 

@@ -77,6 +77,7 @@ v207_basin_outlines = v206_basin_outlines + get_basin_full_path(
         "Data/Basins/East_Cape/v22p3/Motu_bay1_Outline_WGS84.txt",
         "Data/Basins/East_Cape/v22p3/Motu_bay2_Outline_WGS84.txt",
         "Data/Basins/East_Cape/v22p3/Motu_bay3_Outline_WGS84.txt",
+        "Data/USER20_BASINS/Whangaparoa_surface_WG84.txt",
     ]
 )
 basin_outlines_dict = {

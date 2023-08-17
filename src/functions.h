@@ -85,6 +85,7 @@ extern gen_extract_velo_mod_call readGenerateThresholdUserInputTextFile(char *fi
 extern gen_extract_multi_gridpoint_vs_call readExtractMultiInputTextFile(char *fileName);
 extern multi_profile_parameters *readProfilesTextFile(char *fileName);
 extern char *readParameter(char *fileName, char *quality);
+extern char *readParameterNoExit(char *fileName, char *quality);
 
 
 

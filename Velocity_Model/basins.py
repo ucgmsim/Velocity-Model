@@ -6,12 +6,9 @@ vm_data_dir = (Path(__file__).parents[1] / "Data").resolve()
 def get_basin_full_path(basin_outlines):
     return [vm_data_dir / basin for basin in basin_outlines]
 
-
 with open(vm_data_dir/ "basins.yaml", "r") as yaml_file:
     yaml_data = yaml.safe_load(yaml_file)
 
-
-# [x['files'] for x in data['version'][0]['items']]
 def get_basin_files_for_a_version(ver):
     flat_files = []
     for data in yaml_data:

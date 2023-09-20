@@ -1,0 +1,167 @@
+- version: 2.03
+  basins:
+    - id: 1
+      name: Canterbury
+      files:
+        - Boundaries/NewCanterburyBasinBoundary_WGS84_1m.txt
+    - id: 2
+      name: North Canterbury
+      files:
+        - Boundaries/NewCanterburyBasinBoundary_WGS84_1m.txt
+    - id: 3
+      name: Banks Peninsula Volcanics
+      files:
+        - Boundaries/BPVBoundary.txt
+    - id: 4
+      name: Kaikoura
+      files:
+        - SI_BASINS/Kaikoura_Polygon_WGS84.txt
+    - id: 5
+      name: Cheviot
+      files:
+        - SI_BASINS/Cheviot_Polygon_WGS84.txt
+
+    - id: 6
+      name: Hanmer
+      files:
+        - SI_BASINS/Hanmer_Polygon_WGS84.txt
+    - id: 7
+      name: Marlborough
+      files:
+        - SI_BASINS/Marlborough_Polygon_WGS84_v0p1.txt
+    - id: 8
+      name: Nelson
+      files:
+        - SI_BASINS/Nelson_Polygon_WGS84.txt
+    - id: 9
+      name: Wellington / Hutt Valley
+      files:
+        - Basins/Wellington/v19p6/Wellington_Polygon_Wainuiomata_WGS84.txt
+    - id: 10
+      name: Waikato / Hauraki
+      files:
+        - Boundaries/WaikatoHaurakiBasinEdge_WGS84.txt
+
+- version: 2.04
+  basins:
+  - id: 11
+    name: Wanaka
+    files:
+      - USER20_BASINS/WanakaOutlineWGS84.txt
+  - id: 12
+    name: Mackenzie
+    files:
+      - USER20_BASINS/mackenzie_basin_outline_nzmg.txt
+  - id: 13
+    name: Wakatipu
+    files:
+      - USER20_BASINS/WakatipuBasinOutlineWGS84.txt
+  - id: 14
+    name: Alexandra
+    files:
+      - USER20_BASINS/alexandra_outline.txt
+  - id: 15
+    name: Ranfurly
+    files:
+      - USER20_BASINS/ranfurly_outline.txt
+  - id: 16
+    name: NE Otago
+    files:
+      - USER20_BASINS/NE_otago/NE_otago_A_outline.txt
+      - USER20_BASINS/NE_otago/NE_otago_B_outline.txt
+      - USER20_BASINS/NE_otago/NE_otago_C_outline.txt
+      - USER20_BASINS/NE_otago/NE_otago_D_outline.txt
+      - USER20_BASINS/NE_otago/NE_otago_E_outline.txt
+  - id: 17
+    name: Mosgiel
+    files:
+      - USER20_BASINS/mos_outline_WGS84.txt
+  - id: 18
+    name: Balclutha
+    files:
+      - USER20_BASINS/bal_outline_WGS84.txt
+  - id: 19
+    name: Dunedin
+    files:
+      - USER20_BASINS/dun_outline_WGS84.txt
+  - id: 20
+    name: Murchison
+    files:
+      - USER20_BASINS/Murchison_Basin_Outline_v1_WGS84.txt
+  - id: 21
+    name: Waitaki
+    files:
+      - USER20_BASINS/waitaki_outline_WGS84.txt
+  - id: 22
+    name: Hakataramea
+    files:
+      - USER20_BASINS/hakataramea_outline_WGS84.txt
+- version: 2.06
+  basins:
+  - id: 23
+    name: Karamea
+    files:
+      - USER20_BASINS/Karamea_basin_outline_v1_WGS84.txt
+  - id: 24
+    name: Collingwood
+    files:
+      - USER20_BASINS/CollingwoodBasinOutline_1_WGS84_v1.txt
+      - USER20_BASINS/CollingwoodBasinOutline_2_WGS84_v1.txt
+      - USER20_BASINS/CollingwoodBasinOutline_3_WGS84_v1.txt
+  - id: 25
+    name: Springs Junction
+    files:
+      - USER20_BASINS/SpringsJ_basin_outline_v1_WGS84.txt
+- version: 2.07
+  basins:
+  - id: 26
+    name: Hawke's Bay
+    files:
+      - Basins/Napier_Hawkes_Bay/v21p7/HawkesBay1_Outline_WGS84_delim.dat
+      - Basins/Napier_Hawkes_Bay/v21p7/HawkesBay2_Outline_WGS84_delim.dat
+      - Basins/Napier_Hawkes_Bay/v21p7/HawkesBay3_Outline_WGS84_delim.dat
+      - Basins/Napier_Hawkes_Bay/v21p7/HawkesBay4_Outline_WGS84_delim.dat-
+  - id: 27
+    name: Napier
+    files:
+      - Basins/Napier_Hawkes_Bay/v21p7/Napier1_Outline_WGS84_delim.dat
+      - Basins/Napier_Hawkes_Bay/v21p7/Napier2_Outline_WGS84_delim.dat
+      - Basins/Napier_Hawkes_Bay/v21p7/Napier3_Outline_WGS84_delim.dat
+      - Basins/Napier_Hawkes_Bay/v21p7/Napier4_Outline_WGS84_delim.dat
+      - Basins/Napier_Hawkes_Bay/v21p7/Napier5_Outline_WGS84_delim.dat
+      - Basins/Napier_Hawkes_Bay/v21p7/Napier6_Outline_WGS84_delim.dat
+  - id: 28
+    name: Greater Wellington
+    files:
+      - Basins/Greater_Wellington_and_Porirua/v21p7/GreaterWellington1_Outline_WGS84.dat
+      - Basins/Greater_Wellington_and_Porirua/v21p7/GreaterWellington2_Outline_WGS84.dat
+      - Basins/Greater_Wellington_and_Porirua/v21p7/GreaterWellington3_Outline_WGS84.dat
+      - Basins/Greater_Wellington_and_Porirua/v21p7/GreaterWellington4_Outline_WGS84.dat
+      - Basins/Greater_Wellington_and_Porirua/v21p7/GreaterWellington5_Outline_WGS84.dat
+      - Basins/Greater_Wellington_and_Porirua/v21p7/GreaterWellington6_Outline_WGS84.dat
+  - id: 29
+    name: Porirua
+    files:
+      - Basins/Greater_Wellington_and_Porirua/v21p7/Porirua1_Outline_WGS84.dat
+  - id: 30
+    name: Gisborne
+    files:
+      - Basins/Gisborne/v21p11/Gisborne_Outline_WGS84_delim.dat
+  - id: 31
+    name: SHB
+    files:
+      - Basins/Southern_Hawkes_Bay/v21p12/SHB_Outline_WGS84_delim.dat
+  - id: 32
+    name: Wairarapa
+    files:
+      - Basins/Wairarapa/v21p12/Wairarapa_Outline_WGS84_delim.dat
+  - id: 33
+    name: Motu Bay
+    files:
+      - Basins/East_Cape/v22p3/Motu_bay1_Outline_WGS84.txt
+      - Basins/East_Cape/v22p3/Motu_bay2_Outline_WGS84.txt
+      - Basins/East_Cape/v22p3/Motu_bay3_Outline_WGS84.txt
+  - id: 34
+    name: Whangaparoa
+    files:
+      - USER20_BASINS/Whangaparoa_outline_WGS84.txt

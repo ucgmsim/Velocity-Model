@@ -26,7 +26,9 @@ if __name__ == "__main__":
     )
     # by default, the output file will be current_dir / {ll_file}.z
     # this is to avoid overwriting existing z-file in StationInfo directory by mistake
-    parser.add_argument("-o", "--outdir", help="output directory", default=Path.cwd(), type=Path)
+    parser.add_argument(
+        "-o", "--outdir", help="output directory", default=Path.cwd(), type=Path
+    )
     parser.add_argument("--nzvm-path", default="NZVM", type=Path)
     args = parser.parse_args()
 
@@ -39,4 +41,4 @@ if __name__ == "__main__":
 
     z_df = extract_z(z_types, stat_df, args.nzvm_path, args.version)
     print(z_df)
-    z_df.to_csv(output_file,header=args.keep_header)
+    z_df.to_csv(output_file, header=args.keep_header)

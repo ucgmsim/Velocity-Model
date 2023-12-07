@@ -53,7 +53,7 @@ def extract_z(
             coords_ffp = temp_dir / "MultipleProfileParameters.txt"
             vm_working_dir = temp_dir / "z_output"
 
-            stat_df_slice = stat_df[i: i + SLICE_SIZE]
+            stat_df_slice = stat_df[i : i + SLICE_SIZE]
 
             n_stats_slice = len(stat_df_slice)
             with open(coords_ffp, "w") as coords_fp:
@@ -64,17 +64,24 @@ def extract_z(
 
             for z_type in z_types:
                 z_val = calculate_z(
-                        config_ffp, coords_ffp, nzvm_path, version, vm_working_dir, z_type)
+                    config_ffp, coords_ffp, nzvm_path, version, vm_working_dir, z_type
+                )
                 if z_type in z_values:
-                    z_val.index = range(z_values[z_type].index.max() + 1,
-                                        z_values[z_type].index.max() + n_stats_slice + 1)
-                    z_values[z_type] = pd.concat([z_values[z_type], z_val], ignore_index=True)
+                    z_val.index = range(
+                        z_values[z_type].index.max() + 1,
+                        z_values[z_type].index.max() + n_stats_slice + 1,
+                    )
+                    z_values[z_type] = pd.concat(
+                        [z_values[z_type], z_val], ignore_index=True
+                    )
                 else:
                     z_values[z_type] = z_val
 
     for z_type in z_types:
         stat_df["z_index"] = z_values[z_type].index
-        merged_df = merged_df.merge(z_values[z_type], left_on="z_index", right_index=True)
+        merged_df = merged_df.merge(
+            z_values[z_type], left_on="z_index", right_index=True
+        )
 
     merged_df["sigma"] = calculate_z_sigma(stat_df, version)
 

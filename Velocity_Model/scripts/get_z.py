@@ -6,15 +6,16 @@ from Velocity_Model.z import extract_z, basin_outlines_dict
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("-ll", help="Station ll file", required=True)
+    parser.add_argument("-ll", help="Station ll file", required=True, type=Path)
     parser.add_argument(
         "-z",
-        "--z-type",
+        "--z-types",
         choices=[
             "Z1.0",
             "Z2.5",
         ],  # TO DO:["vs30", "vs500"] not working despite documentation saying otherwise
         help="Selects what Z type to extract: [%(choices)s]",
+        action="extend",
         nargs="+",
         required=True,
     )
@@ -33,12 +34,18 @@ if __name__ == "__main__":
         default=True,
         action="store_false",
     )
-    parser.add_argument("-o", "--output", help="path to output file", default=".", type=Path)
+    parser.add_argument("-o", "--outdir", help="output directory", default=Path.cwd(), type=Path)
     parser.add_argument("--nzvm-path", default="NZVM", type=Path)
     args = parser.parse_args()
 
     stat_df = formats.load_station_file(args.ll)
 
-    output_file = args.output
-    z_df = extract_z(args.z_type, stat_df, args.nzvm_path, args.version)
+    print(args.outdir)
+    output_file = args.outdir / args.ll.with_suffix(".z").name
+
+    print(f"Specified z-types : {args.z_types}")
+    print(f"Output to be saved as {output_file}")
+
+    z_df = extract_z(args.z_types, stat_df, args.nzvm_path, args.version)
+    print(z_df)
     z_df.to_csv(output_file,header=args.keep_header)

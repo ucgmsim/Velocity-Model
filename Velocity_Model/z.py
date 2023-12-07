@@ -63,12 +63,14 @@ def extract_z(
             )
 
             for z_type in z_types:
+                print(z_type)
                 z_val = calculate_z(
                         config_ffp, coords_ffp, nzvm_path, version, vm_working_dir, z_type)
                 if z_type in z_values:
                     z_val.index = range(z_values[z_type].index.max() + 1,
                                         z_values[z_type].index.max() + n_stats_slice + 1)
-                    z_values[z_type] = z_values[z_type].append(z_val)
+#                    z_values[z_type] = z_values[z_type].append(z_val)
+                    z_values[z_type] = pd.concat([z_values[z_type], z_val], ignore_index=True)
                 else:
                     z_values[z_type] = z_val
 

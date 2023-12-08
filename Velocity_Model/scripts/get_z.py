@@ -34,11 +34,11 @@ if __name__ == "__main__":
 
     stat_df = formats.load_station_file(args.ll)
 
-    print(args.outdir)
     output_file = args.outdir / args.ll.with_suffix(".z").name
 
     print(f"Output to be saved as {output_file}")
 
     z_df = extract_z(z_types, stat_df, args.nzvm_path, args.version)
+    # this print is intentional. gives a peek view of the result
     print(z_df)
     z_df.to_csv(output_file, header=args.keep_header)

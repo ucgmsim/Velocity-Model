@@ -20,7 +20,6 @@ def get_basin_files_for_a_version(ver):
         print(f"Empty - check version {ver}")
     return flat_files
 
-
 versions = ["2.03", "2.04", "2.05", "2.06", "2.07"]
 basin_outlines_dict = {}
 prev_ver_basins = []

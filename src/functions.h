@@ -85,6 +85,7 @@ extern gen_extract_velo_mod_call readGenerateThresholdUserInputTextFile(char *fi
 extern gen_extract_multi_gridpoint_vs_call readExtractMultiInputTextFile(char *fileName);
 extern multi_profile_parameters *readProfilesTextFile(char *fileName);
 extern char *readParameter(char *fileName, char *quality);
+extern char *readParameterNoExit(char *fileName, char *quality);
 
 
 
@@ -344,6 +345,7 @@ void load_SouthernHawkesBay_v21p12(global_model_parameters *GLOBAL_MODEL_PARAMET
 void load_Motu_Bay1_v22p3(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
 void load_Motu_Bay2_v22p3(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
 void load_Motu_Bay3_v22p3(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_Whangaparoa_v23p4(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
 
 void load_Perturbation_v20p6(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
 void load_Perturbation_v20p10(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);

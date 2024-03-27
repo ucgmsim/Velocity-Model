@@ -183,40 +183,49 @@ void writeSampleInputTextFiles(void)
 
 char *readParameter(char *fileName, char *quality)
 {
+    char *returnValue;
+    returnValue = readParameterNoExit(fileName,quality);
+
+    if (returnValue == NULL)
+    {
+        printf("Quality %s not set in file %s. See readme.\n",quality,fileName);
+        exit(EXIT_FAILURE);
+    }
+    return returnValue;
+}
+
+char *readParameterNoExit(char *fileName, char *quality) {
     char line[MAX_FILENAME_STRING_LEN];
-    char *returnValue=(char*) malloc(MAX_FILENAME_STRING_LEN*sizeof(char));
+    char *returnValue = (char *) malloc(MAX_FILENAME_STRING_LEN * sizeof(char));
     char *type;
     char *val;
     int valAssigned = 0;
 
     FILE *fNameRead = NULL;
-    fNameRead  = fopen(fileName, "r");
-    if (fNameRead == NULL)
-    {
-        printf("File not found. (%s).\n",fileName);
+    fNameRead = fopen(fileName, "r");
+    if (fNameRead == NULL) {
+        printf("File not found. (%s).\n", fileName);
         exit(EXIT_FAILURE);
     }
 
-    while (fgets (line, sizeof(line), fNameRead))
-    {
-        type = strtok (line,"=");
-        val = strtok (NULL,"=");
-        if(strcmp(type, quality) == 0)
-        {
-            val[strlen(val)-1] = 0;
-            strcpy(returnValue,val);
+    while (fgets(line, sizeof(line), fNameRead)) {
+        type = strtok(line, "=");
+        val = strtok(NULL, "=");
+        if (strcmp(type, quality) == 0) {
+            val[strlen(val) - 1] = 0;
+            strcpy(returnValue, val);
 //            printf("%s %s\n",type, val);
             valAssigned = 1;
             break;
-
         }
     }
+    fclose(fNameRead);
+
     if (valAssigned == 0)
     {
-        printf("Quality %s not set in file %s. See readme.\n",quality,fileName);
-        exit(EXIT_FAILURE);
+        free(returnValue);
+        returnValue = NULL;
     }
-    fclose(fNameRead);
     return returnValue;
 }
 

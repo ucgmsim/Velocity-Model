@@ -7,7 +7,7 @@
     - id: 2
       name: North Canterbury
       files:
-        - Data/SI_BASINS/NorthCanterbury_Polygon_WGS84.txt
+        - SI_BASINS/NorthCanterbury_Polygon_WGS84.txt
     - id: 3
       name: Banks Peninsula Volcanics
       files:
@@ -36,7 +36,7 @@
     - id: 9
       name: Wellington / Hutt Valley
       files:
-        - Data/Basins/Wellington/v21p8/Wellington_Polygon_Wainuiomata_WGS84.txt
+        - Basins/Wellington/v21p8/Wellington_Polygon_Wainuiomata_WGS84.txt
     - id: 10
       name: Waikato / Hauraki
       files:

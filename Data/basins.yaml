@@ -7,7 +7,7 @@
     - id: 2
       name: North Canterbury
       files:
-        - Boundaries/NewCanterburyBasinBoundary_WGS84_1m.txt
+        - SI_BASINS/NorthCanterbury_Polygon_WGS84.txt
     - id: 3
       name: Banks Peninsula Volcanics
       files:
@@ -36,7 +36,7 @@
     - id: 9
       name: Wellington / Hutt Valley
       files:
-        - Basins/Wellington/v19p6/Wellington_Polygon_Wainuiomata_WGS84.txt
+        - Basins/Wellington/v21p8/Wellington_Polygon_Wainuiomata_WGS84.txt
     - id: 10
       name: Waikato / Hauraki
       files:
@@ -143,6 +143,8 @@
     name: Porirua
     files:
       - Basins/Greater_Wellington_and_Porirua/v21p7/Porirua1_Outline_WGS84.dat
+      - Basins/Greater_Wellington_and_Porirua/v21p7/Porirua2_Outline_WGS84.dat
+
   - id: 30
     name: Gisborne
     files:

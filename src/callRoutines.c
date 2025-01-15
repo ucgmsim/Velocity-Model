@@ -347,10 +347,12 @@ void runGenerateMultipleProfiles(char *MODEL_VERSION, char *OUTPUT_DIR, gen_mult
     free(VELO_MOD_1D_DATA);
     freeEPtomoSurfaceData(NZ_TOMOGRAPHY_DATA);
     free(NZ_TOMOGRAPHY_DATA);
-    free(GLOBAL_SURFACES);
+
     freeGlobalSurfaceData(GLOBAL_SURFACES, GLOBAL_MODEL_PARAMETERS);
+    free(GLOBAL_SURFACES);
     freeAllBasinSurfaces(BASIN_DATA, GLOBAL_MODEL_PARAMETERS);
     free(BASIN_DATA);
+
     if (strcmp(GEN_MULTI_PROFILES_CALL.SPACING_TYPE,"VARIABLE") == 0)
     {
         free(VARIABLE_DEPTH_POINTS);
@@ -1059,8 +1061,9 @@ void runThresholdInputLatLons(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extract
     free(VELO_MOD_1D_DATA);
     freeEPtomoSurfaceData(NZ_TOMOGRAPHY_DATA);
     free(NZ_TOMOGRAPHY_DATA);
-    free(GLOBAL_SURFACES);
+
     freeGlobalSurfaceData(GLOBAL_SURFACES, GLOBAL_MODEL_PARAMETERS);
+    free(GLOBAL_SURFACES);
     freeAllBasinSurfaces(BASIN_DATA, GLOBAL_MODEL_PARAMETERS);
     free(BASIN_DATA);
     free(MULTI_PROFILE_PARAMETERS);

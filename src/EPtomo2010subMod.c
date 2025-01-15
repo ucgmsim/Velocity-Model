@@ -612,8 +612,13 @@ void loadEPtomoSurfaceData(char *tomoType, nz_tomography_data *NZ_TOMOGRAPHY_DAT
         for(int j = 0; j < 3; j++)
         {
             ftoa(elev[i],floatElev,2); // int->int; float-> DDDpFF format
-            printf("elev[%d]=%f converted to floatElev=%s\n",i,elev[i],floatElev);
-            sprintf(baseFilename,"Data/Tomography/%s/surf_tomography_%s_elev%s.in",tomoDirectory,varNames[j],floatElev);
+            fprintf(stderr,"elev[%d]=%f converted to floatElev=%s\n",i,elev[i],floatElev);
+            int ret = snprintf(baseFilename, sizeof(baseFilename),"Data/Tomography/%s/surf_tomography_%s_elev%s.in",tomoDirectory,varNames[j],floatElev);
+            if (ret < 0 || ret >= sizeof(baseFilename))
+            {
+                fprintf(stderr, "Error: String assignment : baseFilename\n");
+                exit(EXIT_FAILURE);
+            }
             // read the surface
             NZ_TOMOGRAPHY_DATA->surf[j][i] = loadGlobalSurface(baseFilename);
             

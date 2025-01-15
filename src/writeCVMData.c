@@ -201,7 +201,12 @@ void writeMultipleProfiles(qualities_vector *QUALITIES_VECTOR, gen_multi_profile
     {
         FILE *fp;
         char fName[MAX_FILENAME_STRING_LEN];
-        sprintf(fName,"%s/Profiles/%s.1d",OUTPUT_DIR,&MULTI_PROFILE_PARAMETERS->codes[profileNum]);
+        int ret = snprintf(fName, sizeof(fName),"%s/Profiles/%s.1d",OUTPUT_DIR,MULTI_PROFILE_PARAMETERS->codes[profileNum]);
+        if (ret < 0 || ret >= sizeof(fName))
+        {
+            fprintf(stderr, "Error: String assignment : fName\n");
+            exit(EXIT_FAILURE);
+        }
         fp = fopen(fName, "w");
         if (fp == NULL)
         {
@@ -242,7 +247,13 @@ void writeMultipleProfiles(qualities_vector *QUALITIES_VECTOR, gen_multi_profile
     {
         FILE *fp;
         char fName[MAX_FILENAME_STRING_LEN];
-        sprintf(fName,"%s/Profiles/Profile%s.txt",OUTPUT_DIR,&MULTI_PROFILE_PARAMETERS->codes[profileNum]);
+        int ret = snprintf(fName,sizeof(fName), "%s/Profiles/Profile%ss.txt",OUTPUT_DIR, MULTI_PROFILE_PARAMETERS->codes[profileNum]);
+        if (ret < 0 || ret >= sizeof(fName))
+        {
+            fprintf(stderr, "Error: String assignment : fName\n");
+            exit(EXIT_FAILURE);
+        }
+
         fp = fopen(fName, "w");
         if (fp == NULL)
         {
@@ -276,7 +287,13 @@ void writeMultipleProfileSurfaceDepths(global_model_parameters *GLOBAL_MODEL_PAR
 {
     FILE *fp;
     char fName[MAX_FILENAME_STRING_LEN];
-    sprintf(fName,"%s/Profiles/ProfileSurfaceDepths%s.txt", OUTPUT_DIR,&MULTI_PROFILE_PARAMETERS->codes[profileNum]);
+    int ret = snprintf(fName,sizeof(fName),"%s/Profiles/ProfileSurfaceDepths%s.txt", OUTPUT_DIR,MULTI_PROFILE_PARAMETERS->codes[profileNum]);
+    if (ret < 0 || ret >= sizeof(fName))
+    {
+        fprintf(stderr, "Error: String assignment : fName\n");
+        exit(EXIT_FAILURE);
+    }
+
     
     fp = fopen(fName, "w");
     if (fp == NULL)
@@ -367,7 +384,12 @@ void writeSliceSurfaceDepths(global_model_parameters *GLOBAL_MODEL_PARAMETERS,pa
 void writeAllBasinSurfaceDepths(global_model_parameters *GLOBAL_MODEL_PARAMETERS, partial_global_mesh *PARTIAL_GLOBAL_MESH, int basinNum, char *OUTPUT_DIR,slice_surface_depths *SLICE_SURFACE_DEPTHS)
 {
     char sliceDir[MAX_FILENAME_STRING_LEN];
-    sprintf(sliceDir,"%s/Generated_Slices",OUTPUT_DIR);
+    int ret = snprintf(sliceDir, sizeof(sliceDir),"%s/Generated_Slices",OUTPUT_DIR);
+    if (ret < 0 || ret >= sizeof(sliceDir))
+    {
+        fprintf(stderr, "Error: String assignment : sliceDir\n");
+        exit(EXIT_FAILURE);
+    }
     
     static int sliceCount = 1;
     
@@ -387,7 +409,12 @@ void writeAllBasinSurfaceDepths(global_model_parameters *GLOBAL_MODEL_PARAMETERS
     
     FILE *fp;
     char fName[MAX_FILENAME_STRING_LEN];
-    sprintf(fName,"%s/SliceSurfaceDepthsSlice%iBasin%i.txt",sliceDir,sliceCount,basinNum);
+    ret = snprintf(fName, sizeof(fName), "%s/SliceSurfaceDepthsSlice%iBasin%i.txt",sliceDir,sliceCount,basinNum);
+    if (ret < 0 || ret >= sizeof(fName))
+    {
+        fprintf(stderr, "Error: String assignment : fName\n");
+        exit(EXIT_FAILURE);
+    }
     fp = fopen(fName, "w");
     fprintf(fp, "Lat\tLon\t");
     for(int k = 0; k < GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum]; k++)
@@ -412,14 +439,26 @@ void writeAllBasinSurfaceDepths(global_model_parameters *GLOBAL_MODEL_PARAMETERS
 void writeAllGlobalSurfaceDepths(slice_surface_depths *SLICE_SURFACE_DEPTHS, partial_global_mesh *PARTIAL_GLOBAL_MESH, global_model_parameters *GLOBAL_MODEL_PARAMETERS,char *OUTPUT_DIR)
 {
     char sliceDir[MAX_FILENAME_STRING_LEN];
-    sprintf(sliceDir,"%s/Generated_Slices",OUTPUT_DIR);
+    int ret = snprintf(sliceDir, sizeof(sliceDir),"%s/Generated_Slices",OUTPUT_DIR);
+    if (ret < 0 || ret >= sizeof(sliceDir))
+    {
+        fprintf(stderr, "Error: String assignment : sliceDir\n");
+        exit(EXIT_FAILURE);
+    }
+
     
     static int sCountBasin = 0;
     sCountBasin += 1;
     
     FILE *fp;
     char fName[MAX_FILENAME_STRING_LEN];
-    sprintf(fName,"%s/SliceSurfaceDepthsGlobal%i.txt",sliceDir,sCountBasin);
+
+    ret = snprintf(fName,sizeof(fName), "%s/SliceSurfaceDepthsGlobal%i.txt",sliceDir,sCountBasin);
+    if (ret < 0 || ret >= sizeof(fName))
+    {
+        fprintf(stderr, "Error: String assignment : fName\n");
+        exit(EXIT_FAILURE);
+    }
     fp = fopen(fName, "w");
     fprintf(fp, "Lat\tLon\t");
     for(int k = 0; k < GLOBAL_MODEL_PARAMETERS->nSurf; k++)

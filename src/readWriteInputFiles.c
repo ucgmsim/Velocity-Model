@@ -386,7 +386,7 @@ multi_profile_parameters *readProfilesTextFile(char *coordsTextFile)
 
     for(int i = 0; i < MULTI_PROFILE_PARAMETERS->nProfiles; i++)
     {
-        fscanf(file, "%lf %lf %s", &MULTI_PROFILE_PARAMETERS->lons[i], &MULTI_PROFILE_PARAMETERS->lats[i], &MULTI_PROFILE_PARAMETERS->codes[i]);
+        fscanf(file, "%lf %lf %s", &MULTI_PROFILE_PARAMETERS->lons[i], &MULTI_PROFILE_PARAMETERS->lats[i], MULTI_PROFILE_PARAMETERS->codes[i]);
     }
 
     printf("Profiles text file read complete.\n");

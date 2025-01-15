@@ -1165,7 +1165,7 @@ void load_Westport_v24p9(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int b
     GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][0] = "Cant1D_v2";
 
     GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][1] = "Westport";
-    GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][1] = "Data/STUDENTS_BASINS/Westport_surface_WGS84.txt";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][1] = "Data/STUDENTS_BASINS/Westport_surface_WGS84.in";
     GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][1] = 0;
 }
 
@@ -1181,8 +1181,8 @@ void load_TeAnau_v24p9(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int bas
     GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][0] = 0;
     GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][0] = "Cant1D_v2";
 
-    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][1] = "Westport";
-    GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][1] = "Data/STUDENTS_BASINS/TeAnau_surface_WGS84.txt";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][1] = "TeAnau";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][1] = "Data/STUDENTS_BASINS/TeAnau_surface_WGS84.in";
     GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][1] = 0;
 }
 

@@ -347,7 +347,7 @@ void load_Motu_Bay1_v22p3(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int 
 void load_Motu_Bay2_v22p3(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
 void load_Motu_Bay3_v22p3(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
 void load_Whangaparoa_v23p4(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
-void load_Westport_v24p9(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum)
+void load_Westport_v24p9(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
 void load_TeAnau_v24p9(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
 
 void load_Perturbation_v20p6(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);

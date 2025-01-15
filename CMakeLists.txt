@@ -21,7 +21,7 @@ add_executable(NZVM
         src/ftoa.c
         src/functions.h
         src/generateModelGrid.c
-        src/generateProfile.c
+        #src/generateProfile.c
         src/getSurfSubModNames.c
         src/linearInterpolation.c
         src/loadAllData.c
@@ -45,5 +45,5 @@ find_package(OpenMP REQUIRED)
 if(OpenMP_C_FOUND) 
 	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}") 
 endif()
-
+target_compile_options(NZVM PRIVATE -Wextra -Wpedantic)
 target_link_libraries(NZVM OpenMP::OpenMP_C m) 

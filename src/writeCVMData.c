@@ -202,7 +202,7 @@ void writeMultipleProfiles(qualities_vector *QUALITIES_VECTOR, gen_multi_profile
         FILE *fp;
         char fName[MAX_FILENAME_STRING_LEN];
         int ret = snprintf(fName, sizeof(fName),"%s/Profiles/%s.1d",OUTPUT_DIR,MULTI_PROFILE_PARAMETERS->codes[profileNum]);
-        if (ret < 0 || ret >= sizeof(fName))
+        if (ret < 0 || ret >= (int)sizeof(fName))
         {
             fprintf(stderr, "Error: String assignment : fName\n");
             exit(EXIT_FAILURE);
@@ -248,7 +248,7 @@ void writeMultipleProfiles(qualities_vector *QUALITIES_VECTOR, gen_multi_profile
         FILE *fp;
         char fName[MAX_FILENAME_STRING_LEN];
         int ret = snprintf(fName,sizeof(fName), "%s/Profiles/Profile%ss.txt",OUTPUT_DIR, MULTI_PROFILE_PARAMETERS->codes[profileNum]);
-        if (ret < 0 || ret >= sizeof(fName))
+        if (ret < 0 || ret >= (int)sizeof(fName))
         {
             fprintf(stderr, "Error: String assignment : fName\n");
             exit(EXIT_FAILURE);
@@ -288,7 +288,7 @@ void writeMultipleProfileSurfaceDepths(global_model_parameters *GLOBAL_MODEL_PAR
     FILE *fp;
     char fName[MAX_FILENAME_STRING_LEN];
     int ret = snprintf(fName,sizeof(fName),"%s/Profiles/ProfileSurfaceDepths%s.txt", OUTPUT_DIR,MULTI_PROFILE_PARAMETERS->codes[profileNum]);
-    if (ret < 0 || ret >= sizeof(fName))
+    if (ret < 0 || ret >= (int)sizeof(fName))
     {
         fprintf(stderr, "Error: String assignment : fName\n");
         exit(EXIT_FAILURE);
@@ -385,7 +385,7 @@ void writeAllBasinSurfaceDepths(global_model_parameters *GLOBAL_MODEL_PARAMETERS
 {
     char sliceDir[MAX_FILENAME_STRING_LEN];
     int ret = snprintf(sliceDir, sizeof(sliceDir),"%s/Generated_Slices",OUTPUT_DIR);
-    if (ret < 0 || ret >= sizeof(sliceDir))
+    if (ret < 0 || ret >= (int)sizeof(sliceDir))
     {
         fprintf(stderr, "Error: String assignment : sliceDir\n");
         exit(EXIT_FAILURE);
@@ -410,7 +410,7 @@ void writeAllBasinSurfaceDepths(global_model_parameters *GLOBAL_MODEL_PARAMETERS
     FILE *fp;
     char fName[MAX_FILENAME_STRING_LEN];
     ret = snprintf(fName, sizeof(fName), "%s/SliceSurfaceDepthsSlice%iBasin%i.txt",sliceDir,sliceCount,basinNum);
-    if (ret < 0 || ret >= sizeof(fName))
+    if (ret < 0 || ret >= (int)sizeof(fName))
     {
         fprintf(stderr, "Error: String assignment : fName\n");
         exit(EXIT_FAILURE);
@@ -440,7 +440,7 @@ void writeAllGlobalSurfaceDepths(slice_surface_depths *SLICE_SURFACE_DEPTHS, par
 {
     char sliceDir[MAX_FILENAME_STRING_LEN];
     int ret = snprintf(sliceDir, sizeof(sliceDir),"%s/Generated_Slices",OUTPUT_DIR);
-    if (ret < 0 || ret >= sizeof(sliceDir))
+    if (ret < 0 || ret >= (int)sizeof(sliceDir))
     {
         fprintf(stderr, "Error: String assignment : sliceDir\n");
         exit(EXIT_FAILURE);
@@ -454,7 +454,7 @@ void writeAllGlobalSurfaceDepths(slice_surface_depths *SLICE_SURFACE_DEPTHS, par
     char fName[MAX_FILENAME_STRING_LEN];
 
     ret = snprintf(fName,sizeof(fName), "%s/SliceSurfaceDepthsGlobal%i.txt",sliceDir,sCountBasin);
-    if (ret < 0 || ret >= sizeof(fName))
+    if (ret < 0 || ret >= (int)sizeof(fName))
     {
         fprintf(stderr, "Error: String assignment : fName\n");
         exit(EXIT_FAILURE);

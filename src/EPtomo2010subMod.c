@@ -131,7 +131,7 @@ void loadEPtomoSurfaceData(char *tomoType, nz_tomography_data *NZ_TOMOGRAPHY_DAT
  Purpose:   read in the Eberhart-Phillips 2010 tomography dataset
  
  Input variables:
- *tomoType - strimg containing the type of tomography to load
+ *tomoType - string containing the type of tomography to load
  *NZ_TOMOGRAPHY_DATA - struct containing tomography sub velocity model data (tomography surfaces depths etc)
  
  Output variables:
@@ -614,7 +614,7 @@ void loadEPtomoSurfaceData(char *tomoType, nz_tomography_data *NZ_TOMOGRAPHY_DAT
             ftoa(elev[i],floatElev,2); // int->int; float-> DDDpFF format
             fprintf(stderr,"elev[%d]=%f converted to floatElev=%s\n",i,elev[i],floatElev);
             int ret = snprintf(baseFilename, sizeof(baseFilename),"Data/Tomography/%s/surf_tomography_%s_elev%s.in",tomoDirectory,varNames[j],floatElev);
-            if (ret < 0 || ret >= sizeof(baseFilename))
+            if (ret < 0 || ret >= (int)sizeof(baseFilename))
             {
                 fprintf(stderr, "Error: String assignment : baseFilename\n");
                 exit(EXIT_FAILURE);

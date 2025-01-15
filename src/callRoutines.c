@@ -264,7 +264,7 @@ void runGenerateMultipleProfiles(char *MODEL_VERSION, char *OUTPUT_DIR, gen_mult
         }
         else if (strcmp(GEN_MULTI_PROFILES_CALL.SPACING_TYPE,"VARIABLE") == 0)
         {
-            // insert place holder values to be wirtten over once variable depth points have been read from file
+            // insert placeholder values to be wirtten over once variable depth points have been read from file
             MODEL_EXTENT->Zmax = 1;
             MODEL_EXTENT->Zmin = 0;
             MODEL_EXTENT->hDep = 1;

@@ -85,18 +85,18 @@ void runGenerateVelocitySlices(char *MODEL_VERSION, char *OUTPUT_DIR, gen_velo_s
     loadAllGlobalData(GLOBAL_MODEL_PARAMETERS, CALCULATION_LOG, VELO_MOD_1D_DATA, NZ_TOMOGRAPHY_DATA, GLOBAL_SURFACES, BASIN_DATA);
 
     // Loop over grid points and assign values
-    for(int j = 0; j < SLICE_PARAMETERS->nSlices; j++)
+    for(int l = 0; l < SLICE_PARAMETERS->nSlices; l++)
     {
         individual_slice_parameters INDIVIDUAL_SLICE_PARAMETERS;
         
-        INDIVIDUAL_SLICE_PARAMETERS.latPtsSlice[0] = SLICE_PARAMETERS->latA[j];
-        INDIVIDUAL_SLICE_PARAMETERS.latPtsSlice[1] = SLICE_PARAMETERS->latB[j];
-        INDIVIDUAL_SLICE_PARAMETERS.lonPtsSlice[0] = SLICE_PARAMETERS->lonA[j];
-        INDIVIDUAL_SLICE_PARAMETERS.lonPtsSlice[1] = SLICE_PARAMETERS->lonB[j];
-        INDIVIDUAL_SLICE_PARAMETERS.resZ = SLICE_PARAMETERS->DepRes[j];
-        INDIVIDUAL_SLICE_PARAMETERS.resXY = SLICE_PARAMETERS->LatLonRes[j];
-        INDIVIDUAL_SLICE_PARAMETERS.zMin = SLICE_PARAMETERS->depMin[j];
-        INDIVIDUAL_SLICE_PARAMETERS.zMax = SLICE_PARAMETERS->depMax[j];
+        INDIVIDUAL_SLICE_PARAMETERS.latPtsSlice[0] = SLICE_PARAMETERS->latA[l];
+        INDIVIDUAL_SLICE_PARAMETERS.latPtsSlice[1] = SLICE_PARAMETERS->latB[l];
+        INDIVIDUAL_SLICE_PARAMETERS.lonPtsSlice[0] = SLICE_PARAMETERS->lonA[l];
+        INDIVIDUAL_SLICE_PARAMETERS.lonPtsSlice[1] = SLICE_PARAMETERS->lonB[l];
+        INDIVIDUAL_SLICE_PARAMETERS.resZ = SLICE_PARAMETERS->DepRes[l];
+        INDIVIDUAL_SLICE_PARAMETERS.resXY = SLICE_PARAMETERS->LatLonRes[l];
+        INDIVIDUAL_SLICE_PARAMETERS.zMin = SLICE_PARAMETERS->depMin[l];
+        INDIVIDUAL_SLICE_PARAMETERS.zMax = SLICE_PARAMETERS->depMax[l];
 
         partial_global_mesh *PARTIAL_GLOBAL_MESH;
         PARTIAL_GLOBAL_MESH = generateSlicePartialMesh(INDIVIDUAL_SLICE_PARAMETERS);
@@ -171,9 +171,9 @@ void runGenerateVelocitySlices(char *MODEL_VERSION, char *OUTPUT_DIR, gen_velo_s
             free(PARTIAL_GLOBAL_SURFACE_DEPTHS);
             free(IN_BASIN);
         }
-        writeGeneratedSlice(OUTPUT_DIR, PARTIAL_GLOBAL_MESH, PARTIAL_GLOBAL_QUALITIES, &INDIVIDUAL_SLICE_PARAMETERS,CALCULATION_LOG, j);
+        writeGeneratedSlice(OUTPUT_DIR, PARTIAL_GLOBAL_MESH, PARTIAL_GLOBAL_QUALITIES, &INDIVIDUAL_SLICE_PARAMETERS,CALCULATION_LOG, l);
         writeSliceSurfaceDepths(GLOBAL_MODEL_PARAMETERS,PARTIAL_GLOBAL_MESH, OUTPUT_DIR, SLICE_SURFACE_DEPTHS);
-        printf("Slice %i of %i complete.\n",j+1,SLICE_PARAMETERS->nSlices);
+        printf("Slice %i of %i complete.\n",l+1,SLICE_PARAMETERS->nSlices);
         free(SLICE_SURFACE_DEPTHS);
         free(PARTIAL_GLOBAL_MESH);
         free(PARTIAL_GLOBAL_QUALITIES);
@@ -1074,7 +1074,7 @@ void runThresholdInputLatLons(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extract
 void runGenerateVelocityModel(char *MODEL_VERSION, char *OUTPUT_DIR, gen_extract_velo_mod_call GEN_EXTRACT_VELO_MOD_CALL, calculation_log *CALCULATION_LOG)
 {
     int smoothingRequired = 0; // set as zero if no smoothing is required, set as 1 for smoothing
-    int nPtsSmooth = 1; // number of points (eitherside of gridpoint) to incorporate for smoothing
+    int nPtsSmooth = 1; // number of points (either side of gridpoint) to incorporate for smoothing
     
     model_extent *MODEL_EXTENT = malloc(sizeof(model_extent));
     if (MODEL_EXTENT == NULL)

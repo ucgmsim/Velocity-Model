@@ -74,6 +74,13 @@ typedef struct{
     double Rho[DEP_GRID_DIM_MAX];
     int inbasin[DEP_GRID_DIM_MAX];
 }qualities_vector;
+// global values
+typedef struct{
+    double Vp[DEP_GRID_DIM_MAX];
+    double Vs[DEP_GRID_DIM_MAX];
+    double Rho[DEP_GRID_DIM_MAX];
+    int inbasin[DEP_GRID_DIM_MAX];
+}qualities_vector;
 
 typedef struct{
     double Vp[LON_GRID_DIM_MAX][DEP_GRID_DIM_MAX];

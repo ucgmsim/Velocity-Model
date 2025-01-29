@@ -139,7 +139,7 @@ int main(int argc, char *argv[])
         if (stat(OUTPUT_DIR, &st) != -1)
         {
             printf("Output directory must not exist for this call type. See readme.\n");
-            exit(EXIT_FAILURE);
+            //exit(EXIT_FAILURE);
         }
         else
         {

@@ -37,7 +37,7 @@ double linearInterpolation(double p1, double p2, double v1, double v2, double p3
 
 double biLinearInterpolation(double X1, double X2, double Y1, double Y2, double Q11, double Q12, double Q21, double Q22, double X, double Y)
 /*
- Purpose:   bilinearly interpolate bewteen four points
+ Purpose:   bilinearly interpolate between four points
  
  Input variables:
  X1

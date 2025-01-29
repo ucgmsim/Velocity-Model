@@ -33,7 +33,7 @@ void assignQualities(global_model_parameters *GLOBAL_MODEL_PARAMETERS, velo_mod_
 
     if (SMOOTH_BOUND->n == 0)
     {
-        distance = 1e6; // if there are not points in the smoothing boundary, then skip 
+        distance = 1e6; // if they are not points in the smoothing boundary, then skip
     }
     else 
     {

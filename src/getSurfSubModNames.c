@@ -1977,6 +1977,176 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->basin[54] = "Motu_Bay3_v22p3";
         GLOBAL_MODEL_PARAMETERS->basin[55] = "Whangaparoa_v23p4";
     }
+    else if(strcmp(modelVersion,"2.07_students2024_1") == 0)
+    {
+        // define the number of surfaces and sub models
+        GLOBAL_MODEL_PARAMETERS->nSurf = 3;
+        GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 2;
+
+        // insert surface surface keywords and filenames
+        GLOBAL_MODEL_PARAMETERS->surf[0] = "posInfSurf";
+        GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[0] = "Data/Global_Surfaces/posInf.in";
+        GLOBAL_MODEL_PARAMETERS->surf[1] = "DEM";
+        GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[1] = "Data/DEM/NZ_DEM_HD.in";
+        GLOBAL_MODEL_PARAMETERS->surf[2] = "negInfSurf";
+        GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[2] = "Data/Global_Surfaces/negInf.in";
+
+        // insert velocity submodel keywords and filenames (if necessary)
+        GLOBAL_MODEL_PARAMETERS->veloSubMod[0] = "NaNsubMod";
+        GLOBAL_MODEL_PARAMETERS->veloSubMod[1] = "EPtomo2010subMod";
+        GLOBAL_MODEL_PARAMETERS->tomographyName = "2020_NZ_OFFSHORE";
+
+
+
+        GLOBAL_MODEL_PARAMETERS->GTL = 1;
+        GLOBAL_MODEL_PARAMETERS->BasinEdgeSmoothing = 1;
+
+        // Basin names for this model version
+        GLOBAL_MODEL_PARAMETERS->nBasins = 57;
+        GLOBAL_MODEL_PARAMETERS->basin[0] = "Canterbury_Pre_Quaternary_v19p1";
+        GLOBAL_MODEL_PARAMETERS->basin[1] = "Cantebury_North_v19p1";
+        GLOBAL_MODEL_PARAMETERS->basin[2] = "Banks_Peninsula_Volcanics_v19p1";
+        GLOBAL_MODEL_PARAMETERS->basin[3] = "Kaikoura_v19p1";
+        GLOBAL_MODEL_PARAMETERS->basin[4] = "Cheviot_v19p1";
+        GLOBAL_MODEL_PARAMETERS->basin[5] = "Hanmer_v19p1";
+        GLOBAL_MODEL_PARAMETERS->basin[6] = "Marlborough_v19p1";
+        GLOBAL_MODEL_PARAMETERS->basin[7] = "Nelson_v19p1";
+        GLOBAL_MODEL_PARAMETERS->basin[8] = "Wellington_v21p8";
+        GLOBAL_MODEL_PARAMETERS->basin[9] = "WaikatoHauraki_v19p7";
+        GLOBAL_MODEL_PARAMETERS->basin[10] = "Wanaka_v20p6";
+        GLOBAL_MODEL_PARAMETERS->basin[11] = "MacKenzie_v20p6";
+        GLOBAL_MODEL_PARAMETERS->basin[12] = "Wakatipu_v20p7";
+        GLOBAL_MODEL_PARAMETERS->basin[13] = "Alexandra_v20p7";
+        GLOBAL_MODEL_PARAMETERS->basin[14] = "Ranfurly_v20p7";
+        GLOBAL_MODEL_PARAMETERS->basin[15] = "NE_Otago_A_v20p7";
+        GLOBAL_MODEL_PARAMETERS->basin[16] = "NE_Otago_B_v20p7";
+        GLOBAL_MODEL_PARAMETERS->basin[17] = "NE_Otago_C_v20p7";
+        GLOBAL_MODEL_PARAMETERS->basin[18] = "NE_Otago_D_v20p7";
+        GLOBAL_MODEL_PARAMETERS->basin[19] = "NE_Otago_E_v20p7";
+        GLOBAL_MODEL_PARAMETERS->basin[20] = "Mosgiel_v20p7";
+        GLOBAL_MODEL_PARAMETERS->basin[21] = "Balclutha_v20p7";
+        GLOBAL_MODEL_PARAMETERS->basin[22] = "Dunedin_v20p7";
+        GLOBAL_MODEL_PARAMETERS->basin[23] = "Murchison_v20p7";
+        GLOBAL_MODEL_PARAMETERS->basin[24] = "Waitaki_v20p8";
+        GLOBAL_MODEL_PARAMETERS->basin[25] = "Hakataramea_v20p8";
+        GLOBAL_MODEL_PARAMETERS->basin[26] = "Karamea_v20p11";
+        GLOBAL_MODEL_PARAMETERS->basin[27] = "CollingwoodBasin1_v20p11";
+        GLOBAL_MODEL_PARAMETERS->basin[28] = "CollingwoodBasin2_v20p11";
+        GLOBAL_MODEL_PARAMETERS->basin[29] = "CollingwoodBasin3_v20p11";
+        GLOBAL_MODEL_PARAMETERS->basin[30] = "SpringsJunction_v20p11";
+        GLOBAL_MODEL_PARAMETERS->basin[31] = "HawkesBay1_v21p7";
+        GLOBAL_MODEL_PARAMETERS->basin[32] = "HawkesBay2_v21p7";
+        GLOBAL_MODEL_PARAMETERS->basin[33] = "HawkesBay3_v21p7";
+        GLOBAL_MODEL_PARAMETERS->basin[34] = "HawkesBay4_v21p7";
+        GLOBAL_MODEL_PARAMETERS->basin[35] = "Napier1_v21p7";
+        GLOBAL_MODEL_PARAMETERS->basin[36] = "Napier2_v21p7";
+        GLOBAL_MODEL_PARAMETERS->basin[37] = "Napier3_v21p7";
+        GLOBAL_MODEL_PARAMETERS->basin[38] = "Napier4_v21p7";
+        GLOBAL_MODEL_PARAMETERS->basin[39] = "Napier5_v21p7";
+        GLOBAL_MODEL_PARAMETERS->basin[40] = "Napier6_v21p7";
+        GLOBAL_MODEL_PARAMETERS->basin[41] = "GreaterWellington1_v21p7";
+        GLOBAL_MODEL_PARAMETERS->basin[42] = "GreaterWellington2_v21p7";
+        GLOBAL_MODEL_PARAMETERS->basin[43] = "GreaterWellington3_v21p7";
+        GLOBAL_MODEL_PARAMETERS->basin[44] = "GreaterWellington4_v21p7";
+        GLOBAL_MODEL_PARAMETERS->basin[45] = "GreaterWellington5_v21p7";
+        GLOBAL_MODEL_PARAMETERS->basin[46] = "GreaterWellington6_v21p7";
+        GLOBAL_MODEL_PARAMETERS->basin[47] = "Porirua1_v21p7";
+        GLOBAL_MODEL_PARAMETERS->basin[48] = "Porirua2_v21p7";
+        GLOBAL_MODEL_PARAMETERS->basin[49] = "Gisborne_v21p11";
+        GLOBAL_MODEL_PARAMETERS->basin[50] = "SouthernHawkesBay_v21p12";
+        GLOBAL_MODEL_PARAMETERS->basin[51] = "Wairarapa_v21p12";
+        GLOBAL_MODEL_PARAMETERS->basin[52] = "Motu_Bay1_v22p3";
+        GLOBAL_MODEL_PARAMETERS->basin[53] = "Motu_Bay2_v22p3";
+        GLOBAL_MODEL_PARAMETERS->basin[54] = "Motu_Bay3_v22p3";
+        GLOBAL_MODEL_PARAMETERS->basin[55] = "Whangaparoa_v23p4";
+        GLOBAL_MODEL_PARAMETERS->basin[56] = "Westport_v24p9";
+    }
+
+
+    else if(strcmp(modelVersion,"2.07_students2024_2") == 0)
+    {
+        // define the number of surfaces and sub models
+        GLOBAL_MODEL_PARAMETERS->nSurf = 3;
+        GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 2;
+
+        // insert surface surface keywords and filenames
+        GLOBAL_MODEL_PARAMETERS->surf[0] = "posInfSurf";
+        GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[0] = "Data/Global_Surfaces/posInf.in";
+        GLOBAL_MODEL_PARAMETERS->surf[1] = "DEM";
+        GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[1] = "Data/DEM/NZ_DEM_HD.in";
+        GLOBAL_MODEL_PARAMETERS->surf[2] = "negInfSurf";
+        GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[2] = "Data/Global_Surfaces/negInf.in";
+
+        // insert velocity submodel keywords and filenames (if necessary)
+        GLOBAL_MODEL_PARAMETERS->veloSubMod[0] = "NaNsubMod";
+        GLOBAL_MODEL_PARAMETERS->veloSubMod[1] = "EPtomo2010subMod";
+        GLOBAL_MODEL_PARAMETERS->tomographyName = "2020_NZ_OFFSHORE";
+
+
+
+        GLOBAL_MODEL_PARAMETERS->GTL = 1;
+        GLOBAL_MODEL_PARAMETERS->BasinEdgeSmoothing = 1;
+
+        // Basin names for this model version
+        GLOBAL_MODEL_PARAMETERS->nBasins = 57;
+        GLOBAL_MODEL_PARAMETERS->basin[0] = "Canterbury_Pre_Quaternary_v19p1";
+        GLOBAL_MODEL_PARAMETERS->basin[1] = "Cantebury_North_v19p1";
+        GLOBAL_MODEL_PARAMETERS->basin[2] = "Banks_Peninsula_Volcanics_v19p1";
+        GLOBAL_MODEL_PARAMETERS->basin[3] = "Kaikoura_v19p1";
+        GLOBAL_MODEL_PARAMETERS->basin[4] = "Cheviot_v19p1";
+        GLOBAL_MODEL_PARAMETERS->basin[5] = "Hanmer_v19p1";
+        GLOBAL_MODEL_PARAMETERS->basin[6] = "Marlborough_v19p1";
+        GLOBAL_MODEL_PARAMETERS->basin[7] = "Nelson_v19p1";
+        GLOBAL_MODEL_PARAMETERS->basin[8] = "Wellington_v21p8";
+        GLOBAL_MODEL_PARAMETERS->basin[9] = "WaikatoHauraki_v19p7";
+        GLOBAL_MODEL_PARAMETERS->basin[10] = "Wanaka_v20p6";
+        GLOBAL_MODEL_PARAMETERS->basin[11] = "MacKenzie_v20p6";
+        GLOBAL_MODEL_PARAMETERS->basin[12] = "Wakatipu_v20p7";
+        GLOBAL_MODEL_PARAMETERS->basin[13] = "Alexandra_v20p7";
+        GLOBAL_MODEL_PARAMETERS->basin[14] = "Ranfurly_v20p7";
+        GLOBAL_MODEL_PARAMETERS->basin[15] = "NE_Otago_A_v20p7";
+        GLOBAL_MODEL_PARAMETERS->basin[16] = "NE_Otago_B_v20p7";
+        GLOBAL_MODEL_PARAMETERS->basin[17] = "NE_Otago_C_v20p7";
+        GLOBAL_MODEL_PARAMETERS->basin[18] = "NE_Otago_D_v20p7";
+        GLOBAL_MODEL_PARAMETERS->basin[19] = "NE_Otago_E_v20p7";
+        GLOBAL_MODEL_PARAMETERS->basin[20] = "Mosgiel_v20p7";
+        GLOBAL_MODEL_PARAMETERS->basin[21] = "Balclutha_v20p7";
+        GLOBAL_MODEL_PARAMETERS->basin[22] = "Dunedin_v20p7";
+        GLOBAL_MODEL_PARAMETERS->basin[23] = "Murchison_v20p7";
+        GLOBAL_MODEL_PARAMETERS->basin[24] = "Waitaki_v20p8";
+        GLOBAL_MODEL_PARAMETERS->basin[25] = "Hakataramea_v20p8";
+        GLOBAL_MODEL_PARAMETERS->basin[26] = "Karamea_v20p11";
+        GLOBAL_MODEL_PARAMETERS->basin[27] = "CollingwoodBasin1_v20p11";
+        GLOBAL_MODEL_PARAMETERS->basin[28] = "CollingwoodBasin2_v20p11";
+        GLOBAL_MODEL_PARAMETERS->basin[29] = "CollingwoodBasin3_v20p11";
+        GLOBAL_MODEL_PARAMETERS->basin[30] = "SpringsJunction_v20p11";
+        GLOBAL_MODEL_PARAMETERS->basin[31] = "HawkesBay1_v21p7";
+        GLOBAL_MODEL_PARAMETERS->basin[32] = "HawkesBay2_v21p7";
+        GLOBAL_MODEL_PARAMETERS->basin[33] = "HawkesBay3_v21p7";
+        GLOBAL_MODEL_PARAMETERS->basin[34] = "HawkesBay4_v21p7";
+        GLOBAL_MODEL_PARAMETERS->basin[35] = "Napier1_v21p7";
+        GLOBAL_MODEL_PARAMETERS->basin[36] = "Napier2_v21p7";
+        GLOBAL_MODEL_PARAMETERS->basin[37] = "Napier3_v21p7";
+        GLOBAL_MODEL_PARAMETERS->basin[38] = "Napier4_v21p7";
+        GLOBAL_MODEL_PARAMETERS->basin[39] = "Napier5_v21p7";
+        GLOBAL_MODEL_PARAMETERS->basin[40] = "Napier6_v21p7";
+        GLOBAL_MODEL_PARAMETERS->basin[41] = "GreaterWellington1_v21p7";
+        GLOBAL_MODEL_PARAMETERS->basin[42] = "GreaterWellington2_v21p7";
+        GLOBAL_MODEL_PARAMETERS->basin[43] = "GreaterWellington3_v21p7";
+        GLOBAL_MODEL_PARAMETERS->basin[44] = "GreaterWellington4_v21p7";
+        GLOBAL_MODEL_PARAMETERS->basin[45] = "GreaterWellington5_v21p7";
+        GLOBAL_MODEL_PARAMETERS->basin[46] = "GreaterWellington6_v21p7";
+        GLOBAL_MODEL_PARAMETERS->basin[47] = "Porirua1_v21p7";
+        GLOBAL_MODEL_PARAMETERS->basin[48] = "Porirua2_v21p7";
+        GLOBAL_MODEL_PARAMETERS->basin[49] = "Gisborne_v21p11";
+        GLOBAL_MODEL_PARAMETERS->basin[50] = "SouthernHawkesBay_v21p12";
+        GLOBAL_MODEL_PARAMETERS->basin[51] = "Wairarapa_v21p12";
+        GLOBAL_MODEL_PARAMETERS->basin[52] = "Motu_Bay1_v22p3";
+        GLOBAL_MODEL_PARAMETERS->basin[53] = "Motu_Bay2_v22p3";
+        GLOBAL_MODEL_PARAMETERS->basin[54] = "Motu_Bay3_v22p3";
+        GLOBAL_MODEL_PARAMETERS->basin[55] = "Whangaparoa_v23p4";
+        GLOBAL_MODEL_PARAMETERS->basin[56] = "TeAnau_v24p9";
+    }
 
     else if(strcmp(modelVersion,"2.08") == 0)
     {

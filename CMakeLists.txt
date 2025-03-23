@@ -21,7 +21,7 @@ add_executable(NZVM
         src/ftoa.c
         src/functions.h
         src/generateModelGrid.c
-        #src/generateProfile.c
+        src/generateProfile.c
         src/getSurfSubModNames.c
         src/linearInterpolation.c
         src/loadAllData.c

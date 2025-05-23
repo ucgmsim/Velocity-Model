@@ -30,20 +30,32 @@ void v1DsubMod(int zInd, double dep, qualities_vector *QUALITIES_VECTOR, velo_mo
  n.a.
  */
 {
-    // loop over depth values and assign qualities from the sub-model
-    for(int j = 0; j < VELO_MOD_1D_DATA->nDep; j++)
+    const double eps = 1e-6; // Tolerance for floating-point comparison to handle precision errors
+    int found = 0; // Flag to track if a matching model depth is found
+
+    // Loop over depth values to find the first model depth that matches or is below the input depth
+    for (int j = 0; j < VELO_MOD_1D_DATA->nDep; j++)
     {
-        if(dep >= VELO_MOD_1D_DATA->Dep[j]*-1000) // convert to meters, -ve being downwards
+        // Convert model depth from positive kilometers to negative meters (downward)
+        double model_depth = VELO_MOD_1D_DATA->Dep[j] * -1000;
+        // Check if input depth (with tolerance) is greater than or equal to model depth
+        // Adding eps ensures floating-point errors (e.g., -100.000000000001 vs. -100) don't skip the intended match
+        // This modifies original strict comparison (dep >= model_depth) to handle precision issues
+        if (dep + eps >= model_depth)
         {
+            // Assign rho, vp, and vs values from the velocity model to the qualities vector
             QUALITIES_VECTOR->Rho[zInd] = VELO_MOD_1D_DATA->Rho[j];
             QUALITIES_VECTOR->Vp[zInd] = VELO_MOD_1D_DATA->Vp[j];
             QUALITIES_VECTOR->Vs[zInd] = VELO_MOD_1D_DATA->Vs[j];
-            break;
+            found = 1; // Mark that a match was found
+            break; // Exit loop after finding the first matching depth
         }
-        if(j == VELO_MOD_1D_DATA->nDep)
-        {
-            printf("Error: Depth point below the extent represented in the 1D velocity model file.\n");
-        }
+    }
+
+    // If no matching depth was found, log an error (e.g., dep is below the deepest model depth)
+    if (!found)
+    {
+        fprintf(stderr, "Error: Depth point %g below the extent represented in the 1D velocity model file.\n", dep);
     }
 }
 

@@ -167,3 +167,11 @@
     name: Whangaparoa
     files:
       - USER20_BASINS/Whangaparoa_outline_WGS84.txt
+  - id: 35
+    name: Westport
+    files:
+      - STUDENTS_BASINS/Westport_outline_WGS84.txt
+  - id: 36
+    name: TeAnau
+    files:
+      - STUDENTS_BASINS/TeAnau_outline_WGS84.txt

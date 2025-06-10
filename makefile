@@ -1,4 +1,3 @@
-
 all: 
 	cd src; make -f makefile.linux
 

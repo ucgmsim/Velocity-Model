@@ -278,7 +278,7 @@ Summary of Korean velocity model (KVM) version numbers
 ------
 ### How to build docker image
 
-We will be adding NZVM binary into a minimum base image
+We will be adding NZVM binary into a minimum base image. This containerized NZVM binary is used to test the NZCVM.
 
 If you haven't, build a NZVM first.
 ```angular2html

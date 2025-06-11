@@ -13,14 +13,21 @@ To clone the code from the github repository:
 git clone https://github.com/ucgmsim/Velocity-Model
 ```
 In order to execute the code:
-
-1) Compile - Run make (this will compile the executable)
+1) Make a build directory and go into it
+```angular2html
+mkdir build
+cd build
 ```
+2) Compile - cmake followed by make. Use OpenMP to utilize multiple threads
+```
+cmake ../ -DCMAKE_C_FLAGS="-fopenmp" -DCMAKE_CXX_FLAGS="-fopenmp"
 make
 ```
-or alternatively
+3Copy NZVM to the root where Data directory is located.
+```angular2html
+cp NZVM ../
 ```
-make parallel
+**Important:** You should always execute "NZVM" at this location.
 ```
 2) Execute the code using one of the call types:
 - GENERATE_VELOCITY_MOD - Generates a velocity model from input parameters
@@ -280,7 +287,7 @@ Summary of Korean velocity model (KVM) version numbers
 
 We will be adding NZVM binary into a minimum base image. This containerized NZVM binary is used to test the NZCVM.
 
-If you haven't, build a NZVM first.
+If you haven't, build a NZVM first. 
 ```angular2html
 mkdir build
 cd build

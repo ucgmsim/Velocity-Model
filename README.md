@@ -2,7 +2,10 @@
 
 This is the repository for the source code for the New Zealand Velocity Model (NZVM, Ref. https://doi.org/10.1080/00288306.2019.1636830). 
 
+As of May 2025, this project is superseded by New Zealand Community Velocity Model (NZCVM) https://github.com/ucgmsim/velocity_modelling
+NZCVM produces near 100% identical velocity models, and incorporates new data sets and enhancements.   
 
+------
 There are seven general call types which are outlined in this readme.
 
 To clone the code from the github repository:
@@ -10,14 +13,21 @@ To clone the code from the github repository:
 git clone https://github.com/ucgmsim/Velocity-Model
 ```
 In order to execute the code:
-
-1) Compile - Run make (this will compile the executable)
+1) Make a build directory and go into it
+```angular2html
+mkdir build
+cd build
 ```
+2) Compile - cmake followed by make. Use OpenMP to utilize multiple threads
+```
+cmake ../ -DCMAKE_C_FLAGS="-fopenmp" -DCMAKE_CXX_FLAGS="-fopenmp"
 make
 ```
-or alternatively
+3Copy NZVM to the root where Data directory is located.
+```angular2html
+cp NZVM ../
 ```
-make parallel
+**Important:** You should always execute "NZVM" at this location.
 ```
 2) Execute the code using one of the call types:
 - GENERATE_VELOCITY_MOD - Generates a velocity model from input parameters
@@ -272,3 +282,61 @@ Summary of Korean velocity model (KVM) version numbers
 - KVM_20p6 - 1D VM
 
 - KVM_20p12 - 3D VM Based on "Crustal structure beneath the southern Korean Peninsula from local earthquakes" Kim et al (2017), Vs and Rho derived from Brocher (2005) relationships
+------
+### How to build docker image
+
+We will be adding NZVM binary into a minimum base image. This containerized NZVM binary is used to test the NZCVM.
+
+If you haven't, build a NZVM first. 
+```angular2html
+mkdir build
+cd build
+cmake ../ -DCMAKE_C_FLAGS="-fopenmp" -DCMAKE_CXX_FLAGS="-fopenmp"
+make
+```
+
+Create a Dockerfile
+```angular2html
+# Use a minimal base image
+FROM debian:latest
+
+# Install required dependencies for runtime
+RUN apt-get update && apt-get install -y libgomp1
+
+# Copy the NZVM binary into the container
+COPY NZVM /nzvm/NZVM
+
+# Set working directory
+WORKDIR /nzvm
+
+# Define the entry point
+ENTRYPOINT ["./NZVM"]
+
+
+```
+
+In the directory where NZVM and Dockerfile are located, build the docker image. 
+Our Docker Hub handler is `earthquakesuc`
+
+```angular2html
+docker build -t earthquakesuc/nzvm .
+
+```
+(Optional) Tag the image
+```
+docker tag earthquakesuc/nzvm quathquakesuc/nzvm:v1.0
+```
+
+Push to Docker Hub. First make sure you're logged into Docker Hub
+```angular2html
+docker login
+```
+Then push the image
+```angular2html
+docker push earthquakesuc/nzvm
+```
+Or push a specific tag
+
+```angular2html
+docker push quathquakesuc/nzvm:v1.0
+```

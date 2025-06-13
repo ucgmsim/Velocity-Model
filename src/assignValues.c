@@ -53,9 +53,9 @@ void assignQualities(global_model_parameters *GLOBAL_MODEL_PARAMETERS, velo_mod_
 
 
     inAnyBasin = determineIfWithinAnyBasinLatLon(BASIN_DATA, GLOBAL_MODEL_PARAMETERS, *MESH_VECTOR->Lat, *MESH_VECTOR->Lon);
-    
+    float eps = 1e-6;
     // point lies within smoothing zone , is offshore, and is not in any basin (i.e outside any boundaries)
-    if (distance <= MAX_DIST_SMOOTH && inAnyBasin == 0 && GLOBAL_MODEL_PARAMETERS->GTL == 1 && MESH_VECTOR->Vs30 < 100)
+    if (distance-eps <= MAX_DIST_SMOOTH && inAnyBasin == 0 && GLOBAL_MODEL_PARAMETERS->GTL == 1 && MESH_VECTOR->Vs30 < 100)
     {
         // point lies within smoothing zone and is not in any basin (i.e outside any boundaries)
         qualities_vector *QUALITIES_VECTOR_A;

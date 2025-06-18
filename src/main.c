@@ -113,18 +113,12 @@ int main(int argc, char *argv[])
             printf("Call type '%s' not recognised.\n",CALL_TYPE);
             exit(EXIT_FAILURE);
         }
-        
-        
     }
     else
     {
         printf("Incorrect number of inputs given, only 1 required. See readme.\n");
         exit(EXIT_FAILURE);
     }
-    
-    
-    
-    
     // check if the output directory exists, exit if necessary
     if (GENERATE_VELOCITY_MOD == 1 
         || GENERATE_VELOCITY_SLICES == 1 
@@ -138,8 +132,7 @@ int main(int argc, char *argv[])
         
         if (stat(OUTPUT_DIR, &st) != -1)
         {
-            printf("Output directory must not exist for this call type. See readme.\n");
-            exit(EXIT_FAILURE);
+            printf("Output directory already exists and will be overwritten : %s\n", OUTPUT_DIR);
         }
         else
         {

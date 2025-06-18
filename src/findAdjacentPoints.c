@@ -23,7 +23,7 @@ void findGlobalAdjacentPoints(global_surf_read *GLOBAL_SURF_READ, double lat, do
     *GLOBAL_SURF_READ - structure containing a global surface
     lat - latitude of point to for eventual interpolation
     lon - longitude of point to for eventual interpolation
-    *ADJACENT_POINTS - structure containing indicies of points adjacent to the lat - lon for interpolation
+    *ADJACENT_POINTS - structure containing indices of points adjacent to the lat - lon for interpolation
  
  */
 {
@@ -100,7 +100,7 @@ void findGlobalAdjacentPoints(global_surf_read *GLOBAL_SURF_READ, double lat, do
         }
     }
     
-    if((latAssignedFlag != 1)||(lonAssignedFlag !=1)) // if any indicies are unassigned
+    if((latAssignedFlag != 1)||(lonAssignedFlag !=1)) // if any indices are unassigned
     {
         
         if((lonAssignedFlag == 1) && (latAssignedFlag == 0)) // longitude assigned

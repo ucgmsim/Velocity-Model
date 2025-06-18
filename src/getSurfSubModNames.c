@@ -37,7 +37,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->nSurf = 2;
         GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 1;
         
-        // insert surface surface keywords and filenames
+        // insert surface keywords and filenames
         GLOBAL_MODEL_PARAMETERS->surf[0] = "posInfSurf";
         GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[0] = "Data/Global_Surfaces/posInf.in";
         GLOBAL_MODEL_PARAMETERS->surf[1] = "negInfSurf";
@@ -59,7 +59,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->nSurf = 2;
         GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 1;
         
-        // insert surface surface keywords and filenames
+        // insert surface keywords and filenames
         GLOBAL_MODEL_PARAMETERS->surf[0] = "posInfSurf";
         GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[0] = "Data/Global_Surfaces/posInf.in";
         GLOBAL_MODEL_PARAMETERS->surf[1] = "negInfSurf";
@@ -82,7 +82,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->nSurf = 3;
         GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 2;
         
-        // insert surface surface keywords and filenames
+        // insert surface keywords and filenames
         GLOBAL_MODEL_PARAMETERS->surf[0] = "posInfSurf";
         GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[0] = "Data/Global_Surfaces/posInf.in";
         GLOBAL_MODEL_PARAMETERS->surf[1] = "negInfSurf";
@@ -110,7 +110,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->nSurf = 3;
         GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 2;
         
-        // insert surface surface keywords and filenames
+        // insert surface keywords and filenames
         GLOBAL_MODEL_PARAMETERS->surf[0] = "posInfSurf";
         GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[0] = "Data/Global_Surfaces/posInf.in";
         GLOBAL_MODEL_PARAMETERS->surf[1] = "DEMa";
@@ -233,7 +233,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->nSurf = 4;
         GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 3;
         
-        // insert surface surface keywords and filenames
+        // insert surface keywords and filenames
         GLOBAL_MODEL_PARAMETERS->surf[0] = "posInfSurf";
         GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[0] = "Data/Global_Surfaces/posInf.in";
         GLOBAL_MODEL_PARAMETERS->surf[1] = "demSurf";
@@ -262,7 +262,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->nSurf = 3;
         GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 2;
 
-        // insert surface surface keywords and filenames
+        // insert surface keywords and filenames
         GLOBAL_MODEL_PARAMETERS->surf[0] = "posInfSurf";
         GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[0] = "Data/Global_Surfaces/posInf.in";
         GLOBAL_MODEL_PARAMETERS->surf[1] = "DEM";
@@ -339,7 +339,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->nSurf = 2;
         GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 1;
         
-        // insert surface surface keywords and filenames
+        // insert surface keywords and filenames
         GLOBAL_MODEL_PARAMETERS->surf[0] = "posInfSurf";
         GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[0] = "Data/Global_Surfaces/posInf.in";
         GLOBAL_MODEL_PARAMETERS->surf[1] = "negInfSurf";
@@ -361,7 +361,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->nSurf = 2;
         GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 1;
         
-        // insert surface surface keywords
+        // insert surface keywords
         GLOBAL_MODEL_PARAMETERS->surf[0] = "posInfSurf";
         GLOBAL_MODEL_PARAMETERS->surf[1] = "negInfSurf";
         
@@ -380,7 +380,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->nSurf = 3;
         GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 2;
         
-        // insert surface surface keywords
+        // insert surface keywords
         GLOBAL_MODEL_PARAMETERS->surf[0] = "posInfSurf";
         GLOBAL_MODEL_PARAMETERS->surf[1] = "demSurf";
         GLOBAL_MODEL_PARAMETERS->surf[2] = "negInfSurf";
@@ -401,7 +401,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->nSurf = 3;
         GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 2;
         
-        // insert surface surface keywords
+        // insert surface keywords
         GLOBAL_MODEL_PARAMETERS->surf[0] = "posInfSurf";
         GLOBAL_MODEL_PARAMETERS->surf[1] = "demSurf";
         GLOBAL_MODEL_PARAMETERS->surf[2] = "negInfSurf";
@@ -422,7 +422,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->nSurf = 3;
         GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 2;
         
-        // insert surface surface keywords
+        // insert surface keywords
         GLOBAL_MODEL_PARAMETERS->surf[0] = "posInfSurf";
         GLOBAL_MODEL_PARAMETERS->surf[1] = "demSurf";
         GLOBAL_MODEL_PARAMETERS->surf[2] = "negInfSurf";
@@ -444,7 +444,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->nSurf = 3;
         GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 2;
         
-        // insert surface surface keywords
+        // insert surface keywords
         GLOBAL_MODEL_PARAMETERS->surf[0] = "posInfSurf";
         GLOBAL_MODEL_PARAMETERS->surf[1] = "basementRockSurf";
         GLOBAL_MODEL_PARAMETERS->surf[2] = "negInfSurf";
@@ -467,7 +467,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->nSurf = 3;
         GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 2;
         
-        // insert surface surface keywords
+        // insert surface keywords
         GLOBAL_MODEL_PARAMETERS->surf[0] = "posInfSurf";
         GLOBAL_MODEL_PARAMETERS->surf[1] = "basementRockSurf";
         GLOBAL_MODEL_PARAMETERS->surf[2] = "negInfSurf";
@@ -489,7 +489,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->nSurf = 3;
         GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 2;
         
-        // insert surface surface keywords
+        // insert surface keywords
         GLOBAL_MODEL_PARAMETERS->surf[0] = "posInfSurf";
         GLOBAL_MODEL_PARAMETERS->surf[1] = "basementRockSurf";
         GLOBAL_MODEL_PARAMETERS->surf[2] = "negInfSurf";
@@ -510,7 +510,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->nSurf = 3;
         GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 2;
         
-        // insert surface surface keywords
+        // insert surface keywords
         GLOBAL_MODEL_PARAMETERS->surf[0] = "posInfSurf";
         GLOBAL_MODEL_PARAMETERS->surf[1] = "basementRockSurf";
         GLOBAL_MODEL_PARAMETERS->surf[2] = "negInfSurf";
@@ -531,7 +531,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->nSurf = 4;
         GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 3;
         
-        // insert surface surface keywords
+        // insert surface keywords
         GLOBAL_MODEL_PARAMETERS->surf[0] = "posInfSurf";
         GLOBAL_MODEL_PARAMETERS->surf[1] = "demSurf";
         GLOBAL_MODEL_PARAMETERS->surf[2] = "basementRockSurf";
@@ -554,7 +554,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->nSurf = 4;
         GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 3;
         
-        // insert surface surface keywords
+        // insert surface keywords
         GLOBAL_MODEL_PARAMETERS->surf[0] = "posInfSurf";
         GLOBAL_MODEL_PARAMETERS->surf[1] = "demSurf";
         GLOBAL_MODEL_PARAMETERS->surf[2] = "basementRockSurf";
@@ -578,7 +578,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->nSurf = 4;
         GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 3;
         
-        // insert surface surface keywords
+        // insert surface keywords
         GLOBAL_MODEL_PARAMETERS->surf[0] = "posInfSurf";
         GLOBAL_MODEL_PARAMETERS->surf[1] = "demSurf";
         GLOBAL_MODEL_PARAMETERS->surf[2] = "basementRockSurf";
@@ -602,7 +602,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->nSurf = 3;
         GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 2;
         
-        // insert surface surface keywords and filenames
+        // insert surface keywords and filenames
         GLOBAL_MODEL_PARAMETERS->surf[0] = "posInfSurf";
         GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[0] = "Data/Global_Surfaces/posInf.in";
         GLOBAL_MODEL_PARAMETERS->surf[1] = "DEM";
@@ -673,7 +673,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->nSurf = 3;
         GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 2;
         
-        // insert surface surface keywords and filenames
+        // insert surface keywords and filenames
         GLOBAL_MODEL_PARAMETERS->surf[0] = "posInfSurf";
         GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[0] = "Data/Global_Surfaces/posInf.in";
         GLOBAL_MODEL_PARAMETERS->surf[1] = "DEM";
@@ -698,7 +698,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->nSurf = 2;
         GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 1;
 
-        // insert surface surface keywords and filenames
+        // insert surface keywords and filenames
         GLOBAL_MODEL_PARAMETERS->surf[0] = "posInfSurf";
         GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[0] = "Data/Global_Surfaces/posInf.in";
         GLOBAL_MODEL_PARAMETERS->surf[1] = "negInfSurf";
@@ -726,7 +726,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->nSurf = 3;
         GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 2;
 
-        // insert surface surface keywords and filenames
+        // insert surface keywords and filenames
         GLOBAL_MODEL_PARAMETERS->surf[0] = "posInfSurf";
         GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[0] = "Data/Global_Surfaces/posInf.in";
         GLOBAL_MODEL_PARAMETERS->surf[1] = "zeroDemInfSurf";
@@ -748,7 +748,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->nSurf = 3;
         GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 2;
 
-        // insert surface surface keywords and filenames
+        // insert surface keywords and filenames
         GLOBAL_MODEL_PARAMETERS->surf[0] = "posInfSurf";
         GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[0] = "Data/Global_Surfaces/posInf.in";
         GLOBAL_MODEL_PARAMETERS->surf[1] = "zeroDemInfSurf";
@@ -780,7 +780,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->nSurf = 4;
         GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 3;
         
-        // insert surface surface keywords and filenames
+        // insert surface keywords and filenames
         GLOBAL_MODEL_PARAMETERS->surf[0] = "posInfSurf";
         GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[0] = "Data/Global_Surfaces/posInf.in";
         GLOBAL_MODEL_PARAMETERS->surf[1] = "DEM";
@@ -810,7 +810,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->nSurf = 2;
         GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 1;
         
-        // insert surface surface keywords and filenames
+        // insert surface keywords and filenames
         GLOBAL_MODEL_PARAMETERS->surf[0] = "posInfSurf";
         GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[0] = "Data/Global_Surfaces/posInf.in";
         GLOBAL_MODEL_PARAMETERS->surf[1] = "negInfSurf";
@@ -833,7 +833,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->nSurf = 3;
         GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 2;
         
-        // insert surface surface keywords and filenames
+        // insert surface keywords and filenames
         GLOBAL_MODEL_PARAMETERS->surf[0] = "posInfSurf";
         GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[0] = "Data/Global_Surfaces/posInf.in";
         GLOBAL_MODEL_PARAMETERS->surf[1] = "DEM";
@@ -860,7 +860,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->nSurf = 3;
         GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 2;
         
-        // insert surface surface keywords and filenames
+        // insert surface keywords and filenames
         GLOBAL_MODEL_PARAMETERS->surf[0] = "posInfSurf";
         GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[0] = "Data/Global_Surfaces/posInf.in";
         GLOBAL_MODEL_PARAMETERS->surf[1] = "DEM";
@@ -903,7 +903,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->nSurf = 2;
         GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 1;
         
-        // insert surface surface keywords and filenames
+        // insert surface keywords and filenames
         GLOBAL_MODEL_PARAMETERS->surf[0] = "posInfSurf";
         GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[0] = "Data/Global_Surfaces/posInf.in";
         GLOBAL_MODEL_PARAMETERS->surf[1] = "negInfSurf";
@@ -945,7 +945,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->nSurf = 2;
         GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 1;
         
-        // insert surface surface keywords and filenames
+        // insert surface keywords and filenames
         GLOBAL_MODEL_PARAMETERS->surf[0] = "posInfSurf";
         GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[0] = "Data/Global_Surfaces/posInf.in";
         GLOBAL_MODEL_PARAMETERS->surf[1] = "negInfSurf";
@@ -990,7 +990,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->nSurf = 2;
         GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 1;
         
-        // insert surface surface keywords and filenames
+        // insert surface keywords and filenames
         GLOBAL_MODEL_PARAMETERS->surf[0] = "posInfSurf";
         GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[0] = "Data/Global_Surfaces/posInf.in";
         GLOBAL_MODEL_PARAMETERS->surf[1] = "negInfSurf";
@@ -1035,7 +1035,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->nSurf = 2;
         GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 1;
         
-        // insert surface surface keywords and filenames
+        // insert surface keywords and filenames
         GLOBAL_MODEL_PARAMETERS->surf[0] = "posInfSurf";
         GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[0] = "Data/Global_Surfaces/posInf.in";
         GLOBAL_MODEL_PARAMETERS->surf[1] = "negInfSurf";
@@ -1085,7 +1085,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->nSurf = 2;
         GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 1;
         
-        // insert surface surface keywords and filenames
+        // insert surface keywords and filenames
         GLOBAL_MODEL_PARAMETERS->surf[0] = "posInfSurf";
         GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[0] = "Data/Global_Surfaces/posInf.in";
         GLOBAL_MODEL_PARAMETERS->surf[1] = "negInfSurf";
@@ -1151,7 +1151,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->nSurf = 2;
         GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 1;
         
-        // insert surface surface keywords and filenames
+        // insert surface keywords and filenames
         GLOBAL_MODEL_PARAMETERS->surf[0] = "posInfSurf";
         GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[0] = "Data/Global_Surfaces/posInf.in";
         GLOBAL_MODEL_PARAMETERS->surf[1] = "negInfSurf";
@@ -1220,7 +1220,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->nSurf = 2;
         GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 1;
         
-        // insert surface surface keywords and filenames
+        // insert surface keywords and filenames
         GLOBAL_MODEL_PARAMETERS->surf[0] = "posInfSurf";
         GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[0] = "Data/Global_Surfaces/posInf.in";
         GLOBAL_MODEL_PARAMETERS->surf[1] = "negInfSurf";
@@ -1290,7 +1290,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->nSurf = 2;
         GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 1;
         
-        // insert surface surface keywords and filenames
+        // insert surface keywords and filenames
         GLOBAL_MODEL_PARAMETERS->surf[0] = "posInfSurf";
         GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[0] = "Data/Global_Surfaces/posInf.in";
         GLOBAL_MODEL_PARAMETERS->surf[1] = "negInfSurf";
@@ -1359,7 +1359,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->nSurf = 3;
         GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 2;
         
-        // insert surface surface keywords and filenames
+        // insert surface keywords and filenames
         GLOBAL_MODEL_PARAMETERS->surf[0] = "posInfSurf";
         GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[0] = "Data/Global_Surfaces/posInf.in";
         GLOBAL_MODEL_PARAMETERS->surf[1] = "DEM";
@@ -1385,7 +1385,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->nSurf = 3;
         GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 2;
         
-        // insert surface surface keywords and filenames
+        // insert surface keywords and filenames
         GLOBAL_MODEL_PARAMETERS->surf[0] = "posInfSurf";
         GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[0] = "Data/Global_Surfaces/posInf.in";
         GLOBAL_MODEL_PARAMETERS->surf[1] = "DEM";
@@ -1411,7 +1411,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->nSurf = 3;
         GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 2;
         
-        // insert surface surface keywords and filenames
+        // insert surface keywords and filenames
         GLOBAL_MODEL_PARAMETERS->surf[0] = "posInfSurf";
         GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[0] = "Data/Global_Surfaces/posInf.in";
         GLOBAL_MODEL_PARAMETERS->surf[1] = "DEM";
@@ -1437,7 +1437,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->nSurf = 3;
         GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 2;
         
-        // insert surface surface keywords and filenames
+        // insert surface keywords and filenames
         GLOBAL_MODEL_PARAMETERS->surf[0] = "posInfSurf";
         GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[0] = "Data/Global_Surfaces/posInf.in";
         GLOBAL_MODEL_PARAMETERS->surf[1] = "DEM";
@@ -1463,7 +1463,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->nSurf = 3;
         GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 2;
         
-        // insert surface surface keywords and filenames
+        // insert surface keywords and filenames
         GLOBAL_MODEL_PARAMETERS->surf[0] = "posInfSurf";
         GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[0] = "Data/Global_Surfaces/posInf.in";
         GLOBAL_MODEL_PARAMETERS->surf[1] = "DEM";
@@ -1498,7 +1498,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->nSurf = 3;
         GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 2;
         
-        // insert surface surface keywords and filenames
+        // insert surface keywords and filenames
         GLOBAL_MODEL_PARAMETERS->surf[0] = "posInfSurf";
         GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[0] = "Data/Global_Surfaces/posInf.in";
         GLOBAL_MODEL_PARAMETERS->surf[1] = "DEM";
@@ -1533,7 +1533,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->nSurf = 3;
         GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 2;
         
-        // insert surface surface keywords and filenames
+        // insert surface keywords and filenames
         GLOBAL_MODEL_PARAMETERS->surf[0] = "posInfSurf";
         GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[0] = "Data/Global_Surfaces/posInf.in";
         GLOBAL_MODEL_PARAMETERS->surf[1] = "DEM";
@@ -1571,7 +1571,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->nSurf = 3;
         GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 2;
         
-        // insert surface surface keywords and filenames
+        // insert surface keywords and filenames
         GLOBAL_MODEL_PARAMETERS->surf[0] = "posInfSurf";
         GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[0] = "Data/Global_Surfaces/posInf.in";
         GLOBAL_MODEL_PARAMETERS->surf[1] = "DEM";
@@ -1625,7 +1625,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->nSurf = 3;
         GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 2;
         
-        // insert surface surface keywords and filenames
+        // insert surface keywords and filenames
         GLOBAL_MODEL_PARAMETERS->surf[0] = "posInfSurf";
         GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[0] = "Data/Global_Surfaces/posInf.in";
         GLOBAL_MODEL_PARAMETERS->surf[1] = "DEM";
@@ -1679,7 +1679,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->nSurf = 3;
         GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 2;
         
-        // insert surface surface keywords and filenames
+        // insert surface keywords and filenames
         GLOBAL_MODEL_PARAMETERS->surf[0] = "posInfSurf";
         GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[0] = "Data/Global_Surfaces/posInf.in";
         GLOBAL_MODEL_PARAMETERS->surf[1] = "DEM";
@@ -1707,7 +1707,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->nSurf = 3;
         GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 2;
         
-        // insert surface surface keywords and filenames
+        // insert surface keywords and filenames
         GLOBAL_MODEL_PARAMETERS->surf[0] = "posInfSurf";
         GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[0] = "Data/Global_Surfaces/posInf.in";
         GLOBAL_MODEL_PARAMETERS->surf[1] = "DEM";
@@ -1747,7 +1747,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->nSurf = 3;
         GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 2;
         
-        // insert surface surface keywords and filenames
+        // insert surface keywords and filenames
         GLOBAL_MODEL_PARAMETERS->surf[0] = "posInfSurf";
         GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[0] = "Data/Global_Surfaces/posInf.in";
         GLOBAL_MODEL_PARAMETERS->surf[1] = "DEM";
@@ -1787,7 +1787,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->nSurf = 3;
         GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 2;
         
-        // insert surface surface keywords and filenames
+        // insert surface keywords and filenames
         GLOBAL_MODEL_PARAMETERS->surf[0] = "posInfSurf";
         GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[0] = "Data/Global_Surfaces/posInf.in";
         GLOBAL_MODEL_PARAMETERS->surf[1] = "DEM";
@@ -1842,7 +1842,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->nSurf = 3;
         GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 2;
         
-        // insert surface surface keywords and filenames
+        // insert surface keywords and filenames
         GLOBAL_MODEL_PARAMETERS->surf[0] = "posInfSurf";
         GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[0] = "Data/Global_Surfaces/posInf.in";
         GLOBAL_MODEL_PARAMETERS->surf[1] = "DEM";
@@ -1900,7 +1900,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->nSurf = 3;
         GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 2;
         
-        // insert surface surface keywords and filenames
+        // insert surface keywords and filenames
         GLOBAL_MODEL_PARAMETERS->surf[0] = "posInfSurf";
         GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[0] = "Data/Global_Surfaces/posInf.in";
         GLOBAL_MODEL_PARAMETERS->surf[1] = "DEM";
@@ -1984,7 +1984,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->nSurf = 3;
         GLOBAL_MODEL_PARAMETERS->nVeloSubMod = 2;
         
-        // insert surface surface keywords and filenames
+        // insert surface keywords and filenames
         GLOBAL_MODEL_PARAMETERS->surf[0] = "posInfSurf";
         GLOBAL_MODEL_PARAMETERS->globalSurfFilenames[0] = "Data/Global_Surfaces/posInf.in";
         GLOBAL_MODEL_PARAMETERS->surf[1] = "DEM";

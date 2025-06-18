@@ -23,6 +23,8 @@ void createAllOutputDirectories(char *OUTPUT_DIR, char *genCallType)
     char tempDir[MAX_FILENAME_STRING_LEN];
     sprintf(tempDir,"%s/Log",OUTPUT_DIR);
     mkdir(tempDir, 0700);
+    printf("Output directory created: %s\n", OUTPUT_DIR);
+    printf("Temp directory created: %s\n", tempDir);
 
     if (strcmp(genCallType,"GENERATE_VELOCITY_MOD")== 0)
     {

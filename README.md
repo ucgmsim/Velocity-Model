@@ -297,22 +297,13 @@ make
 
 Create a Dockerfile
 ```angular2html
-# Use a minimal base image
-FROM debian:latest
+FROM gcc:latest
 
-# Install required dependencies for runtime
-RUN apt-get update && apt-get install -y libgomp1
-
-# Copy the NZVM binary into the container
+# Copy the pre-built binary into the Docker image
 COPY NZVM /nzvm/NZVM
 
-# Set working directory
+# Set the working directory
 WORKDIR /nzvm
-
-# Define the entry point
-ENTRYPOINT ["./NZVM"]
-
-
 ```
 
 In the directory where NZVM and Dockerfile are located, build the docker image. 

@@ -1,0 +1,1 @@
+/home/seb56/Velocity-Model/Data/Basins/v2p08/WestCoast/WestCoast_smoothing.txt

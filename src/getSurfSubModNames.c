@@ -2003,16 +2003,16 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->BasinEdgeSmoothing = 1;
         
         // Basin names for this model version
-        GLOBAL_MODEL_PARAMETERS->nBasins = 56;
+        GLOBAL_MODEL_PARAMETERS->nBasins = 66;
         GLOBAL_MODEL_PARAMETERS->basin[0] = "Canterbury_Pre_Quaternary_v19p1";
         GLOBAL_MODEL_PARAMETERS->basin[1] = "Cantebury_North_v19p1";
         GLOBAL_MODEL_PARAMETERS->basin[2] = "Banks_Peninsula_Volcanics_v19p1";
-        GLOBAL_MODEL_PARAMETERS->basin[3] = "Kaikoura_v19p1";
+        GLOBAL_MODEL_PARAMETERS->basin[3] = "Kaikoura_v25p5";
         GLOBAL_MODEL_PARAMETERS->basin[4] = "Cheviot_v19p1";
-        GLOBAL_MODEL_PARAMETERS->basin[5] = "Hanmer_v19p1";
+        GLOBAL_MODEL_PARAMETERS->basin[5] = "Hanmer_v25p3";
         GLOBAL_MODEL_PARAMETERS->basin[6] = "Marlborough_v19p1";
-        GLOBAL_MODEL_PARAMETERS->basin[7] = "Nelson_v19p1";
-        GLOBAL_MODEL_PARAMETERS->basin[8] = "Wellington_v21p8";
+        GLOBAL_MODEL_PARAMETERS->basin[7] = "Nelson_v25p5";
+        GLOBAL_MODEL_PARAMETERS->basin[8] = "Wellington_v25p5";
         GLOBAL_MODEL_PARAMETERS->basin[9] = "WaikatoHauraki_v19p7";
         GLOBAL_MODEL_PARAMETERS->basin[10] = "Wanaka_v20p6";
         GLOBAL_MODEL_PARAMETERS->basin[11] = "MacKenzie_v20p6";
@@ -2056,10 +2056,20 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         GLOBAL_MODEL_PARAMETERS->basin[49] = "Gisborne_v21p11";
         GLOBAL_MODEL_PARAMETERS->basin[50] = "SouthernHawkesBay_v21p12";
         GLOBAL_MODEL_PARAMETERS->basin[51] = "Wairarapa_v21p12";
-        GLOBAL_MODEL_PARAMETERS->basin[52] = "Motu_Bay1_v22p3";
-        GLOBAL_MODEL_PARAMETERS->basin[53] = "Motu_Bay2_v22p3";
-        GLOBAL_MODEL_PARAMETERS->basin[54] = "Motu_Bay3_v22p3";
-        GLOBAL_MODEL_PARAMETERS->basin[55] = "Whangaparoa_v23p4";
+        GLOBAL_MODEL_PARAMETERS->basin[52] = "OmaioBay_v25p5_1";
+        GLOBAL_MODEL_PARAMETERS->basin[53] = "OmaioBay_v25p5_2";
+        GLOBAL_MODEL_PARAMETERS->basin[54] = "OmaioBay_v25p5_3";
+        GLOBAL_MODEL_PARAMETERS->basin[55] = "OmaioBay_v25p5_4";
+        GLOBAL_MODEL_PARAMETERS->basin[56] = "OmaioBay_v25p5_5";
+        GLOBAL_MODEL_PARAMETERS->basin[57] = "Whangaparoa_v23p4";
+        GLOBAL_MODEL_PARAMETERS->basin[58] = "PalmerstonNorth_v25p5";
+        GLOBAL_MODEL_PARAMETERS->basin[59] = "Southland_v25p5_1";
+        GLOBAL_MODEL_PARAMETERS->basin[60] = "Southland_v25p5_2";
+        GLOBAL_MODEL_PARAMETERS->basin[61] = "TeAnau_v25p5";
+        GLOBAL_MODEL_PARAMETERS->basin[62] = "TolagaBay_v25p5";
+        GLOBAL_MODEL_PARAMETERS->basin[63] = "Waiapu_v25p5";
+        GLOBAL_MODEL_PARAMETERS->basin[64] = "WestCoast_v25p5";
+        GLOBAL_MODEL_PARAMETERS->basin[65] = "Westport_v25p5";
 
     }
 

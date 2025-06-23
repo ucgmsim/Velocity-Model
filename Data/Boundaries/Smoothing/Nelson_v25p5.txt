@@ -1,0 +1,1 @@
+/home/seb56/Velocity-Model/Data/Basins/v2p08/Nelson/Nelson_smoothing.txt

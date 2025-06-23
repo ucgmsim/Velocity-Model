@@ -322,6 +322,12 @@ Our Docker Hub handler is `earthquakesuc`
 docker build -t earthquakesuc/nzvm .
 
 ```
+or
+```angular2html
+docker build --no-cache -t earthquakesuc/nzvm .
+
+```
+
 (Optional) Tag the image
 ```
 docker tag earthquakesuc/nzvm quathquakesuc/nzvm:v1.0

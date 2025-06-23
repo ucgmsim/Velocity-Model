@@ -28,7 +28,7 @@ make
 cp NZVM ../
 ```
 **Important:** You should always execute "NZVM" at this location.
-```
+
 2) Execute the code using one of the call types:
 - GENERATE_VELOCITY_MOD - Generates a velocity model from input parameters
 - EXTRACT_VELOCITY_SLICES - Extracts velocity slices from a saved model (Model need to have been previously generated to use this call)

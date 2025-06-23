@@ -1716,7 +1716,7 @@ void load_TolagaBay_v25p5(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int 
     GLOBAL_MODEL_PARAMETERS->ignoreBasinForSmoothing[basinNum] = 0;
     GLOBAL_MODEL_PARAMETERS->nBasinSurfaces[basinNum] = 2;
     GLOBAL_MODEL_PARAMETERS->nBasinBoundaries[basinNum] = 1;
-    GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[basinNum][0] = "Data/Basins/v2p08/TologaBay/TologaBay_outline_WGS84.txt";
+    GLOBAL_MODEL_PARAMETERS->basinBoundaryFilenames[basinNum][0] = "Data/Basins/v2p08/TolagaBay/TolagaBay_outline_WGS84.txt";
 
     GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][0] = "DEM";
     GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][0] = "Data/DEM/NZ_DEM_HD.in";
@@ -1724,7 +1724,7 @@ void load_TolagaBay_v25p5(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int 
     GLOBAL_MODEL_PARAMETERS->basinSubModelNames[basinNum][0] = "Cant1D_v2";
 
     GLOBAL_MODEL_PARAMETERS->basinSurfaceNames[basinNum][1] = "TolagaBay";
-    GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][1] = "Data/Basins/v2p08/TologaBay/TologaBay_basement_WGS84.in";
+    GLOBAL_MODEL_PARAMETERS->basinSurfaceFilenames[basinNum][1] = "Data/Basins/v2p08/TolagaBay/TolagaBay_basement_WGS84.in";
     GLOBAL_MODEL_PARAMETERS->basinBoundaryNumber[basinNum][1] = 0;
 }
 

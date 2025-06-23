@@ -1,1 +1,1 @@
-/home/seb56/Velocity-Model/Data/Basins/v2p08/TolagaBay/TolagaBay_smoothing.txt
+../../Basins/v2p08/TolagaBay/TolagaBay_smoothing.txt

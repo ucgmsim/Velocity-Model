@@ -28,7 +28,7 @@ make
 cp NZVM ../
 ```
 **Important:** You should always execute "NZVM" at this location.
-```
+
 2) Execute the code using one of the call types:
 - GENERATE_VELOCITY_MOD - Generates a velocity model from input parameters
 - EXTRACT_VELOCITY_SLICES - Extracts velocity slices from a saved model (Model need to have been previously generated to use this call)
@@ -338,5 +338,5 @@ docker push earthquakesuc/nzvm
 Or push a specific tag
 
 ```angular2html
-docker push quathquakesuc/nzvm:v1.0
+docker push earthquakesuc/nzvm:v1.0
 ```

@@ -1995,7 +1995,7 @@ global_model_parameters *getGlobalModelParameters(char *modelVersion, char *TOPO
         // insert velocity submodel keywords and filenames (if necessary)
         GLOBAL_MODEL_PARAMETERS->veloSubMod[0] = "NaNsubMod";
         GLOBAL_MODEL_PARAMETERS->veloSubMod[1] = "EPtomo2010subMod";
-        GLOBAL_MODEL_PARAMETERS->tomographyName = "2023_Chow_NI";
+        GLOBAL_MODEL_PARAMETERS->tomographyName = "2020_NZ_OFFSHORE";
 
 
         

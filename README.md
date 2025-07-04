@@ -28,7 +28,7 @@ make
 cp NZVM ../
 ```
 **Important:** You should always execute "NZVM" at this location.
-```
+
 2) Execute the code using one of the call types:
 - GENERATE_VELOCITY_MOD - Generates a velocity model from input parameters
 - EXTRACT_VELOCITY_SLICES - Extracts velocity slices from a saved model (Model need to have been previously generated to use this call)
@@ -297,22 +297,13 @@ make
 
 Create a Dockerfile
 ```angular2html
-# Use a minimal base image
-FROM debian:latest
+FROM gcc:latest
 
-# Install required dependencies for runtime
-RUN apt-get update && apt-get install -y libgomp1
-
-# Copy the NZVM binary into the container
+# Copy the pre-built binary into the Docker image
 COPY NZVM /nzvm/NZVM
 
-# Set working directory
+# Set the working directory
 WORKDIR /nzvm
-
-# Define the entry point
-ENTRYPOINT ["./NZVM"]
-
-
 ```
 
 In the directory where NZVM and Dockerfile are located, build the docker image. 
@@ -322,6 +313,12 @@ Our Docker Hub handler is `earthquakesuc`
 docker build -t earthquakesuc/nzvm .
 
 ```
+or
+```angular2html
+docker build --no-cache -t earthquakesuc/nzvm .
+
+```
+
 (Optional) Tag the image
 ```
 docker tag earthquakesuc/nzvm quathquakesuc/nzvm:v1.0
@@ -338,5 +335,5 @@ docker push earthquakesuc/nzvm
 Or push a specific tag
 
 ```angular2html
-docker push quathquakesuc/nzvm:v1.0
+docker push earthquakesuc/nzvm:v1.0
 ```

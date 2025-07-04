@@ -346,6 +346,24 @@ void load_Motu_Bay1_v22p3(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int 
 void load_Motu_Bay2_v22p3(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
 void load_Motu_Bay3_v22p3(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
 void load_Whangaparoa_v23p4(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_Kaikoura_v25p5(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_Hanmer_v25p3(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_Nelson_v25p5(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_Wellington_v25p5(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_OmaioBay_v25p5_1(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_OmaioBay_v25p5_2(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_OmaioBay_v25p5_3(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_OmaioBay_v25p5_4(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_OmaioBay_v25p5_5(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_PalmerstonNorth_v25p5(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_Southland_v25p5_1(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_Southland_v25p5_2(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_TeAnau_v25p5(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_TolagaBay_v25p5(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_Waiapu_v25p5(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_WestCoast_v25p5(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+void load_Westport_v25p5(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
+
 
 void load_Perturbation_v20p6(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);
 void load_Perturbation_v20p10(global_model_parameters *GLOBAL_MODEL_PARAMETERS, int basinNum);

@@ -647,51 +647,40 @@ void loadBasinBoundaries(int basinNum, basin_data *BASIN_DATA, global_model_para
     }
 }
 
-void loadSmoothBoundaries(nz_tomography_data *NZ_TOMOGRAPHY_DATA,global_model_parameters *GLOBAL_MODEL_PARAMETERS)
+void loadSmoothBoundaries(nz_tomography_data *NZ_TOMOGRAPHY_DATA, global_model_parameters *GLOBAL_MODEL_PARAMETERS)
 /*
  Purpose: load all individual smooth points files and concatenate into one data structure
- 
- Input variables:
- 
- Output variables:
- n.a
- */
+*/
 {
-    smoothing_boundary *SMOOTH_BOUND;
-    SMOOTH_BOUND = NZ_TOMOGRAPHY_DATA->smooth_boundary;
+    smoothing_boundary *SMOOTH_BOUND = NZ_TOMOGRAPHY_DATA->smooth_boundary;
     int count = 0;
-    
+
     char boundaryVecFilename[MAX_FILENAME_STRING_LEN];
-    
-    
+
     for (int i = 0; i < GLOBAL_MODEL_PARAMETERS->nBasins; i++)
     {
-        sprintf(boundaryVecFilename,"Data/Boundaries/Smoothing/%s.txt",GLOBAL_MODEL_PARAMETERS->basin[i]);
-        
-        FILE *file;
-        file = fopen(boundaryVecFilename, "r");
+        sprintf(boundaryVecFilename, "Data/Boundaries/Smoothing/%s.txt", GLOBAL_MODEL_PARAMETERS->basin[i]);
+
+        FILE *file = fopen(boundaryVecFilename, "r");
         if (file == NULL)
         {
-//            printf("Error smoothing boundary vector file %s not found.\n",boundaryVecFilename);
-//            exit(EXIT_FAILURE); 
+//            fprintf(stderr, "Warning: smoothing boundary file %s not found — skipping.\n", boundaryVecFilename);
+            continue;
         }
-        else
+
+        printf("Loading offshore smoothing file: %s.\n", boundaryVecFilename);
+
+        while (fscanf(file, "%lf %lf", &SMOOTH_BOUND->xPts[count], &SMOOTH_BOUND->yPts[count]) == 2)
         {
-            printf("Loading offshore smoothing file: %s.\n",boundaryVecFilename);
-            while(!feof(file))
+            count++;
+            if (count >= MAX_NUM_POINTS_SMOOTH_VEC)
             {
-                fscanf(file, "%lf %lf\n", &SMOOTH_BOUND->xPts[count],&SMOOTH_BOUND->yPts[count]);
-//                printf("%lf\n",SMOOTH_BOUND->xPts[count]);
-                count += 1;
+                fprintf(stderr, "Error: exceeded max smoothing points count=%d (%d)\n", count,MAX_NUM_POINTS_SMOOTH_VEC);
+                fclose(file);
+                exit(EXIT_FAILURE);
             }
-            fclose(file);
         }
-    
-
-
+        fclose(file);
     }
-//    printf("%i\n",count);
-    assert(count<=MAX_NUM_POINTS_SMOOTH_VEC);
     SMOOTH_BOUND->n = count;
 }
-

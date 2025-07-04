@@ -1,0 +1,1 @@
+../../Basins/v2p08/WestCoast/WestCoast_smoothing.txt

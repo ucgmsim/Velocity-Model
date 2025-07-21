@@ -46,6 +46,10 @@ def process_per_elev(tomo_df, mgrid_lon, mgrid_lat, elev):
 
         #       print(f"        {V_type}")
         T = tomo_df[tomo_df.depth == -1 * elev][V_type]
+        T = tomo_df[tomo_df.depth == -1 * elev][V_type]
+        if V_type == "rho":
+            T = T / 1000  # Convert from kg/m³ to g/cm³
+
         Ti2 = griddata(
             np.array([crude_lons, crude_lats]).T,
             np.array(T),

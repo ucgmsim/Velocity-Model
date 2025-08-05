@@ -32,9 +32,9 @@ void generateFullModelGridGreatCircle(model_extent *MODEL_EXTENT, global_mesh *G
     GLOBAL_MESH->maxLon = 0;
     GLOBAL_MESH->minLon = 180;
     
-    GLOBAL_MESH->nX = MODEL_EXTENT->Xmax/MODEL_EXTENT->hLatLon;
-    GLOBAL_MESH->nY = MODEL_EXTENT->Ymax/MODEL_EXTENT->hLatLon;
-    GLOBAL_MESH->nZ = (MODEL_EXTENT->Zmax-MODEL_EXTENT->Zmin) / MODEL_EXTENT->hDep;
+    GLOBAL_MESH->nX = (int) (MODEL_EXTENT->Xmax/MODEL_EXTENT->hLatLon + 0.5);
+    GLOBAL_MESH->nY = (int) (MODEL_EXTENT->Ymax / MODEL_EXTENT->hLatLon + 0.5);
+    GLOBAL_MESH->nZ = (int)((MODEL_EXTENT->Zmax - MODEL_EXTENT->Zmin) / MODEL_EXTENT->hDep + 0.5);
 
     
     if (ceil(GLOBAL_MESH->nX) != GLOBAL_MESH->nX)

@@ -612,7 +612,6 @@ void loadEPtomoSurfaceData(char *tomoType, nz_tomography_data *NZ_TOMOGRAPHY_DAT
         for(int j = 0; j < 3; j++)
         {
             ftoa(elev[i],floatElev,2); // int->int; float-> DDDpFF format
-            fprintf(stderr,"elev[%d]=%f converted to floatElev=%s\n",i,elev[i],floatElev);
             int ret = snprintf(baseFilename, sizeof(baseFilename),"Data/Tomography/%s/surf_tomography_%s_elev%s.in",tomoDirectory,varNames[j],floatElev);
             if (ret < 0 || ret >= (int)sizeof(baseFilename))
             {

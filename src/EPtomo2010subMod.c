@@ -275,27 +275,32 @@ void loadEPtomoSurfaceData(char *tomoType, nz_tomography_data *NZ_TOMOGRAPHY_DAT
     }
     else if (strcmp(tomoType, "2020_NZ_OFFSHORE") == 0)
     {
-        nElev = 20; // read in only the necessary surfaces
+        nElev = 25; // read in only the necessary surfaces
         elev[0] = 15;
         elev[1] = 1;
-        elev[2] = -3;
-        elev[3] = -8;
-        elev[4] = -15;
-        elev[5] = -23;
-        elev[6] = -30;
-        elev[7] = -38;
-        elev[8] = -48;
-        elev[9] = -65;
-        elev[10] = -85;
-        elev[11] = -105;
-        elev[12] = -130;
-        elev[13] = -155;
-        elev[14] = -185;
-        elev[15] = -225;
-        elev[16] = -275;
-        elev[17] = -370;
-        elev[18] = -620;
-        elev[19] = -750;
+        elev[2] = -1;
+        elev[3] = -3;
+        elev[4] = -5;
+        elev[5] = -8;
+        elev[6] = -15;
+        elev[7] = -23;
+        elev[8] = -30;
+        elev[9] = -34;
+        elev[10] = -38;
+        elev[11] = -42;
+        elev[12] = -48;
+        elev[13] = -55;
+        elev[14] = -65;
+        elev[15] = -85;
+        elev[16] = -105;
+        elev[17] = -130;
+        elev[18] = -155;
+        elev[19] = -185;
+        elev[20] = -225;
+        elev[21] = -275;
+        elev[22] = -370;
+        elev[23] = -620;
+        elev[24] = -750;
         printf("Loading NZ Tomography.\n");
         
         // load in Vs30 NZ surface
@@ -308,27 +313,32 @@ void loadEPtomoSurfaceData(char *tomoType, nz_tomography_data *NZ_TOMOGRAPHY_DAT
     }
     else if (strcmp(tomoType, "2020_NZ_OFFSHORE_NO_BASIN") == 0)
     {
-        nElev = 20; // read in only the necessary surfaces
+        nElev = 25; // read in only the necessary surfaces
         elev[0] = 15;
         elev[1] = 1;
-        elev[2] = -3;
-        elev[3] = -8;
-        elev[4] = -15;
-        elev[5] = -23;
-        elev[6] = -30;
-        elev[7] = -38;
-        elev[8] = -48;
-        elev[9] = -65;
-        elev[10] = -85;
-        elev[11] = -105;
-        elev[12] = -130;
-        elev[13] = -155;
-        elev[14] = -185;
-        elev[15] = -225;
-        elev[16] = -275;
-        elev[17] = -370;
-        elev[18] = -620;
-        elev[19] = -750;
+        elev[2] = -1;
+        elev[3] = -3;
+        elev[4] = -5;
+        elev[5] = -8;
+        elev[6] = -15;
+        elev[7] = -23;
+        elev[8] = -30;
+        elev[9] = -34;
+        elev[10] = -38;
+        elev[11] = -42;
+        elev[12] = -48;
+        elev[13] = -55;
+        elev[14] = -65;
+        elev[15] = -85;
+        elev[16] = -105;
+        elev[17] = -130;
+        elev[18] = -155;
+        elev[19] = -185;
+        elev[20] = -225;
+        elev[21] = -275;
+        elev[22] = -370;
+        elev[23] = -620;
+        elev[24] = -750;
         printf("Loading NZ Tomography.\n");
         
         // load in Vs30 NZ surface
@@ -341,27 +351,32 @@ void loadEPtomoSurfaceData(char *tomoType, nz_tomography_data *NZ_TOMOGRAPHY_DAT
     }
     else if (strcmp(tomoType, "2010_NZ_OFFSHORE_EXTENDED") == 0)
     {
-        nElev = 20; // read in only the necessary surfaces
+        nElev = 25; // read in only the necessary surfaces
         elev[0] = 15;
         elev[1] = 1;
-        elev[2] = -3;
-        elev[3] = -8;
-        elev[4] = -15;
-        elev[5] = -23;
-        elev[6] = -30;
-        elev[7] = -38;
-        elev[8] = -48;
-        elev[9] = -65;
-        elev[10] = -85;
-        elev[11] = -105;
-        elev[12] = -130;
-        elev[13] = -155;
-        elev[14] = -185;
-        elev[15] = -225;
-        elev[16] = -275;
-        elev[17] = -370;
-        elev[18] = -620;
-        elev[19] = -750;
+        elev[2] = -1;
+        elev[3] = -3;
+        elev[4] = -5;
+        elev[5] = -8;
+        elev[6] = -15;
+        elev[7] = -23;
+        elev[8] = -30;
+        elev[9] = -34;
+        elev[10] = -38;
+        elev[11] = -42;
+        elev[12] = -48;
+        elev[13] = -55;
+        elev[14] = -65;
+        elev[15] = -85;
+        elev[16] = -105;
+        elev[17] = -130;
+        elev[18] = -155;
+        elev[19] = -185;
+        elev[20] = -225;
+        elev[21] = -275;
+        elev[22] = -370;
+        elev[23] = -620;
+        elev[24] = -750;
         printf("Loading NZ Tomography.\n");
         
         // load in Vs30 NZ surface
